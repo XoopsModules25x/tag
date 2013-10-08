@@ -1,0 +1,37 @@
+2.32 Beta 1 (2013-08-12)
+=========================
++ fixed pagination (mamba)
++ fixed updates and refresh of links in admin (mamba)
++ Items per page taken now from Preferences (mamba)
++ standardized look of the table in Tag Admin
+
+
+2.31 Final (Dec. 12, 2012)
+=========================
++ small code adjustments
+
+2.31 Beta (July 10, 2011)
+=================================
+- removed all icon files and point them to /Frameworks/moduleclasses (Mamba)
++ Updated GUI to XOOPS Module Standard (Mamba)
++ Fix tag phrase (Voltan)
+
+2.3 Final (August 11th, 2010)
+================================= 
++ Fixed footer.php file inclusion
+
+2.30 RC (October 12th, 2008)
+================================= 
++ For XOOPS 2.3+
+
+2.0 (May 4th, 2008)
+================================= 
++ For XOOPS 2.3.0
+
+1.60 (Jan 3rd, 2007)
+================================= 
++ Added global search
+
+Oct 29th, 2006
+================================= 
++ Minor bugfix by Gizmhail
