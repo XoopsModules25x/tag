@@ -1,0 +1,16 @@
+LANGUAGE DIFFERENCES
+=====================
+
+Below are language differences from a version to next version.
+
+Legend :
++ Added
+- Removed
+* Modified
+
+2.32
+==============
+
+main.php:
+
++ define('_AM_TAG_DB_UPDATED', 'Database Updated Successfully');
