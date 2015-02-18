@@ -1,45 +1,67 @@
 <?php
+/*
+ You may not change or alter any portion of this comment or credits
+ of supporting developers from this source code or any supporting source code
+ which is considered copyrighted (c) material of the original comment or credit authors.
+
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+*/
+
 /**
- * Tag management for XOOPS
+ * XOOPS tag management module
  *
- * @copyright	The XOOPS project http://www.xoops.org/
- * @license		http://www.fsf.org/copyleft/gpl.html GNU public license
- * @author		Taiwen Jiang (phppp or D.J.) <php_pp@hotmail.com>
- * @since		1.00
- * @version		$Id: modinfo.php 10505 2012-12-23 03:33:54Z beckmi $
- * @package		tag
+ * @package        tag
+ * @copyright       {@link http://sourceforge.net/projects/xoops/ The XOOPS Project}
+ * @license         {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
+ * @author          Taiwen Jiang <phppp@users.sourceforge.net>
+ * @since           1.00
+ * @version         $Id: modinfo.php 12898 2014-12-08 22:05:21Z zyspec $
  */
 
-if (!defined('XOOPS_ROOT_PATH')) { exit(); }
+defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
-define('TAG_MI_NAME','XOOPS TAG');
-define('TAG_MI_DESC','For site-wide Tag management');
+define('_MI_TAG_NAME', "XOOPS Tag");
+define('_MI_TAG_DESC', "For site-wide Tag management");
 
-define('TAG_MI_BLOCK_CLOUD','Tag Cloud');
-define('TAG_MI_BLOCK_CLOUD_DESC','');
-define('TAG_MI_BLOCK_TOP','Top Tag');
-define('TAG_MI_BLOCK_TOP_DESC','');
+define('_MI_TAG_BLOCK_CLOUD', "Tag Cloud");
+define('_MI_TAG_BLOCK_CLOUD_DESC', "");
+define('_MI_TAG_BLOCK_TOP', "Top Tag");
+define('_MI_TAG_BLOCK_TOP_DESC', "");
 
-define('TAG_MI_DOURLREWRITE','Enable URL rewrite');
-define('TAG_MI_DOURLREWRITE_DESC','AcceptPathInfo On for Apache2 is required');
+define('_MI_TAG_DOURLREWRITE', "Enable URL rewrite");
+define('_MI_TAG_DOURLREWRITE_DESC', "AcceptPathInfo On for Apache2 is required");
 
-define('TAG_MI_ITEMSPERPAGE','Items per page');
-define('TAG_MI_ITEMSPERPAGE_DESC','');
+define('_MI_TAG_ITEMSPERPAGE', "Items per page");
+define('_MI_TAG_ITEMSPERPAGE_DESC', "");
 
-define('TAG_MI_ADMENU_INDEX','Home');
-define('TAG_MI_ADMENU_EDIT','Tag Admin');
-define('TAG_MI_ADMENU_SYNCHRONIZATION','Synchronize');
+define('_MI_TAG_ADMENU_INDEX', "Home");
+define('_MI_TAG_ADMENU_EDIT', "Tag Admin");
+define('_MI_TAG_ADMENU_EDIT_DESC', "View/Edit Tags");
+define('_MI_TAG_ADMENU_SYNCHRONIZATION', "Synchronize");
 
 //2.31
-// index.php
+define('_MI_TAG_ADMIN_INDEX', "Index");
+define('_MI_TAG_ADMIN_HOME', "Home");
+define('_MI_TAG_ADMIN_HOME_DESC', "Go back to Administration module");
+define('_MI_TAG_ADMIN_ABOUT', "About");
+define('_MI_TAG_ADMIN_HELP_DESC', "About this module");
+define('_MI_TAG_HELP_DESC', "Module help");
+//define('_MI_TAG_ADMIN_HELP', "Help");
 
-define('_TAG_ADMIN_INDEX','Index');
-define('_TAG_ADMIN_HOME','Home');
-define('_TAG_ADMIN_HOME_DESC','Go back to Administration module');
-define('_TAG_ADMIN_ABOUT' , 'About');
-define('_TAG_ADMIN_ABOUT_DESC' , 'About this module');
-define('_TAG_ADMIN_HELP' , 'Help');
-define('_TAG_ADMIN_HELP_DESC' , 'Module help');
-define('_AM_TAG_ADMIN_HELP' , 'Help');
+//2.32
+define('_MI_TAG_INDEX_TPL_DESC', "Index page of tag module");
+define('_MI_TAG_INDEX_TPL_LIST_DESC', "List of tags");
+define('_MI_TAG_INDEX_TPL_VIEW_DESC', "Links of a tag");
+define('_MI_TAG_INDEX_TPL_BAR_DESC', "Tag list in an item");
+define('_MI_TAG_INDEX_ADMINTPL_ABOUT_DESC', "");
+define('_MI_TAG_INDEX_ADMINTPL_HELP_DESC', "");
 
-?>
+//2.33
+define('_MI_TAG_BLOCK_CUMULUS',"Cumulus Tag Cloud");
+define('_MI_TAG_BLOCK_CUMULUS_DESC', "Display terms in a moving cloud");
+define('_MI_TAG_LIMITPERLIST', "Limit number of items per list");
+define('_MI_TAG_LIMITPERLIST_DESC', "");
+define('_MI_TAG_LIMITPERCLOUD', "Limit number of items per cloud");
+define('_MI_TAG_LIMITPERCLOUD_DESC', "");

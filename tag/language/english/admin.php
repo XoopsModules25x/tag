@@ -1,62 +1,93 @@
 <?php
+/*
+ You may not change or alter any portion of this comment or credits
+ of supporting developers from this source code or any supporting source code
+ which is considered copyrighted (c) material of the original comment or credit authors.
+
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+*/
+
 /**
- * Tag management for XOOPS
+ * XOOPS tag management module
  *
- * @copyright	The XOOPS project http://www.xoops.org/
- * @license		http://www.fsf.org/copyleft/gpl.html GNU public license
- * @author		Taiwen Jiang (phppp or D.J.) <php_pp@hotmail.com>
- * @since		1.00
- * @version		$Id: admin.php 11906 2013-08-14 05:54:12Z beckmi $
- * @package		tag
+ * @package        tag
+ * @copyright      {@link http://sourceforge.net/projects/xoops/ The XOOPS Project}
+ * @license        {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
+ * @author         Taiwen Jiang (phppp or D.J.) <php_pp@hotmail.com>
+ * @since          1.00
+ * @version        $Id: admin.php 12898 2014-12-08 22:05:21Z zyspec $
  */
 
-if (!defined('XOOPS_ROOT_PATH')) { exit(); }
-define('TAG_AM_TERM','Tag');
+defined('XOOPS_ROOT_PATH') || exit('Restricted access');
+define('_AM_TAG_TERM', "Tag");
 
-define('TAG_AM_STATS','Statistic Infomation');
-define('TAG_AM_COUNT_TAG','Tag count: %s');
-define('TAG_AM_COUNT_ITEM','Item count: %s');
-define('TAG_AM_COUNT_MODULE','Module count: %s');
-define('TAG_AM_COUNT_MODULE_TITLE','Tag Count / Module Count');
+define('_AM_TAG_STATS', "Statistic Infomation");
+define('_AM_TAG_COUNT_TAG', "Tag count: %s");
+define('_AM_TAG_COUNT_ITEM', "Item count: %s");
+define('_AM_TAG_COUNT_MODULE', "Module:");
+define('_AM_TAG_COUNT_MODULE_TITLE', "Item Count / Tag Count");
 
-define('TAG_AM_EDIT','Tag Admin');
-define('TAG_AM_SYNCHRONIZATION','Synchronize');
+define('_AM_TAG_EDIT', "Tag Admin");
+define('_AM_TAG_SYNCHRONIZATION', "Synchronize");
 
-define('TAG_AM_ACTIVE','Active');
-define('TAG_AM_INACTIVE','Inactive');
-define('TAG_AM_GLOBAL','Global');
-define('TAG_AM_ALL','All modules');
-define('TAG_AM_NUM','Number for each time');
-define('TAG_AM_IN_PROCESS','Data synchronization is in process, please wait for a while ...');
-define('TAG_AM_FINISHED','Data synchronization is finished.');
+define('_AM_TAG_ACTIVE', "Active");
+define('_AM_TAG_INACTIVE', "Inactive");
+define('_AM_TAG_GLOBAL', "Global");
+define('_AM_TAG_ALL', "All modules");
+define('_AM_TAG_NUM', "Number for each time");
+define('_AM_TAG_IN_PROCESS', "Data synchronization is in process, please wait for a while ...");
+define('_AM_TAG_FINISHED', "Data synchronization is finished.");
 
-//2.3.1
+//2.31
+// index.php
+/*
+define('_MI_TAG_ADMIN_INDEX', "Index");
+define('_MI_TAG_ADMIN_HOME', "Home");
+define('_MI_AM_TAG_ADMIN_HOME_DESC', "Go back to Administration module");
+define('_MI_TAG_ADMIN_ABOUT', "About");
+define('_MI_TAG_ADMIN_HELP_DESC', "About this module");
+define('_MI_TAG_HELP_DESC', "Module help");
+//define('_MI_TAG_ADMIN_HELP', "Help");
+*/
+//2.32
+define('_AM_TAG_INDEX_TPL_DESC', "Index page of tag module");
+define('_AM_TAG_INDEX_TPL_LIST_DESC', "List of tags");
+define('_AM_TAG_INDEX_TPL_VIEW_DESC', "Links of a tag");
+define('_AM_TAG_INDEX_TPL_BAR_DESC', "Tag list in an item");
+define('_AM_TAG_INDEX_ADMINTPL_ABOUT_DESC', "");
+define('_AM_TAG_INDEX_ADMINTPL_HELP_DESC', "");
+
+// Text for Admin footer
+define('_AM_TAG_MAINTAINED_BY', "XOOPS Tag is maintained by the");
+define('_AM_TAG_MAINTAINED_TITLE', "Visit XOOPS Community");
+define('_AM_TAG_MAINTAINED_TEXT', "XOOPS Community");
 
 // About.php
-define('_AM_TAG_ABOUT_RELEASEDATE',        'Released: ');
-define('_AM_TAG_ABOUT_UPDATEDATE',               'Updated: ');
-define('_AM_TAG_ABOUT_AUTHOR',                   'Author: ');
-define('_AM_TAG_ABOUT_CREDITS',                  'Credits: ');
-define('_AM_TAG_ABOUT_LICENSE',                  'License: ');
-define('_AM_TAG_ABOUT_MODULE_STATUS',            'Status: ');
-define('_AM_TAG_ABOUT_WEBSITE',                  'Website: ');
-define('_AM_TAG_ABOUT_AUTHOR_NAME',              'Author name: ');
-define('_AM_TAG_ABOUT_CHANGELOG',                'Change Log');
-define('_AM_TAG_ABOUT_MODULE_INFO',              'Module Infos');
-define('_AM_TAG_ABOUT_AUTHOR_INFO',              'Author Infos');
-define('_AM_TAG_ABOUT_DESCRIPTION',          'Description: ');
+define('_AM_TAG_ABOUT_RELEASEDATE', "Released: ");
+define('_AM_TAG_ABOUT_UPDATEDATE', "Updated: ");
+define('_AM_TAG_ABOUT_AUTHOR', "Author: ");
+define('_AM_TAG_ABOUT_CREDITS', "Credits: ");
+define('_AM_TAG_ABOUT_LICENSE', "License: ");
+define('_AM_TAG_ABOUT_MODULE_STATUS', "Status: ");
+define('_AM_TAG_ABOUT_WEBSITE', "Website: ");
+define('_AM_TAG_ABOUT_AUTHOR_NAME', "Author name: ");
+define('_AM_TAG_ABOUT_CHANGELOG', "Change Log");
+define('_AM_TAG_ABOUT_MODULE_INFO', "Module Infos");
+define('_AM_TAG_ABOUT_AUTHOR_INFO', "Author Infos");
+define('_AM_TAG_ABOUT_DESCRIPTION', "Description: ");
 
 // text in admin footer
-define('_AM_TAG_ADMIN_FOOTER',                 "<div class='right smallsmall italic pad5'><b>" . $xoopsModule->getVar("name") . "</b> is maintained by the <a class='tooltip' rel='external' href='http://xoops.org/' title='Visit XOOPS Community'>XOOPS Community</a></div>");
+define('_AM_TAG_ADMIN_FOOTER', "<div class='right smallsmall italic pad5'><b>" . $GLOBALS['xoopsModule']->getVar("name") . "</b> is maintained by the <a class='tooltip' rel='external' href='http://xoops.org/' title='Visit XOOPS Community'>XOOPS Community</a></div>");
 
 //ModuleAdmin
-define('_AM_MODULEADMIN_MISSING','Error: The ModuleAdmin class is missing. Please install the ModuleAdmin Class (see /docs/readme.txt)');
+define('_AM_MODULEADMIN_MISSING', "Error: The ModuleAdmin class is missing. Please install the ModuleAdmin Class (see /docs/readme.txt)");
 
 //define('_AM_TAG_MISSING','Error: The ModuleAdmin class is missing. Please install the ModuleAdmin Class into /Frameworks (see /docs/readme.txt)');
 
 // Text for Admin footer
-define("_AM_TAG_FOOTER","<div class='center smallsmall italic pad5'>Tag Module is maintained by the <a class='tooltip' rel='external' href='http://xoops.org/' title='Visit XOOPS Community'>XOOPS Community</a></div>");
+define("_AM_TAG_FOOTER", "<div class='center smallsmall italic pad5'>Tag Module is maintained by the <a class='tooltip' rel='external' href='http://xoops.org/' title='Visit XOOPS Community'>XOOPS Community</a></div>");
 
 //2.32
-define('_AM_TAG_DB_UPDATED', 'Database Updated Successfully');
-
+define('_AM_TAG_DB_UPDATED', "Database Updated Successfully");

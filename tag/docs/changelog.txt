@@ -1,37 +1,67 @@
-2.32 Beta 1 (2013-08-12)
-=========================
+2.33 RC 1         NOT RELEASED
+=================================
+- added check for plugins in /class/plugins (in preparation for next version of XOOPS (mamba)
+
+2.33 Beta 1       2014-12-05
+=================================
++ minor code cleanup (zyspec)
+  * moved some hardcoded language strings to language files (zyspec)
+  * file formatting (tabs-> 4 spaces) (zyspec)
+  * improved PSRx coding compliance - cannot completely comply without (zyspec)
+    breaking plugins distributed with other modules (zyspec)
+  * replaced dirname(__FILE__) with __DIR__ (zyspec)
++ eliminated /Frameworks/art/functions.admin.php alternative since should be (zyspec)
+  present in all versions of XOOPS >= 2.5.7 (zyspec)
++ utilize XoopsRequest for input vars (zyspec)
++ normalized Frameworks icons directory to be similar to other XOOPS modules (zyspec)
++ deprecated XoopsFormTag (modules should not create classes beginning with (zyspec)
+  'Xoops'). Created class TagFormTag to replace it. (zyspec)
++ merged Cumulus module for flash cloud block - Cumulus module no longer needed (zyspec)
++ fixed bug in display limit in .list.tag.php for both list and cloud (zyspec)
++ removed support for MySQL < 4.1.0 (zyspec)
++ added TagConstant class to improve code maintainability (zyspec)
++ improved HTML rendering (admin side) (zyspec)
++ modified module defines naming to standardize with other XOOPS modules (zyspec)
++ added randomquote ./plugin (zyspec)
+
+2.32 Beta 2       2014-04-23
+=================================
++ moved all images, CSS, and JS files to /assets (mamba)
++ renamed .html Smarty templates to .tpl (mamba)
+
+2.32 Beta 1     (2013-08-12)
+=================================
 + fixed pagination (mamba)
 + fixed updates and refresh of links in admin (mamba)
 + Items per page taken now from Preferences (mamba)
 + standardized look of the table in Tag Admin
 
-
 2.31 Final (Dec. 12, 2012)
-=========================
+=================================
 + small code adjustments
 
 2.31 Beta (July 10, 2011)
 =================================
-- removed all icon files and point them to /Frameworks/moduleclasses (Mamba)
++ removed all icon files and point them to /Frameworks/moduleclasses (Mamba)
 + Updated GUI to XOOPS Module Standard (Mamba)
 + Fix tag phrase (Voltan)
 
 2.3 Final (August 11th, 2010)
-================================= 
+=================================
 + Fixed footer.php file inclusion
 
 2.30 RC (October 12th, 2008)
-================================= 
+=================================
 + For XOOPS 2.3+
 
 2.0 (May 4th, 2008)
-================================= 
+=================================
 + For XOOPS 2.3.0
 
 1.60 (Jan 3rd, 2007)
-================================= 
+=================================
 + Added global search
 
 Oct 29th, 2006
-================================= 
+=================================
 + Minor bugfix by Gizmhail
