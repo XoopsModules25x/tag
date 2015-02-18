@@ -1,9 +1,9 @@
 <?php
 /*
  You may not change or alter any portion of this comment or credits
- of supporting developers from this source code or any supporting source code 
+ of supporting developers from this source code or any supporting source code
  which is considered copyrighted (c) material of the original comment or credit authors.
- 
+
  This program is distributed in the hope that it will be useful,
  but WITHOUT ANY WARRANTY; without even the implied warranty of
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
@@ -12,63 +12,61 @@
 /**
  * XOOPS tag management module
  *
- * @copyright       The XOOPS project http://sourceforge.net/projects/xoops/
- * @license         http://www.fsf.org/copyleft/gpl.html GNU public license
- * @since           1.0.0
- * @author          Taiwen Jiang <phppp@users.sourceforge.net>
- * @version         $Id: xoops_version.php 11906 2013-08-14 05:54:12Z beckmi $
- * @package         tag
+ * @package        tag
+ * @copyright      {@link http://sourceforge.net/projects/xoops/ The XOOPS Project}
+ * @license        {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
+ * @author         Taiwen Jiang <phppp@users.sourceforge.net>
+ * @since          1.00
+ * @version        $Id: xoops_version.php 12898 2014-12-08 22:05:21Z zyspec $
  */
 
+defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
-if (!defined('XOOPS_ROOT_PATH')) { exit(); }
+$moduleDirName = basename(__DIR__);
 
-$moduleDirName = basename( dirname( __FILE__ ) ) ;
-
-$modversion = array();
-$modversion["name"]         = TAG_MI_NAME;
-$modversion["version"]      = 2.32;
-$modversion["description"]  = TAG_MI_DESC;
-$modversion["image"]        = "images/logoTag.png";
-$modversion["dirname"]      = "tag";
-$modversion["author"]       = "Taiwen Jiang <phppp@users.sourceforge.net>";
-$modversion['nickname'] = "phppp";
-$modversion["credits"]	= "http://xoops.org, Trabis, Mamba";
-$modversion['help'] = 'page=help';
-$modversion["license"] 	= "GNU General Public License";
-$modversion["license_url"]	= "http://www.gnu.org/licenses/gpl.html";
-$modversion["official"] 	= 0;
-$modversion["author_website_url"]	= "http://xoops.org";
-$modversion["author_website_name"]	= "XOOPS";
-$modversion['dirmoduleadmin'] = '/Frameworks/moduleclasses/moduleadmin';
-$modversion['icons16'] = '../../Frameworks/moduleclasses/icons/16';
-$modversion['icons32'] = '../../Frameworks/moduleclasses/icons/32';
+$modversion                        = array();
+$modversion["name"]                = _MI_TAG_NAME;
+$modversion["version"]             = 2.33;
+$modversion["description"]         = _MI_TAG_DESC;
+$modversion["image"]               = "assets/images/logoTag.png";
+$modversion["dirname"]             = $moduleDirName;
+$modversion["author"]              = "Taiwen Jiang <phppp@users.sourceforge.net>";
+$modversion['nickname']            = "phppp";
+$modversion["credits"]             = "http://xoops.org, Trabis, Mamba";
+$modversion['help']                = 'page=help';
+$modversion["license"]             = "GNU General Public License";
+$modversion["license_url"]         = "http://www.gnu.org/licenses/gpl.html";
+$modversion["official"]            = 0;
+$modversion["author_website_url"]  = "http://xoops.org";
+$modversion["author_website_name"] = "XOOPS";
+$modversion['dirmoduleadmin']      = 'Frameworks/moduleclasses';
+$modversion['icons16']             = 'Frameworks/moduleclasses/icons/16';
+$modversion['icons32']             = 'Frameworks/moduleclasses/icons/32';
 
 //about
-$modversion["release_date"] = "2013/08/12";
-$modversion["demo_site_url"]			= "";
-$modversion["demo_site_name"]			= "";
-$modversion["module_website_url"]		= "http://xoops.org";
-$modversion["module_website_name"]	= "XOOPS";
-$modversion["module_status"]			= "Beta 1";
-$modversion['min_php'] = '5.2';
-$modversion['min_xoops'] = "2.5.6";
-$modversion['min_admin']='1.1';
-$modversion['min_db']= array('mysql'=>'5.0.7', 'mysqli'=>'5.0.7');
-
+$modversion["module_status"]       = "RC 1";
+$modversion['release_file']        = $GLOBALS['xoops']->url("www/modules/{$moduleDirName}/docs/changelog.txt");
+$modversion['release_date']        = "2014/12/05";
+$modversion["demo_site_url"]       = "";
+$modversion["demo_site_name"]      = "";
+$modversion["module_website_url"]  = "http://xoops.org";
+$modversion["module_website_name"] = "XOOPS";
+$modversion['min_php']             = '5.3.7';
+$modversion['min_xoops']           = "2.5.7";
+$modversion['min_admin']           = '1.1';
+$modversion['min_db']              = array('mysql' => '5.0.7', 'mysqli' => '5.0.7');
 
 // database tables
 $modversion["sqlfile"]["mysql"] = "sql/mysql.sql";
-$modversion["tables"] = array(
-    "tag_tag",
-    "tag_link",
-    "tag_stats",
+$modversion["tables"]           = array("tag_tag",
+                                       "tag_link",
+                                      "tag_stats",
 );
 
 // Admin things
-$modversion["hasAdmin"] = 1;
+$modversion["hasAdmin"]   = 1;
 $modversion["adminindex"] = "admin/index.php";
-$modversion["adminmenu"] = "admin/menu.php";
+$modversion["adminmenu"]  = "admin/menu.php";
 
 // Menu
 $modversion["hasMain"] = 1;
@@ -77,8 +75,8 @@ $modversion["hasMain"] = 1;
 // Set to 1 if you want to display menu generated by system module
 $modversion['system_menu'] = 1;
 
-$modversion["onInstall"] = "include/action.module.php";
-$modversion["onUpdate"] = "include/action.module.php";
+$modversion["onInstall"]   = "include/action.module.php";
+$modversion["onUpdate"]    = "include/action.module.php";
 $modversion["onUninstall"] = "include/action.module.php";
 
 // Use smarty
@@ -87,114 +85,118 @@ $modversion["use_smarty"] = 1;
 /**
 * Templates
 */
-// $modversion['templates']    = array();
-// $modversion['templates'][1]    = array(
-    // 'file'          => 'tag_index.html',
-    // 'description'   => 'Index page of tag module'
-    // );
-// $modversion['templates'][]    = array(
-    // 'file'          => 'tag_list.html',
-    // 'description'   => 'List of tags'
-    // );
-// $modversion['templates'][]    = array(
-    // 'file'          => 'tag_view.html',
-    // 'description'   => 'Links of a tag'
-    // );
-// $modversion['templates'][]    = array(
-    // 'file'          => 'tag_bar.html',
-    // 'description'   => 'Tag list in an item'
-    // );
+$modversion["templates"] = array(array("file" => "tag_index.tpl",
+                                "description" => '_MI_TAG_INDEX_TPL_DESC'),
 
+                                 array("file" => "tag_list.tpl",
+                                "description" => _MI_TAG_INDEX_TPL_LIST_DESC),
 
-// Templates
-$i = 1;
-$modversion["templates"][$i]["file"] 		= "tag_index.html";
-$modversion["templates"][$i]["description"] 	= "Index page of tag module";
-$i++;
-$modversion["templates"][$i]["file"] 		= "tag_list.html";
-$modversion["templates"][$i]["description"] 	= "List of tags";
-$i++;
-$modversion["templates"][$i]["file"] 		= "tag_view.html";
-$modversion["templates"][$i]["description"] 	= "Links of a tag";
-$i++;
-$modversion["templates"][$i]["file"] 		= "tag_bar.html";
-$modversion["templates"][$i]["description"] 	= "Tag list in an item";
-$i++;
-$modversion["templates"][$i]["file"] 		= "admin/" . $moduleDirName . "_admin_about.html";
-$modversion["templates"][$i]["description"] 	= "";
-$i++;
-$modversion["templates"][$i]["file"] 		= "admin/" . $moduleDirName . "_admin_help.html";
-$modversion["templates"][$i]["description"] 	= "";
+                                 array("file" => "tag_view.tpl",
+                                "description" => _MI_TAG_INDEX_TPL_VIEW_DESC),
 
+                                 array("file" => "tag_bar.tpl",
+                                "description" => _MI_TAG_INDEX_TPL_BAR_DESC),
 
+                                 array("file" => "admin/{$moduleDirName}_admin_about.tpl",
+                                "description" => _MI_TAG_INDEX_ADMINTPL_ABOUT_DESC),
+
+                                 array("file" => "admin/{$moduleDirName}_admin_help.tpl",
+                                "description" => _MI_TAG_INDEX_ADMINTPL_HELP_DESC)
+);
 
 // Blocks
-$modversion['blocks']    = array();
-
+$modversion['blocks']    = array(
 /*
- * $options:  
+ * $options:
  *                    $options[0] - number of tags to display
- *                    $options[1] - max font size (px or %)
- *                    $options[2] - min font size (px or %)
+ *                    $options[1] - time duration, in days, 0 for all the time
+ *                    $options[2] - max font size (px or %)
+ *                    $options[3] - min font size (px or %)
  */
-$modversion["blocks"][1]    = array(
-    "file"          => "block.php",
-    "name"          => TAG_MI_BLOCK_CLOUD,
-    "description"   => TAG_MI_BLOCK_CLOUD_DESC,
-    "show_func"     => "tag_block_cloud_show",
-    "edit_func"     => "tag_block_cloud_edit",
-    "options"       => "100|0|150|80",
-    "template"      => "tag_block_cloud.html",
-    );
-
+                                 array("file" => "block.php",
+                                       "name" => _MI_TAG_BLOCK_CLOUD,
+                                "description" => _MI_TAG_BLOCK_CLOUD_DESC,
+                                  "show_func" => "tag_block_cloud_show",
+                                  "edit_func" => "tag_block_cloud_edit",
+                                    "options" => "100|0|150|80",
+                                   "template" => "tag_block_cloud.tpl"),
 /*
- * $options:  
+ * $options:
  *                    $options[0] - number of tags to display
  *                    $options[1] - time duration, in days, 0 for all the time
  *                    $options[2] - sort: a - alphabet; c - count; t - time
  */
-$modversion["blocks"][]    = array(
-    "file"          => "block.php",
-    "name"          => TAG_MI_BLOCK_TOP,
-    "description"   => TAG_MI_BLOCK_TOP_DESC,
-    "show_func"     => "tag_block_top_show",
-    "edit_func"     => "tag_block_top_edit",
-    "options"       => "50|30|a",
-    "template"      => "tag_block_top.html",
-    );
+                                 array("file" => "block.php",
+                                       "name" => _MI_TAG_BLOCK_TOP,
+                                "description" => _MI_TAG_BLOCK_TOP_DESC,
+                                  "show_func" => "tag_block_top_show",
+                                  "edit_func" => "tag_block_top_edit",
+                                    "options" => "50|30|a",
+                                   "template" => "tag_block_top.tpl"),
+
+/*
+ * $options for cumulus:
+ *                     $options[0] - number of tags to display
+ *                     $options[1] - time duration
+ *                     $options[2] - max font size (px or %)
+ *                     $options[3] - min font size (px or %)
+ *                     $options[4] - cumulus_flash_width
+ *                     $options[5] - cumulus_flash_height
+ *                     $options[6] - cumulus_flash_background
+ *                     $options[7] - cumulus_flash_transparency
+ *                     $options[8] - cumulus_flash_min_font_color
+ *                     $options[9] - cumulus_flash_max_font_color
+ *                    $options[10] - cumulus_flash_hicolor
+ *                    $options[11] - cumulus_flash_speed
+ */
+                                 array("file" => "block.php",
+                                       "name" => _MI_TAG_BLOCK_CUMULUS,
+                                "description" => _MI_TAG_BLOCK_CUMULUS_DESC,
+                                  "show_func" => "tag_block_cumulus_show",
+                                  "edit_func" => "tag_block_cumulus_edit",
+                                    "options" => "100|0|24|12|160|140|#ffffff|0|#000000|#003300|#00ff00|100",
+                                   "template" => "tag_block_cumulus.tpl")
+);
 
 // Search
-$modversion["hasSearch"] = 1;
+$modversion["hasSearch"]      = 1;
 $modversion['search']['file'] = "include/search.inc.php";
 $modversion['search']['func'] = "tag_search";
 
 // Comments
-$modversion["hasComments"] = 0;
+$modversion["hasComments"]    = 0;
 
 // Configs
-$modversion["config"] = array();
-    
-$modversion["config"][1] = array(
-    "name"          => "do_urw",
-    "title"         => "TAG_MI_DOURLREWRITE",
-    "description"   => "TAG_MI_DOURLREWRITE_DESC",
-    "formtype"      => "yesno",
-    "valuetype"     => "int",
-    "default"       => in_array(php_sapi_name(), array("apache", "apache2handler")),
-    );
+$modversion["config"] = array(array("name" => "do_urw",
+                                   "title" => "_MI_TAG_DOURLREWRITE",
+                             "description" => "_MI_TAG_DOURLREWRITE_DESC",
+                                "formtype" => "yesno",
+                               "valuetype" => "int",
+                                 "default" => in_array(php_sapi_name(), array("apache", "apache2handler"))),
 
-$modversion["config"][] = array(
-    "name"          => "items_perpage",
-    "title"         => "TAG_MI_ITEMSPERPAGE",
-    "description"   => "TAG_MI_ITEMSPERPAGE_DESC",
-    "formtype"      => "textbox",
-    "valuetype"     => "int",
-    "default"       => 10
-    );
+                              array("name" => "items_perpage",
+                                   "title" => "_MI_TAG_ITEMSPERPAGE",
+                             "description" => "_MI_TAG_ITEMSPERPAGE_DESC",
+                                "formtype" => "textbox",
+                               "valuetype" => "int",
+                                 "default" => 10),
 
+                              array("name" => "limit_tag_list",
+                                   "title" => "_MI_TAG_LIMITPERLIST",
+                             "description" => "_MI_TAG_LIMITPERLIST_DESC",
+                                "formtype" => "textbox",
+                               "valuetype" => "int",
+                                 "default" => 10),
+
+                              array("name" => "limit_cloud_list",
+                                   "title" => "_MI_TAG_LIMITPERCLOUD",
+                             "description" => "_MI_TAG_LIMITPERCLOUD_DESC",
+                                "formtype" => "textbox",
+                               "valuetype" => "int",
+                                 "default" => 100)
+);
 
 // Notification
 
 $modversion["hasNotification"] = 0;
 $modversion["notification"] = array();
-?>
