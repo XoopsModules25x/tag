@@ -70,6 +70,7 @@ function myalbum1_tag_iteminfo(&$items)
         }
     }
     unset($items_obj);
+
     return true;
 }
 

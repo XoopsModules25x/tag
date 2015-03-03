@@ -52,6 +52,7 @@ function xoops_module_pre_install_tag(&$module)
     }
     if (!$success) {
         $module->setErrors("This module requires XOOPS {$requiredVer}+ ({$currentVer} installed)");
+
         return false;
     }
 
@@ -62,6 +63,7 @@ function xoops_module_pre_install_tag(&$module)
     $reqVer = $module->getInfo('min_php');
     if ($verNum < $reqVer) {
         $module->setErrors( "The module requires PHP {$reqVer}+ ({$verNum} installed)");
+
         return false;
     }
 

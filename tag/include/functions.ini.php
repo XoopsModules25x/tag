@@ -62,6 +62,7 @@ function &tag_load_config()
             $moduleConfig = array_merge($moduleConfig, $customConfig);
         }
     }
+
     return $moduleConfig;
 }
 

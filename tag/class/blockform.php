@@ -55,6 +55,7 @@ class TagBlockForm extends XoopsForm
         }
         $ret .= "</div>\n";
         $ret .= $this->renderValidationJS(true);
+
         return $ret;
     }
 }

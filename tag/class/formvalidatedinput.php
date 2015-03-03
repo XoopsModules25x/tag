@@ -49,11 +49,11 @@ class TagFormValidatedInput extends XoopsFormText
     /**
      * Constructor
      *
-     * @param string $caption Caption
-     * @param string $name "name" attribute
-     * @param int $size Size
-     * @param int $maxlength Maximum length of text
-     * @param string $value Initial text
+     * @param string $caption   Caption
+     * @param string $name      "name" attribute
+     * @param int    $size      Size
+     * @param int    $maxlength Maximum length of text
+     * @param string $value     Initial text
      */
     function __construct($caption, $name, $size, $maxlength, $value = '', $type='text')
     {
@@ -138,6 +138,7 @@ class TagFormValidatedInput extends XoopsFormText
     {
         $myClasses = $this->getClass();
         $classes = ($myClasses) ? " class='{$myClasses}'" : "";
+
         return "<input type='" . $this->_type . "' name='" . $this->getName() . "' title='" . $this->getTitle() . "' id='" . $this->getName() . "' size='" . $this->getSize() . "' maxlength='" . $this->getMaxlength() . "' value='" . $this->getValue() . "'" . $classes . $this->getExtra() . " />";
     }
 }
