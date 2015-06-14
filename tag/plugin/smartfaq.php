@@ -73,6 +73,7 @@ function smartfaq_tag_iteminfo(&$items)
         }
     }
     unset($items_obj);
+
     return true;
 }
 

@@ -89,10 +89,10 @@ class TagTagHandler extends XoopsPersistableObjectHandler
      * Get tags linked to an item
      *
      * @access public
-     * @param  int     $itemid item ID
-     * @param  int     $modid  module ID, optional
-     * @param  int     $catid  id of corresponding category, optional
-     * @return array   associative array of tags (id, term)
+     * @param  int   $itemid item ID
+     * @param  int   $modid  module ID, optional
+     * @param  int   $catid  id of corresponding category, optional
+     * @return array associative array of tags (id, term)
      */
     public function getByItem($itemid, $modid = 0, $catid = 0)
     {
@@ -123,10 +123,10 @@ class TagTagHandler extends XoopsPersistableObjectHandler
      * Update tags linked to an item
      *
      * @access public
-     * @param  array|string array of $tags or a single tag
-     * @param  int          $itemid item ID
-     * @param  int          $modid  module ID or module dirname, optional
-     * @param  int          $catid  id of corresponding category, optional
+     * @param  array|string array of $tags   or a single tag
+     * @param  int                   $itemid item ID
+     * @param  int                   $modid  module ID or module dirname, optional
+     * @param  int                   $catid  id of corresponding category, optional
      * @return bool
      */
     public function updateByItem($tags, $itemid, $modid = "", $catid = 0)
@@ -319,10 +319,10 @@ class TagTagHandler extends XoopsPersistableObjectHandler
      * Get tags with item count
      *
      * @access         public
-     * @param  object  $criteria {@link Criteria}
-     * @param  boolean $fromStats fetch from tag-stats table
+     * @param object  $criteria  {@link Criteria}
+     * @param boolean $fromStats fetch from tag-stats table
      *
-     * @return array   associative array of tags (id, term, count)
+     * @return array associative array of tags (id, term, count)
      */
     public function &getByLimit($criteria = null, $fromStats = true)
     {
@@ -390,7 +390,7 @@ class TagTagHandler extends XoopsPersistableObjectHandler
      * Get count of tags
      *
      * @access public
-     * @param  object $criteria {@link Criteria)
+     * @param object $criteria {@link Criteria)
      *
      * @return integer count
      */

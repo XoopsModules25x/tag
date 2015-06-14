@@ -20,7 +20,6 @@
  * @version         $Id: header.php 12898 2014-12-08 22:05:21Z zyspec $
  */
 
-
 include_once '../../mainfile.php';
 include __DIR__ . "/include/vars.php";
 include_once __DIR__ . "/include/functions.php";
