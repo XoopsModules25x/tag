@@ -1,6 +1,8 @@
 2.33 RC 1         NOT RELEASED
 =================================
 - added check for plugins in /class/plugins (in preparation for next version of XOOPS (mamba)
+- fixed XOOPS version check on install (zyspec)
+- fixed call to XoopsFormText in TagFormTag class (zyspec)
 
 2.33 Beta 1       2014-12-05
 =================================

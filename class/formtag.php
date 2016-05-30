@@ -54,7 +54,8 @@ class TagFormTag extends XoopsFormText
             }
         }
         $caption = _MD_TAG_TAGS;
-        $this->XoopsFormText($caption, $name, $size, $maxlength, $value);
+//        $this->XoopsFormText($caption, $name, $size, $maxlength, $value);
+        parent::__construct($caption, $name, $size, $maxlength, $value);
     }
 
     /**
