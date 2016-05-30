@@ -37,14 +37,16 @@ function xoops_module_pre_install_tag(&$module)
     $success     = true;
     foreach ($reqArray as $k=>$v) {
         if (isset($currArray[$k])) {
-            if ($currArray[$k] >= $v) {
+            if ($currArray[$k] > $v) {
+                break;
+            } elseif ($currArray[$k] = $v) {
                 continue;
             } else {
                 $success = false;
                 break;
             }
         } else {
-            if ($v > 0) {
+            if (intval($v) > 0) { // to handle things like x.x.x.0_RC1
                 $success = false;
                 break;
             }
@@ -52,7 +54,6 @@ function xoops_module_pre_install_tag(&$module)
     }
     if (!$success) {
         $module->setErrors("This module requires XOOPS {$requiredVer}+ ({$currentVer} installed)");
-
         return false;
     }
 
