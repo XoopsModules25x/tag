@@ -12,31 +12,38 @@
 /**
  * XOOPS tag management module
  *
- * @package        tag
+ * @package         tag
  * @copyright       {@link http://sourceforge.net/projects/xoops/ The XOOPS Project}
  * @license         {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
  * @since           1.00
- * @version         $Id: search.inc.php 12898 2014-12-08 22:05:21Z zyspec $
  */
 
 defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
-function &tag_search($queryarray, $andor, $limit, $offset, $userid, $sortby = "tag_term ASC")
+/**
+ * @param         $queryarray
+ * @param         $andor
+ * @param         $limit
+ * @param         $offset
+ * @param         $userid
+ * @param  string $sortby
+ * @return array
+ */
+function &tag_search($queryarray, $andor, $limit, $offset, $userid, $sortby = 'tag_term ASC')
 {
-
-    $ret = array();
+    $ret   = array();
     $count = is_array($queryarray) ? count($queryarray) : 0;
-    $sql = "SELECT tag_id, tag_term FROM " . $GLOBALS['xoopsDB']->prefix("tag_tag");
+    $sql   = 'SELECT tag_id, tag_term FROM ' . $GLOBALS['xoopsDB']->prefix('tag_tag');
     if ($count > 0) {
-        if ($andor == "exact") {
+        if ($andor === 'exact') {
             $sql .= " WHERE tag_term = '{$queryarray[0]}'";
-            for ($i = 1 ; $i < $count; ++$i) {
+            for ($i = 1; $i < $count; ++$i) {
                 $sql .= " {$andor} tag_term = '{$queryarray[$i]}'";
             }
         } else {
             $sql .= " WHERE tag_term LIKE '%{$queryarray[0]}%'";
-            for ($i = 1 ; $i < $count; ++$i) {
+            for ($i = 1; $i < $count; ++$i) {
                 $sql .= " {$andor} tag_term LIKE '%{$queryarray[$i]}%'";
             }
         }
@@ -48,9 +55,9 @@ function &tag_search($queryarray, $andor, $limit, $offset, $userid, $sortby = "t
         $sql .= " ORDER BY {$sortby}";
     }
     $result = $GLOBALS['xoopsDB']->query($sql, $limit, $offset);
-    $i = 0;
-     while ($myrow = $GLOBALS['xoopsDB']->fetchArray($result)) {
-        $ret[$i]['link'] = "view.tag.php?tag=" . $myrow['tag_id'];
+    $i      = 0;
+    while ($myrow = $GLOBALS['xoopsDB']->fetchArray($result)) {
+        $ret[$i]['link']  = 'view.tag.php?tag=' . $myrow['tag_id'];
         $ret[$i]['title'] = $myrow['tag_term'];
         ++$i;
     }

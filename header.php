@@ -12,18 +12,17 @@
 /**
  * XOOPS tag management module
  *
- * @package        tag
+ * @package         tag
  * @copyright       {@link http://sourceforge.net/projects/xoops/ The XOOPS Project}
  * @license         {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
  * @since           1.00
- * @version         $Id: header.php 12898 2014-12-08 22:05:21Z zyspec $
  */
 
-include_once '../../mainfile.php';
-include __DIR__ . "/include/vars.php";
-include_once __DIR__ . "/include/functions.php";
+include_once dirname(dirname(__DIR__)) . '/mainfile.php';
+include __DIR__ . '/include/vars.php';
+include_once __DIR__ . '/include/functions.php';
 xoops_load('constants', 'tag');
 
-$xoopsOption["xoops_module_header"] = "<link rel='stylesheet' type='text/css' href='" . $GLOBALS['xoops']->url("www/modules/tag/assets/css/style.css") . "' />";
-$myts =& MyTextSanitizer::getInstance();
+$xoopsOption['xoops_module_header'] = "<link rel='stylesheet' type='text/css' href='" . $GLOBALS['xoops']->url('www/modules/tag/assets/css/style.css') . "' />";
+$myts                               = MyTextSanitizer::getInstance();

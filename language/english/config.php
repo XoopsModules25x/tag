@@ -12,12 +12,11 @@
 /**
  * XOOPS tag management module
  *
- * @package        tag
+ * @package         tag
  * @copyright       {@link http://sourceforge.net/projects/xoops/ The XOOPS Project}
  * @license         {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
  * @author          Taiwen Jiang (phppp or D.J.) <php_pp@hotmail.com>
  * @since           1.00
- * @version         $Id: config.php 12898 2014-12-08 22:05:21Z zyspec $
  */
 
 defined('XOOPS_ROOT_PATH') || exit('Restricted access');
@@ -28,6 +27,6 @@ defined('XOOPS_ROOT_PATH') || exit('Restricted access');
  *
  * Tips:
  * For English sites, you can set as array(",", ";", " ", "|")
- * For Chinese sites, set as array(",", ";", " ", "|", "£¬")
+ * For Chinese sites, set as array(",", ";", " ", "|", "ï¿½ï¿½")
  */
-$GLOBALS["tag_delimiter"] = array(",", " ", "|", ";");
+$GLOBALS['tag_delimiter'] = array(',', ' ', '|', ';');

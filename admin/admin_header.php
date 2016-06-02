@@ -12,11 +12,10 @@
 /**
  * XOOPS tag management module
  *
- * @copyright       The XOOPS project http://sourceforge.net/projects/xoops/
+ * @copyright       XOOPS Project (http://xoops.org)
  * @license         http://www.fsf.org/copyleft/gpl.html GNU public license
  * @since           1.00
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
- * @version         $Id: admin_header.php 12898 2014-12-08 22:05:21Z zyspec $
  * */
 
 $path = dirname(dirname(dirname(__DIR__)));
@@ -32,14 +31,10 @@ xoops_loadLanguage('admin', $thisModuleDir);
 xoops_loadLanguage('modinfo', $thisModuleDir);
 xoops_loadLanguage('main', $thisModuleDir);
 
-$pathIcon16 = $GLOBALS['xoops']->url('www/' . $GLOBALS['xoopsModule']->getInfo('icons16'));
-$pathIcon32 = $GLOBALS['xoops']->url('www/' . $GLOBALS['xoopsModule']->getInfo('icons32'));
+$pathIcon16      = $GLOBALS['xoops']->url('www/' . $GLOBALS['xoopsModule']->getInfo('icons16'));
+$pathIcon32      = $GLOBALS['xoops']->url('www/' . $GLOBALS['xoopsModule']->getInfo('icons32'));
 $pathModuleAdmin = $GLOBALS['xoops']->path('www/' . $GLOBALS['xoopsModule']->getInfo('dirmoduleadmin'));
 
-if ( file_exists("{$pathModuleAdmin}/moduleadmin/moduleadmin.php")) {
-    include_once "{$pathModuleAdmin}/moduleadmin/moduleadmin.php";
-} else {
-    redirect_header("{$path}/admin.php", TagConstants::REDIRECT_DELAY_LONG, _AM_MODULEADMIN_MISSING, false);
-}
+include_once "{$pathModuleAdmin}/moduleadmin/moduleadmin.php";
 
-include_once $GLOBALS['xoops']->path("/Frameworks/art/functions.admin.php");
+include_once $GLOBALS['xoops']->path('/Frameworks/art/functions.admin.php');

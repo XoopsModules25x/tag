@@ -12,16 +12,19 @@
 /**
  * XOOPS tag management module
  *
- * @package        tag
+ * @package         tag
  * @copyright       Gregory Mage (Aka Mage)
  * @license         {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
  * @author          Gregory Mage (Aka Mage)
  * @since           1.00
- * @version         $Id: xfaq.php 12898 2014-12-08 22:05:21Z zyspec $
  */
 
 defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
+/**
+ * @param $items
+ * @return bool
+ */
 function xfaq_tag_iteminfo(&$items)
 {
     if (empty($items) || !is_array($items)) {
@@ -31,23 +34,24 @@ function xfaq_tag_iteminfo(&$items)
     $items_id = array();
     foreach (array_keys($items) as $cat_id) {
         foreach (array_keys($items[$cat_id]) as $item_id) {
-            $items_id[] = intval($item_id);
+            $items_id[] = (int)$item_id;
         }
     }
 
-    $item_handler =& xoops_getmodulehandler('faq', 'xfaq');
-    $items_obj = $item_handler->getObjects(new Criteria("faq_id", "(" . implode(", ", $items_id) . ")", "IN"), true);
+    $item_handler = xoops_getModuleHandler('faq', 'xfaq');
+    $items_obj    = $item_handler->getObjects(new Criteria('faq_id', '(' . implode(', ', $items_id) . ')', 'IN'), true);
 
     foreach (array_keys($items) as $cat_id) {
         foreach (array_keys($items[$cat_id]) as $item_id) {
             if (isset($items_obj[$item_id])) {
-                $item_obj =& $items_obj[$item_id];
-                $items[$cat_id][$item_id] = array('title' => $item_obj->getVar("faq_question"),
-                                                    'uid' => $item_obj->getVar("faq_submitter"),
-                                                   'link' => "faq.php?faq_id={$item_id}",
-                                                   'time' => $item_obj->getVar("faq_date_created"),
-                                                   'tags' => '',
-                                                'content' => ''
+                $item_obj                 =& $items_obj[$item_id];
+                $items[$cat_id][$item_id] = array(
+                    'title'   => $item_obj->getVar('faq_question'),
+                    'uid'     => $item_obj->getVar('faq_submitter'),
+                    'link'    => "faq.php?faq_id={$item_id}",
+                    'time'    => $item_obj->getVar('faq_date_created'),
+                    'tags'    => '',
+                    'content' => ''
                 );
             }
         }
@@ -57,7 +61,10 @@ function xfaq_tag_iteminfo(&$items)
     return true;
 }
 
+/**
+ * @param $mid
+ */
 function xfaq_tag_synchronization($mid)
 {
-   // Optional
+    // Optional
 }

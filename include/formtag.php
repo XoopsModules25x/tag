@@ -12,16 +12,18 @@
 /**
  * XOOPS tag management module
  *
- * @package        tag
+ * @package         tag
  * @copyright       {@link http://sourceforge.net/projects/xoops/ The XOOPS Project}
  * @license         {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
  * @author          XOOPS Module Development Team {@link http://www.xoops.org}
  * @since           1.00
- * @version         $Id: formtag.php 12898 2014-12-08 22:05:21Z zyspec $
  */
 
 xoops_load('formtag', 'tag');
 
+/**
+ * Class XoopsFormTag
+ */
 class XoopsFormTag extends TagFormTag
 {
     /**
@@ -34,22 +36,8 @@ class XoopsFormTag extends TagFormTag
      * @param int        $catid     category id (applicable if $value is itemid)
      */
     public function __construct($name, $size, $maxlength, $value = null, $catid = 0)
-        {
+    {
         $GLOBALS['xoopsLogger']->addDeprecated(__CLASS__ . ' is deprecated use TagFormTag instead.');
         parent::__construct($name, $size, $maxlength, $value, $catid);
-    }
-
-    /**
-     * Constructor {@see XoopsFormTag}
-     *
-     * @param string     $name      "name" attribute
-     * @param int        $size      size of input box
-     * @param int        $maxlength Maximum length of text
-     * @param string|int $value     Initial text or itemid
-     * @param int        $catid     category id (applicable if $value is itemid)
-     */
-    public function XoopsFormTag($name, $size, $maxlength, $value = null, $catid = 0)
-    {
-        self::__construct($name, $size, $maxlength, $value, $catid);
     }
 }

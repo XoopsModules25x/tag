@@ -12,12 +12,11 @@
 /**
  * XOOPS tag management module
  *
- * @package        tag
+ * @package         tag
  * @copyright       {@link http://sourceforge.net/projects/xoops/ The XOOPS Project}
  * @license         {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
  * @since           1.00
- * @version         $Id: $
  */
 
 defined('XOOPS_ROOT_PATH') || exit('Restricted access');
@@ -32,14 +31,18 @@ defined('XOOPS_ROOT_PATH') || exit('Restricted access');
  * uname
  * tags
  *
- * @var        array    $items    associative array of items: [modid][catid][itemid]
+ * @var array $items associative array of items: [modid][catid][itemid]
  *
- * @return    boolean
+ * @return boolean
  *
  */
 
 include_once $GLOBALS['xoops']->path('/modules/smartfaq/include/functions.php');
 
+/**
+ * @param $items
+ * @return bool
+ */
 function smartfaq_tag_iteminfo(&$items)
 {
     if (empty($items) || !is_array($items)) {
@@ -52,22 +55,23 @@ function smartfaq_tag_iteminfo(&$items)
         // catid is not used in smartfaq, so just skip it
         foreach (array_keys($items[$cat_id]) as $item_id) {
             // In smartfaq, the item_id is "topic_id"
-            $items_id[] = (int) $item_id;
+            $items_id[] = (int)$item_id;
         }
     }
-    $item_handler =& sf_gethandler('faq');
-    $items_obj = $item_handler->getObjects(new Criteria("faqid", "(" . implode(", ", $items_id) . ")", "IN"), true);
-    $myts =& MyTextSanitizer::getInstance();
+    $item_handler = sf_gethandler('faq');
+    $items_obj    = $item_handler->getObjects(new Criteria('faqid', '(' . implode(', ', $items_id) . ')', 'IN'), true);
+    $myts         = MyTextSanitizer::getInstance();
     foreach (array_keys($items) as $cat_id) {
         foreach (array_keys($items[$cat_id]) as $item_id) {
             $item_obj =& $items_obj[$item_id];
             if (is_object($item_obj)) {
-                $items[$cat_id][$item_id] = array("title" => $item_obj->getVar("question"),
-                                                    "uid" => $item_obj->getVar("uid"),
-                                                   "link" => 'faq.php?faqid='.$item_id,
-                                                   "time" => strtotime($item_obj->getVar("datesub")),
-                                                   "tags" => tag_parse_tag($item_obj->getVar("tags", "n")),
-                                                "content" => $myts->displayTarea($item_obj->answer(), 1, 1, 1, 1, 1, 1)
+                $items[$cat_id][$item_id] = array(
+                    'title'   => $item_obj->getVar('question'),
+                    'uid'     => $item_obj->getVar('uid'),
+                    'link'    => 'faq.php?faqid=' . $item_id,
+                    'time'    => strtotime($item_obj->getVar('datesub')),
+                    'tags'    => tag_parse_tag($item_obj->getVar('tags', 'n')),
+                    'content' => $myts->displayTarea($item_obj->answer(), 1, 1, 1, 1, 1, 1)
                 );
             }
         }
@@ -80,13 +84,13 @@ function smartfaq_tag_iteminfo(&$items)
 /**
  * Remove orphan tag-item links
  *
- * @return    boolean
- *
+ * @param $mid
+ * @return bool
  */
 function smartfaq_tag_synchronization($mid)
 {
-    $item_handler =& xoops_getmodulehandler("smartfaq", "smartfaq");
-    $link_handler =& xoops_getmodulehandler("link", "tag");
+    $item_handler = xoops_getModuleHandler('smartfaq', 'smartfaq');
+    $link_handler = xoops_getModuleHandler('link', 'tag');
 
     $mid = XoopsFilterInput::clean($mid, 'INT');
 
@@ -95,31 +99,31 @@ function smartfaq_tag_synchronization($mid)
      *   and some hosting companies block the mysql_get_server_info() function for security
      *   reasons.}
      */
-//    if (version_compare( mysql_get_server_info(), "4.1.0", "ge" )):
+    //    if (version_compare( mysql_get_server_info(), "4.1.0", "ge" )):
     $sql = "DELETE FROM {$link_handler->table}"
-         . " WHERE tag_modid = {$mid}"
-         . "    AND "
-         . "    (tag_itemid NOT IN "
-         . "        (SELECT DISTINCT {$item_handler->keyName} "
-         . "           FROM {$item_handler->table} "
-         . "           WHERE {$item_handler->table}.approved > 0"
-         . "        )"
-         . "    )";
-/*
-    else:
-    $sql =  "    DELETE {$link_handler->table} FROM {$link_handler->table}" .
-            "    LEFT JOIN {$item_handler->table} AS aa ON {$link_handler->table}.tag_itemid = aa.{$item_handler->keyName} " .
-            "    WHERE " .
-            "        tag_modid = {$mid}" .
-            "        AND " .
-            "        ( aa.{$item_handler->keyName} IS NULL" .
-            "            OR aa.approved < 1" .
-            "        )";
-    endif;
-*/
+           . " WHERE tag_modid = {$mid}"
+           . '    AND '
+           . '    (tag_itemid NOT IN '
+           . "        (SELECT DISTINCT {$item_handler->keyName} "
+           . "           FROM {$item_handler->table} "
+           . "           WHERE {$item_handler->table}.approved > 0"
+           . '        )'
+           . '    )';
+    /*
+        else:
+        $sql =  "    DELETE {$link_handler->table} FROM {$link_handler->table}" .
+                "    LEFT JOIN {$item_handler->table} AS aa ON {$link_handler->table}.tag_itemid = aa.{$item_handler->keyName} " .
+                "    WHERE " .
+                "        tag_modid = {$mid}" .
+                "        AND " .
+                "        ( aa.{$item_handler->keyName} IS NULL" .
+                "            OR aa.approved < 1" .
+                "        )";
+        endif;
+    */
     if (!$result = $link_handler->db->queryF($sql)) {
         //xoops_error($link_handler->db->error());
     }
 
-    return ($result) ? true : false;
+    return $result ? true : false;
 }
