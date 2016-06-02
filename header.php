@@ -19,7 +19,7 @@
  * @since           1.00
  */
 
-include_once '../../mainfile.php';
+include_once dirname(dirname(__DIR__)) . '/mainfile.php';
 include __DIR__ . '/include/vars.php';
 include_once __DIR__ . '/include/functions.php';
 xoops_load('constants', 'tag');

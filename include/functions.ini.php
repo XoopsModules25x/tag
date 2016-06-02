@@ -33,7 +33,7 @@ define('TAG_FUNCTIONS_INI', 1);
 /**
  * @return array|mixed|null
  */
-function &tag_load_config()
+function tag_load_config()
 {
     static $moduleConfig;
 

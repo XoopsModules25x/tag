@@ -28,8 +28,8 @@
  *                      OR
  * @param  int   $catid
  * @param  int   $modid
- * @param  int   $itemid
- * @return array (subject language, array of linked tags)
+ * @return array
+ * @internal param int $itemid
  */
 function tagBar($tags, $catid = 0, $modid = 0)
 {

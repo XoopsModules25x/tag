@@ -31,10 +31,10 @@ function xoops_module_install_tag(&$module)
 }
 
 /**
- * @param $module
+ * @param XoopsModule $module
  * @return bool
  */
-function xoops_module_pre_install_tag(&$module)
+function xoops_module_pre_install_tag(XoopsModule $module)
 {
     //check for minimum XOOPS version
     $currentVer  = substr(XOOPS_VERSION, 6); // get the numeric part of string
@@ -57,7 +57,7 @@ function xoops_module_pre_install_tag(&$module)
     $phpLen   = strlen(PHP_VERSION);
     $extraLen = strlen(PHP_EXTRA_VERSION);
     $verNum   = substr(PHP_VERSION, 0, $phpLen - $extraLen);
-    $reqVer   = $module->getInfo('min_php');
+    $reqVer   =& $module->getInfo('min_php');
     if ($verNum < $reqVer) {
         $module->setErrors("The module requires PHP {$reqVer}+ ({$verNum} installed)");
 
@@ -72,7 +72,7 @@ function xoops_module_pre_install_tag(&$module)
     }
     */
 
-    $mod_tables = $module->getInfo('tables');
+    $mod_tables =& $module->getInfo('tables');
     foreach ($mod_tables as $table) {
         $GLOBALS['xoopsDB']->queryF('DROP TABLE IF EXISTS ' . $GLOBALS['xoopsDB']->prefix($table) . ';');
     }
@@ -81,29 +81,29 @@ function xoops_module_pre_install_tag(&$module)
 }
 
 /**
- * @param $module
+ * @param XoopsModule $module
  * @return bool
  */
-function xoops_module_pre_update_tag(&$module)
+function xoops_module_pre_update_tag(XoopsModule $module)
 {
     return true;
 }
 
 /**
- * @param $module
+ * @param XoopsModule $module
  * @return bool
  */
-function xoops_module_pre_uninstall_tag(&$module)
+function xoops_module_pre_uninstall_tag(XoopsModule $module)
 {
     return true;
 }
 
 /**
- * @param       $module
- * @param  null $prev_version
+ * @param  XoopsModule $module
+ * @param  null        $prev_version
  * @return bool
  */
-function xoops_module_update_tag(&$module, $prev_version = null)
+function xoops_module_update_tag(XoopsModule $module, $prev_version = null)
 {
     //load_functions("config");
     //mod_clearConfg($module->getVar("dirname", "n"));

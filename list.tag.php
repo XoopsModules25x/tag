@@ -132,7 +132,7 @@ if (!empty($start) || count($tags_data) >= $limit) {
         $nav     = new XoopsPageNav($count_tag, $limit, $start, 'start', "catid={$catid}&amp;mode={$mode_display}");
         $pagenav = $nav->renderNav(4);
     } else {
-        $pagenav = "<a href='" . xoops_getEnv('PHP_SELF') . "?catid={$catid}&amp;mode={$mode_display}\">" . _MORE . '</a>';
+        $pagenav = "<a href='" . xoops_getenv('PHP_SELF') . "?catid={$catid}&amp;mode={$mode_display}\">" . _MORE . '</a>';
     }
 } else {
     $pagenav = '';

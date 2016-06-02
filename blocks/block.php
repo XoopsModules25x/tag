@@ -241,7 +241,7 @@ function tag_block_top_show($options, $dirname = '', $catid = 0)
     $criteria->setLimit((int)$options[0]);
     $criteria->add(new Criteria('o.tag_status', TagConstants::STATUS_ACTIVE));
     if (!empty($options[1])) {
-        $criteria->add(new Criteria('l.tag_time', time() - floatval($options[1]) * 24 * 3600, '>'));
+        $criteria->add(new Criteria('l.tag_time', time() - (float)$options[1] * 24 * 3600, '>'));
     }
     if (!empty($modid)) {
         $criteria->add(new Criteria('l.tag_modid', $modid));
@@ -326,7 +326,7 @@ function tag_block_top_edit($options)
     return $form;
 }
 
-/*
+/**
  * $options for cumulus:
  *                     $options[0] - number of tags to display
  *                     $options[1] - time duration

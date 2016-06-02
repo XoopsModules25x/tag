@@ -139,7 +139,7 @@ class TagTagHandler extends XoopsPersistableObjectHandler
 
         if (!empty($tags_delete)) {
             $tags_delete = array_map(array($this->db, 'quoteString'), $tags_delete);
-            if ($tags_id = $this->getIds(new Criteria('tag_term', '(' . implode(', ', $tags_delete) . ')', 'IN'))) {
+            if ($tags_id =& $this->getIds(new Criteria('tag_term', '(' . implode(', ', $tags_delete) . ')', 'IN'))) {
                 $sql = "DELETE FROM {$this->table_link}"
                        . ' WHERE '
                        . "     {$this->keyName} IN ("
@@ -166,7 +166,7 @@ class TagTagHandler extends XoopsPersistableObjectHandler
             $tag_link  = array();
             $tag_count = array();
             foreach ($tags_add as $tag) {
-                if ($tags_id = $this->getIds(new Criteria('tag_term', $tag))) {
+                if ($tags_id =& $this->getIds(new Criteria('tag_term', $tag))) {
                     $tag_id      = $tags_id[0];
                     $tag_count[] = $tag_id;
                 } else {
@@ -265,11 +265,11 @@ class TagTagHandler extends XoopsPersistableObjectHandler
      * Get tags with item count
      *
      * @access         public
-     * @param int                    $limit
-     * @param int                    $start
-     * @param CriteriaElement|object $criteria  {@link Criteria}
-     * @param null                   $fields
-     * @param boolean                $fromStats fetch from tag-stats table
+     * @param int             $limit
+     * @param int             $start
+     * @param CriteriaElement $criteria  {@link Criteria}
+     * @param null            $fields
+     * @param boolean         $fromStats fetch from tag-stats table
      * @return array associative array of tags (id, term, count)
      */
     public function &getByLimit($limit = 0, $start = 0, CriteriaElement $criteria = null, $fields = null, $fromStats = true)//&getByLimit($criteria = null, $fromStats = true)
@@ -490,7 +490,7 @@ class TagTagHandler extends XoopsPersistableObjectHandler
         if (!is_object($object) || !$object->getVar($this->keyName)) {
             return false;
         }
-*/
+        */
         $queryFunc = empty($force) ? 'query' : 'queryF';
 
         /*
@@ -539,7 +539,7 @@ class TagTagHandler extends XoopsPersistableObjectHandler
      * @param  CriteriaElement $ids
      * @return array|bool      object IDs or false on failure
      */
-    public function &getIds(CriteriaElement $ids = null) //getIds(CriteriaElement $ids = null)
+    public function &getIds(CriteriaElement $ids = null)
     {
         return parent::getIds($ids);
     }

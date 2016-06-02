@@ -35,10 +35,6 @@ $pathIcon16      = $GLOBALS['xoops']->url('www/' . $GLOBALS['xoopsModule']->getI
 $pathIcon32      = $GLOBALS['xoops']->url('www/' . $GLOBALS['xoopsModule']->getInfo('icons32'));
 $pathModuleAdmin = $GLOBALS['xoops']->path('www/' . $GLOBALS['xoopsModule']->getInfo('dirmoduleadmin'));
 
-if (file_exists("{$pathModuleAdmin}/moduleadmin/moduleadmin.php")) {
-    include_once "{$pathModuleAdmin}/moduleadmin/moduleadmin.php";
-} else {
-    redirect_header("{$path}/admin.php", TagConstants::REDIRECT_DELAY_LONG, _AM_MODULEADMIN_MISSING, false);
-}
+include_once "{$pathModuleAdmin}/moduleadmin/moduleadmin.php";
 
 include_once $GLOBALS['xoops']->path('/Frameworks/art/functions.admin.php');

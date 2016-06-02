@@ -60,10 +60,14 @@ if (!defined('TAG_FUNCTIONS')):
      * @return bool true on args parsed
      */
 
-    /* known issues:
+    /** known issues:
      * - "/" in a string
      * - "&" in a string
-    */
+     * @param $args_numeric
+     * @param $args
+     * @param $args_string
+     * @return bool|null
+     */
     function tag_parse_args(&$args_numeric, &$args, &$args_string)
     {
         $args_abb     = array(

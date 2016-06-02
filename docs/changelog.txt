@@ -1,6 +1,8 @@
 2.33 RC 1         2016-06-01
 =================================
 - added check for plugins in /class/plugins (in preparation for next version of XOOPS (mamba)
+- fixed XOOPS version check on install (zyspec)
+- fixed call to XoopsFormText in TagFormTag class (zyspec)
 - removed @version (mamba)
 - code cosmetics (mamba)
 - replaced <b /> with <b> (mamba)
