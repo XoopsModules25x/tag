@@ -33,11 +33,11 @@ class TagUtilities
      *
      * Verifies XOOPS version meets minimum requirements for this module
      * @static
-     * @param XoopsModule
+     * @param XoopsModule $module
      *
      * @return bool true if meets requirements, false if not
      */
-    public static function checkXoopsVer(&$module)
+    public static function checkXoopsVer(XoopsModule $module)
     {
         xoops_loadLanguage('admin', $module->dirname());
         //check for minimum XOOPS version
@@ -75,17 +75,17 @@ class TagUtilities
      *
      * Verifies PHP version meets minimum requirements for this module
      * @static
-     * @param XoopsModule
+     * @param XoopsModule $module
      *
      * @return bool true if meets requirements, false if not
      */
-    public static function checkPHPVer(&$module)
+    public static function checkPHPVer(XoopsModule $module)
     {
         xoops_loadLanguage('admin', $module->dirname());
         // check for minimum PHP version
         $success = true;
         $verNum  = phpversion();
-        $reqVer  = $module->getInfo('min_php');
+        $reqVer  =& $module->getInfo('min_php');
         if (isset($reqVer)) {
             if (version_compare($verNum, $reqVer, '<')) {
                 $module->setErrors(sprintf(_AM_TAG_ERROR_BAD_PHP, $reqVer, $verNum));
