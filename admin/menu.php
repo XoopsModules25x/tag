@@ -12,38 +12,46 @@
 /**
  * XOOPS tag management module
  *
- * @package        tag
+ * @package         tag
  * @copyright       {@link http://sourceforge.net/projects/xoops/ The XOOPS Project}
  * @license         {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
  * @since           1.00
- * @version         $Id: menu.php 12898 2014-12-08 22:05:21Z zyspec $
  */
 
 defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
-$module_handler =& xoops_gethandler('module');
-$module         =& XoopsModule::getByDirname('tag');
-$moduleInfo     =& $module_handler->get($module->getVar('mid'));
-$pathIcon32 = '../../' . $module->getInfo('icons32');
+$moduleHandler = xoops_getHandler('module');
+$module        = XoopsModule::getByDirname('tag');
+$moduleInfo    = $moduleHandler->get($module->getVar('mid'));
+$pathIcon32    = '../../' . $module->getInfo('icons32');
 
-$adminmenu = array(array("title" => _MI_TAG_ADMENU_INDEX,
-                          "link" => "admin/index.php",
-                          "desc" => _MI_TAG_ADMIN_HOME_DESC,
-                          "icon" => "{$pathIcon32}/home.png"),
+$adminmenu = array(
+    array(
+        'title' => _MI_TAG_ADMENU_INDEX,
+        'link'  => 'admin/index.php',
+        'desc'  => _MI_TAG_ADMIN_HOME_DESC,
+        'icon'  => "{$pathIcon32}/home.png"
+    ),
 
-                   array("title" => _MI_TAG_ADMENU_EDIT,
-                          "link" => "admin/admin.tag.php",
-                          "desc" => _MI_TAG_ADMENU_EDIT_DESC,
-                          "icon" => "{$pathIcon32}/administration.png"),
+    array(
+        'title' => _MI_TAG_ADMENU_EDIT,
+        'link'  => 'admin/admin.tag.php',
+        'desc'  => _MI_TAG_ADMENU_EDIT_DESC,
+        'icon'  => "{$pathIcon32}/administration.png"
+    ),
 
-                   array("title" => _MI_TAG_ADMENU_SYNCHRONIZATION,
-                          "link" => "admin/syn.tag.php",
-                          "desc" => _MI_TAG_HELP_DESC,
-                          "icon" => "{$pathIcon32}/synchronized.png"),
+    array(
+        'title' => _MI_TAG_ADMENU_SYNCHRONIZATION,
+        'link'  => 'admin/syn.tag.php',
+        'desc'  => _MI_TAG_HELP_DESC,
+        'icon'  => "{$pathIcon32}/synchronized.png"
+    ),
 
-                   array("title" => _MI_TAG_ADMIN_ABOUT,
-                          "link" => "admin/about.php",
-                          "desc" => _MI_TAG_ADMIN_HELP_DESC,
-                          "icon" => "{$pathIcon32}/about.png")
+    array(
+        'title' => _MI_TAG_ADMIN_ABOUT,
+        'link'  => 'admin/about.php',
+        'desc'  => _MI_TAG_ADMIN_HELP_DESC,
+        'icon'  => "{$pathIcon32}/about.png"
+    )
 );

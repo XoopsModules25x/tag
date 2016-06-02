@@ -20,20 +20,22 @@
  *
  * @category     Module
  * @package      tag
- * @copyright::  {@link http://sourceforge.net/projects/xoops/ The XOOPS Project}
- * @license::    {@link http://www.gnu.org/licenses/gpl-2.0.html GNU Public License}
- * @author::     ZySpec <owners@zyspec.com>
- * @since::      2.33
- * @version::    $Id: $
+ * @copyright    ::  {@link http://sourceforge.net/projects/xoops/ The XOOPS Project}
+ * @license      ::  {@link http://www.gnu.org/licenses/gpl-2.0.html GNU Public License}
+ * @author       ::  ZySpec <owners@zyspec.com>
+ * @since        ::  2.33
  **/
 
 defined('XOOPS_ROOT_PATH') or die('Restricted access');
 
+/**
+ * Interface TagConstants
+ */
 interface TagConstants
 {
-/**#@+
- * Constant definition
- */
+    /**#@+
+     * Constant definition
+     */
     /**
      *  indicates a quote is active
      */
@@ -86,5 +88,5 @@ interface TagConstants
      * confirm ok to take action
      */
     const CONFIRM_OK = 1;
-/**#@-*/
+    /**#@-*/
 }

@@ -1,6 +1,14 @@
-2.33 RC 1         NOT RELEASED
+2.33 RC 1         2016-06-01
 =================================
 - added check for plugins in /class/plugins (in preparation for next version of XOOPS (mamba)
+- removed @version (mamba)
+- code cosmetics (mamba)
+- replaced <b /> with <b> (mamba)
+- XOOPS 2.5.8 and PHP 7 fixes (mamba)
+- addNavigation(basename(__FILE__)) (mamba)
+- Unnecessary double quotes (mamba)
+- reference mismatch (mamba)
+- Hardening to type safe (mamba)
 
 2.33 Beta 1       2014-12-05
 =================================

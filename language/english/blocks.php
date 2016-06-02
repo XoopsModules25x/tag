@@ -12,32 +12,31 @@
 /**
  * XOOPS tag management module
  *
- * @package        tag
+ * @package         tag
  * @copyright       {@link http://sourceforge.net/projects/xoops/ The XOOPS Project}
  * @license         {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
  * @author          Taiwen Jiang (phppp or D.J.) <php_pp@hotmail.com>
  * @since           1.00
- * @version         $Id: blocks.php 12898 2014-12-08 22:05:21Z zyspec $
  */
 
 defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
-define('_MB_TAG_ITEMS', "Number to display");
-define('_MB_TAG_FONTSIZE_MAX', "Maximum font-size(px or %) for display");
-define('_MB_TAG_FONTSIZE_MIN', "Minimum font-size(px or %) for display");
-define('_MB_TAG_TIME_DURATION', "Time duration for stats, in days");
-define('_MB_TAG_SORT', "Sort Criteria");
-define('_MB_TAG_ALPHABET', "Alphabet");
-define('_MB_TAG_COUNT', "Item count");
-define('_MB_TAG_TIME', "Time");
+define('_MB_TAG_ITEMS', 'Number to display');
+define('_MB_TAG_FONTSIZE_MAX', 'Maximum font-size(px or %) for display');
+define('_MB_TAG_FONTSIZE_MIN', 'Minimum font-size(px or %) for display');
+define('_MB_TAG_TIME_DURATION', 'Time duration for stats, in days');
+define('_MB_TAG_SORT', 'Sort Criteria');
+define('_MB_TAG_ALPHABET', 'Alphabet');
+define('_MB_TAG_COUNT', 'Item count');
+define('_MB_TAG_TIME', 'Time');
 
 //2.33
-define('_MB_TAG_FLASH_TRANSPARENCY', "flash transparency");
-define('_MB_TAG_FLASH_WIDTH', "flash width");
-define('_MB_TAG_FLASH_HEIGHT', "flash height");
-define('_MB_TAG_FLASH_BACKGROUND', "flash background");
-define('_MB_TAG_FLASH_TRANSPARENT', "transparent");
-define('_MB_TAG_FLASH_MINFONTCOLOR', "min font color");
-define('_MB_TAG_FLASH_MAXFONTCOLOR', "max font color");
-define('_MB_TAG_FLASH_HILIGHTFONTCOLOR', "font hilight color");
-define('_MB_TAG_FLASH_SPEED', "flash speed");
+define('_MB_TAG_FLASH_TRANSPARENCY', 'flash transparency');
+define('_MB_TAG_FLASH_WIDTH', 'flash width');
+define('_MB_TAG_FLASH_HEIGHT', 'flash height');
+define('_MB_TAG_FLASH_BACKGROUND', 'flash background');
+define('_MB_TAG_FLASH_TRANSPARENT', 'transparent');
+define('_MB_TAG_FLASH_MINFONTCOLOR', 'min font color');
+define('_MB_TAG_FLASH_MAXFONTCOLOR', 'max font color');
+define('_MB_TAG_FLASH_HILIGHTFONTCOLOR', 'font hilight color');
+define('_MB_TAG_FLASH_SPEED', 'flash speed');

@@ -12,44 +12,41 @@
 /**
  * XOOPS tag management module
  *
- * @copyright       The XOOPS project http://sourceforge.net/projects/xoops/
+ * @copyright       XOOPS Project (http://xoops.org)
  * @license         http://www.fsf.org/copyleft/gpl.html GNU public license
  * @since           1.00
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
- * @version         $Id: action.module.php 12908 2014-12-19 19:59:59Z zyspec $
  * */
 
 defined('XOOPS_ROOT_PATH') || exit('Restricted access');
-defined("TAG_INI") || include __DIR__ . "/vars.php";
+defined('TAG_INI') || include __DIR__ . '/vars.php';
 
+/**
+ * @param $module
+ * @return bool
+ */
 function xoops_module_install_tag(&$module)
 {
     return true;
 }
 
+/**
+ * @param $module
+ * @return bool
+ */
 function xoops_module_pre_install_tag(&$module)
 {
     //check for minimum XOOPS version
     $currentVer  = substr(XOOPS_VERSION, 6); // get the numeric part of string
     $currArray   = explode('.', $currentVer);
-    $requiredVer = "" . $module->getInfo('min_xoops'); //making sure it's a string
+    $requiredVer = '' . $module->getInfo('min_xoops'); //making sure it's a string
     $reqArray    = explode('.', $requiredVer);
-    $success     = true;
-    foreach ($reqArray as $k=>$v) {
-        if (isset($currArray[$k])) {
-            if ($currArray[$k] >= $v) {
-                continue;
-            } else {
-                $success = false;
-                break;
-            }
-        } else {
-            if ($v > 0) {
-                $success = false;
-                break;
-            }
-        }
+
+    $success = false;
+    if (version_compare($currentVer, $requiredVer) >= 0) {
+        $success = true;
     }
+
     if (!$success) {
         $module->setErrors("This module requires XOOPS {$requiredVer}+ ({$currentVer} installed)");
 
@@ -57,12 +54,12 @@ function xoops_module_pre_install_tag(&$module)
     }
 
     // check for minimum PHP version
-    $phpLen    = strlen(PHP_VERSION);
-    $extraLen  = strlen(PHP_EXTRA_VERSION);
-    $verNum = substr(PHP_VERSION, 0, ($phpLen-$extraLen));
-    $reqVer = $module->getInfo('min_php');
+    $phpLen   = strlen(PHP_VERSION);
+    $extraLen = strlen(PHP_EXTRA_VERSION);
+    $verNum   = substr(PHP_VERSION, 0, $phpLen - $extraLen);
+    $reqVer   = $module->getInfo('min_php');
     if ($verNum < $reqVer) {
-        $module->setErrors( "The module requires PHP {$reqVer}+ ({$verNum} installed)");
+        $module->setErrors("The module requires PHP {$reqVer}+ ({$verNum} installed)");
 
         return false;
     }
@@ -75,35 +72,48 @@ function xoops_module_pre_install_tag(&$module)
     }
     */
 
-    $mod_tables = $module->getInfo("tables");
+    $mod_tables = $module->getInfo('tables');
     foreach ($mod_tables as $table) {
-        $GLOBALS["xoopsDB"]->queryF("DROP TABLE IF EXISTS " .  $GLOBALS["xoopsDB"]->prefix($table) . ";");
+        $GLOBALS['xoopsDB']->queryF('DROP TABLE IF EXISTS ' . $GLOBALS['xoopsDB']->prefix($table) . ';');
     }
 
     return true;
 }
 
+/**
+ * @param $module
+ * @return bool
+ */
 function xoops_module_pre_update_tag(&$module)
 {
     return true;
 }
 
+/**
+ * @param $module
+ * @return bool
+ */
 function xoops_module_pre_uninstall_tag(&$module)
 {
     return true;
 }
 
+/**
+ * @param       $module
+ * @param  null $prev_version
+ * @return bool
+ */
 function xoops_module_update_tag(&$module, $prev_version = null)
 {
     //load_functions("config");
     //mod_clearConfg($module->getVar("dirname", "n"));
 
     if ($prev_version <= 150) {
-        $GLOBALS['xoopsDB']->queryFromFile($GLOBALS['xoops']->path("/modules/" . $module->getVar("dirname") . "/sql/mysql.150.sql"));
+        $GLOBALS['xoopsDB']->queryFromFile($GLOBALS['xoops']->path('/modules/' . $module->getVar('dirname') . '/sql/mysql.150.sql'));
     }
 
     /* Do some synchronization */
-    include_once $GLOBALS['xoops']->path("/modules/" . $module->getVar("dirname") . "/include/functions.recon.php");
+    include_once $GLOBALS['xoops']->path('/modules/' . $module->getVar('dirname') . '/include/functions.recon.php');
     tag_synchronization();
 
     return true;

@@ -12,25 +12,24 @@
 /**
  * XOOPS tag management module
  *
- * @package        tag
+ * @package         tag
  * @copyright       {@link http://sourceforge.net/projects/xoops/ The XOOPS Project}
  * @license         {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
  * @since           1.00
- * @version         $Id: vars.php 12898 2014-12-08 22:05:21Z zyspec $
  */
 
-if (!defined("TAG_INI")) define("TAG_INI", 1);
+if (!defined('TAG_INI')) {
+    define('TAG_INI', 1);
+}
 
 //include_once $GLOBALS['xoops']->path("/Frameworks/art/functions.ini.php");
-require_once $GLOBALS['xoops']->path("/modules/tag/include/functions.ini.php");
+require_once $GLOBALS['xoops']->path('/modules/tag/include/functions.ini.php');
 
 // include customized variables
-if (($GLOBALS["xoopsModule"] instanceof XoopsModule)
-     && ("tag" == $GLOBALS["xoopsModule"]->getVar("dirname", "n"))
-     && ($GLOBALS['xoopsModule']->isactive()))
-{
-    $GLOBALS["xoopsModuleConfig"] = tag_load_config();
+if (($GLOBALS['xoopsModule'] instanceof XoopsModule) && ('tag' === $GLOBALS['xoopsModule']->getVar('dirname', 'n')) && $GLOBALS['xoopsModule']->isactive()) {
+    $GLOBALS['xoopsModuleConfig'] = tag_load_config();
 }
 
 //load_object();
+

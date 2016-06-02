@@ -17,11 +17,10 @@ redirect_header('../../index.php', 0);
 /**
  * XOOPS tag management module
  *
- * @copyright       The XOOPS project http://sourceforge.net/projects/xoops/
+ * @copyright       XOOPS Project (http://xoops.org)
  * @license         http://www.fsf.org/copyleft/gpl.html GNU public license
  * @since           1.00
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
- * @version         $Id: sample.php 12898 2014-12-08 22:05:21Z zyspec $
  * */
 
 /*
@@ -51,47 +50,53 @@ To enable tag for a module ("mymodule"), following steps are need:
 
 /* Step 1: add tag input box */
 // File: edit.item.php
-$itemid = $item_obj->isNew() ? 0 : $item_obj->getVar("itemid");
+$itemid = $item_obj->isNew() ? 0 : $item_obj->getVar('itemid');
 XoopsLoad::load('formtag', 'tag');  // get the TagFormTag class
-$form_item->addElement(new TagFormTag("item_tag", 60, 255, $itemid, $catid = 0));
+$form_item->addElement(new TagFormTag('item_tag', 60, 255, $itemid, $catid = 0));
 
 /* Step 2: add tag storage after item storage */
 // File: submit.item.php
-$tag_handler = xoops_getmodulehandler('tag', 'tag');
-$tag_handler->updateByItem($_POST['item_tag'], $itemid, $GLOBALS['xoopsModule']->getVar("dirname"), $catid = 0);
+$tag_handler = xoops_getModuleHandler('tag', 'tag');
+$tag_handler->updateByItem($_POST['item_tag'], $itemid, $GLOBALS['xoopsModule']->getVar('dirname'), $catid = 0);
 
 /* Step 3: define functions to build info of tagged items */
 // File: /modules/tag/plugin/mymodule.php OR /modules/mymodule/include/plugin.tag.php
-/** Get item fields: title, content, time, link, uid, uname, tags **/
+/** Get item fields: title, content, time, link, uid, uname, tags *
+ * @param $items
+ */
 function mymodule_tag_iteminfo(&$items)
 {
     $items_id = array();
     foreach (array_keys($items) as $cat_id) {
         // Some handling here to build the link upon catid
-            // If catid is not used, just skip it
+        // If catid is not used, just skip it
         foreach (array_keys($items[$cat_id]) as $item_id) {
             // In article, the item_id is "art_id"
-            $items_id[] = intval($item_id);
+            $items_id[] = (int)$item_id;
         }
     }
-    $item_handler =& xoops_getmodulehandler("item", "module");
-    $items_obj = $item_handler->getObjects(new Criteria("itemid", "(" . implode(", ", $items_id) . ")", "IN"), true);
+    $item_handler = xoops_getModuleHandler('item', 'module');
+    $items_obj    = $item_handler->getObjects(new Criteria('itemid', '(' . implode(', ', $items_id) . ')', 'IN'), true);
 
     foreach (array_keys($items) as $cat_id) {
         foreach (array_keys($items[$cat_id]) as $item_id) {
-            $item_obj =& $items_obj[$item_id];
-            $items[$cat_id][$item_id] = array("title" => $item_obj->getVar("item_title"),
-                                                "uid" => $item_obj->getVar("uid"),
-                                               "link" => "view.item.php?itemid={$item_id}",
-                                               "time" => $item_obj->getVar("item_time"),
-                                               "tags" => tag_parse_tag($item_obj->getVar("item_tags", "n")), // optional
-                                            "content" => ""
+            $item_obj                 =& $items_obj[$item_id];
+            $items[$cat_id][$item_id] = array(
+                'title'   => $item_obj->getVar('item_title'),
+                'uid'     => $item_obj->getVar('uid'),
+                'link'    => "view.item.php?itemid={$item_id}",
+                'time'    => $item_obj->getVar('item_time'),
+                'tags'    => tag_parse_tag($item_obj->getVar('item_tags', 'n')), // optional
+                'content' => ''
             );
         }
     }
     unset($items_obj);
 }
-/** Remove orphan tag-item links **/
+
+/** Remove orphan tag-item links *
+ * @param $mid
+ */
 function mymodule_tag_synchronization($mid)
 {
     // Optional
@@ -99,18 +104,18 @@ function mymodule_tag_synchronization($mid)
 
 /* Step 4: Display tags on our item page */
 // File: view.item.php
-include_once $GLOBALS['xoops']->path("/modules/tag/include/tagbar.php");
+include_once $GLOBALS['xoops']->path('/modules/tag/include/tagbar.php');
 $GLOBALS['xoopsTpl']->assign('tagbar', tagBar($itemid, $catid = 0));
 // File: mymodule_item_template.tpl
-<{include file="db:tag_bar.tpl"}>
+$GLOBALS['xoopsTpl']->display('db:tag_bar.tpl');
 
 /* Step 5: create tag list page and tag view page */
 // File: list.tag.php
-include 'header.php';
-include $GLOBALS['xoops']->path("/modules/tag/list.tag.php");
+include __DIR__ . '/header.php';
+include $GLOBALS['xoops']->path('/modules/tag/list.tag.php');
 // File: view.tag.php
-include 'header.php';
-include $GLOBALS['xoops']->path("/modules/tag/view.tag.php");
+include __DIR__ . '/header.php';
+include $GLOBALS['xoops']->path('/modules/tag/view.tag.php');
 
 /* Step 6: create tag blocks */
 // File: xoops_version.php
@@ -121,13 +126,14 @@ include $GLOBALS['xoops']->path("/modules/tag/view.tag.php");
  *                    $options[2] - max font size (px or %)
  *                    $options[3] - min font size (px or %)
  */
-$modversion["blocks"][] = array("file" => "mymodule_block_tag.php",
-                                "name" => "Module Tag Cloud",
-                         "description" => "Show tag cloud",
-                           "show_func" => "mymodule_tag_block_cloud_show",
-                           "edit_func" => "mymodule_tag_block_cloud_edit",
-                             "options" => "100|0|150|80",
-                            "template" => "mymodule_tag_block_cloud.tpl",
+$modversion['blocks'][] = array(
+    'file'        => 'mymodule_block_tag.php',
+    'name'        => 'Module Tag Cloud',
+    'description' => 'Show tag cloud',
+    'show_func'   => 'mymodule_tag_block_cloud_show',
+    'edit_func'   => 'mymodule_tag_block_cloud_edit',
+    'options'     => '100|0|150|80',
+    'template'    => 'mymodule_tag_block_cloud.tpl'
 );
 /*
  * $options:
@@ -135,42 +141,65 @@ $modversion["blocks"][] = array("file" => "mymodule_block_tag.php",
  *                    $options[1] - time duration, in days, 0 for all the time
  *                    $options[2] - sort: a - alphabet; c - count; t - time
  */
-$modversion["blocks"][] = array("file" => "mymodule_block_tag.php",
-                                "name" => "Module Top Tags",
-                         "description" => "Show top tags",
-                           "show_func" => "mymodule_tag_block_top_show",
-                           "edit_func" => "mymodule_tag_block_top_edit",
-                             "options" => "50|30|c",
-                            "template" => "mymodule_tag_block_top.html",
+$modversion['blocks'][] = array(
+    'file'        => 'mymodule_block_tag.php',
+    'name'        => 'Module Top Tags',
+    'description' => 'Show top tags',
+    'show_func'   => 'mymodule_tag_block_top_show',
+    'edit_func'   => 'mymodule_tag_block_top_edit',
+    'options'     => '50|30|c',
+    'template'    => 'mymodule_tag_block_top.html'
 );
 // File: module_block_tag.php
+/**
+ * @param $options
+ * @return array
+ */
 function mymodule_tag_block_cloud_show(&$options)
 {
-    include_once $GLOBALS['xoops']->path("/modules/tag/blocks/block.php");
+    include_once $GLOBALS['xoops']->path('/modules/tag/blocks/block.php');
+
     return tag_block_cloud_show($options, $moduleDirName);
 }
 
+/**
+ * @param $options
+ * @return string
+ */
 function mymodule_tag_block_cloud_edit(&$options)
 {
-    include_once $GLOBALS['xoops']->path("/modules/tag/blocks/block.php");
+    include_once $GLOBALS['xoops']->path('/modules/tag/blocks/block.php');
+
     return tag_block_cloud_edit($options);
 }
 
+/**
+ * @param $options
+ * @return array
+ */
 function mymodule_tag_block_top_show(&$options)
 {
-    include_once $GLOBALS['xoops']->path("/modules/tag/blocks/block.php");
+    include_once $GLOBALS['xoops']->path('/modules/tag/blocks/block.php');
+
     return tag_block_top_show($options, $moduleDirName);
 }
 
+/**
+ * @param $options
+ * @return string
+ */
 function mymodule_tag_block_top_edit(&$options)
 {
-    include_once $GLOBALS['xoops']->path("/modules/tag/blocks/block.php");
+    include_once $GLOBALS['xoops']->path('/modules/tag/blocks/block.php');
+
     return tag_block_top_edit($options);
 }
 
 // File: mymodule_tag_block_cloud.tpl
-<{include file="db:tag_block_cloud.tpl"}>
+//<{include file = 'db:tag_block_cloud.tpl'}>
+$GLOBALS['xoopsTpl']->display('db:tag_block_cloud.tpl');
 // File: mymodule_tag_block_top.html
-<{include file="db:tag_block_top.tpl"}>
+//<{include file = 'db:tag_block_top.tpl'}>
+$GLOBALS['xoopsTpl']->display('db:tag_block_top.tpl');
 
 /* End */
