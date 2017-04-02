@@ -83,7 +83,7 @@ define('_AM_TAG_ADMIN_FOOTER', "<div class='right smallsmall italic pad5'><b>"
                                . "</b> is maintained by the <a class='tooltip' rel='external' href='http://xoops.org/' title='Visit XOOPS Community'>XOOPS Community</a></div>");
 
 //ModuleAdmin
-define('_AM_MODULEADMIN_MISSING', 'Error: The ModuleAdmin class is missing. Please install the ModuleAdmin Class (see /docs/readme.txt)');
+//define('_AM_MODULEADMIN_MISSING', 'Error: The ModuleAdmin class is missing. Please install the ModuleAdmin Class (see /docs/readme.txt)');
 
 //define('_AM_TAG_MISSING','Error: The ModuleAdmin class is missing. Please install the ModuleAdmin Class into /Frameworks (see /docs/readme.txt)');
 
