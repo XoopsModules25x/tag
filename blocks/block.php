@@ -58,10 +58,10 @@ xoops_load('constants', 'tag');
  *            }
  *        </code>
  *    </li>
- *    <li>Create your tag_block_cloud template, for example newbb_block_tag_cloud.html;</li>
+ *    <li>Create your tag_block_cloud template, for example newbb_block_tag_cloud.tpl;</li>
  *    <li>Include tag_block_cloud template in your created block template:<br>
  *        <code>
- *            <{include file="db:tag_block_cloud.html"}>
+ *            <{include file="db:tag_block_cloud.tpl"}>
  *        </code>
  *    </li>
  * </ul>
@@ -199,10 +199,10 @@ function tag_block_cloud_edit($options)
  *            }
  *        </code>
  *    </li>
- *    <li>Create your tag_block_top template, for example newbb_block_tag_top.html;</li>
+ *    <li>Create your tag_block_top template, for example newbb_block_tag_top.tpl;</li>
  *    <li>Include tag_block_top template in your created block template:<br>
  *        <code>
- *            <{include file="db:tag_block_top.html"}>
+ *            <{include file="db:tag_block_top.tpl"}>
  *        </code>
  *    </li>
  * </ul>
