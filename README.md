@@ -5,7 +5,7 @@
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/0fdcfa1725a14753865921b99bb3611e)](https://www.codacy.com/app/mambax7/tag_2)
 [![Code Climate](https://img.shields.io/codeclimate/github/XoopsModules25x/tag.svg?style=flat)](https://codeclimate.com/github/XoopsModules25x/tag)
 [![SensioLabsInsight](https://insight.sensiolabs.com/projects/0ffc2915-82a8-446a-978e-df50e2e58858/mini.png)](https://insight.sensiolabs.com/projects/0ffc2915-82a8-446a-978e-df50e2e58858)
-[![Latest Pre-Resease](https://img.shields.io/github/tag/XoopsModules25x/tag.svg?style=flat)](https://github.com/XoopsModules25x/tag/tags/)
+[![Latest Pre-Release](https://img.shields.io/github/tag/XoopsModules25x/tag.svg?style=flat)](https://github.com/XoopsModules25x/tag/tags/)
 [![Latest Version](https://img.shields.io/github/release/XoopsModules25x/tag.svg?style=flat)](https://github.com/XoopsModules25x/tag/releases/)
 
 Tag module for [XOOPS CMS](http://xoops.org) is designed for site-wide tag management, handling tag input, display and stats for each module that enables tag plugin.
@@ -18,5 +18,3 @@ To contribute to the Tutorial, [fork it on GitHub](https://github.com/XoopsDocs/
 Please visit us on http://xoops.org
 
 The upcoming "next generation" version of XOOPS CMS is being crafted on GitHub at: https://github.com/XOOPS
-
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/0fdcfa1725a14753865921b99bb3611e)](https://www.codacy.com/app/mambax7/tag_2?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=XoopsModules25x/tag&amp;utm_campaign=Badge_Grade)
