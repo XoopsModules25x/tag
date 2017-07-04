@@ -73,7 +73,8 @@ class TagTagHandler extends XoopsPersistableObjectHandler
         $ret = array();
 
         $itemid = (int)$itemid;
-        $modid  = (empty($modid) && is_object($GLOBALS['xoopsModule']) && 'tag' !== $GLOBALS['xoopsModule']->getVar('dirname')) ? $GLOBALS['xoopsModule']->getVar('mid') : (int)$modid;
+        $modid  = (empty($modid) && is_object($GLOBALS['xoopsModule'])
+                   && 'tag' !== $GLOBALS['xoopsModule']->getVar('dirname')) ? $GLOBALS['xoopsModule']->getVar('mid') : (int)$modid;
         if (empty($itemid) || empty($modid)) {
             return $ret;
         }
@@ -111,9 +112,12 @@ class TagTagHandler extends XoopsPersistableObjectHandler
         $itemid = (int)$itemid;
 
         if (!empty($modid) && !is_numeric($modid)) {
-            if (($GLOBALS['xoopsModule'] instanceof XoopsModule) && ($modid == $GLOBALS['xoopsModule']->getVar('dirname'))) {
+            if (($GLOBALS['xoopsModule'] instanceof XoopsModule)
+                && ($modid == $GLOBALS['xoopsModule']->getVar('dirname'))
+            ) {
                 $modid = $GLOBALS['xoopsModule']->getVar('mid');
             } else {
+                /** @var XoopsModuleHandler $moduleHandler */
                 $moduleHandler = xoops_getHandler('module');
                 $modid         = ($module_obj = $moduleHandler->getByDirname($modid)) ? $module_obj->getVar('mid') : 0;
             }
@@ -128,7 +132,7 @@ class TagTagHandler extends XoopsPersistableObjectHandler
         if (empty($tags)) {
             $tags = array();
         } elseif (!is_array($tags)) {
-            include_once $GLOBALS['xoops']->path('/modules/tag/include/functions.php');
+            require_once $GLOBALS['xoops']->path('/modules/tag/include/functions.php');
             $tags = tag_parse_tag(addslashes(stripslashes($tags)));
         }
 
@@ -181,7 +185,7 @@ class TagTagHandler extends XoopsPersistableObjectHandler
                 $tags_update[] = $tag_id;
             }
             $sql = "INSERT INTO {$this->table_link}" . ' (tag_id, tag_itemid, tag_catid, tag_modid, tag_time) ' . ' VALUES ' . implode(', ', $tag_link);
-            if (($result = $this->db->queryF($sql)) == false) {
+            if (($result = $this->db->queryF($sql)) === false) {
                 //xoops_error($this->db->error());
             }
             if (!empty($tag_count)) {
@@ -218,8 +222,8 @@ class TagTagHandler extends XoopsPersistableObjectHandler
         $modid = (int)$modid;
         $catid = empty($modid) ? -1 : (int)$catid;
         $count = 0;
-        $sql   =
-            'SELECT COUNT(*) ' . " FROM {$this->table_link}" . " WHERE tag_id = {$tag_id}" . (empty($modid) ? '' : " AND tag_modid = {$modid}") . (($catid < 0) ? '' : " AND tag_catid = {$catid}");
+        $sql   = 'SELECT COUNT(*) ' . " FROM {$this->table_link}" . " WHERE tag_id = {$tag_id}" . (empty($modid) ? '' : " AND tag_modid = {$modid}") . (($catid
+                                                                                                                                                         < 0) ? '' : " AND tag_catid = {$catid}");
 
         if ($result = $this->db->query($sql)) {
             list($count) = $this->db->fetchRow($result);
@@ -252,7 +256,7 @@ class TagTagHandler extends XoopsPersistableObjectHandler
                     $sql = "INSERT INTO {$this->table_stats}" . ' (tag_id, tag_modid, tag_catid, tag_count)' . " VALUES ({$tag_id}, {$modid}, {$catid}, {$count})";
                 }
 
-                if (!empty($sql) && ($result = $this->db->queryF($sql)) == false) {
+                if (!empty($sql) && ($result = $this->db->queryF($sql)) === false) {
                     //xoops_error($this->db->error());
                 }
             }
@@ -272,7 +276,13 @@ class TagTagHandler extends XoopsPersistableObjectHandler
      * @param boolean         $fromStats fetch from tag-stats table
      * @return array associative array of tags (id, term, count)
      */
-    public function &getByLimit($limit = 0, $start = 0, CriteriaElement $criteria = null, $fields = null, $fromStats = true)//&getByLimit($criteria = null, $fromStats = true)
+    public function &getByLimit(
+        $limit = 0,
+        $start = 0,
+        CriteriaElement $criteria = null,
+        $fields = null,
+        $fromStats = true
+    )//&getByLimit($criteria = null, $fromStats = true)
     {
         $ret = array();
         if ($fromStats) {
@@ -288,7 +298,7 @@ class TagTagHandler extends XoopsPersistableObjectHandler
         $sort  = '';
         $order = '';
         if (isset($criteria) && is_subclass_of($criteria, 'CriteriaElement')) {
-            $sql .= ' ' . $criteria->renderWhere();
+            $sql   .= ' ' . $criteria->renderWhere();
             $sort  = $criteria->getSort();
             $order = $criteria->getOrder();
             $limit = $criteria->getLimit();
@@ -302,18 +312,18 @@ class TagTagHandler extends XoopsPersistableObjectHandler
             case 'a':
             case 'alphabet':
                 $order = ('DESC' !== $order) ? 'ASC' : 'DESC';
-                $sql .= " ORDER BY o.tag_term {$order}";
+                $sql   .= " ORDER BY o.tag_term {$order}";
                 break;
             case 'id':
             case 'time':
                 $order = ('ASC' !== $order) ? 'DESC' : 'ASC';
-                $sql .= " ORDER BY o.{$this->keyName} {$order}";
+                $sql   .= " ORDER BY o.{$this->keyName} {$order}";
                 break;
             case 'c':
             case 'count':
             default:
                 $order = ('ASC' !== $order) ? 'DESC' : 'ASC';
-                $sql .= " ORDER BY count {$order}";
+                $sql   .= " ORDER BY count {$order}";
                 break;
         }
 
@@ -364,7 +374,7 @@ class TagTagHandler extends XoopsPersistableObjectHandler
 
         $sql =     $sql_select . " " . $sql_from . " " . $sql_where;
         */
-        if (($result = $this->db->query($sql)) == false) {
+        if (($result = $this->db->query($sql)) === false) {
             //xoops_error($this->db->error());
             $ret = 0;
         } else {
@@ -392,7 +402,7 @@ class TagTagHandler extends XoopsPersistableObjectHandler
         $sort  = '';
         $order = '';
         if (isset($criteria) && is_subclass_of($criteria, 'CriteriaElement')) {
-            $sql .= ' ' . $criteria->renderWhere();
+            $sql   .= ' ' . $criteria->renderWhere();
             $sort  = $criteria->getSort();
             $order = $criteria->getOrder();
             $limit = $criteria->getLimit();
@@ -405,18 +415,18 @@ class TagTagHandler extends XoopsPersistableObjectHandler
             case 'i':
             case 'item':
                 $order = ('DESC' !== $order) ? 'ASC' : 'DESC';
-                $sql .= "    ORDER BY o.tag_itemid {$order}, o.tl_id DESC";
+                $sql   .= "    ORDER BY o.tag_itemid {$order}, o.tl_id DESC";
                 break;
             case 'm':
             case 'module':
                 $order = ('DESC' !== $order) ? 'ASC' : 'DESC';
-                $sql .= "    ORDER BY o.tag_modid {$order}, o.tl_id DESC";
+                $sql   .= "    ORDER BY o.tag_modid {$order}, o.tl_id DESC";
                 break;
             case 't':
             case 'time':
             default:
                 $order = ('ASC' !== $order) ? 'DESC' : 'ASC';
-                $sql .= "    ORDER BY o.tl_id {$order}";
+                $sql   .= "    ORDER BY o.tl_id {$order}";
                 break;
         }
 
@@ -465,7 +475,7 @@ class TagTagHandler extends XoopsPersistableObjectHandler
             }
 
             $sql = $sql_select . ' ' . $sql_from . ' ' . $sql_where;
-            if (($result = $this->db->query($sql)) == false) {
+            if (($result = $this->db->query($sql)) === false) {
                 //xoops_error($this->db->error());
                 $ret = 0;
             } else {
@@ -506,11 +516,13 @@ class TagTagHandler extends XoopsPersistableObjectHandler
          * Remove stats-tag links
          */
         $sql = 'DELETE' . " FROM {$this->table_stats}" . " WHERE  {$this->keyName} = " . $object->getVar($this->keyName);
+
         /*
                 if (false == ($result = $this->db->{$queryFunc}($sql))) {
                    // xoops_error($this->db->error());
                 }
         */
+
         return parent::delete($object, $force);
     }
 
@@ -525,7 +537,8 @@ class TagTagHandler extends XoopsPersistableObjectHandler
      */
     public function cleanOrphan($table_link = '', $field_link = '', $field_object = '')
     {
-        include_once $GLOBALS['xoops']->path('/modules/tag/functions.recon.php');
+        require_once $GLOBALS['xoops']->path('/modules/tag/functions.recon.php');
+
         //mod_loadFunctions("recon");
         return tag_cleanOrphan();
     }

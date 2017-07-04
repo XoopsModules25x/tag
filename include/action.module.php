@@ -22,16 +22,16 @@ defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 defined('TAG_INI') || include __DIR__ . '/vars.php';
 
 /**
- * @param $module
+ * @param  XoopsModule $module
  * @return bool
  */
-function xoops_module_install_tag(&$module)
+function xoops_module_install_tag(XoopsModule $module)
 {
     return true;
 }
 
 /**
- * @param XoopsModule $module
+ * @param  XoopsModule $module
  * @return bool
  */
 function xoops_module_pre_install_tag(XoopsModule $module)
@@ -57,7 +57,7 @@ function xoops_module_pre_install_tag(XoopsModule $module)
     $phpLen   = strlen(PHP_VERSION);
     $extraLen = strlen(PHP_EXTRA_VERSION);
     $verNum   = substr(PHP_VERSION, 0, $phpLen - $extraLen);
-    $reqVer   =& $module->getInfo('min_php');
+    $reqVer   = $module->getInfo('min_php');
     if ($verNum < $reqVer) {
         $module->setErrors("The module requires PHP {$reqVer}+ ({$verNum} installed)");
 
@@ -72,7 +72,7 @@ function xoops_module_pre_install_tag(XoopsModule $module)
     }
     */
 
-    $mod_tables =& $module->getInfo('tables');
+    $mod_tables = $module->getInfo('tables');
     foreach ($mod_tables as $table) {
         $GLOBALS['xoopsDB']->queryF('DROP TABLE IF EXISTS ' . $GLOBALS['xoopsDB']->prefix($table) . ';');
     }
@@ -81,7 +81,7 @@ function xoops_module_pre_install_tag(XoopsModule $module)
 }
 
 /**
- * @param XoopsModule $module
+ * @param  XoopsModule $module
  * @return bool
  */
 function xoops_module_pre_update_tag(XoopsModule $module)
@@ -90,7 +90,7 @@ function xoops_module_pre_update_tag(XoopsModule $module)
 }
 
 /**
- * @param XoopsModule $module
+ * @param  XoopsModule $module
  * @return bool
  */
 function xoops_module_pre_uninstall_tag(XoopsModule $module)
@@ -113,7 +113,7 @@ function xoops_module_update_tag(XoopsModule $module, $prev_version = null)
     }
 
     /* Do some synchronization */
-    include_once $GLOBALS['xoops']->path('/modules/' . $module->getVar('dirname') . '/include/functions.recon.php');
+    require_once $GLOBALS['xoops']->path('/modules/' . $module->getVar('dirname') . '/include/functions.recon.php');
     tag_synchronization();
 
     return true;

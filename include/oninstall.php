@@ -1,27 +1,23 @@
 <?php
 /*
- You may not change or alter any portion of this comment or credits of
- supporting developers from this source code or any supporting source code
- which is considered copyrighted (c) material of the original comment or credit
- authors.
-
- This program is distributed in the hope that it will be useful, but
- WITHOUT ANY WARRANTY; without even the implied warranty of
- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * You may not change or alter any portion of this comment or credits
+ * of supporting developers from this source code or any supporting source code
+ * which is considered copyrighted (c) material of the original comment or credit authors.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  */
 
 /**
- * Module: Tag
- *
- * @category        Module
- * @package         Tag
- * @author          XOOPS Module Development Team
- * @author          Mamba
- * @copyright       {@link http://xoops.org 2001-2016 XOOPS Project}
- * @license         {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
- * @link            http://xoops.org XOOPS
- * @since           2.00
+ * @copyright    XOOPS Project http://xoops.org/
+ * @license      GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
+ * @package
+ * @since
+ * @author       XOOPS Development Team
  */
+
+use Xmf\Language;
 
 /**
  *
@@ -32,21 +28,22 @@
  */
 function xoops_module_pre_install_tag(XoopsModule $module)
 {
-
-    if (!class_exists('TagUtilities')) {
-        xoops_load('utilities', 'tag');
+    $moduleDirName = basename(dirname(__DIR__));
+    $classUtility  = ucfirst($moduleDirName) . 'Utility';
+    if (!class_exists($classUtility)) {
+        xoops_load('utility', $moduleDirName);
     }
     //check for minimum XOOPS version
-    if (!TagUtilities::checkXoopsVer($module)) {
+    if (!$classUtility::checkVerXoops($module)) {
         return false;
     }
 
     // check for minimum PHP version
-    if (!TagUtilities::checkPHPVer($module)) {
+    if (!$classUtility::checkVerPhp($module)) {
         return false;
     }
 
-    $mod_tables =& $module->getInfo('tables');
+    $mod_tables = $module->getInfo('tables');
     foreach ($mod_tables as $table) {
         $GLOBALS['xoopsDB']->queryF('DROP TABLE IF EXISTS ' . $GLOBALS['xoopsDB']->prefix($table) . ';');
     }
@@ -65,5 +62,3 @@ function xoops_module_install_tag(XoopsModule $module)
 {
     return true;
 }
-
-

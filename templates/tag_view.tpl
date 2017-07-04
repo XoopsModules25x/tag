@@ -11,10 +11,12 @@
     <{foreach item=article from=$tag_articles}>
         <div class="tag-item-title" style="padding-top: 10px;">
             <a href="<{$xoops_url}>/modules/<{$article.dirname}>/" title="<{$article.module}>"><{$article.module}></a>:
-            <a href="<{$xoops_url}>/modules/<{$article.dirname}>/<{$article.link}>" title="<{$article.title}>"><{$article.title}></a>
+            <a href="<{$xoops_url}>/modules/<{$article.dirname}>/<{$article.link}>"
+               title="<{$article.title}>"><{$article.title}></a>
         </div>
         <div class="tag-item-meta" style="padding-left: 10px;">
-            <a href="<{$xoops_url}>/userinfo.php?uid=<{$article.uid}>" title="<{$article.uname}>"><{$article.uname}></a> <{$article.time}><br>
+            <a href="<{$xoops_url}>/userinfo.php?uid=<{$article.uid}>"
+               title="<{$article.uname}>"><{$article.uname}></a> <{$article.time}><br>
             <{assign var=tagbar value=$article.tags}>
             <{include file="db:tag_bar.tpl"}>
         </div>

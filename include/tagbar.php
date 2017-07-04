@@ -24,10 +24,10 @@
 /**
  * Display tag list
  *
- * @param  array $tags  array of tag string
- *                      OR
- * @param  int   $catid
- * @param  int   $modid
+ * @param  int|array $tags array of tag string
+ *                         OR
+ * @param  int       $catid
+ * @param  int       $modid
  * @return array
  * @internal param int $itemid
  */
@@ -41,9 +41,11 @@ function tagBar($tags, $catid = 0, $modid = 0)
 
     if (!isset($loaded)) {
         include $GLOBALS['xoops']->path('/modules/tag/include/vars.php');
-        include_once $GLOBALS['xoops']->path('/modules/tag/include/functions.php');
+        require_once $GLOBALS['xoops']->path('/modules/tag/include/functions.php');
         tag_define_url_delimiter();
-        if (!($GLOBALS['xoopsModule'] instanceof XoopsModule) || ('tag' !== $GLOBALS['xoopsModule']->getVar('dirname'))) {
+        if (!($GLOBALS['xoopsModule'] instanceof XoopsModule)
+            || ('tag' !== $GLOBALS['xoopsModule']->getVar('dirname'))
+        ) {
             xoops_loadLanguage('main', 'tag');
         }
         if (file_exists($GLOBALS['xoops']->path('/modules/tag/assets/images/delimiter.gif'))) {
@@ -59,8 +61,8 @@ function tagBar($tags, $catid = 0, $modid = 0)
         if (empty($modid) && ($GLOBALS['xoopsModule'] instanceof XoopsModule)) {
             $modid = $GLOBALS['xoopsModule']->getVar('mid');
         }
-        $tag_handler = xoops_getModuleHandler('tag', 'tag');
-        if (!$tags = $tag_handler->getByItem($tags, $modid, $catid)) {
+        $tagHandler = xoops_getModuleHandler('tag', 'tag');
+        if (!$tags = $tagHandler->getByItem($tags, $modid, $catid)) {
             return array();
         }
 

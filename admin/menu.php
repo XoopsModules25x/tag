@@ -19,12 +19,20 @@
  * @since           1.00
  */
 
-defined('XOOPS_ROOT_PATH') || exit('Restricted access');
+$moduleDirName = basename(dirname(__DIR__));
 
-$moduleHandler = xoops_getHandler('module');
-$module        = XoopsModule::getByDirname('tag');
-$moduleInfo    = $moduleHandler->get($module->getVar('mid'));
-$pathIcon32    = '../../' . $module->getInfo('icons32');
+if (false !== ($moduleHelper = Xmf\Module\Helper::getHelper($moduleDirName))) {
+} else {
+    $moduleHelper = Xmf\Module\Helper::getHelper('system');
+}
+$adminObject = \Xmf\Module\Admin::getInstance();
+
+$pathIcon32    = \Xmf\Module\Admin::menuIconPath('');
+//$pathModIcon32 = $moduleHelper->getModule()->getInfo('modicons32');
+
+// Load language files
+$moduleHelper->loadLanguage('modinfo');
+
 
 $adminmenu = array(
     array(

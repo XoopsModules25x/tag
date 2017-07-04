@@ -17,6 +17,8 @@
  * @since           1.00
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
  * */
+use Xmf\Request;
+
 include __DIR__ . '/header.php';
 
 xoops_loadLanguage('main', 'tag');
@@ -35,29 +37,31 @@ if (tag_parse_args($args_num, $args, $args_str)) {
 }
 
 $tag_id   = (int)(empty($_GET['tag']) ? @$args['tag'] : $_GET['tag']);
-$tag_term = empty($_GET['term']) ? @$args['term'] : XoopsRequest::getString('term', '', 'GET');
+$tag_term = empty($_GET['term']) ? @$args['term'] : Request::getString('term', '', 'GET');
 $modid    = (int)(empty($_GET['modid']) ? @$args['modid'] : $_GET['modid']);
 $catid    = (int)(empty($_GET['catid']) ? @$args['catid'] : $_GET['catid']);
 $start    = (int)(empty($_GET['start']) ? @$args['start'] : $_GET['start']);
 
-if (empty($modid) && ($GLOBALS['xoopsModule'] instanceof XoopsModule) && 'tag' !== $GLOBALS['xoopsModule']->getVar('dirname', 'n')) {
+if (empty($modid) && ($GLOBALS['xoopsModule'] instanceof XoopsModule)
+    && 'tag' !== $GLOBALS['xoopsModule']->getVar('dirname', 'n')
+) {
     $modid = $GLOBALS['xoopsModule']->getVar('mid');
 }
 
 if (empty($tag_id) && empty($tag_term)) {
     redirect_header($GLOBALS['xoops']->url('www/modules/' . $GLOBALS['xoopsModule']->getVar('dirname') . '/index.php'), 2, _MD_TAG_INVALID);
 }
-$tag_handler = xoops_getModuleHandler('tag', 'tag');
+$tagHandler = xoops_getModuleHandler('tag', 'tag');
 if (!empty($tag_id)) {
-    if (!$tag_obj =& $tag_handler->get($tag_id)) {
+    if (!$tag_obj = $tagHandler->get($tag_id)) {
         redirect_header($GLOBALS['xoops']->url('www/modules/' . $GLOBALS['xoopsModule']->getVar('dirname') . '/index.php'), 2, _MD_TAG_INVALID);
     }
     $tag_term = $tag_obj->getVar('tag_term', 'n');
 } else {
-    if (!$tags_obj = $tag_handler->getObjects(new Criteria('tag_term', $myts->addSlashes(trim($tag_term))))) {
+    if (!$tags_obj = $tagHandler->getObjects(new Criteria('tag_term', $myts->addSlashes(trim($tag_term))))) {
         redirect_header($GLOBALS['xoops']->url('www/modules/' . $GLOBALS['xoopsModule']->getVar('dirname') . '/index.php'), 2, _MD_TAG_INVALID);
     }
-    $tag_obj =& $tags_obj[0];
+    $tag_obj = $tags_obj[0];
     $tag_id  = $tag_obj->getVar('tag_id');
 }
 
@@ -89,7 +93,7 @@ if (!empty($modid)) {
         $criteria->add(new Criteria('o.tag_catid', $catid));
     }
 }
-$items = $tag_handler->getItems($criteria); // Tag, imist, start, sort, order, modid, catid
+$items = $tagHandler->getItems($criteria); // Tag, imist, start, sort, order, modid, catid
 
 $items_module = array();
 $modules_obj  = array();
@@ -97,22 +101,23 @@ if (!empty($items)) {
     foreach (array_keys($items) as $key) {
         $items_module[$items[$key]['modid']][$items[$key]['catid']][$items[$key]['itemid']] = array();
     }
+    /** @var XoopsModuleHandler $moduleHandler */
     $moduleHandler = xoops_getHandler('module');
     $modules_obj   = $moduleHandler->getObjects(new Criteria('mid', '(' . implode(', ', array_keys($items_module)) . ')', 'IN'), true);
     foreach (array_keys($modules_obj) as $mid) {
         $dirname = $modules_obj[$mid]->getVar('dirname', 'n');
         if (file_exists($GLOBALS['xoops']->path("/modules/{$dirname}/class/plugins/plugin.tag.php"))) {
-            include_once $GLOBALS['xoops']->path("/modules/{$dirname}/class/plugins/plugin.tag.php");
+            require_once $GLOBALS['xoops']->path("/modules/{$dirname}/class/plugins/plugin.tag.php");
         } elseif (file_exists($GLOBALS['xoops']->path("/modules/{$dirname}/include/plugin.tag.php"))) {
-            include_once $GLOBALS['xoops']->path("/modules/{$dirname}/include/plugin.tag.php");
+            require_once $GLOBALS['xoops']->path("/modules/{$dirname}/include/plugin.tag.php");
         } elseif (file_exists($GLOBALS['xoops']->path("/modules/tag/plugin/{$dirname}.php"))) {
-            include_once $GLOBALS['xoops']->path("/modules/tag/plugin/{$dirname}.php");
+            require_once $GLOBALS['xoops']->path("/modules/tag/plugin/{$dirname}.php");
         } else {
             continue;
         }
         /*
-                if (!@include_once $GLOBALS['xoops']->path("/modules/{$dirname}/include/plugin.tag.php")) {
-                    if (!@include_once $GLOBALS['xoops']->path("/modules/tag/plugin/{$dirname}.php")) {
+                if (!@require_once $GLOBALS['xoops']->path("/modules/{$dirname}/include/plugin.tag.php")) {
+                    if (!@require_once $GLOBALS['xoops']->path("/modules/tag/plugin/{$dirname}.php")) {
                         continue;
                     }
                 }
@@ -128,7 +133,7 @@ if (!empty($items)) {
 
 $items_data = array();
 $uids       = array();
-include_once $GLOBALS['xoops']->path('/modules/tag/include/tagbar.php');
+require_once $GLOBALS['xoops']->path('/modules/tag/include/tagbar.php');
 foreach (array_keys($items) as $key) {
     /**
      * Get item fileds:
@@ -158,9 +163,9 @@ foreach (array_keys($items_data) as $key) {
 }
 
 if (!empty($start) || count($items_data) >= $limit) {
-    $count_item = $tag_handler->getItemCount($tag_id, $modid, $catid); // Tag, modid, catid
+    $count_item = $tagHandler->getItemCount($tag_id, $modid, $catid); // Tag, modid, catid
 
-    include_once $GLOBALS['xoops']->path('/class/pagenav.php');
+    require_once $GLOBALS['xoops']->path('/class/pagenav.php');
     $nav     = new XoopsPageNav($count_item, $limit, $start, 'start', "tag={$tag_id}&amp;catid={$catid}");
     $pagenav = $nav->renderNav(4);
 } else {
@@ -171,7 +176,8 @@ $tag_addon = array();
 if (!empty($GLOBALS['_MD_TAG_ADDONS'])) {
     $tag_addon['title'] = _MD_TAG_TAG_ON;
     foreach ($GLOBALS['_MD_TAG_ADDONS'] as $key => $_tag) {
-        $_term                 = (empty($_tag['function']) || !function_exists($_tag['function'])) ? $tag_term : $_tag['function']($tag_term);
+        $_term                 = (empty($_tag['function'])
+                                  || !function_exists($_tag['function'])) ? $tag_term : $_tag['function']($tag_term);
         $tag_addon['addons'][] = "<a href='" . sprintf($_tag['link'], urlencode($_term)) . "' target='{$key}' title='{$_tag['title']}'>{$_tag['title']}</a>";
     }
 }
@@ -191,4 +197,4 @@ $xoopsTpl->assign_by_ref('tag_addon', $tag_addon);
 $xoopsTpl->assign_by_ref('tag_articles', $items_data);
 $xoopsTpl->assign_by_ref('pagenav', $pagenav);
 
-include_once __DIR__ . '/footer.php';
+require_once __DIR__ . '/footer.php';

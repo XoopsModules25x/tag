@@ -41,9 +41,9 @@ function publisher_tag_iteminfo(&$items)
             $items_id[] = (int)$item_id;
         }
     }
-    $item_handler = xoops_getModuleHandler('item', 'publisher');
+    $itemHandler = xoops_getModuleHandler('item', 'publisher');
     $criteria     = new Criteria('itemid', '(' . implode(', ', $items_id) . ')', 'IN');
-    $items_obj    = $item_handler->getObjects($criteria, 'itemid');
+    $items_obj    = $itemHandler->getObjects($criteria, 'itemid');
 
     foreach (array_keys($items) as $cat_id) {
         foreach (array_keys($items[$cat_id]) as $item_id) {
@@ -69,25 +69,25 @@ function publisher_tag_iteminfo(&$items)
  */
 function publisher_tag_synchronization($mid)
 {
-    include_once $GLOBALS['xoops']->path('/modules/publisher/include/constants.php');
-    $item_handler = xoops_getModuleHandler('item', 'publisher');
-    $link_handler = xoops_getModuleHandler('link', 'tag');
+    require_once $GLOBALS['xoops']->path('/modules/publisher/include/constants.php');
+    $itemHandler = xoops_getModuleHandler('item', 'publisher');
+    $linkHandler = xoops_getModuleHandler('link', 'tag');
 
     $mid = XoopsFilterInput::clean($mid, 'INT');
 
     /* clear tag-item links */
-    $sql    = "    DELETE FROM {$link_handler->table}"
+    $sql    = "    DELETE FROM {$linkHandler->table}"
               . '    WHERE '
               . "        tag_modid = {$mid}"
               . '        AND '
               . '        ( tag_itemid NOT IN '
-              . "            ( SELECT DISTINCT {$item_handler->keyName} "
-              . "                FROM {$item_handler->table} "
-              . "                WHERE {$item_handler->table}.status = "
+              . "            ( SELECT DISTINCT {$itemHandler->keyName} "
+              . "                FROM {$itemHandler->table} "
+              . "                WHERE {$itemHandler->table}.status = "
               . _PUBLISHER_STATUS_PUBLISHED
               . '            ) '
               . '        )';
-    $result = $link_handler->db->queryF($sql);
+    $result = $linkHandler->db->queryF($sql);
 
     return $result ? true : false;
 }

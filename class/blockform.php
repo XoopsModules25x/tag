@@ -21,7 +21,7 @@
  * @since           2.33
  */
 
-include_once $GLOBALS['xoops']->path('/class/xoopsformloader.php');
+require_once $GLOBALS['xoops']->path('/class/xoopsformloader.php');
 
 /**
  * Class TagBlockForm

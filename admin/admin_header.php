@@ -18,23 +18,32 @@
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
  * */
 
-$path = dirname(dirname(dirname(__DIR__)));
-require_once $path . '/include/cp_header.php';
+require_once __DIR__ . '/../../../include/cp_header.php';
+require_once __DIR__ . '/../class/utility.php';
+require_once __DIR__ . '/../class/constants.php';
 
-require_once dirname(__DIR__) . '/include/vars.php';
-require_once dirname(__DIR__) . '/include/functions.php';
-xoops_load('constants', 'tag');
+$moduleDirName = basename(dirname(__DIR__));
 
-$thisModuleDir = $GLOBALS['xoopsModule']->getVar('dirname');
+if (false !== ($moduleHelper = Xmf\Module\Helper::getHelper($moduleDirName))) {
+} else {
+    $moduleHelper = Xmf\Module\Helper::getHelper('system');
+}
+$adminObject = \Xmf\Module\Admin::getInstance();
+
+$pathIcon16      = \Xmf\Module\Admin::iconUrl('', 16);
+$pathIcon32      = \Xmf\Module\Admin::iconUrl('', 32);
+$pathModIcon32 = $moduleHelper->getModule()->getInfo('modicons32');
+
 // Load language files
-xoops_loadLanguage('admin', $thisModuleDir);
-xoops_loadLanguage('modinfo', $thisModuleDir);
-xoops_loadLanguage('main', $thisModuleDir);
+$moduleHelper->loadLanguage('admin');
+$moduleHelper->loadLanguage('modinfo');
+$moduleHelper->loadLanguage('main');
 
-$pathIcon16      = $GLOBALS['xoops']->url('www/' . $GLOBALS['xoopsModule']->getInfo('icons16'));
-$pathIcon32      = $GLOBALS['xoops']->url('www/' . $GLOBALS['xoopsModule']->getInfo('icons32'));
-$pathModuleAdmin = $GLOBALS['xoops']->path('www/' . $GLOBALS['xoopsModule']->getInfo('dirmoduleadmin'));
+$myts = MyTextSanitizer::getInstance();
 
-include_once "{$pathModuleAdmin}/moduleadmin/moduleadmin.php";
-
-include_once $GLOBALS['xoops']->path('/Frameworks/art/functions.admin.php');
+if (!isset($GLOBALS['xoopsTpl']) || !($GLOBALS['xoopsTpl'] instanceof XoopsTpl)) {
+    require_once $GLOBALS['xoops']->path('class/template.php');
+    $xoopsTpl = new XoopsTpl();
+}
+//TODO remove link to Frameworks
+//require_once $GLOBALS['xoops']->path('/Frameworks/art/functions.admin.php');

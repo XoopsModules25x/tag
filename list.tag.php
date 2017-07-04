@@ -39,7 +39,9 @@ $start = (int)(empty($_GET['start']) ? @$args['start'] : $_GET['start']);
 $sort  = '';
 $order = '';
 
-if (empty($modid) && ($GLOBALS['xoopsModule'] instanceof XoopsModule) && ('tag' !== $GLOBALS['xoopsModule']->getVar('dirname'))) {
+if (empty($modid) && ($GLOBALS['xoopsModule'] instanceof XoopsModule)
+    && ('tag' !== $GLOBALS['xoopsModule']->getVar('dirname'))
+) {
     $modid = $GLOBALS['xoopsModule']->getVar('mid');
 }
 
@@ -70,7 +72,7 @@ switch (strtolower($mode_display)) {
         break;
 }
 
-$tag_handler = xoops_getModuleHandler('tag', 'tag');
+$tagHandler = xoops_getModuleHandler('tag', 'tag');
 $tag_config  = tag_load_config();
 tag_define_url_delimiter();
 
@@ -86,7 +88,7 @@ if (!empty($modid)) {
         $criteria->add(new Criteria('l.tag_catid', $catid));
     }
 }
-$tags = $tag_handler->getByLimit(0, 0, $criteria);
+$tags = $tagHandler->getByLimit(0, 0, $criteria);
 
 $count_max = 0;
 $count_min = 0;
@@ -125,7 +127,7 @@ foreach (array_keys($tags) as $key) {
 unset($tags, $tags_term);
 
 if (!empty($start) || count($tags_data) >= $limit) {
-    $count_tag = $tag_handler->getCount($criteria); // modid, catid
+    $count_tag = $tagHandler->getCount($criteria); // modid, catid
 
     if ('list' === mb_strtolower($mode_display)) {
         include $GLOBALS['xoops']->path('/class/pagenav.php');
@@ -147,4 +149,4 @@ $xoopsTpl->assign('xoops_pagetitle', $xoopsOption['xoops_pagetitle']);
 $xoopsTpl->assign('xoops_module_header', $xoopsOption['xoops_module_header']);
 $xoopsTpl->assign('xoops_meta_description', $xoopsOption['xoops_pagetitle']);
 
-include_once __DIR__ . '/footer.php';
+require_once __DIR__ . '/footer.php';

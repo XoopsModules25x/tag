@@ -24,7 +24,7 @@
 The functions loaded on initializtion
 */
 
-defined('XOOPS_ROOT_PATH') || exit('Restricted access');
+//defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 defined('TAG_INI') || exit();
 (!defined('TAG_FUNCTIONS_INI')) || exit();
 
@@ -45,12 +45,13 @@ function tag_load_config()
                 $moduleConfig = null;
             }
         } else {
+            /** @var XoopsModuleHandler $moduleHandler */
             $moduleHandler = xoops_getHandler('module');
             $module        = $moduleHandler->getByDirname('tag');
 
-            $config_handler = xoops_getHandler('config');
+            $configHandler = xoops_getHandler('config');
             $criteria       = new CriteriaCompo(new Criteria('conf_modid', $module->getVar('mid')));
-            $configs        = $config_handler->getConfigs($criteria);
+            $configs        = $configHandler->getConfigs($criteria);
             foreach (array_keys($configs) as $i) {
                 $moduleConfig[$configs[$i]->getVar('conf_name')] = $configs[$i]->getConfValueForOutput();
             }

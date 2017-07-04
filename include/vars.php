@@ -23,13 +23,14 @@ if (!defined('TAG_INI')) {
     define('TAG_INI', 1);
 }
 
-//include_once $GLOBALS['xoops']->path("/Frameworks/art/functions.ini.php");
+//require_once $GLOBALS['xoops']->path("/Frameworks/art/functions.ini.php");
 require_once $GLOBALS['xoops']->path('/modules/tag/include/functions.ini.php');
 
 // include customized variables
-if (($GLOBALS['xoopsModule'] instanceof XoopsModule) && ('tag' === $GLOBALS['xoopsModule']->getVar('dirname', 'n')) && $GLOBALS['xoopsModule']->isactive()) {
+if (($GLOBALS['xoopsModule'] instanceof XoopsModule) && ('tag' === $GLOBALS['xoopsModule']->getVar('dirname', 'n'))
+    && $GLOBALS['xoopsModule']->isactive()
+) {
     $GLOBALS['xoopsModuleConfig'] = tag_load_config();
 }
 
 //load_object();
-

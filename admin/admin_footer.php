@@ -18,9 +18,11 @@
  * @author          Mamba {@link http://www.xoops.org}
  * @since           2.31
  */
+
+$pathIcon32      = \Xmf\Module\Admin::iconUrl('', 32);
 /*
 echo "<div class='adminfooter'>\n"
-    ."  <div class='txtcenter'>\n"
+    ."  <div style='text-align: center;'>\n"
     ."    <a href='http://www.xoops.org' rel='external'><img src='{$pathIcon32}/xoopsmicrobutton.gif' alt='XOOPS' title='XOOPS'></a>\n"
     ."  </div>\n"
     ."  " . _AM_TAG_FOOTER . "\n"

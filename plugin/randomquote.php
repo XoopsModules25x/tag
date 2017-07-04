@@ -51,8 +51,8 @@ function randomquote_tag_iteminfo(&$items)
     $criteria->add(new Criteria('id', '(' . implode(',', $items_id) . ')', 'IN'));
     $criteria->add(new Criteria('quote_status', RandomquoteConstants::STATUS_ONLINE));
 
-    $quote_handler = xoops_getModuleHandler('quotes', 'randomquote');
-    $quoteObjs     = $quote_handler->getObjects($criteria, true);
+    $quoteHandler = xoops_getModuleHandler('quotes', 'randomquote');
+    $quoteObjs     = $quoteHandler->getObjects($criteria, true);
 
     foreach ($cats_id as $cat_id) {
         foreach ($items_id as $item_id) {
@@ -82,10 +82,10 @@ function randomquote_tag_iteminfo(&$items)
 function mymodule_tag_synchronization($mid)
 {
     xoops_load('constants', 'randomquote');
-    $item_handler = xoops_getModuleHandler('quotes', 'randomquote');
-    $link_handler = xoops_getModuleHandler('link', 'tag');
+    $itemHandler = xoops_getModuleHandler('quotes', 'randomquote');
+    $linkHandler = xoops_getModuleHandler('link', 'tag');
 
-    if (!$item_handler || !$link_handler) {
+    if (!$itemHandler || !$linkHandler) {
         $result = false;
     } else {
         $mid           = XoopsFilterInput::clean($mid, 'INT');
@@ -95,17 +95,17 @@ function mymodule_tag_synchronization($mid)
         // check to make sure module is active and trying to sync randomquote
         if (($rqModule instanceof XoopsModule) && $rqModule->isactive() && ($rqModule->mid() == $mid)) {
             // clear tag-item links
-            $sql    = "DELETE FROM {$link_handler->table}"
+            $sql    = "DELETE FROM {$linkHandler->table}"
                       . " WHERE tag_modid = {$mid}"
                       . '    AND '
                       . '    (tag_itemid NOT IN '
-                      . "        (SELECT DISTINCT {$item_handler->keyName} "
-                      . "           FROM {$item_handler->table} "
-                      . "           WHERE {$item_handler->table}.quote_status = "
+                      . "        (SELECT DISTINCT {$itemHandler->keyName} "
+                      . "           FROM {$itemHandler->table} "
+                      . "           WHERE {$itemHandler->table}.quote_status = "
                       . RandomquoteConstants::STATUS_ONLINE
                       . '        )'
                       . '    )';
-            $result = $link_handler->db->queryF($sql);
+            $result = $linkHandler->db->queryF($sql);
         } else {
             $result = false;
         }

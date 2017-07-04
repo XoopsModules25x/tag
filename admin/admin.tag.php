@@ -18,48 +18,49 @@
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
  * @since           1.00
  */
+use Xmf\Request;
 
 require_once __DIR__ . '/admin_header.php';
 require_once $GLOBALS['xoops']->path('/class/xoopsformloader.php');
-xoops_load('xoopsrequest');
 
-$indexAdmin = new ModuleAdmin();
+
+$adminObject  = \Xmf\Module\Admin::getInstance();
 
 xoops_cp_header();
 
 include $GLOBALS['xoops']->path('/modules/tag/include/vars.php');
-echo $indexAdmin->addNavigation(basename(__FILE__));
+$adminObject->displayNavigation(basename(__FILE__));
 
 $limit  = $GLOBALS['xoopsModuleConfig']['items_perpage'];
-$modid  = XoopsRequest::getInt('modid', TagConstants::DEFAULT_ID);
-$start  = XoopsRequest::getInt('start', TagConstants::BEGINNING);
-$status = XoopsRequest::getInt('status', TagConstants::STATUS_ALL, 'GET');
+$modid  = Request::getInt('modid', TagConstants::DEFAULT_ID);
+$start  = Request::getInt('start', TagConstants::BEGINNING);
+$status = Request::getInt('status', TagConstants::STATUS_ALL, 'GET');
 
-$tag_handler  = xoops_getModuleHandler('tag', $thisModuleDir);
-$link_handler = xoops_getModuleHandler('link', $thisModuleDir);
+$tagHandler  = xoops_getModuleHandler('tag', $moduleDirName);
+$linkHandler = xoops_getModuleHandler('link', $moduleDirName);
 
-$postTags = XoopsRequest::getArray('tags', array(), 'POST');
+$postTags = Request::getArray('tags', array(), 'POST');
 if (!empty($postTags)) {
     $msgDBUpdated = '';
     foreach ($postTags as $tag => $tag_status) {
-        $tag_obj =& $tag_handler->get($tag);
+        $tag_obj = $tagHandler->get($tag);
         if (!($tag_obj instanceof TagTag) || !$tag_obj->getVar('tag_id')) {
             continue;
         }
         if ($tag_status < TagConstants::STATUS_ACTIVE) {
-            $tag_handler->delete($tag_obj);
+            $tagHandler->delete($tag_obj);
         } elseif ($tag_status != $tag_obj->getVar('tag_status')) {
             $tag_obj->setVar('tag_status', $tag_status);
-            $tag_handler->insert($tag_obj);
+            $tagHandler->insert($tag_obj);
             $msgDBUpdated = _AM_TAG_DB_UPDATED;
         }
     }
     redirect_header("admin.tag.php?modid={$modid}&amp;start={$start}&amp;status={$status}", TagConstants::REDIRECT_DELAY_MEDIUM, $msgDBUpdated);
 }
 
-$sql = 'SELECT tag_modid, COUNT(DISTINCT tag_id) AS count_tag';
-$sql .= ' FROM ' . $GLOBALS['xoopsDB']->prefix('tag_link');
-$sql .= ' GROUP BY tag_modid';
+$sql           = 'SELECT tag_modid, COUNT(DISTINCT tag_id) AS count_tag';
+$sql           .= ' FROM ' . $GLOBALS['xoopsDB']->prefix('tag_link');
+$sql           .= ' GROUP BY tag_modid';
 $counts_module = array();
 $module_list   = array();
 $result        = $GLOBALS['xoopsDB']->query($sql);
@@ -70,12 +71,13 @@ if (false === $result) {
         $counts_module[$myrow['tag_modid']] = $myrow['count_tag'];
     }
     if (!empty($counts_module)) {
+        /** @var XoopsModuleHandler $moduleHandler */
         $moduleHandler = xoops_getHandler('module');
         $module_list   = $moduleHandler->getList(new Criteria('mid', '(' . implode(', ', array_keys($counts_module)) . ')', 'IN'));
     }
 }
 
-$opform     = new XoopsSimpleForm('', 'moduleform', xoops_getenv('PHP_SELF'), 'get');
+$opform     = new XoopsSimpleForm('', 'moduleform', xoops_getenv('PHP_SELF'), 'get', true);
 $tray       = new XoopsFormElementTray('');
 $mod_select = new XoopsFormSelect(_SELECT, 'modid', $modid);
 $mod_select->addOption(0, _ALL);
@@ -103,7 +105,7 @@ if ($status >= TagConstants::STATUS_ACTIVE) {
 if (!empty($modid)) {
     $criteria->add(new Criteria('l.tag_modid', $modid));
 }
-$tags = $tag_handler->getByLimit(0, 0, $criteria, null, false);
+$tags = $tagHandler->getByLimit(0, 0, $criteria, null, false);
 
 $form_tags = "<form name='tags' method='post' action='"
              . xoops_getenv('PHP_SELF')
@@ -150,13 +152,13 @@ if (empty($tags)) {
                       . TagConstants::STATUS_DELETE
                       . "'></td>\n"
                       . "  </tr>\n";
-        $class_tr = ('even' === $class_tr) ? 'odd' : 'even';
+        $class_tr  = ('even' === $class_tr) ? 'odd' : 'even';
     }
     if (!empty($start) || (count($tags) >= $limit)) {
-        $count_tag = $tag_handler->getCount($criteria);
+        $count_tag = $tagHandler->getCount($criteria);
 
         include $GLOBALS['xoops']->path('/class/pagenav.php');
-        $nav = new XoopsPageNav($count_tag, $limit, $start, 'start', "modid={$modid}&amp;status={$status}");
+        $nav       = new XoopsPageNav($count_tag, $limit, $start, 'start', "modid={$modid}&amp;status={$status}");
         $form_tags .= "  <tr><td colspan='4' class='txtright'>" . $nav->renderNav(4) . "</td></tr>\n";
     }
     $form_tags .= "  </tbody>\n"

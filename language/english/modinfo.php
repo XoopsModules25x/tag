@@ -64,3 +64,4 @@ define('_MI_TAG_LIMITPERLIST', 'Limit number of items per list');
 define('_MI_TAG_LIMITPERLIST_DESC', '');
 define('_MI_TAG_LIMITPERCLOUD', 'Limit number of items per cloud');
 define('_MI_TAG_LIMITPERCLOUD_DESC', '');
+define('_MI_TAG_VIEW_SEARCH', 'Search');

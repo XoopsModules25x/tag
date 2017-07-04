@@ -37,7 +37,8 @@ class XoopsFormTag extends TagFormTag
      */
     public function __construct($name, $size, $maxlength, $value = null, $catid = 0)
     {
-        $GLOBALS['xoopsLogger']->addDeprecated(__CLASS__ . ' is deprecated use TagFormTag instead.');
+        $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1);
+        $GLOBALS['xoopsLogger']->addDeprecated(__CLASS__ . ' is deprecated use TagFormTag instead.' . ". Called from {$trace[0]['file']}line {$trace[0]['line']}");
         parent::__construct($name, $size, $maxlength, $value, $catid);
     }
 }

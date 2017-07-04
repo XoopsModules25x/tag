@@ -104,7 +104,7 @@ function mymodule_tag_synchronization($mid)
 
 /* Step 4: Display tags on our item page */
 // File: view.item.php
-include_once $GLOBALS['xoops']->path('/modules/tag/include/tagbar.php');
+require_once $GLOBALS['xoops']->path('/modules/tag/include/tagbar.php');
 $GLOBALS['xoopsTpl']->assign('tagbar', tagBar($itemid, $catid = 0));
 // File: mymodule_item_template.tpl
 $GLOBALS['xoopsTpl']->display('db:tag_bar.tpl');
@@ -157,7 +157,7 @@ $modversion['blocks'][] = array(
  */
 function mymodule_tag_block_cloud_show(&$options)
 {
-    include_once $GLOBALS['xoops']->path('/modules/tag/blocks/block.php');
+    require_once $GLOBALS['xoops']->path('/modules/tag/blocks/block.php');
 
     return tag_block_cloud_show($options, $moduleDirName);
 }
@@ -168,7 +168,7 @@ function mymodule_tag_block_cloud_show(&$options)
  */
 function mymodule_tag_block_cloud_edit(&$options)
 {
-    include_once $GLOBALS['xoops']->path('/modules/tag/blocks/block.php');
+    require_once $GLOBALS['xoops']->path('/modules/tag/blocks/block.php');
 
     return tag_block_cloud_edit($options);
 }
@@ -179,7 +179,7 @@ function mymodule_tag_block_cloud_edit(&$options)
  */
 function mymodule_tag_block_top_show(&$options)
 {
-    include_once $GLOBALS['xoops']->path('/modules/tag/blocks/block.php');
+    require_once $GLOBALS['xoops']->path('/modules/tag/blocks/block.php');
 
     return tag_block_top_show($options, $moduleDirName);
 }
@@ -190,7 +190,7 @@ function mymodule_tag_block_top_show(&$options)
  */
 function mymodule_tag_block_top_edit(&$options)
 {
-    include_once $GLOBALS['xoops']->path('/modules/tag/blocks/block.php');
+    require_once $GLOBALS['xoops']->path('/modules/tag/blocks/block.php');
 
     return tag_block_top_edit($options);
 }

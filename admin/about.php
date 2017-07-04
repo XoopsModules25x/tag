@@ -20,13 +20,11 @@
  * @since           2.31
  */
 
-include_once __DIR__ . '/admin_header.php';
-
+require_once __DIR__ . '/admin_header.php';
 xoops_cp_header();
 
-$aboutAdmin = new ModuleAdmin();
+$adminObject->displayNavigation(basename(__FILE__));
+$adminObject->setPaypal('xoopsfoundation@gmail.com');
+$adminObject->displayAbout(false);
 
-echo $aboutAdmin->addNavigation(basename(__FILE__));
-echo $aboutAdmin->renderAbout('xoopsfoundation@gmail.com', false);
-
-include __DIR__ . '/admin_footer.php';
+require_once __DIR__ . '/admin_footer.php';

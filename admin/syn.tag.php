@@ -18,26 +18,27 @@
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
  * @since           1.00
  */
+use Xmf\Request;
 
 require_once __DIR__ . '/admin_header.php';
 require_once $GLOBALS['xoops']->path('/class/xoopsformloader.php');
-xoops_load('xoopsrequest');
-//include_once $GLOBALS['xoops']->path("/modules/" . $GLOBALS['xoopsModule']->getVar("dirname") . "/class/admin.php");
+
+//require_once $GLOBALS['xoops']->path("/modules/" . $GLOBALS['xoopsModule']->getVar("dirname") . "/class/admin.php");
 
 include $GLOBALS['xoops']->path('/modules/tag/include/vars.php');
 
 xoops_cp_header();
 
-$index_admin = new ModuleAdmin();
-echo $index_admin->addNavigation(basename(__FILE__));
+$adminObject = \Xmf\Module\Admin::getInstance();
+$adminObject->displayNavigation(basename(__FILE__));
 
-$modid = XoopsRequest::getInt('modid', TagConstants::DEFAULT_ID);
-$start = XoopsRequest::getInt('start', TagConstants::BEGINNING);
-$limit = XoopsRequest::getInt('limit', TagConstants::DEFAULT_LIMIT);
+$modid = Request::getInt('modid', TagConstants::DEFAULT_ID);
+$start = Request::getInt('start', TagConstants::BEGINNING);
+$limit = Request::getInt('limit', TagConstants::DEFAULT_LIMIT);
 
-$sql = 'SELECT tag_modid, COUNT(DISTINCT tag_id) AS count_tag';
-$sql .= ' FROM ' . $GLOBALS['xoopsDB']->prefix('tag_link');
-$sql .= ' GROUP BY tag_modid';
+$sql           = 'SELECT tag_modid, COUNT(DISTINCT tag_id) AS count_tag';
+$sql           .= ' FROM ' . $GLOBALS['xoopsDB']->prefix('tag_link');
+$sql           .= ' GROUP BY tag_modid';
 $counts_module = array();
 $module_list   = array();
 if ($result = $GLOBALS['xoopsDB']->query($sql)) {
@@ -45,12 +46,13 @@ if ($result = $GLOBALS['xoopsDB']->query($sql)) {
         $counts_module[$myrow['tag_modid']] = $myrow['count_tag'];
     }
     if (!empty($counts_module)) {
+        /** @var XoopsModuleHandler $moduleHandler */
         $moduleHandler = xoops_getHandler('module');
         $module_list   = $moduleHandler->getList(new Criteria('mid', '(' . implode(', ', array_keys($counts_module)) . ')', 'IN'));
     }
 }
 
-$opform     = new XoopsSimpleForm('', 'moduleform', xoops_getenv('PHP_SELF'), 'get');
+$opform     = new XoopsSimpleForm('', 'moduleform', xoops_getenv('PHP_SELF'), 'get', true);
 $tray       = new XoopsFormElementTray('');
 $mod_select = new XoopsFormSelect(_SELECT, 'modid', $modid);
 $mod_select->addOption(-1, _AM_TAG_GLOBAL);
@@ -68,7 +70,7 @@ $opform->addElement($tray);
 $opform->display();
 
 if (isset($_GET['start'])) {
-    $tag_handler = xoops_getModuleHandler('tag', $thisModuleDir);
+    $tagHandler = xoops_getModuleHandler('tag', $moduleDirName);
 
     $criteria = new CriteriaCompo();
     $criteria->setStart($start);
@@ -76,12 +78,12 @@ if (isset($_GET['start'])) {
     if ($modid > TagConstants::DEFAULT_ID) {
         $criteria->add(new Criteria('l.tag_modid', $modid));
     }
-    $tags = $tag_handler->getByLimit(0, 0, $criteria, null, false);
+    $tags = $tagHandler->getByLimit(0, 0, $criteria, null, false);
     if (empty($tags)) {
         echo '<h2>' . _AM_TAG_FINISHED . "</h2>\n";
     } else {
         foreach (array_keys($tags) as $tag_id) {
-            $tag_handler->update_stats($tag_id, (-1 == $modid) ? TagConstants::DEFAULT_ID : $tags[$tag_id]['modid']);
+            $tagHandler->update_stats($tag_id, (-1 == $modid) ? TagConstants::DEFAULT_ID : $tags[$tag_id]['modid']);
         }
         redirect_header("syn.tag.php?modid={$modid}&amp;start=" . ($start + $limit) . "&amp;limit={$limit}", TagConstants::REDIRECT_DELAY_SHORT, _AM_TAG_IN_PROCESS);
     }

@@ -28,7 +28,7 @@ $xoopsOption['template_main']   = 'tag_index.tpl';
 $xoopsOption['xoops_pagetitle'] = strip_tags($page_title);
 include $GLOBALS['xoops']->path('/header.php');
 
-$tag_handler = xoops_getModuleHandler('tag', 'tag');
+$tagHandler = xoops_getModuleHandler('tag', 'tag');
 $tag_config  = tag_load_config();
 tag_define_url_delimiter();
 
@@ -36,7 +36,7 @@ $criteria = new CriteriaCompo();
 $criteria->setSort('count');
 $criteria->setOrder('DESC');
 $criteria->setLimit($limit);
-$tags = $tag_handler->getByLimit(0, 0, $criteria);
+$tags = $tagHandler->getByLimit(0, 0, $criteria);
 
 $count_max = 0;
 $count_min = 0;
@@ -81,4 +81,4 @@ $GLOBALS['xoopsTpl']->assign_by_ref('tags', $tags_data);
 $GLOBALS['xoopsTpl']->assign('xoops_pagetitle', $xoopsOption['xoops_pagetitle']);
 $GLOBALS['xoopsTpl']->assign('xoops_module_header', $xoopsOption['xoops_module_header']);
 
-include_once __DIR__ . '/footer.php';
+require_once __DIR__ . '/footer.php';

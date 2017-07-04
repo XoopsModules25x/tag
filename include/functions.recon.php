@@ -20,7 +20,7 @@
 
 defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
-defined('TAG_FUNCTIONS_INI') || include __DIR__ . '/functions.ini.php';
+defined('TAG_FUNCTIONS_INI') || require_once __DIR__ . '/functions.ini.php';
 define('TAG_FUNCTIONS_RECON_LOADED', true);
 
 if (!defined('TAG_FUNCTIONS_RECON')):
@@ -31,19 +31,20 @@ if (!defined('TAG_FUNCTIONS_RECON')):
      */
     function tag_synchronization()
     {
+        /** @var XoopsModuleHandler $moduleHandler */
         $moduleHandler = xoops_getHandler('module');
         $criteria      = new CriteriaCompo(new Criteria('isactive', 1));
         $criteria->add(new Criteria('dirname', "('system', 'tag')", 'NOT IN'));
         $modules_obj = $moduleHandler->getObjects($criteria, true);
 
-        $link_handler = xoops_getModuleHandler('link', 'tag');
-        $link_handler->deleteAll(new Criteria('tag_modid', '(' . implode(', ', array_keys($modules_obj)) . ')', 'NOT IN'), true);
+        $linkHandler = xoops_getModuleHandler('link', 'tag');
+        $linkHandler->deleteAll(new Criteria('tag_modid', '(' . implode(', ', array_keys($modules_obj)) . ')', 'NOT IN'), true);
 
         foreach (array_keys($modules_obj) as $mid) {
             $dirname = $modules_obj[$mid]->getVar('dirname');
-            if (!@include_once $GLOBALS['xoops']->path("/modules/{$dirname}/class/plugins/plugin.tag.php")) {
-                if (!@include_once $GLOBALS['xoops']->path("/modules/{$dirname}/include/plugin.tag.php")) {
-                    if (!@include_once $GLOBALS['xoops']->path("/modules/tag/plugin/{$dirname}.php")) {
+            if (!@require_once $GLOBALS['xoops']->path("/modules/{$dirname}/class/plugins/plugin.tag.php")) {
+                if (!@require_once $GLOBALS['xoops']->path("/modules/{$dirname}/include/plugin.tag.php")) {
+                    if (!@require_once $GLOBALS['xoops']->path("/modules/tag/plugin/{$dirname}.php")) {
                         continue;
                     }
                 }
@@ -67,35 +68,35 @@ if (!defined('TAG_FUNCTIONS_RECON')):
      */
     function tag_cleanOrphan()
     {
-        $tag_handler = xoops_getModuleHandler('tag', 'tag');
+        $tagHandler = xoops_getModuleHandler('tag', 'tag');
 
         $success = true;
         /* clear item-tag links */
-        $sql     = "DELETE FROM {$tag_handler->table_link}" . " WHERE ({$tag_handler->keyName} NOT IN ( SELECT DISTINCT {$tag_handler->keyName} FROM {$tag_handler->table}) )";
-        $s1      = $tag_handler->db->queryF($sql) ? true : false;
+        $sql     = "DELETE FROM {$tagHandler->table_link}" . " WHERE ({$tagHandler->keyName} NOT IN ( SELECT DISTINCT {$tagHandler->keyName} FROM {$tagHandler->table}) )";
+        $s1      = $tagHandler->db->queryF($sql) ? true : false;
         $success = $success && $s1;
 
         /* remove empty stats-tag links */
-        $sql     = "DELETE FROM {$tag_handler->table_stats} WHERE tag_count = 0";
-        $s1      = $tag_handler->db->queryF($sql) ? true : false;
+        $sql     = "DELETE FROM {$tagHandler->table_stats} WHERE tag_count = 0";
+        $s1      = $tagHandler->db->queryF($sql) ? true : false;
         $success = $success && $s1;
 
         /* clear stats-tag links */
-        $sql     = "DELETE FROM {$tag_handler->table_stats}" . " WHERE ({$tag_handler->keyName} NOT IN ( SELECT DISTINCT {$tag_handler->keyName} FROM {$tag_handler->table}) )";
-        $s1      = $tag_handler->db->queryF($sql) ? true : false;
+        $sql     = "DELETE FROM {$tagHandler->table_stats}" . " WHERE ({$tagHandler->keyName} NOT IN ( SELECT DISTINCT {$tagHandler->keyName} FROM {$tagHandler->table}) )";
+        $s1      = $tagHandler->db->queryF($sql) ? true : false;
         $success = $success && $s1;
 
-        $sql     = "    DELETE FROM {$tag_handler->table_stats}"
-                   . "    WHERE NOT EXISTS ( SELECT * FROM {$tag_handler->table_link} "
-                   . "                       WHERE  {$tag_handler->table_link}.tag_modid={$tag_handler->table_stats}.tag_modid"
-                   . "                       AND  {$tag_handler->table_link}.tag_catid={$tag_handler->table_stats}.tag_catid"
+        $sql     = "    DELETE FROM {$tagHandler->table_stats}"
+                   . "    WHERE NOT EXISTS ( SELECT * FROM {$tagHandler->table_link} "
+                   . "                       WHERE  {$tagHandler->table_link}.tag_modid={$tagHandler->table_stats}.tag_modid"
+                   . "                       AND  {$tagHandler->table_link}.tag_catid={$tagHandler->table_stats}.tag_catid"
                    . '                     )';
-        $s1      = $tag_handler->db->queryF($sql) ? true : false;
+        $s1      = $tagHandler->db->queryF($sql) ? true : false;
         $success = $success && $s1;
 
         /* clear empty tags */
-        $sql     = "DELETE FROM {$tag_handler->table}" . " WHERE ({$tag_handler->keyName} NOT IN ( SELECT DISTINCT {$tag_handler->keyName} FROM {$tag_handler->table_link}) )";
-        $s1      = $tag_handler->db->queryF($sql) ? true : false;
+        $sql     = "DELETE FROM {$tagHandler->table}" . " WHERE ({$tagHandler->keyName} NOT IN ( SELECT DISTINCT {$tagHandler->keyName} FROM {$tagHandler->table_link}) )";
+        $s1      = $tagHandler->db->queryF($sql) ? true : false;
         $success = $success && $s1;
 
         return $success;

@@ -31,23 +31,26 @@ if (!defined('TAG_FUNCTIONS')):
      */
     function tag_getTagHandler()
     {
-        static $tag_handler;
+        static $tagHandler;
 
-        if (isset($tag_handler)) {
-            return $tag_handler;
+        if (isset($tagHandler)) {
+            return $tagHandler;
         }
 
-        $tag_handler = null;
-        if (!($GLOBALS['xoopsModule'] instanceof XoopsModule) || ('tag' !== $GLOBALS['xoopsModule']->getVar('dirname'))) {
+        $tagHandler = null;
+        if (!($GLOBALS['xoopsModule'] instanceof XoopsModule)
+            || ('tag' !== $GLOBALS['xoopsModule']->getVar('dirname'))
+        ) {
+            /** @var XoopsModuleHandler $moduleHandler */
             $moduleHandler = xoops_getHandler('module');
             $module        = $moduleHandler->getByDirname('tag');
             if (!$module || !$module->isactive()) {
-                return $tag_handler;
+                return $tagHandler;
             }
         }
-        $tag_handler = @xoops_getModuleHandler('tag', 'tag', true);
+        $tagHandler = @xoops_getModuleHandler('tag', 'tag', true);
 
-        return $tag_handler;
+        return $tagHandler;
     }
 
     /**
