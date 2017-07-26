@@ -32,7 +32,7 @@ $modversion = array(
     'official'            => 0,
     //1 indicates official XOOPS module supported by XOOPS Dev Team, 0 means 3rd party supported
     'author'              => 'Taiwen Jiang <phppp@users.sourceforge.net>',
-    'author_website_url'  => 'http://xoops.org',
+    'author_website_url'  => 'https://xoops.org',
     'author_website_name' => 'XOOPS',
     'credits'             => 'XOOPS Development Team, Trabis, Mamba',
     'license'             => 'GPL 2.0 or later',
@@ -59,7 +59,7 @@ $modversion = array(
     //About
     'demo_site_url'       => 'http://www.xoops.org',
     'demo_site_name'      => 'XOOPS Demo Site',
-    'support_url'         => 'http://xoops.org/modules/newbb/viewforum.php?forum=28/',
+    'support_url'         => 'https://xoops.org/modules/newbb/viewforum.php?forum=28/',
     'support_name'        => 'Support Forum',
     'module_website_url'  => 'www.xoops.org',
     'module_website_name' => 'XOOPS Project',

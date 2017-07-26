@@ -1,4 +1,4 @@
-<!-- phppp (D.J.): http://xoopsforge.com; http://xoops.org.cn -->
+<!-- phppp (D.J.): http://xoopsforge.com; https://xoops.org.cn -->
 
 <div class="tag-page-title">
     <h3><a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/list.tag.php"
