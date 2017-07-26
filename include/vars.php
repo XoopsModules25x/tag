@@ -28,8 +28,7 @@ require_once $GLOBALS['xoops']->path('/modules/tag/include/functions.ini.php');
 
 // include customized variables
 if (($GLOBALS['xoopsModule'] instanceof XoopsModule) && ('tag' === $GLOBALS['xoopsModule']->getVar('dirname', 'n'))
-    && $GLOBALS['xoopsModule']->isactive()
-) {
+    && $GLOBALS['xoopsModule']->isactive()) {
     $GLOBALS['xoopsModuleConfig'] = tag_load_config();
 }
 

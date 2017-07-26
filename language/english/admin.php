@@ -78,13 +78,10 @@ define('_AM_TAG_ABOUT_AUTHOR_INFO', 'Author Infos');
 define('_AM_TAG_ABOUT_DESCRIPTION', 'Description: ');
 
 // text in admin footer
-define('_AM_TAG_ADMIN_FOOTER', "<div class='right smallsmall italic pad5'><b>"
-                               . $GLOBALS['xoopsModule']->getVar('name')
-                               . "</b> is maintained by the <a class='tooltip' rel='external' href='https://xoops.org/' title='Visit XOOPS Community'>XOOPS Community</a></div>");
+define('_AM_TAG_ADMIN_FOOTER', "<div class='right smallsmall italic pad5'><b>" . $GLOBALS['xoopsModule']->getVar('name') . "</b> is maintained by the <a class='tooltip' rel='external' href='https://xoops.org/' title='Visit XOOPS Community'>XOOPS Community</a></div>");
 
 // Text for Admin footer
-define('_AM_TAG_FOOTER',
-       "<div class='center smallsmall italic pad5'>Tag Module is maintained by the <a class='tooltip' rel='external' href='https://xoops.org/' title='Visit XOOPS Community'>XOOPS Community</a></div>");
+define('_AM_TAG_FOOTER', "<div class='center smallsmall italic pad5'>Tag Module is maintained by the <a class='tooltip' rel='external' href='https://xoops.org/' title='Visit XOOPS Community'>XOOPS Community</a></div>");
 
 //2.32
 define('_AM_TAG_DB_UPDATED', 'Database Updated Successfully');

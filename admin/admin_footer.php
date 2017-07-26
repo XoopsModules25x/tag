@@ -19,7 +19,7 @@
  * @since           2.31
  */
 
-$pathIcon32      = \Xmf\Module\Admin::iconUrl('', 32);
+$pathIcon32 = \Xmf\Module\Admin::iconUrl('', 32);
 /*
 echo "<div class='adminfooter'>\n"
     ."  <div style='text-align: center;'>\n"
@@ -36,7 +36,7 @@ echo "<div class='adminfooter'>\n"
      . $GLOBALS['xoopsModule']->getInfo('author_website_name')
      . "' title='"
      . $GLOBALS['xoopsModule']->getInfo('author_website_name')
-     . "' /></a>\n"
+     . "'></a>\n"
      . "  </div>\n"
      . "  <div class='center smallsmall italic pad5'>\n"
      . '    '

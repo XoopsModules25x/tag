@@ -18,13 +18,13 @@
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
  * @since           1.00
  */
+
 use Xmf\Request;
 
 require_once __DIR__ . '/admin_header.php';
 require_once $GLOBALS['xoops']->path('/class/xoopsformloader.php');
 
-
-$adminObject  = \Xmf\Module\Admin::getInstance();
+$adminObject = \Xmf\Module\Admin::getInstance();
 
 xoops_cp_header();
 
@@ -165,15 +165,15 @@ if (empty($tags)) {
                   . "  <tfoot>\n"
                   . "  <tr>\n"
                   . "    <td class='txtcenter' colspan='4'>\n"
-                  . "      <input type='hidden' name='status' value='{$status}' /> \n"
-                  . "      <input type='hidden' name='start' value='{$start}' /> \n"
-                  . "      <input type='hidden' name='modid' value='{$modid}' /> \n"
+                  . "      <input type='hidden' name='status' value='{$status}'> \n"
+                  . "      <input type='hidden' name='start' value='{$start}'> \n"
+                  . "      <input type='hidden' name='modid' value='{$modid}'> \n"
                   . "      <input type='submit' name='submit' value='"
                   . _SUBMIT
-                  . "' /> \n"
+                  . "'> \n"
                   . "      <input type='reset' name='submit' value='"
                   . _CANCEL
-                  . "' />\n"
+                  . "'>\n"
                   . "    </td>\n"
                   . "  </tr>\n"
                   . "  </tfoot>\n";

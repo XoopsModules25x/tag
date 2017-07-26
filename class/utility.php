@@ -15,15 +15,15 @@ class TagUtility extends XoopsObject
     public static function createFolder($folder)
     {
         //        try {
-//            if (!mkdir($folder) && !is_dir($folder)) {
-//                throw new \RuntimeException(sprintf('Unable to create the %s directory', $folder));
-//            } else {
-//                file_put_contents($folder . '/index.html', '<script>history.go(-1);</script>');
-//            }
-//        }
-//        catch (Exception $e) {
-//            echo 'Caught exception: ', $e->getMessage(), "\n", '<br/>';
-//        }
+        //            if (!mkdir($folder) && !is_dir($folder)) {
+        //                throw new \RuntimeException(sprintf('Unable to create the %s directory', $folder));
+        //            } else {
+        //                file_put_contents($folder . '/index.html', '<script>history.go(-1);</script>');
+        //            }
+        //        }
+        //        catch (Exception $e) {
+        //            echo 'Caught exception: ', $e->getMessage(), "\n", '<br>';
+        //        }
         try {
             if (!file_exists($folder)) {
                 if (!mkdir($folder) && !is_dir($folder)) {
@@ -33,7 +33,7 @@ class TagUtility extends XoopsObject
                 }
             }
         } catch (Exception $e) {
-            echo 'Caught exception: ', $e->getMessage(), "\n", '<br/>';
+            echo 'Caught exception: ', $e->getMessage(), "\n", '<br>';
         }
     }
 
@@ -52,7 +52,7 @@ class TagUtility extends XoopsObject
         //                return copy($file, $folder);
         //            }
         //        } catch (Exception $e) {
-        //            echo 'Caught exception: ', $e->getMessage(), "\n", "<br/>";
+        //            echo 'Caught exception: ', $e->getMessage(), "\n", "<br>";
         //        }
         //        return false;
     }
@@ -83,17 +83,24 @@ class TagUtility extends XoopsObject
      * @static
      * @param XoopsModule $module
      *
+     * @param null|string $requiredVer
      * @return bool true if meets requirements, false if not
      */
-    public static function checkVerXoops(XoopsModule $module)
+    public static function checkVerXoops(XoopsModule $module = null, $requiredVer = null)
     {
-        xoops_loadLanguage('admin', $module->dirname());
+        $moduleDirName = basename(dirname(__DIR__));
+        if (null === $module) {
+            $module = XoopsModule::getByDirname($moduleDirName);
+        }
+        xoops_loadLanguage('admin', $moduleDirName);
         //check for minimum XOOPS version
-        $currentVer  = substr(XOOPS_VERSION, 6); // get the numeric part of string
-        $currArray   = explode('.', $currentVer);
-        $requiredVer = '' . $module->getInfo('min_xoops'); //making sure it's a string
-        $reqArray    = explode('.', $requiredVer);
-        $success     = true;
+        $currentVer = substr(XOOPS_VERSION, 6); // get the numeric part of string
+        $currArray  = explode('.', $currentVer);
+        if (null === $requiredVer) {
+            $requiredVer = '' . $module->getInfo('min_xoops'); //making sure it's a string
+        }
+        $reqArray = explode('.', $requiredVer);
+        $success  = true;
         foreach ($reqArray as $k => $v) {
             if (isset($currArray[$k])) {
                 if ($currArray[$k] > $v) {

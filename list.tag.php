@@ -40,8 +40,7 @@ $sort  = '';
 $order = '';
 
 if (empty($modid) && ($GLOBALS['xoopsModule'] instanceof XoopsModule)
-    && ('tag' !== $GLOBALS['xoopsModule']->getVar('dirname'))
-) {
+    && ('tag' !== $GLOBALS['xoopsModule']->getVar('dirname'))) {
     $modid = $GLOBALS['xoopsModule']->getVar('mid');
 }
 
@@ -73,7 +72,7 @@ switch (strtolower($mode_display)) {
 }
 
 $tagHandler = xoops_getModuleHandler('tag', 'tag');
-$tag_config  = tag_load_config();
+$tag_config = tag_load_config();
 tag_define_url_delimiter();
 
 $criteria = new CriteriaCompo();

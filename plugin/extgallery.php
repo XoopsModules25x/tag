@@ -41,7 +41,7 @@ function extgallery_tag_iteminfo(&$items)
     }
 
     $itemHandler = xoops_getModuleHandler('publicphoto', 'extgallery');
-    $items_obj    = $itemHandler->getObjects(new Criteria('photo_id', '(' . implode(', ', $items_id) . ')', 'IN'), true);
+    $items_obj   = $itemHandler->getObjects(new Criteria('photo_id', '(' . implode(', ', $items_id) . ')', 'IN'), true);
 
     foreach (array_keys($items) as $cat_id) {
         foreach (array_keys($items[$cat_id]) as $item_id) {
@@ -84,14 +84,7 @@ function extgallery_tag_synchronization($mid)
      *   reasons.}
      */
     //    if (version_compare( $GLOBALS['xoopsDB']->getServerVersion(), "4.1.0", "ge" )):
-    $sql = "DELETE FROM {$linkHandler->table}"
-           . " WHERE tag_modid = {$mid}"
-           . ' AND (tag_itemid NOT IN '
-           . "       (SELECT DISTINCT {$itemHandler->keyName} "
-           . "        FROM {$itemHandler->table} "
-           . "          WHERE {$itemHandler->table}.photo_approved > 0"
-           . '       )'
-           . '     )';
+    $sql = "DELETE FROM {$linkHandler->table}" . " WHERE tag_modid = {$mid}" . ' AND (tag_itemid NOT IN ' . "       (SELECT DISTINCT {$itemHandler->keyName} " . "        FROM {$itemHandler->table} " . "          WHERE {$itemHandler->table}.photo_approved > 0" . '       )' . '     )';
     /*
         else:
         $sql =  "    DELETE {$linkHandler->table} FROM {$linkHandler->table}" .

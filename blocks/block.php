@@ -80,13 +80,13 @@ xoops_load('constants', 'tag');
 function tag_block_cloud_show($options, $dirname = '', $catid = 0)
 {
     global $xoTheme;
+    /** @var xos_opal_Theme $xoTheme */
     $xoTheme->addStylesheet($GLOBALS['xoops']->url('www/modules/tag/assets/css/style.css'));
 
     if (empty($dirname)) {
         $modid = 0;
     } elseif (isset($GLOBALS['xoopsModule']) && ($GLOBALS['xoopsModule'] instanceof XoopsModule)
-              && ($GLOBALS['xoopsModule']->getVar('dirname') == $dirname)
-    ) {
+              && ($GLOBALS['xoopsModule']->getVar('dirname') == $dirname)) {
         $modid = $GLOBALS['xoopsModule']->getVar('mid');
     } else {
         /** @var XoopsModuleHandler $moduleHandler */
@@ -95,7 +95,7 @@ function tag_block_cloud_show($options, $dirname = '', $catid = 0)
         $modid         = $module->getVar('mid');
     }
 
-    $block       = array();
+    $block      = array();
     $tagHandler = xoops_getModuleHandler('tag', 'tag');
     tag_define_url_delimiter();
 
@@ -164,10 +164,10 @@ function tag_block_cloud_show($options, $dirname = '', $catid = 0)
  */
 function tag_block_cloud_edit($options)
 {
-    $form = _MB_TAG_ITEMS . ":&nbsp;&nbsp;<input type='number' name='options[0]' value='{$options[0]}' min='0' /><br>\n";
-    $form .= _MB_TAG_TIME_DURATION . ":&nbsp;&nbsp;<input type='number' name='options[1]' value='{$options[1]}' min='0' /><br>\n";
-    $form .= _MB_TAG_FONTSIZE_MAX . ":&nbsp;&nbsp;<input type='number' name='options[2]' value='{$options[2]}' min='0' /><br>\n";
-    $form .= _MB_TAG_FONTSIZE_MIN . ":&nbsp;&nbsp;<input type='number' name='options[3]' value='{$options[3]}' min='0' /><br>\n";
+    $form = _MB_TAG_ITEMS . ":&nbsp;&nbsp;<input type='number' name='options[0]' value='{$options[0]}' min='0'><br>\n";
+    $form .= _MB_TAG_TIME_DURATION . ":&nbsp;&nbsp;<input type='number' name='options[1]' value='{$options[1]}' min='0'><br>\n";
+    $form .= _MB_TAG_FONTSIZE_MAX . ":&nbsp;&nbsp;<input type='number' name='options[2]' value='{$options[2]}' min='0'><br>\n";
+    $form .= _MB_TAG_FONTSIZE_MIN . ":&nbsp;&nbsp;<input type='number' name='options[3]' value='{$options[3]}' min='0'><br>\n";
 
     return $form;
 }
@@ -226,8 +226,7 @@ function tag_block_top_show($options, $dirname = '', $catid = 0)
     if (empty($dirname)) {
         $modid = 0;
     } elseif (isset($GLOBALS['xoopsModule']) && ($GLOBALS['xoopsModule'] instanceof XoopsModule)
-              && $GLOBALS['xoopsModule']->getVar('dirname') == $dirname
-    ) {
+              && $GLOBALS['xoopsModule']->getVar('dirname') == $dirname) {
         $modid = $GLOBALS['xoopsModule']->getVar('mid');
     } else {
         /** @var XoopsModuleHandler $moduleHandler */
@@ -236,12 +235,12 @@ function tag_block_top_show($options, $dirname = '', $catid = 0)
         $modid         = $module->getVar('mid');
     }
 
-    $block       = array();
+    $block      = array();
     $tagHandler = xoops_getModuleHandler('tag', 'tag');
     tag_define_url_delimiter();
 
     $criteria = new CriteriaCompo();
-    $sort = '';
+    $sort     = '';
     if (isset($options[2])) {
         $sort = (('a' === $options[2]) || ('alphabet' === $options[2])) ? 'count' : $options[2];
     }
@@ -315,8 +314,8 @@ function tag_block_top_show($options, $dirname = '', $catid = 0)
  */
 function tag_block_top_edit($options)
 {
-    $form = _MB_TAG_ITEMS . ":&nbsp;&nbsp;<input type='number' name='options[0]' value='{$options[0]}' min='0' /><br>\n";
-    $form .= _MB_TAG_TIME_DURATION . ":&nbsp;&nbsp;<input type='number' name='options[1]' value=\"{$options[1]}' min='0' /><br>\n";
+    $form = _MB_TAG_ITEMS . ":&nbsp;&nbsp;<input type='number' name='options[0]' value='{$options[0]}' min='0'><br>\n";
+    $form .= _MB_TAG_TIME_DURATION . ":&nbsp;&nbsp;<input type='number' name='options[1]' value=\"{$options[1]}' min='0'><br>\n";
     $form .= _MB_TAG_SORT . ":&nbsp;&nbsp;<select name='options[2]'>\n";
     $form .= "<option value='a'";
     if ('a' === $options[2]) {
@@ -380,8 +379,7 @@ function tag_block_cumulus_show(array $options, $dirname = '', $catid = 0)
     if (empty($dirname)) {
         $modid = 0;
     } elseif (isset($GLOBALS['xoopsModule']) && ($GLOBALS['xoopsModule'] instanceof XoopsModule)
-              && ($GLOBALS['xoopsModule']->getVar('dirname') == $dirname)
-    ) {
+              && ($GLOBALS['xoopsModule']->getVar('dirname') == $dirname)) {
         $modid = $GLOBALS['xoopsModule']->getVar('mid');
     } else {
         /** @var XoopsModuleHandler $moduleHandler */
@@ -390,7 +388,7 @@ function tag_block_cumulus_show(array $options, $dirname = '', $catid = 0)
         $modid         = $module->getVar('mid');
     }
 
-    $block       = array();
+    $block      = array();
     $tagHandler = xoops_getModuleHandler('tag', 'tag');
     tag_define_url_delimiter();
 

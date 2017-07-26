@@ -153,23 +153,6 @@ class TagFormValidatedInput extends XoopsFormText
         $myClasses = $this->getClass();
         $classes   = $myClasses ? " class='{$myClasses}'" : '';
 
-        return "<input type='"
-               . $this->_type
-               . "' name='"
-               . $this->getName()
-               . "' title='"
-               . $this->getTitle()
-               . "' id='"
-               . $this->getName()
-               . "' size='"
-               . $this->getSize()
-               . "' maxlength='"
-               . $this->getMaxlength()
-               . "' value='"
-               . $this->getValue()
-               . "'"
-               . $classes
-               . $this->getExtra()
-               . ' />';
+        return "<input type='" . $this->_type . "' name='" . $this->getName() . "' title='" . $this->getTitle() . "' id='" . $this->getName() . "' size='" . $this->getSize() . "' maxlength='" . $this->getMaxlength() . "' value='" . $this->getValue() . "'" . $classes . $this->getExtra() . '>';
     }
 }

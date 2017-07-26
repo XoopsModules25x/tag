@@ -44,12 +44,7 @@ class TagBlockForm extends XoopsForm
                 $ret .= $ele;
             } elseif (!$ele->isHidden()) {
                 if ('' != $caption = $ele->getCaption()) {
-                    $ret .= "<div class='xoops-form-element-caption"
-                            . ($ele->isRequired() ? '-required' : '')
-                            . "'>\n"
-                            . "  <span class='caption-text'>{$caption}</span>\n"
-                            . "  <span class='caption-marker'>*</span>\n"
-                            . "</div>\n";
+                    $ret .= "<div class='xoops-form-element-caption" . ($ele->isRequired() ? '-required' : '') . "'>\n" . "  <span class='caption-text'>{$caption}</span>\n" . "  <span class='caption-marker'>*</span>\n" . "</div>\n";
                 }
 
                 $ret .= "<div style='margin:5px 0 8px 0; '>" . $ele->render() . "</div>\n";

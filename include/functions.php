@@ -39,8 +39,7 @@ if (!defined('TAG_FUNCTIONS')):
 
         $tagHandler = null;
         if (!($GLOBALS['xoopsModule'] instanceof XoopsModule)
-            || ('tag' !== $GLOBALS['xoopsModule']->getVar('dirname'))
-        ) {
+            || ('tag' !== $GLOBALS['xoopsModule']->getVar('dirname'))) {
             /** @var XoopsModuleHandler $moduleHandler */
             $moduleHandler = xoops_getHandler('module');
             $module        = $moduleHandler->getByDirname('tag');

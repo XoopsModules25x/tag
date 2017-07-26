@@ -45,7 +45,7 @@ class TagFormTag extends XoopsFormText
         $value = empty($value) ? '' : $value;
         // itemid
         if (!empty($value) && is_numeric($value) && ($GLOBALS['xoopsModule'] instanceof XoopsModule)) {
-            $modid       = $GLOBALS['xoopsModule']->getVar('mid');
+            $modid      = $GLOBALS['xoopsModule']->getVar('mid');
             $tagHandler = xoops_getModuleHandler('tag', 'tag');
             if ($tags = $tagHandler->getByItem($value, $modid, $catid)) {
                 $value = htmlspecialchars(implode(', ', $tags));
@@ -68,19 +68,7 @@ class TagFormTag extends XoopsFormText
         foreach (array_keys($delimiters) as $key) {
             $delimiters[$key] = "<em style='font-weight: bold; color: red; font-style: normal;'>" . htmlspecialchars($delimiters[$key]) . '</em>';
         }
-        $render = "<input type='text' name='"
-                  . $this->getName()
-                  . "' id='"
-                  . $this->getName()
-                  . "' size='"
-                  . $this->getSize()
-                  . "' maxlength='"
-                  . $this->getMaxlength()
-                  . "' value='"
-                  . $this->getValue()
-                  . "' "
-                  . $this->getExtra()
-                  . ' />';
+        $render = "<input type='text' name='" . $this->getName() . "' id='" . $this->getName() . "' size='" . $this->getSize() . "' maxlength='" . $this->getMaxlength() . "' value='" . $this->getValue() . "' " . $this->getExtra() . '>';
         $render .= '<br>' . _MD_TAG_TAG_DELIMITER . ': [' . implode('], [', $delimiters) . ']';
 
         return $render;

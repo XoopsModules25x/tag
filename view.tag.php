@@ -17,6 +17,7 @@
  * @since           1.00
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
  * */
+
 use Xmf\Request;
 
 include __DIR__ . '/header.php';
@@ -43,8 +44,7 @@ $catid    = (int)(empty($_GET['catid']) ? @$args['catid'] : $_GET['catid']);
 $start    = (int)(empty($_GET['start']) ? @$args['start'] : $_GET['start']);
 
 if (empty($modid) && ($GLOBALS['xoopsModule'] instanceof XoopsModule)
-    && 'tag' !== $GLOBALS['xoopsModule']->getVar('dirname', 'n')
-) {
+    && 'tag' !== $GLOBALS['xoopsModule']->getVar('dirname', 'n')) {
     $modid = $GLOBALS['xoopsModule']->getVar('mid');
 }
 

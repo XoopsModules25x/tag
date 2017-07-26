@@ -113,8 +113,7 @@ class TagTagHandler extends XoopsPersistableObjectHandler
 
         if (!empty($modid) && !is_numeric($modid)) {
             if (($GLOBALS['xoopsModule'] instanceof XoopsModule)
-                && ($modid == $GLOBALS['xoopsModule']->getVar('dirname'))
-            ) {
+                && ($modid == $GLOBALS['xoopsModule']->getVar('dirname'))) {
                 $modid = $GLOBALS['xoopsModule']->getVar('mid');
             } else {
                 /** @var XoopsModuleHandler $moduleHandler */
@@ -144,12 +143,7 @@ class TagTagHandler extends XoopsPersistableObjectHandler
         if (!empty($tags_delete)) {
             $tags_delete = array_map(array($this->db, 'quoteString'), $tags_delete);
             if ($tags_id =& $this->getIds(new Criteria('tag_term', '(' . implode(', ', $tags_delete) . ')', 'IN'))) {
-                $sql = "DELETE FROM {$this->table_link}"
-                       . ' WHERE '
-                       . "     {$this->keyName} IN ("
-                       . implode(', ', $tags_id)
-                       . ')'
-                       . "     AND tag_modid = {$modid} AND tag_catid = {$catid} AND tag_itemid = {$itemid}";
+                $sql = "DELETE FROM {$this->table_link}" . ' WHERE ' . "     {$this->keyName} IN (" . implode(', ', $tags_id) . ')' . "     AND tag_modid = {$modid} AND tag_catid = {$catid} AND tag_itemid = {$itemid}";
                 if (false == ($result = $this->db->queryF($sql))) {
                     //@todo: decide if we should do something here on failure
                 }
@@ -195,8 +189,10 @@ class TagTagHandler extends XoopsPersistableObjectHandler
                 }
             }
         }
-        foreach ($tags_update as $tag_id) {
-            $this->update_stats($tag_id, $modid, $catid);
+        if (is_array($tags_update)) {
+            foreach ($tags_update as $tag_id) {
+                $this->update_stats($tag_id, $modid, $catid);
+            }
         }
 
         return true;
@@ -222,8 +218,7 @@ class TagTagHandler extends XoopsPersistableObjectHandler
         $modid = (int)$modid;
         $catid = empty($modid) ? -1 : (int)$catid;
         $count = 0;
-        $sql   = 'SELECT COUNT(*) ' . " FROM {$this->table_link}" . " WHERE tag_id = {$tag_id}" . (empty($modid) ? '' : " AND tag_modid = {$modid}") . (($catid
-                                                                                                                                                         < 0) ? '' : " AND tag_catid = {$catid}");
+        $sql   = 'SELECT COUNT(*) ' . " FROM {$this->table_link}" . " WHERE tag_id = {$tag_id}" . (empty($modid) ? '' : " AND tag_modid = {$modid}") . (($catid < 0) ? '' : " AND tag_catid = {$catid}");
 
         if ($result = $this->db->query($sql)) {
             list($count) = $this->db->fetchRow($result);
@@ -286,11 +281,9 @@ class TagTagHandler extends XoopsPersistableObjectHandler
     {
         $ret = array();
         if ($fromStats) {
-            $sql = "SELECT DISTINCT(o.{$this->keyName}), o.tag_term, o.tag_status, SUM(l.tag_count) AS count, l.tag_modid"
-                   . " FROM {$this->table} AS o LEFT JOIN {$this->table_stats} AS l ON l.{$this->keyName} = o.{$this->keyName}";
+            $sql = "SELECT DISTINCT(o.{$this->keyName}), o.tag_term, o.tag_status, SUM(l.tag_count) AS count, l.tag_modid" . " FROM {$this->table} AS o LEFT JOIN {$this->table_stats} AS l ON l.{$this->keyName} = o.{$this->keyName}";
         } else {
-            $sql = "SELECT DISTINCT(o.{$this->keyName}), o.tag_term, o.tag_status, COUNT(l.tl_id) AS count, l.tag_modid"
-                   . " FROM {$this->table} AS o LEFT JOIN {$this->table_link} AS l ON l.{$this->keyName} = o.{$this->keyName}";
+            $sql = "SELECT DISTINCT(o.{$this->keyName}), o.tag_term, o.tag_status, COUNT(l.tl_id) AS count, l.tag_modid" . " FROM {$this->table} AS o LEFT JOIN {$this->table_link} AS l ON l.{$this->keyName} = o.{$this->keyName}";
         }
 
         $limit = null;

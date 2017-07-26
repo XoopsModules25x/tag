@@ -59,8 +59,8 @@ function smartfaq_tag_iteminfo(&$items)
         }
     }
     $itemHandler = sf_gethandler('faq');
-    $items_obj    = $itemHandler->getObjects(new Criteria('faqid', '(' . implode(', ', $items_id) . ')', 'IN'), true);
-    $myts         = MyTextSanitizer::getInstance();
+    $items_obj   = $itemHandler->getObjects(new Criteria('faqid', '(' . implode(', ', $items_id) . ')', 'IN'), true);
+    $myts        = MyTextSanitizer::getInstance();
     foreach (array_keys($items) as $cat_id) {
         foreach (array_keys($items[$cat_id]) as $item_id) {
             $item_obj = $items_obj[$item_id];
@@ -100,15 +100,7 @@ function smartfaq_tag_synchronization($mid)
      *   reasons.}
      */
     //    if (version_compare( $GLOBALS['xoopsDB']->getServerVersion(), "4.1.0", "ge" )):
-    $sql = "DELETE FROM {$linkHandler->table}"
-           . " WHERE tag_modid = {$mid}"
-           . '    AND '
-           . '    (tag_itemid NOT IN '
-           . "        (SELECT DISTINCT {$itemHandler->keyName} "
-           . "           FROM {$itemHandler->table} "
-           . "           WHERE {$itemHandler->table}.approved > 0"
-           . '        )'
-           . '    )';
+    $sql = "DELETE FROM {$linkHandler->table}" . " WHERE tag_modid = {$mid}" . '    AND ' . '    (tag_itemid NOT IN ' . "        (SELECT DISTINCT {$itemHandler->keyName} " . "           FROM {$itemHandler->table} " . "           WHERE {$itemHandler->table}.approved > 0" . '        )' . '    )';
     /*
         else:
         $sql =  "    DELETE {$linkHandler->table} FROM {$linkHandler->table}" .
