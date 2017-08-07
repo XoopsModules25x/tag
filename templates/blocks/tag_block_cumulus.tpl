@@ -1,7 +1,7 @@
 <{ $xoTheme->addScript("browse.php?modules/tag/assets/js/swfobject.js") }>
 <div id="tags" class=txtcenter>
 <{foreach item=tag from=$block.tags}>
-        <a href="<{$xoops_url}>/modules/<{$block.tag_dirname}>/view.tag.php<{$smarty.const.URL_DELIMITER}><{$tag.id}>/" title="<{$tag.term}>"><{$tag.term}></a>
+        <a href="<{$xoops_url}>/modules/<{$block.tag_dirname}>/view.tag.php<{$smarty.const.URL_DELIMITER}><{$tag.id}>/" title="<{$tag.term}>"><{$tag.title}></a>
 <{/foreach}>
 
 <script type="text/javascript">

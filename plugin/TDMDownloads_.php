@@ -1,18 +1,26 @@
 <?php
+/*
+ You may not change or alter any portion of this comment or credits
+ of supporting developers from this source code or any supporting source code
+ which is considered copyrighted (c) material of the original comment or credit authors.
+
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+*/
+
 /**
- * TDMDownload
+ * XOOPS tag management module - TDMDownload
  *
- * You may not change or alter any portion of this comment or credits
- * of supporting developers from this source code or any supporting source code
- * which is considered copyrighted (c) material of the original comment or credit authors.
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- *
- * @copyright   Gregory Mage (Aka Mage)
- * @license     GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
- * @author      Gregory Mage (Aka Mage)
+ * @package        tag
+ * @copyright       Gregory Mage (Aka Mage)
+ * @license         {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
+ * @author          Gregory Mage (Aka Mage)
+ * @since           1.00
+ * @version         $Id: TDMDownloads.php 12898 2014-12-08 22:05:21Z zyspec $
  */
+
+defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
 function TDMDownloads_tag_iteminfo(&$items)
 {
@@ -27,7 +35,7 @@ function TDMDownloads_tag_iteminfo(&$items)
         }
     }
 
-    $item_handler = xoops_getmodulehandler('tdmdownloads_downloads', 'TDMDownloads');
+    $item_handler =& xoops_getmodulehandler('tdmdownloads_downloads', 'TDMDownloads');
     $items_obj = $item_handler->getObjects(new Criteria("lid", "(" . implode(", ", $items_id) . ")", "IN"), true);
 
     foreach (array_keys($items) as $cat_id) {
@@ -40,20 +48,28 @@ function TDMDownloads_tag_iteminfo(&$items)
                                                   'time' => $item_obj->getVar("date"),
                                                   'tags' => '',
                                                   'content' => '',
-                    );
-                }
+                );
             }
+        }
     }
     unset($items_obj);
+
+    return true;
 }
 
 function TDMDownloads_tag_synchronization($mid)
 {
-    $item_handler = xoops_getmodulehandler('tdmdownloads_downloads', 'TDMDownloads');
-    $link_handler = xoops_getmodulehandler("link", "tag");
+    $item_handler =& xoops_getmodulehandler('tdmdownloads_downloads', 'TDMDownloads');
+    $link_handler =& xoops_getmodulehandler("link", "tag");
+
+    $mid = XoopsFilterInput::clean($mid, 'INT');
 
     /* clear tag-item links */
-    if (version_compare( mysql_get_server_info(), "4.1.0", "ge" )):
+    /** {@internal the following statement isn't really needed any more (MySQL is really old)
+     *   and some hosting companies block the mysql_get_server_info() function for security
+     *   reasons.}
+     */
+//    if (version_compare( mysql_get_server_info(), "4.1.0", "ge" )):
     $sql =  "    DELETE FROM {$link_handler->table}" .
             "    WHERE " .
             "        tag_modid = {$mid}" .
@@ -64,6 +80,7 @@ function TDMDownloads_tag_synchronization($mid)
             "                WHERE {$item_handler->table}.status > 0" .
             "            ) " .
             "        )";
+/*
     else:
     $sql =  "    DELETE {$link_handler->table} FROM {$link_handler->table}" .
             "    LEFT JOIN {$item_handler->table} AS aa ON {$link_handler->table}.tag_itemid = aa.{$item_handler->keyName} " .
@@ -74,7 +91,10 @@ function TDMDownloads_tag_synchronization($mid)
             "            OR aa.status < 1" .
             "        )";
     endif;
+*/
     if (!$result = $link_handler->db->queryF($sql)) {
         //xoops_error($link_handler->db->error());
     }
+
+    return ($result) ? true : false;
 }

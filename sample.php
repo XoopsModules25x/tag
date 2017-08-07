@@ -56,8 +56,8 @@ $form_item->addElement(new TagFormTag('item_tag', 60, 255, $itemid, $catid = 0))
 
 /* Step 2: add tag storage after item storage */
 // File: submit.item.php
-$tagHandler = xoops_getModuleHandler('tag', 'tag');
-$tagHandler->updateByItem($_POST['item_tag'], $itemid, $GLOBALS['xoopsModule']->getVar('dirname'), $catid = 0);
+$tag_handler = xoops_getModuleHandler('tag', 'tag');
+$tag_handler->updateByItem($_POST['item_tag'], $itemid, $GLOBALS['xoopsModule']->getVar('dirname'), $catid = 0);
 
 /* Step 3: define functions to build info of tagged items */
 // File: /modules/tag/plugin/mymodule.php OR /modules/mymodule/include/plugin.tag.php
@@ -75,8 +75,8 @@ function mymodule_tag_iteminfo(&$items)
             $items_id[] = (int)$item_id;
         }
     }
-    $itemHandler = xoops_getModuleHandler('item', 'module');
-    $items_obj    = $itemHandler->getObjects(new Criteria('itemid', '(' . implode(', ', $items_id) . ')', 'IN'), true);
+    $item_handler = xoops_getModuleHandler('item', 'module');
+    $items_obj    = $item_handler->getObjects(new Criteria('itemid', '(' . implode(', ', $items_id) . ')', 'IN'), true);
 
     foreach (array_keys($items) as $cat_id) {
         foreach (array_keys($items[$cat_id]) as $item_id) {

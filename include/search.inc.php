@@ -57,7 +57,7 @@ function &tag_search($queryarray, $andor, $limit, $offset, $userid, $sortby = 't
     $result = $GLOBALS['xoopsDB']->query($sql, $limit, $offset);
     $i      = 0;
     while ($myrow = $GLOBALS['xoopsDB']->fetchArray($result)) {
-        $ret[$i]['link']  = 'view.tag.php?tag=' . $myrow['tag_id'];
+        $ret[$i]['link']  = 'view.tag.php?tag=' . $myrow['tag_term'];
         $ret[$i]['title'] = $myrow['tag_term'];
         ++$i;
     }
