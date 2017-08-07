@@ -148,7 +148,7 @@ $modversion['blocks'][] = array(
     'show_func'   => 'mymodule_tag_block_top_show',
     'edit_func'   => 'mymodule_tag_block_top_edit',
     'options'     => '50|30|c',
-    'template'    => 'mymodule_tag_block_top.html'
+    'template'    => 'mymodule_tag_block_top.tpl'
 );
 // File: module_block_tag.php
 /**
