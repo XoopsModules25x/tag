@@ -6,9 +6,9 @@
 
 <div class="tag-jumpto" style="padding-top: 10px;">
     <form id="form-tag-jumpto" name="form-tag-jumpto" action="<{$xoops_url}>/modules/<{$xoops_dirname}>/view.tag.php" method="get">
-        <div>
-            <{$lang_jumpto}>: <input type="text" id="term" name="term" value="" size="20"/> <input type="submit" name="submit" value="<{$smarty.const._SUBMIT}>"/>
-        </div>
+    <div>
+        <{$lang_jumpto}>:&nbsp;<input type="text" id="term" name="term" class="keyword" value="" size="20" />&nbsp;<input type="submit" value="<{$smarty.const._SUBMIT}>" />
+    </div>
     </form>
 </div>
 

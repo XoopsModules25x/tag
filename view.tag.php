@@ -35,7 +35,7 @@ if (tag_parse_args($args_num, $args, $args_str)) {
 }
 
 $tag_id   = (int)(empty($_GET['tag']) ? @$args['tag'] : $_GET['tag']);
-$tag_term = empty($_GET['term']) ? @$args['term'] : XoopsRequest::getString('term', '', 'GET');
+$tag_term = empty($_GET['term=']) ? @$args['term'] : XoopsRequest::getString('term=', '', 'GET');
 $modid    = (int)(empty($_GET['modid']) ? @$args['modid'] : $_GET['modid']);
 $catid    = (int)(empty($_GET['catid']) ? @$args['catid'] : $_GET['catid']);
 $start    = (int)(empty($_GET['start']) ? @$args['start'] : $_GET['start']);
@@ -45,17 +45,17 @@ if (empty($modid) && ($GLOBALS['xoopsModule'] instanceof XoopsModule) && 'tag' !
 }
 
 if (empty($tag_id) && empty($tag_term)) {
-    redirect_header($GLOBALS['xoops']->url('www/modules/' . $GLOBALS['xoopsModule']->getVar('dirname') . '/index.php'), 2, _MD_TAG_INVALID);
+    redirect_header($GLOBALS['xoops']->url($GLOBALS['xoopsModule']->getVar('dirname') . '/'), 2, _MD_TAG_INVALID);
 }
 $tag_handler = xoops_getModuleHandler('tag', 'tag');
 if (!empty($tag_id)) {
     if (!$tag_obj =& $tag_handler->get($tag_id)) {
-        redirect_header($GLOBALS['xoops']->url('www/modules/' . $GLOBALS['xoopsModule']->getVar('dirname') . '/index.php'), 2, _MD_TAG_INVALID);
+        redirect_header($GLOBALS['xoops']->url($GLOBALS['xoopsModule']->getVar('dirname') . '/'), 2, _MD_TAG_INVALID);
     }
     $tag_term = $tag_obj->getVar('tag_term', 'n');
 } else {
     if (!$tags_obj = $tag_handler->getObjects(new Criteria('tag_term', $myts->addSlashes(trim($tag_term))))) {
-        redirect_header($GLOBALS['xoops']->url('www/modules/' . $GLOBALS['xoopsModule']->getVar('dirname') . '/index.php'), 2, _MD_TAG_INVALID);
+        redirect_header($GLOBALS['xoops']->url($GLOBALS['xoopsModule']->getVar('dirname') . '/'), 2, _MD_TAG_INVALID);
     }
     $tag_obj =& $tags_obj[0];
     $tag_id  = $tag_obj->getVar('tag_id');

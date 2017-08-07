@@ -58,10 +58,10 @@ xoops_load('constants', 'tag');
  *            }
  *        </code>
  *    </li>
- *    <li>Create your tag_block_cloud template, for example newbb_block_tag_cloud.tpl;</li>
+ *    <li>Create your tag_block_cloud template, for example newbb_block_tag_cloud.html;</li>
  *    <li>Include tag_block_cloud template in your created block template:<br>
  *        <code>
- *            <{include file="db:tag_block_cloud.tpl"}>
+ *            <{include file="db:tag_block_cloud.html"}>
  *        </code>
  *    </li>
  * </ul>
@@ -199,10 +199,10 @@ function tag_block_cloud_edit($options)
  *            }
  *        </code>
  *    </li>
- *    <li>Create your tag_block_top template, for example newbb_block_tag_top.tpl;</li>
+ *    <li>Create your tag_block_top template, for example newbb_block_tag_top.html;</li>
  *    <li>Include tag_block_top template in your created block template:<br>
  *        <code>
- *            <{include file="db:tag_block_top.tpl"}>
+ *            <{include file="db:tag_block_top.html"}>
  *        </code>
  *    </li>
  * </ul>
@@ -397,7 +397,7 @@ function tag_block_cumulus_show(array $options, $dirname = '', $catid = 0)
     $count_max = 0;
     $count_min = 0;
     $tags_term = array();
-    foreach (array_keys($tags) as $key) {
+    foreach (array_keys($tags) as $key) { 
         $count_max   = max(0, $tags[$key]['count'], $count_max);
         $count_min   = min(0, $tags[$key]['count'], $count_min);
         $tags_term[] = mb_strtolower($tags[$key]['term']);
@@ -418,12 +418,13 @@ function tag_block_cumulus_show(array $options, $dirname = '', $catid = 0)
             'id'    => $tags[$key]['id'],
             'font'  => $count_interval ? floor(($tags[$key]['count'] - $count_min) * $font_ratio + $font_min) : 12,
             'level' => empty($count_max) ? 0 : floor(($tags[$key]['count'] - $count_min) * $level_limit / $count_max),
-            'term'  => $tags[$key]['term'],
+            'term'  => urlencode($tags[$key]['term']),
+            'title' => htmlspecialchars($tags[$key]['term']),
             'count' => $tags[$key]['count']
         );
     }
     unset($tags, $tags_term);
-    $block['tags'] =& $tags_data;
+    $block['tags'] = $tags_data;
 
     $block['tag_dirname'] = 'tag';
     if (!empty($modid)) {
@@ -449,10 +450,10 @@ function tag_block_cumulus_show(array $options, $dirname = '', $catid = 0)
     foreach ($tags_data as $term) {
         // assign font size
         $output .= <<<EOT
-<a href='{$xoops_url}/modules/tag/view.tag.php?{$term['id']}' style='{$term['font']}'>{$term['term']}</a>
+<a href='{$xoops_url}tag/view.tag.php?{$term['term']}' style='{$term['font']}'>{$term['title']}</a>
 EOT;
     }
-    $output .= '</tags>';
+    $output .= '</tags>'; 
     $flash_params['tags_formatted_flash'] = urlencode($output);
     if (1 == $options[7]) {
         $flash_params['transparency'] = 'widget_so.addParam("wmode", "transparent");';
@@ -461,6 +462,7 @@ EOT;
 
     return $block;
 }
+
 
 /**
  *
