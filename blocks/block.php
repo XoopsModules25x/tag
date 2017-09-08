@@ -58,7 +58,7 @@ xoops_load('constants', 'tag');
  *            }
  *        </code>
  *    </li>
- *    <li>Create your tag_block_cloud template, for example newbb_block_tag_cloud.html;</li>
+ *    <li>Create your tag_block_cloud template, for example newbb_block_tag_cloud.tpl;</li>
  *    <li>Include tag_block_cloud template in your created block template:<br>
  *        <code>
  *            <{include file="db:tag_block_cloud.tpl"}>
@@ -145,7 +145,7 @@ function tag_block_cloud_show($options, $dirname = '', $catid = 0)
     }
     unset($tags, $tags_term);
 
-    $block['tags']        =& $tags_data;
+    $block['tags']        = $tags_data;
     $block['tag_dirname'] = 'tag';
     if (!empty($modid)) {
         /** @var XoopsModuleHandler $moduleHandler */
@@ -164,10 +164,10 @@ function tag_block_cloud_show($options, $dirname = '', $catid = 0)
  */
 function tag_block_cloud_edit($options)
 {
-    $form = _MB_TAG_ITEMS . ":&nbsp;&nbsp;<input type='number' name='options[0]' value='{$options[0]}' min='0' /><br>\n";
-    $form .= _MB_TAG_TIME_DURATION . ":&nbsp;&nbsp;<input type='number' name='options[1]' value='{$options[1]}' min='0' /><br>\n";
-    $form .= _MB_TAG_FONTSIZE_MAX . ":&nbsp;&nbsp;<input type='number' name='options[2]' value='{$options[2]}' min='0' /><br>\n";
-    $form .= _MB_TAG_FONTSIZE_MIN . ":&nbsp;&nbsp;<input type='number' name='options[3]' value='{$options[3]}' min='0' /><br>\n";
+    $form = _MB_TAG_ITEMS . ":&nbsp;&nbsp;<input type='number' name='options[0]' value='{$options[0]}' min='0' /><br />\n";
+    $form .= _MB_TAG_TIME_DURATION . ":&nbsp;&nbsp;<input type='number' name='options[1]' value='{$options[1]}' min='0' /><br />\n";
+    $form .= _MB_TAG_FONTSIZE_MAX . ":&nbsp;&nbsp;<input type='number' name='options[2]' value='{$options[2]}' min='0' /><br />\n";
+    $form .= _MB_TAG_FONTSIZE_MIN . ":&nbsp;&nbsp;<input type='number' name='options[3]' value='{$options[3]}' min='0' /><br />\n";
 
     return $form;
 }
@@ -203,7 +203,7 @@ function tag_block_cloud_edit($options)
  *            }
  *        </code>
  *    </li>
- *    <li>Create your tag_block_top template, for example newbb_block_tag_top.html;</li>
+ *    <li>Create your tag_block_top template, for example newbb_block_tag_top.tpl;</li>
  *    <li>Include tag_block_top template in your created block template:<br>
  *        <code>
  *            <{include file="db:tag_block_top.tpl"}>
@@ -296,7 +296,7 @@ function tag_block_top_show($options, $dirname = '', $catid = 0)
     }
     unset($tags, $tags_term);
 
-    $block['tags']        =& $tags_data;
+    $block['tags']        = $tags_data;
     $block['tag_dirname'] = 'tag';
     if (!empty($modid)) {
         /** @var XoopsModuleHandler $moduleHandler */
@@ -315,8 +315,8 @@ function tag_block_top_show($options, $dirname = '', $catid = 0)
  */
 function tag_block_top_edit($options)
 {
-    $form = _MB_TAG_ITEMS . ":&nbsp;&nbsp;<input type='number' name='options[0]' value='{$options[0]}' min='0' /><br>\n";
-    $form .= _MB_TAG_TIME_DURATION . ":&nbsp;&nbsp;<input type='number' name='options[1]' value=\"{$options[1]}' min='0' /><br>\n";
+    $form = _MB_TAG_ITEMS . ":&nbsp;&nbsp;<input type='number' name='options[0]' value='{$options[0]}' min='0' /><br />\n";
+    $form .= _MB_TAG_TIME_DURATION . ":&nbsp;&nbsp;<input type='number' name='options[1]' value='{$options[1]}' min='0' /><br />\n";
     $form .= _MB_TAG_SORT . ":&nbsp;&nbsp;<select name='options[2]'>\n";
     $form .= "<option value='a'";
     if ('a' === $options[2]) {
@@ -333,7 +333,7 @@ function tag_block_top_edit($options)
         $form .= ' selected ';
     }
     $form .= '>' . _MB_TAG_TIME . "</option>\n";
-    $form .= "</select>\n";
+    $form .= "</select><br />\n";
 
     return $form;
 }
@@ -433,12 +433,13 @@ function tag_block_cumulus_show(array $options, $dirname = '', $catid = 0)
             'id'    => $tags[$key]['id'],
             'font'  => $count_interval ? floor(($tags[$key]['count'] - $count_min) * $font_ratio + $font_min) : 12,
             'level' => empty($count_max) ? 0 : floor(($tags[$key]['count'] - $count_min) * $level_limit / $count_max),
-            'term'  => $tags[$key]['term'],
+            'term'  => urlencode($tags[$key]['term']),
+            'title' => htmlspecialchars($tags[$key]['term']),            
             'count' => $tags[$key]['count']
         );
     }
     unset($tags, $tags_term);
-    $block['tags'] =& $tags_data;
+    $block['tags'] = $tags_data;
 
     $block['tag_dirname'] = 'tag';
     if (!empty($modid)) {
@@ -475,7 +476,7 @@ function tag_block_cumulus_show(array $options, $dirname = '', $catid = 0)
     foreach ($tags_data as $term) {
         // assign font size
         $output .= <<<EOT
-<a href='{$xoops_url}/modules/tag/view.tag.php?{$term['id']}' style='{$term['font']}'>{$term['term']}</a>
+<a href='{$xoops_url}/modules/tag/view.tag.php?{$term['term']}' style='{$term['font']}'>{$term['title']}</a>
 EOT;
     }
     $output                               .= '</tags>';
