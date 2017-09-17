@@ -3,12 +3,10 @@
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
  which is considered copyrighted (c) material of the original comment or credit authors.
-
  This program is distributed in the hope that it will be useful,
  but WITHOUT ANY WARRANTY; without even the implied warranty of
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 */
-
 /**
  * XOOPS tag management module
  *
@@ -18,19 +16,15 @@
  * @author         Taiwen Jiang (phppp or D.J.) <php_pp@hotmail.com>
  * @since          1.00
  */
-
 defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 define('_AM_TAG_TERM', 'Tag');
-
 define('_AM_TAG_STATS', 'Statistic Infomation');
 define('_AM_TAG_COUNT_TAG', 'Tag count: %s');
 define('_AM_TAG_COUNT_ITEM', 'Item count: %s');
 define('_AM_TAG_COUNT_MODULE', 'Module:');
 define('_AM_TAG_COUNT_MODULE_TITLE', 'Item Count / Tag Count');
-
 define('_AM_TAG_EDIT', 'Tag Admin');
 define('_AM_TAG_SYNCHRONIZATION', 'Synchronize');
-
 define('_AM_TAG_ACTIVE', 'Active');
 define('_AM_TAG_INACTIVE', 'Inactive');
 define('_AM_TAG_GLOBAL', 'Global');
@@ -38,7 +32,6 @@ define('_AM_TAG_ALL', 'All modules');
 define('_AM_TAG_NUM', 'Number for each time');
 define('_AM_TAG_IN_PROCESS', 'Data synchronization is in process, please wait for a while ...');
 define('_AM_TAG_FINISHED', 'Data synchronization is finished.');
-
 //2.31
 // index.php
 /*
@@ -57,12 +50,10 @@ define('_AM_TAG_INDEX_TPL_VIEW_DESC', 'Links of a tag');
 define('_AM_TAG_INDEX_TPL_BAR_DESC', 'Tag list in an item');
 define('_AM_TAG_INDEX_ADMINTPL_ABOUT_DESC', '');
 define('_AM_TAG_INDEX_ADMINTPL_HELP_DESC', '');
-
 // Text for Admin footer
 define('_AM_TAG_MAINTAINED_BY', 'XOOPS Tag is maintained by the');
 define('_AM_TAG_MAINTAINED_TITLE', 'Visit XOOPS Community');
 define('_AM_TAG_MAINTAINED_TEXT', 'XOOPS Community');
-
 // About.php
 define('_AM_TAG_ABOUT_RELEASEDATE', 'Released: ');
 define('_AM_TAG_ABOUT_UPDATEDATE', 'Updated: ');
@@ -76,27 +67,15 @@ define('_AM_TAG_ABOUT_CHANGELOG', 'Change Log');
 define('_AM_TAG_ABOUT_MODULE_INFO', 'Module Infos');
 define('_AM_TAG_ABOUT_AUTHOR_INFO', 'Author Infos');
 define('_AM_TAG_ABOUT_DESCRIPTION', 'Description: ');
-
 // text in admin footer
 define('_AM_TAG_ADMIN_FOOTER', "<div class='right smallsmall italic pad5'><b>"
                                . $GLOBALS['xoopsModule']->getVar('name')
                                . "</b> is maintained by the <a class='tooltip' rel='external' href='http://xoops.org/' title='Visit XOOPS Community'>XOOPS Community</a></div>");
-
-<<<<<<< HEAD
-=======
-//ModuleAdmin
-//define('_AM_MODULEADMIN_MISSING', 'Error: The ModuleAdmin class is missing. Please install the ModuleAdmin Class (see /docs/readme.txt)');
-
-//define('_AM_TAG_MISSING','Error: The ModuleAdmin class is missing. Please install the ModuleAdmin Class into /Frameworks (see /docs/readme.txt)');
-
->>>>>>> 756ad9d993e83675a65cc46a191191f3c8443f4b
 // Text for Admin footer
 define('_AM_TAG_FOOTER',
        "<div class='center smallsmall italic pad5'>Tag Module is maintained by the <a class='tooltip' rel='external' href='http://xoops.org/' title='Visit XOOPS Community'>XOOPS Community</a></div>");
-
 //2.32
 define('_AM_TAG_DB_UPDATED', 'Database Updated Successfully');
-
 //2.33
 define('_AM_TAG_UPGRADEFAILED0', "Update failed - couldn't rename field '%s'");
 define('_AM_TAG_UPGRADEFAILED1', "Update failed - couldn't add new fields");
