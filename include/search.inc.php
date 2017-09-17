@@ -32,7 +32,7 @@ defined('XOOPS_ROOT_PATH') || exit('Restricted access');
  */
 function &tag_search($queryarray, $andor, $limit, $offset, $userid, $sortby = 'tag_term ASC')
 {
-    $ret   = array();
+    $ret   = [];
     $count = is_array($queryarray) ? count($queryarray) : 0;
     $sql   = 'SELECT tag_id, tag_term FROM ' . $GLOBALS['xoopsDB']->prefix('tag_tag');
     if ($count > 0) {

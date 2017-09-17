@@ -40,7 +40,7 @@ $tags = $tagHandler->getByLimit(0, 0, $criteria);
 
 $count_max = 0;
 $count_min = 0;
-$tags_term = array();
+$tags_term = [];
 foreach (array_keys($tags) as $key) {
     $count_max   = max(0, $tags[$key]['count'], $count_max);
     $count_min   = min(0, $tags[$key]['count'], $count_min);
@@ -56,25 +56,25 @@ $font_max   = $tag_config['font_max'];
 $font_min   = $tag_config['font_min'];
 $font_ratio = $count_interval ? ($font_max - $font_min) / $count_interval : 1;
 
-$tags_data = array();
+$tags_data = [];
 foreach (array_keys($tags) as $key) {
-    $tags_data[] = array(
+    $tags_data[] = [
         'id'    => $tags[$key]['id'],
         'font'  => empty($count_interval) ? 100 : floor(($tags[$key]['count'] - $count_min) * $font_ratio) + $font_min,
         'level' => empty($count_max) ? 0 : floor(($tags[$key]['count'] - $count_min) * $level_limit / $count_max),
         'term'  => urlencode($tags[$key]['term']),
         'title' => htmlspecialchars($tags[$key]['term']),
         'count' => $tags[$key]['count']
-    );
+    ];
 }
 unset($tags, $tags_term);
 $pagenav = "<a href='" . $GLOBALS['xoops']->url('www/modules/tag/list.tag.php') . "'>" . _MORE . '</a>';
 
-$GLOBALS['xoopsTpl']->assign(array(
+$GLOBALS['xoopsTpl']->assign([
                                  'lang_jumpto'    => _MD_TAG_JUMPTO,
                                  'pagenav'        => $pagenav,
                                  'tag_page_title' => $page_title
-                             ));
+                             ]);
 $GLOBALS['xoopsTpl']->assign_by_ref('tags', $tags_data);
 
 // Loading module meta data, NOT THE RIGHT WAY DOING IT

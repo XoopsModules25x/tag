@@ -42,7 +42,7 @@ function myalbum_tag_iteminfo(&$items)
         return false;
     }
 
-    $items_id = array();
+    $items_id = [];
     foreach (array_keys($items) as $cat_id) {
         // Some handling here to build the link upon catid
         // catid is not used in myalbum, so just skip it
@@ -53,20 +53,20 @@ function myalbum_tag_iteminfo(&$items)
     }
     $itemHandler = xoops_getModuleHandler('photos', 'myalbum');
     $textHandler = xoops_getModuleHandler('text', 'myalbum');
-    $items_obj    = $itemHandler->getObjects(new Criteria('lid', '(' . implode(', ', $items_id) . ')', 'IN'), true);
+    $items_obj   = $itemHandler->getObjects(new Criteria('lid', '(' . implode(', ', $items_id) . ')', 'IN'), true);
 
     foreach (array_keys($items) as $cat_id) {
         foreach (array_keys($items[$cat_id]) as $item_id) {
-            $item_obj                 =& $items_obj[$item_id];
+            $item_obj                 = $items_obj[$item_id];
             $text                     = $textHandler->get($item_id);
-            $items[$cat_id][$item_id] = array(
+            $items[$cat_id][$item_id] = [
                 'title'   => $item_obj->getVar('title'),
                 'uid'     => $item_obj->getVar('submitter'),
                 'link'    => "photo.php?lid={$item_id}&cid=" . $item_obj->getVar('cid'),
                 'time'    => $item_obj->getVar('date'),
                 'tags'    => tag_parse_tag($item_obj->getVar('tags', 'n')),
                 'content' => $GLOBALS['myts']->displayTarea($text->getVar('description'), 1, 1, 1, 1, 1, 1)
-            );
+            ];
         }
     }
     unset($items_obj);

@@ -36,7 +36,7 @@ function tagBar($tags, $catid = 0, $modid = 0)
     static $loaded, $delimiter;
 
     if (empty($tags)) {
-        return array();
+        return [];
     }
 
     if (!isset($loaded)) {
@@ -63,7 +63,7 @@ function tagBar($tags, $catid = 0, $modid = 0)
         }
         $tagHandler = xoops_getModuleHandler('tag', 'tag');
         if (!$tags = $tagHandler->getByItem($tags, $modid, $catid)) {
-            return array();
+            return [];
         }
 
         // if ready, do nothing
@@ -71,9 +71,9 @@ function tagBar($tags, $catid = 0, $modid = 0)
 
         // parse
     } elseif (!$tags = tag_parse_tag($tags)) {
-        return array();
+        return [];
     }
-    $tags_data = array();
+    $tags_data = [];
     foreach ($tags as $tag) {
         $tags_data[] = "<a href='"
                        . $GLOBALS['xoops']->url('www/modules/' . $GLOBALS['xoopsModule']->getVar('dirname') . '/view.tag.php' . URL_DELIMITER . urlencode($tag))
@@ -84,9 +84,9 @@ function tagBar($tags, $catid = 0, $modid = 0)
                        . '</a>';
     }
 
-    return array(
+    return [
         'title'     => _MD_TAG_TAGS,
         'delimiter' => $delimiter,
         'tags'      => $tags_data
-    );
+    ];
 }

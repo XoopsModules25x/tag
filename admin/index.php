@@ -40,15 +40,15 @@ if (false === ($result = $GLOBALS['xoopsDB']->query($sql))) {
 $sql           = 'SELECT tag_modid, SUM(tag_count) AS count_item, COUNT(DISTINCT tag_id) AS count_tag';
 $sql           .= ' FROM ' . $GLOBALS['xoopsDB']->prefix('tag_stats');
 $sql           .= ' GROUP BY tag_modid';
-$counts_module = array();
+$counts_module = [];
 if (false === ($result = $GLOBALS['xoopsDB']->query($sql))) {
     xoops_error($GLOBALS['xoopsDB']->error());
 } else {
     while ($myrow = $GLOBALS['xoopsDB']->fetchArray($result)) {
-        $counts_module[$myrow['tag_modid']] = array(
+        $counts_module[$myrow['tag_modid']] = [
             'count_item' => $myrow['count_item'],
             'count_tag'  => $myrow['count_tag']
-        );
+        ];
     }
     if (!empty($counts_module)) {
         /** @var XoopsModuleHandler $moduleHandler */

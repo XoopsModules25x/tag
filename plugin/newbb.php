@@ -42,7 +42,7 @@ function newbb_tag_iteminfo(&$items)
         return false;
     }
 
-    $items_id = array();
+    $items_id = [];
     foreach (array_keys($items) as $cat_id) {
         // Some handling here to build the link upon catid
         // catid is not used in newbb, so just skip it
@@ -52,19 +52,19 @@ function newbb_tag_iteminfo(&$items)
         }
     }
     $itemHandler = xoops_getModuleHandler('topic', 'newbb');
-    $items_obj    = $itemHandler->getObjects(new Criteria('topic_id', '(' . implode(', ', $items_id) . ')', 'IN'), true);
+    $items_obj   = $itemHandler->getObjects(new Criteria('topic_id', '(' . implode(', ', $items_id) . ')', 'IN'), true);
 
     foreach (array_keys($items) as $cat_id) {
         foreach (array_keys($items[$cat_id]) as $item_id) {
-            $item_obj                 =& $items_obj[$item_id];
-            $items[$cat_id][$item_id] = array(
+            $item_obj                 = $items_obj[$item_id];
+            $items[$cat_id][$item_id] = [
                 'title'   => $item_obj->getVar('topic_title'),
                 'uid'     => $item_obj->getVar('topic_poster'),
                 'link'    => "viewtopic.php?topic_id={$item_id}",
                 'time'    => $item_obj->getVar('topic_time'),
                 'tags'    => tag_parse_tag($item_obj->getVar('topic_tags', 'n')),
                 'content' => ''
-            );
+            ];
         }
     }
     unset($items_obj);

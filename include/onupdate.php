@@ -91,7 +91,10 @@ function xoops_module_update_tag(XoopsModule $module, $previousVersion = null)
             foreach ($configurator['templateFolders'] as $folder) {
                 $templateFolder = $GLOBALS['xoops']->path('modules/' . $moduleDirName . $folder);
                 if (is_dir($templateFolder)) {
-                    $templateList = array_diff(scandir($templateFolder), array('..', '.'));
+                    $templateList = array_diff(scandir($templateFolder), [
+                        '..',
+                        '.'
+                        ]);
                     foreach ($templateList as $k => $v) {
                         $fileInfo = new SplFileInfo($templateFolder . $v);
                         if ($fileInfo->getExtension() === 'html' && $fileInfo->getFilename() !== 'index.html') {
@@ -149,10 +152,10 @@ function xoops_module_update_tag(XoopsModule $module, $previousVersion = null)
         $GLOBALS['xoopsDB']->queryF($sql);
 
         /* Do some synchronization */
-        include_once __DIR__ . '/functions.recon.php';
+        include_once __DIR__ . '/functions.recon.php'; 
         tag_synchronization();
 
         return true;
     }
-
+   
 }

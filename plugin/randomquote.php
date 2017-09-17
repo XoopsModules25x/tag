@@ -37,8 +37,8 @@ function randomquote_tag_iteminfo(&$items)
 {
     xoops_load('constants', 'randomquote');
 
-    $items_id = array();
-    $cats_id  = array();
+    $items_id = [];
+    $cats_id  = [];
 
     foreach (array_keys($items) as $cat_id) {
         $cats_id[] = (int)$cat_id;
@@ -52,19 +52,19 @@ function randomquote_tag_iteminfo(&$items)
     $criteria->add(new Criteria('quote_status', RandomquoteConstants::STATUS_ONLINE));
 
     $quoteHandler = xoops_getModuleHandler('quotes', 'randomquote');
-    $quoteObjs     = $quoteHandler->getObjects($criteria, true);
+    $quoteObjs    = $quoteHandler->getObjects($criteria, true);
 
     foreach ($cats_id as $cat_id) {
         foreach ($items_id as $item_id) {
             $quoteObj                 = $quoteObjs[$item_id];
-            $items[$cat_id][$item_id] = array(
+            $items[$cat_id][$item_id] = [
                 'title'   => $quoteObj,
                 //                                                "uid" => $quoteObj->getVar("uid"),
                 'link'    => "index.php?id={$item_id}",
                 'time'    => strtotime($quoteObj->getVar('create_date')),
                 //                                               "tags" => tag_parse_tag($quoteObj->getVar("item_tag", "n")), // optional
                 'content' => ''
-            );
+            ];
         }
     }
 
