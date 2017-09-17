@@ -19,11 +19,11 @@
  * @since          1.00
  */
 
-defined('XOOPS_ROOT_PATH') || exit('Restricted access');
+//defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 $moduleDirName = basename(__DIR__);
 
 // ------------------- Informations ------------------- //
-$modversion = array(
+$modversion = [
     'version'             => 2.34,
     'module_status'       => 'RC-1',
     'release_date'        => '2017/07/01',
@@ -67,7 +67,7 @@ $modversion = array(
     'min_php'             => '5.5',
     'min_xoops'           => '2.5.8',
     'min_admin'           => '1.2',
-    'min_db'              => array('mysql' => '5.5'),
+    'min_db'              => ['mysql' => '5.5'],
     // ------------------- Admin Menu -------------------
     'system_menu'         => 1,
     'hasAdmin'            => 1,
@@ -75,30 +75,30 @@ $modversion = array(
     'adminmenu'           => 'admin/menu.php',
     // ------------------- Main Menu ---------------------
     'hasMain'             => 1,
-    'sub'                 => array(
-        array(
+    'sub'                 => [
+        [
             'name' => _MI_TAG_VIEW_SEARCH,
             'url'  => 'index.php'
-        ),
-    ),
+        ],
+    ],
 
     // ------------------- Install/Update -------------------
     'onInstall'           => 'include/oninstall.php',
     'onUpdate'            => 'include/onupdate.php',
     'onUninstall'         => 'include/onuninstall.php',
     // -------------------  PayPal ---------------------------
-    'paypal'              => array(
+    'paypal'              => [
         'business'      => 'foundation@xoops.org',
         'item_name'     => 'Donation : ' . _MI_TAG_NAME,
         'amount'        => 0,
         'currency_code' => 'USD'
-    ),
+    ],
     // ------------------- Search ---------------------------
     'hasSearch'           => 1,
-    'search'              => array(
+    'search'              => [
         'file' => 'include/search.inc.php',
         'func' => 'tag_search'
-    ),
+    ],
     // ------------------- Comments -------------------------
     'hasComments'         => 0,
 
@@ -106,30 +106,30 @@ $modversion = array(
     'hasNotification'     => 0,
 
     // ------------------- Mysql -----------------------------
-    'sqlfile'             => array('mysql' => 'sql/mysql.sql'),
+    'sqlfile'             => ['mysql' => 'sql/mysql.sql'],
     // ------------------- Tables ----------------------------
-    'tables'              => array(
+    'tables'              => [
         $moduleDirName . '_' . 'tag',
         $moduleDirName . '_' . 'link',
         $moduleDirName . '_' . 'stats',
-    ),
-);
+    ],
+];
 
 // Use smarty
 $modversion['use_smarty'] = 1;
 
 // ------------------- Templates ------------------- //
-$modversion['templates'] = array(
-    array('file' => 'tag_index.tpl', 'description' => '_MI_TAG_INDEX_TPL_DESC'),
-    array('file' => 'tag_list.tpl', 'description' => _MI_TAG_INDEX_TPL_LIST_DESC),
-    array('file' => 'tag_view.tpl', 'description' => _MI_TAG_INDEX_TPL_VIEW_DESC),
-    array('file' => 'tag_bar.tpl', 'description' => _MI_TAG_INDEX_TPL_BAR_DESC),
-    array('file' => "admin/{$moduleDirName}_admin_about.tpl", 'description' => _MI_TAG_INDEX_ADMINTPL_ABOUT_DESC),
-    array('file' => "admin/{$moduleDirName}_admin_help.tpl", 'description' => _MI_TAG_INDEX_ADMINTPL_HELP_DESC)
-);
+$modversion['templates'] = [
+    ['file' => 'tag_index.tpl', 'description' => '_MI_TAG_INDEX_TPL_DESC'],
+    ['file' => 'tag_list.tpl', 'description' => _MI_TAG_INDEX_TPL_LIST_DESC],
+    ['file' => 'tag_view.tpl', 'description' => _MI_TAG_INDEX_TPL_VIEW_DESC],
+    ['file' => 'tag_bar.tpl', 'description' => _MI_TAG_INDEX_TPL_BAR_DESC],
+    ['file' => "admin/{$moduleDirName}_admin_about.tpl", 'description' => _MI_TAG_INDEX_ADMINTPL_ABOUT_DESC],
+    ['file' => "admin/{$moduleDirName}_admin_help.tpl", 'description' => _MI_TAG_INDEX_ADMINTPL_HELP_DESC]
+];
 
 // Blocks
-$modversion['blocks'] = array(
+$modversion['blocks'] = [
     /*
      * $options:
      *                    $options[0] - number of tags to display
@@ -137,7 +137,7 @@ $modversion['blocks'] = array(
      *                    $options[2] - max font size (px or %)
      *                    $options[3] - min font size (px or %)
      */
-    array(
+    [
         'file'        => 'block.php',
         'name'        => _MI_TAG_BLOCK_CLOUD,
         'description' => _MI_TAG_BLOCK_CLOUD_DESC,
@@ -145,14 +145,14 @@ $modversion['blocks'] = array(
         'edit_func'   => 'tag_block_cloud_edit',
         'options'     => '100|0|150|80',
         'template'    => 'tag_block_cloud.tpl'
-    ),
+    ],
     /*
      * $options:
      *                    $options[0] - number of tags to display
      *                    $options[1] - time duration, in days, 0 for all the time
      *                    $options[2] - sort: a - alphabet; c - count; t - time
      */
-    array(
+    [
         'file'        => 'block.php',
         'name'        => _MI_TAG_BLOCK_TOP,
         'description' => _MI_TAG_BLOCK_TOP_DESC,
@@ -160,7 +160,7 @@ $modversion['blocks'] = array(
         'edit_func'   => 'tag_block_top_edit',
         'options'     => '50|30|a',
         'template'    => 'tag_block_top.tpl'
-    ),
+    ],
 
     /*
      * $options for cumulus:
@@ -177,7 +177,7 @@ $modversion['blocks'] = array(
      *                    $options[10] - cumulus_flash_hicolor
      *                    $options[11] - cumulus_flash_speed
      */
-    array(
+    [
         'file'        => 'block.php',
         'name'        => _MI_TAG_BLOCK_CUMULUS,
         'description' => _MI_TAG_BLOCK_CUMULUS_DESC,
@@ -185,44 +185,43 @@ $modversion['blocks'] = array(
         'edit_func'   => 'tag_block_cumulus_edit',
         'options'     => '100|0|24|12|160|140|#ffffff|0|#000000|#003300|#00ff00|100',
         'template'    => 'tag_block_cumulus.tpl'
-    )
-);
+    ]
+];
 
 // Configs
-$modversion['config'] = array(
-    array(
+$modversion['config'] = [
+    [
         'name'        => 'do_urw',
         'title'       => '_MI_TAG_DOURLREWRITE',
         'description' => '_MI_TAG_DOURLREWRITE_DESC',
         'formtype'    => 'yesno',
         'valuetype'   => 'int',
-        'default'     => in_array(php_sapi_name(), array('apache', 'apache2handler'))
-    ),
-
-    array(
+        'default'     => in_array(php_sapi_name(), [
+        'apache', 'apache2handler'
+        ])
+    ],
+    [
         'name'        => 'items_perpage',
         'title'       => '_MI_TAG_ITEMSPERPAGE',
         'description' => '_MI_TAG_ITEMSPERPAGE_DESC',
         'formtype'    => 'textbox',
         'valuetype'   => 'int',
         'default'     => 10
-    ),
-
-    array(
+    ],
+    [
         'name'        => 'limit_tag_list',
         'title'       => '_MI_TAG_LIMITPERLIST',
         'description' => '_MI_TAG_LIMITPERLIST_DESC',
         'formtype'    => 'textbox',
         'valuetype'   => 'int',
         'default'     => 10
-    ),
-
-    array(
+    ],
+    [
         'name'        => 'limit_cloud_list',
         'title'       => '_MI_TAG_LIMITPERCLOUD',
         'description' => '_MI_TAG_LIMITPERCLOUD_DESC',
         'formtype'    => 'textbox',
         'valuetype'   => 'int',
         'default'     => 100
-    )
-);
+    ]
+];

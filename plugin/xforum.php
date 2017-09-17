@@ -42,7 +42,7 @@ function xforum_tag_iteminfo(&$items)
         return false;
     }
 
-    $items_id = array();
+    $items_id = [];
     foreach (array_keys($items) as $cat_id) {
         // Some handling here to build the link upon catid
         // catid is not used in xforum, so just skip it
@@ -58,14 +58,14 @@ function xforum_tag_iteminfo(&$items)
         foreach (array_keys($items[$cat_id]) as $item_id) {
             $item_obj = $items_obj[$item_id];
             if (is_object($item_obj)) {
-                $items[$cat_id][$item_id] = array(
+                $items[$cat_id][$item_id] = [
                     'title'   => $item_obj->getVar('subject'),
                     'uid'     => $item_obj->getVar('uid'),
                     'link'    => "viewpost.php?post_id={$item_id}",
                     'time'    => strtotime(date(_DATESTRING, $item_obj->getVar('post_time'))),
                     'tags'    => tag_parse_tag($item_obj->getVar('tags', 'n')),
                     'content' => $myts->displayTarea($item_obj->getVar('post_text'), true, true, true, true, true, true)
-                );
+                ];
             }
         }
     }

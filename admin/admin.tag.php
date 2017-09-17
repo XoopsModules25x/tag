@@ -39,7 +39,7 @@ $status = Request::getInt('status', TagConstants::STATUS_ALL, 'GET');
 $tagHandler  = xoops_getModuleHandler('tag', $moduleDirName);
 $linkHandler = xoops_getModuleHandler('link', $moduleDirName);
 
-$postTags = Request::getArray('tags', array(), 'POST');
+$postTags = Request::getArray('tags', [], 'POST');
 if (!empty($postTags)) {
     $msgDBUpdated = '';
     foreach ($postTags as $tag => $tag_status) {
@@ -61,8 +61,8 @@ if (!empty($postTags)) {
 $sql           = 'SELECT tag_modid, COUNT(DISTINCT tag_id) AS count_tag';
 $sql           .= ' FROM ' . $GLOBALS['xoopsDB']->prefix('tag_link');
 $sql           .= ' GROUP BY tag_modid';
-$counts_module = array();
-$module_list   = array();
+$counts_module = [];
+$module_list   = [];
 $result        = $GLOBALS['xoopsDB']->query($sql);
 if (false === $result) {
     xoops_error($GLOBALS['xoopsDB']->error());

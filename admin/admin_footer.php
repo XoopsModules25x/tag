@@ -41,7 +41,7 @@ echo "<div class='adminfooter'>\n"
      . "  <div class='center smallsmall italic pad5'>\n"
      . '    '
      . _AM_TAG_MAINTAINED_BY
-     . " <a class='tooltip' rel='external' href='http://"
+     . " <a class='tooltip' rel='external' href='//"
      . $GLOBALS['xoopsModule']->getInfo('module_website_url')
      . "' "
      . "title='"

@@ -64,9 +64,9 @@ $tagHandler->updateByItem($_POST['item_tag'], $itemid, $GLOBALS['xoopsModule']->
 /** Get item fields: title, content, time, link, uid, uname, tags *
  * @param $items
  */
-function mymodule_tag_iteminfo(&$items)
+function mymodule_tag_iteminfo($items)
 {
-    $items_id = array();
+    $items_id = [];
     foreach (array_keys($items) as $cat_id) {
         // Some handling here to build the link upon catid
         // If catid is not used, just skip it
@@ -76,19 +76,19 @@ function mymodule_tag_iteminfo(&$items)
         }
     }
     $itemHandler = xoops_getModuleHandler('item', 'module');
-    $items_obj    = $itemHandler->getObjects(new Criteria('itemid', '(' . implode(', ', $items_id) . ')', 'IN'), true);
+    $items_obj   = $itemHandler->getObjects(new Criteria('itemid', '(' . implode(', ', $items_id) . ')', 'IN'), true);
 
     foreach (array_keys($items) as $cat_id) {
         foreach (array_keys($items[$cat_id]) as $item_id) {
-            $item_obj                 =& $items_obj[$item_id];
-            $items[$cat_id][$item_id] = array(
+            $item_obj                 = $items_obj[$item_id];
+            $items[$cat_id][$item_id] = [
                 'title'   => $item_obj->getVar('item_title'),
                 'uid'     => $item_obj->getVar('uid'),
                 'link'    => "view.item.php?itemid={$item_id}",
                 'time'    => $item_obj->getVar('item_time'),
                 'tags'    => tag_parse_tag($item_obj->getVar('item_tags', 'n')), // optional
                 'content' => ''
-            );
+            ];
         }
     }
     unset($items_obj);
@@ -126,7 +126,7 @@ include $GLOBALS['xoops']->path('/modules/tag/view.tag.php');
  *                    $options[2] - max font size (px or %)
  *                    $options[3] - min font size (px or %)
  */
-$modversion['blocks'][] = array(
+$modversion['blocks'][] = [
     'file'        => 'mymodule_block_tag.php',
     'name'        => 'Module Tag Cloud',
     'description' => 'Show tag cloud',
@@ -134,14 +134,14 @@ $modversion['blocks'][] = array(
     'edit_func'   => 'mymodule_tag_block_cloud_edit',
     'options'     => '100|0|150|80',
     'template'    => 'mymodule_tag_block_cloud.tpl'
-);
+];
 /*
  * $options:
  *                    $options[0] - number of tags to display
  *                    $options[1] - time duration, in days, 0 for all the time
  *                    $options[2] - sort: a - alphabet; c - count; t - time
  */
-$modversion['blocks'][] = array(
+$modversion['blocks'][] = [
     'file'        => 'mymodule_block_tag.php',
     'name'        => 'Module Top Tags',
     'description' => 'Show top tags',
@@ -149,13 +149,13 @@ $modversion['blocks'][] = array(
     'edit_func'   => 'mymodule_tag_block_top_edit',
     'options'     => '50|30|c',
     'template'    => 'mymodule_tag_block_top.tpl'
-);
+];
 // File: module_block_tag.php
 /**
  * @param $options
  * @return array
  */
-function mymodule_tag_block_cloud_show(&$options)
+function mymodule_tag_block_cloud_show($options)
 {
     require_once $GLOBALS['xoops']->path('/modules/tag/blocks/block.php');
 
@@ -166,7 +166,7 @@ function mymodule_tag_block_cloud_show(&$options)
  * @param $options
  * @return string
  */
-function mymodule_tag_block_cloud_edit(&$options)
+function mymodule_tag_block_cloud_edit($options)
 {
     require_once $GLOBALS['xoops']->path('/modules/tag/blocks/block.php');
 
@@ -177,7 +177,7 @@ function mymodule_tag_block_cloud_edit(&$options)
  * @param $options
  * @return array
  */
-function mymodule_tag_block_top_show(&$options)
+function mymodule_tag_block_top_show($options)
 {
     require_once $GLOBALS['xoops']->path('/modules/tag/blocks/block.php');
 
@@ -188,7 +188,7 @@ function mymodule_tag_block_top_show(&$options)
  * @param $options
  * @return string
  */
-function mymodule_tag_block_top_edit(&$options)
+function mymodule_tag_block_top_edit($options)
 {
     require_once $GLOBALS['xoops']->path('/modules/tag/blocks/block.php');
 

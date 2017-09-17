@@ -69,7 +69,10 @@ function tag_load_config()
 function tag_define_url_delimiter()
 {
     if (defined('URL_DELIMITER')) {
-        if (!in_array(URL_DELIMITER, array('?', '/'))) {
+        if (!in_array(URL_DELIMITER, [
+            '?',
+            '/'
+            ])) {
             exit('Security Violation');
         }
     } else {
@@ -88,7 +91,12 @@ function tag_define_url_delimiter()
 function tag_get_delimiter()
 {
     xoops_loadLanguage('config', 'tag');
-    $retVal = array(',', ' ', '|', ';');
+    $retVal = [
+        ',',
+        ' ',
+        '|',
+        ';'
+        ];
 
     if (!empty($GLOBALS['tag_delimiter'])) {
         $retVal = $GLOBALS['tag_delimiter'];
