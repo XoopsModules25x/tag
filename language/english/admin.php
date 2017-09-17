@@ -82,6 +82,14 @@ define('_AM_TAG_ADMIN_FOOTER', "<div class='right smallsmall italic pad5'><b>"
                                . $GLOBALS['xoopsModule']->getVar('name')
                                . "</b> is maintained by the <a class='tooltip' rel='external' href='http://xoops.org/' title='Visit XOOPS Community'>XOOPS Community</a></div>");
 
+<<<<<<< HEAD
+=======
+//ModuleAdmin
+//define('_AM_MODULEADMIN_MISSING', 'Error: The ModuleAdmin class is missing. Please install the ModuleAdmin Class (see /docs/readme.txt)');
+
+//define('_AM_TAG_MISSING','Error: The ModuleAdmin class is missing. Please install the ModuleAdmin Class into /Frameworks (see /docs/readme.txt)');
+
+>>>>>>> 756ad9d993e83675a65cc46a191191f3c8443f4b
 // Text for Admin footer
 define('_AM_TAG_FOOTER',
        "<div class='center smallsmall italic pad5'>Tag Module is maintained by the <a class='tooltip' rel='external' href='http://xoops.org/' title='Visit XOOPS Community'>XOOPS Community</a></div>");
