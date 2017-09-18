@@ -21,7 +21,7 @@
  * @since           2.33
  */
 
-defined('XOOPS_ROOT_PATH') || exit('Restricted access');
+defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
 
 /**
  * A simple HTML5 type validated input field

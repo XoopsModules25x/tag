@@ -91,7 +91,7 @@ $tags = $tagHandler->getByLimit(0, 0, $criteria);
 
 $count_max = 0;
 $count_min = 0;
-$tags_term = array();
+$tags_term = [];
 foreach (array_keys($tags) as $key) {
     if ($tags[$key]['count'] > $count_max) {
         $count_max = $tags[$key]['count'];

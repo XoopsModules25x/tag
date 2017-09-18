@@ -95,11 +95,11 @@ if (!empty($modid)) {
 }
 $items = $tagHandler->getItems($criteria); // Tag, imist, start, sort, order, modid, catid
 
-$items_module = array();
-$modules_obj  = array();
+$items_module = [];
+$modules_obj  = [];
 if (!empty($items)) {
     foreach (array_keys($items) as $key) {
-        $items_module[$items[$key]['modid']][$items[$key]['catid']][$items[$key]['itemid']] = array();
+        $items_module[$items[$key]['modid']][$items[$key]['catid']][$items[$key]['itemid']] = [];
     }
     /** @var XoopsModuleHandler $moduleHandler */
     $moduleHandler = xoops_getHandler('module');

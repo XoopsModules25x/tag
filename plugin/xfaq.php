@@ -19,7 +19,7 @@
  * @since           1.00
  */
 
-defined('XOOPS_ROOT_PATH') || exit('Restricted access');
+defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
 
 /**
  * @param $items
@@ -39,7 +39,7 @@ function xfaq_tag_iteminfo(&$items)
     }
 
     $itemHandler = xoops_getModuleHandler('faq', 'xfaq');
-    $items_obj    = $itemHandler->getObjects(new Criteria('faq_id', '(' . implode(', ', $items_id) . ')', 'IN'), true);
+    $items_obj   = $itemHandler->getObjects(new Criteria('faq_id', '(' . implode(', ', $items_id) . ')', 'IN'), true);
 
     foreach (array_keys($items) as $cat_id) {
         foreach (array_keys($items[$cat_id]) as $item_id) {

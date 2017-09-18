@@ -19,7 +19,7 @@
  * @since           1.00
  */
 
-defined('XOOPS_ROOT_PATH') || exit('Restricted access');
+defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
 
 define('_MD_TAG_TAGS', 'Tags');
 define('_MD_TAG_TAG_ON', 'Tag On');
@@ -40,18 +40,18 @@ define('_MD_TAG_INVALID', 'Invalid query');
  *    </li>
  * </ul>
  */
-$GLOBALS['_MD_TAG_ADDONS'] = array(
-    'google' => array(
+$GLOBALS['_MD_TAG_ADDONS'] = [
+    'google' => [
         'title' => 'Google',
         'link'  => 'http://www.google.com/search?q=%s'
-    ),
-    'techno' => array(
+    ],
+    'techno' => [
         'title' => 'Technorati',
         'link'  => 'http://technorati.com/tag/%s/'
-    ),
-    'flickr' => array(
+    ],
+    'flickr' => [
         'title'    => 'Flickr',
         'link'     => 'http://www.flickr.com/photos/tags/%s/',
         'function' => 'utf8_encode'
-    )
-);
+    ]
+];

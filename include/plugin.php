@@ -40,12 +40,7 @@ $customConfig = [];
  *
  */
 $customConfig = [
-    'tag_delimiter' => [
-        ',',
-        ' ',
-        '|',
-        ';'
-        ],
+    'tag_delimiter' => [',', ' ', '|', ';'],
     'limit_tag'     => 100,
     'font_max'      => 150,
     'font_min'      => 80

@@ -25,9 +25,10 @@ if (false !== ($moduleHelper = Xmf\Module\Helper::getHelper($moduleDirName))) {
 } else {
     $moduleHelper = Xmf\Module\Helper::getHelper('system');
 }
-$adminObject = \Xmf\Module\Admin::getInstance();
 
-$pathIcon32    = \Xmf\Module\Admin::menuIconPath('');
+
+$pathIcon32 = \Xmf\Module\Admin::menuIconPath('');
+//$pathModIcon32 = $moduleHelper->getModule()->getInfo('modicons32');
 
 // Load language files
 $moduleHelper->loadLanguage('modinfo');
@@ -39,18 +40,21 @@ $adminmenu = [
         'desc'  => _MI_TAG_ADMIN_HOME_DESC,
         'icon'  => "{$pathIcon32}/home.png"
     ],
+
     [
         'title' => _MI_TAG_ADMENU_EDIT,
         'link'  => 'admin/admin.tag.php',
         'desc'  => _MI_TAG_ADMENU_EDIT_DESC,
         'icon'  => "{$pathIcon32}/administration.png"
     ],
+
     [
         'title' => _MI_TAG_ADMENU_SYNCHRONIZATION,
         'link'  => 'admin/syn.tag.php',
         'desc'  => _MI_TAG_HELP_DESC,
         'icon'  => "{$pathIcon32}/synchronized.png"
     ],
+
     [
         'title' => _MI_TAG_ADMIN_ABOUT,
         'link'  => 'admin/about.php',

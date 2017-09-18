@@ -18,7 +18,7 @@
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
  * */
 
-defined('XOOPS_ROOT_PATH') || exit('Restricted access');
+defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
 defined('TAG_INI') || include __DIR__ . '/vars.php';
 
 /**
@@ -47,7 +47,7 @@ function xoops_module_pre_install_tag(XoopsModule $module)
         $success = true;
     }
 
-    if (!$success) {
+    if (false === $success) {
         $module->setErrors("This module requires XOOPS {$requiredVer}+ ({$currentVer} installed)");
 
         return false;

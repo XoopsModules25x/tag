@@ -24,7 +24,7 @@
 The functions loaded on initializtion
 */
 
-//defined('XOOPS_ROOT_PATH') || exit('Restricted access');
+//defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
 defined('TAG_INI') || exit();
 (!defined('TAG_FUNCTIONS_INI')) || exit();
 
@@ -50,8 +50,8 @@ function tag_load_config()
             $module        = $moduleHandler->getByDirname('tag');
 
             $configHandler = xoops_getHandler('config');
-            $criteria       = new CriteriaCompo(new Criteria('conf_modid', $module->getVar('mid')));
-            $configs        = $configHandler->getConfigs($criteria);
+            $criteria      = new CriteriaCompo(new Criteria('conf_modid', $module->getVar('mid')));
+            $configs       = $configHandler->getConfigs($criteria);
             foreach (array_keys($configs) as $i) {
                 $moduleConfig[$configs[$i]->getVar('conf_name')] = $configs[$i]->getConfValueForOutput();
             }
@@ -69,10 +69,7 @@ function tag_load_config()
 function tag_define_url_delimiter()
 {
     if (defined('URL_DELIMITER')) {
-        if (!in_array(URL_DELIMITER, [
-            '?',
-            '/'
-            ])) {
+        if (!in_array(URL_DELIMITER, ['?', '/'])) {
             exit('Security Violation');
         }
     } else {
@@ -91,12 +88,7 @@ function tag_define_url_delimiter()
 function tag_get_delimiter()
 {
     xoops_loadLanguage('config', 'tag');
-    $retVal = [
-        ',',
-        ' ',
-        '|',
-        ';'
-        ];
+    $retVal = [',', ' ', '|', ';'];
 
     if (!empty($GLOBALS['tag_delimiter'])) {
         $retVal = $GLOBALS['tag_delimiter'];

@@ -19,7 +19,7 @@
  * @since           1.00
  */
 
-defined('XOOPS_ROOT_PATH') || exit('Restricted access');
+defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
 
 /*
  * Due to the difference of word boundary for different languages, delimiters also depend on languages
@@ -29,4 +29,4 @@ defined('XOOPS_ROOT_PATH') || exit('Restricted access');
  * For English sites, you can set as array(",", ";", " ", "|")
  * For Chinese sites, set as array(",", ";", " ", "|", "��")
  */
-$GLOBALS['tag_delimiter'] = array(',', ' ', '|', ';');
+$GLOBALS['tag_delimiter'] = [',', ' ', '|', ';'];

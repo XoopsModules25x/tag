@@ -19,7 +19,7 @@
  * @since          1.00
  */
 
-//defined('XOOPS_ROOT_PATH') || exit('Restricted access');
+defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
 $moduleDirName = basename(__DIR__);
 
 // ------------------- Informations ------------------- //
@@ -57,7 +57,7 @@ $modversion = [
     'modicons16'          => 'assets/images/icons/16',
     'modicons32'          => 'assets/images/icons/32',
     //About
-    'demo_site_url'       => 'http://www.xoops.org',
+    'demo_site_url'       => 'https://xoops.org',
     'demo_site_name'      => 'XOOPS Demo Site',
     'support_url'         => 'https://xoops.org/modules/newbb/viewforum.php?forum=28/',
     'support_name'        => 'Support Forum',
@@ -196,10 +196,9 @@ $modversion['config'] = [
         'description' => '_MI_TAG_DOURLREWRITE_DESC',
         'formtype'    => 'yesno',
         'valuetype'   => 'int',
-        'default'     => in_array(php_sapi_name(), [
-        'apache', 'apache2handler'
-        ])
+        'default'     => in_array(php_sapi_name(), ['apache', 'apache2handler'])
     ],
+
     [
         'name'        => 'items_perpage',
         'title'       => '_MI_TAG_ITEMSPERPAGE',
@@ -208,6 +207,7 @@ $modversion['config'] = [
         'valuetype'   => 'int',
         'default'     => 10
     ],
+
     [
         'name'        => 'limit_tag_list',
         'title'       => '_MI_TAG_LIMITPERLIST',
@@ -216,6 +216,7 @@ $modversion['config'] = [
         'valuetype'   => 'int',
         'default'     => 10
     ],
+
     [
         'name'        => 'limit_cloud_list',
         'title'       => '_MI_TAG_LIMITPERCLOUD',

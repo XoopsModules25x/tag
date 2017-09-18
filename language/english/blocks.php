@@ -19,7 +19,7 @@
  * @since           1.00
  */
 
-defined('XOOPS_ROOT_PATH') || exit('Restricted access');
+defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
 
 define('_MB_TAG_ITEMS', 'Number to display');
 define('_MB_TAG_FONTSIZE_MAX', 'Maximum font-size(px or %) for display');

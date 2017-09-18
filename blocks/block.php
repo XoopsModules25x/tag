@@ -19,7 +19,7 @@
  * @since           1.00
  */
 
-defined('XOOPS_ROOT_PATH') || exit('Restricted access');
+defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
 
 include $GLOBALS['xoops']->path('/modules/tag/include/vars.php');
 require_once $GLOBALS['xoops']->path('/modules/tag/include/functions.php');

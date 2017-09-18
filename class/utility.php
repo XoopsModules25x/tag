@@ -112,14 +112,14 @@ class TagUtility extends XoopsObject
                     break;
                 }
             } else {
-                if ((int)$v > 0) { // handles things like x.x.x.0_RC2
+                if ((int)$v > 0) { // handles versions like x.x.x.0_RC2
                     $success = false;
                     break;
                 }
             }
         }
 
-        if (!$success) {
+        if (false === $success) {
             $module->setErrors(sprintf(_AM_TAG_ERROR_BAD_XOOPS, $requiredVer, $currentVer));
         }
 

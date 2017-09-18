@@ -19,7 +19,7 @@
  * @since           1.00
  */
 
-defined('XOOPS_ROOT_PATH') || exit('Restricted access');
+defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
 
 define('_MI_TAG_NAME', 'XOOPS Tag');
 define('_MI_TAG_DESC', 'For site-wide Tag management');

@@ -15,7 +15,7 @@
  * @package         tag
  * @copyright       {@link http://sourceforge.net/projects/xoops/ The XOOPS Project}
  * @license         {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
- * @author          XOOPS Module Development Team {@link http://www.xoops.org}
+ * @author          XOOPS Module Development Team {@link https://xoops.org}
  * @since           1.00
  */
 

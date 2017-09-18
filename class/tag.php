@@ -20,7 +20,7 @@
  * @since           1.00
  */
 
-defined('XOOPS_ROOT_PATH') || exit('Restricted access');
+defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
 
 /**
  * Class TagTag
@@ -138,10 +138,10 @@ class TagTagHandler extends XoopsPersistableObjectHandler
         $tags_existing = $this->getByItem($itemid, $modid, $catid);
         $tags_delete   = array_diff(array_values($tags_existing), $tags);
         $tags_add      = array_diff($tags, array_values($tags_existing));
-        $tags_update   = array();
+        $tags_update   = [];
 
         if (!empty($tags_delete)) {
-            $tags_delete = array_map(array($this->db, 'quoteString'), $tags_delete);
+            $tags_delete = array_map([$this->db, 'quoteString'], $tags_delete);
             if ($tags_id = $this->getIds(new Criteria('tag_term', '(' . implode(', ', $tags_delete) . ')', 'IN'))) {
                 $sql = "DELETE FROM {$this->table_link}" . ' WHERE ' . "     {$this->keyName} IN (" . implode(', ', $tags_id) . ')' . "     AND tag_modid = {$modid} AND tag_catid = {$catid} AND tag_itemid = {$itemid}";
                 if (false == ($result = $this->db->queryF($sql))) {
