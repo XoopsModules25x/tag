@@ -109,19 +109,19 @@ $font_max   = $tag_config['font_max'];
 $font_min   = $tag_config['font_min'];
 $font_ratio = $count_interval ? ($font_max - $font_min) / $count_interval : 1;
 
-$tags_data = array();
+$tags_data = [];
 foreach (array_keys($tags) as $key) {
     /*
      * Font-size = ((tag.count - count.min) * (font.max - font.min) / (count.max - count.min) ) * 100%
      */
-    $tags_data[] = array(
+    $tags_data[] = [
         'id'    => $tags[$key]['id'],
         'font'  => empty($count_interval) ? 100 : floor(($tags[$key]['count'] - $count_min) * $font_ratio) + $font_min,
         'level' => empty($count_max) ? 0 : floor(($tags[$key]['count'] - $count_min) * $level_limit / $count_max),
         'term'  => urlencode($tags[$key]['term']),
         'title' => htmlspecialchars($tags[$key]['term']),
         'count' => $tags[$key]['count']
-    );
+    ];
 }
 unset($tags, $tags_term);
 

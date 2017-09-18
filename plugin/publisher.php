@@ -32,7 +32,7 @@ function publisher_tag_iteminfo(&$items)
         return false;
     }
 
-    $items_id = array();
+    $items_id = [];
 
     foreach (array_keys($items) as $cat_id) {
         // Some handling here to build the link upon catid
@@ -42,20 +42,20 @@ function publisher_tag_iteminfo(&$items)
         }
     }
     $itemHandler = xoops_getModuleHandler('item', 'publisher');
-    $criteria     = new Criteria('itemid', '(' . implode(', ', $items_id) . ')', 'IN');
-    $items_obj    = $itemHandler->getObjects($criteria, 'itemid');
+    $criteria    = new Criteria('itemid', '(' . implode(', ', $items_id) . ')', 'IN');
+    $items_obj   = $itemHandler->getObjects($criteria, 'itemid');
 
     foreach (array_keys($items) as $cat_id) {
         foreach (array_keys($items[$cat_id]) as $item_id) {
             $item_obj                 = $items_obj[$item_id];
-            $items[$cat_id][$item_id] = array(
+            $items[$cat_id][$item_id] = [
                 'title'   => $item_obj->getVar('title'),
                 'uid'     => $item_obj->getVar('uid'),
                 'link'    => "item.php?itemid={$item_id}",
                 'time'    => $item_obj->getVar('datesub'),
                 'tags'    => tag_parse_tag($item_obj->getVar('item_tag', 'n')), // optional
                 'content' => ''
-            );
+            ];
         }
     }
     unset($items_obj);

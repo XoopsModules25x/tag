@@ -57,7 +57,7 @@ class TagFormValidatedInput extends XoopsFormText
      */
     public function __construct($caption, $name, $size, $maxlength, $value = '', $type = 'text')
     {
-        $this->_htmlTypes = array(
+        $this->_htmlTypes = [
             'color',
             'date',
             'datetime',
@@ -72,7 +72,7 @@ class TagFormValidatedInput extends XoopsFormText
             'time',
             'url',
             'week'
-        );
+        ];
         $this->setCaption($caption);
         $this->setName($name);
         $this->_size      = (int)$size;
@@ -126,7 +126,11 @@ class TagFormValidatedInput extends XoopsFormText
             if (is_array($value)) {
                 $value       = isset($value['type']) ? mb_strtolower($value['type']) : 'text';
                 $this->_type = in_array($value, $this->_htmlTypes) ? $value : 'text';
-                if (in_array($value['type'], array('number', 'date', 'range'))) {
+                if (in_array($value['type'], [
+                    'number',
+                    'date',
+                    'range'
+                    ])) {
                     if (isset($value['min'])) {
                         $this->setExtra('min=' . $value['min']);
                     }

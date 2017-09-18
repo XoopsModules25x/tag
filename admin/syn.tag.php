@@ -39,8 +39,8 @@ $limit = Request::getInt('limit', TagConstants::DEFAULT_LIMIT);
 $sql           = 'SELECT tag_modid, COUNT(DISTINCT tag_id) AS count_tag';
 $sql           .= ' FROM ' . $GLOBALS['xoopsDB']->prefix('tag_link');
 $sql           .= ' GROUP BY tag_modid';
-$counts_module = array();
-$module_list   = array();
+$counts_module = [];
+$module_list   = [];
 if ($result = $GLOBALS['xoopsDB']->query($sql)) {
     while ($myrow = $GLOBALS['xoopsDB']->fetchArray($result)) {
         $counts_module[$myrow['tag_modid']] = $myrow['count_tag'];
@@ -62,7 +62,13 @@ foreach ($module_list as $module => $module_name) {
 }
 $tray->addElement($mod_select);
 $num_select = new XoopsFormSelect(_AM_TAG_NUM, 'limit', $limit);
-$num_select->addOptionArray(array(0 => _ALL, 10 => 10, 50 => 50, 100 => 100, 500 => 500));
+$num_select->addOptionArray([
+       0 => _ALL,
+       10 => 10,
+       50 => 50,
+       100 => 100,
+       500 => 500
+      ]);
 $tray->addElement($num_select);
 $tray->addElement(new XoopsFormButton('', 'submit', _SUBMIT, 'submit'));
 $tray->addElement(new XoopsFormHidden('start', $start));

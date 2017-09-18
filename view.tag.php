@@ -131,8 +131,8 @@ if (!empty($items)) {
     }
 }
 
-$items_data = array();
-$uids       = array();
+$items_data = [];
+$uids       = [];
 require_once $GLOBALS['xoops']->path('/modules/tag/include/tagbar.php');
 foreach (array_keys($items) as $key) {
     /**
@@ -172,7 +172,7 @@ if (!empty($start) || count($items_data) >= $limit) {
     $pagenav = '';
 }
 
-$tag_addon = array();
+$tag_addon = [];
 if (!empty($GLOBALS['_MD_TAG_ADDONS'])) {
     $tag_addon['title'] = _MD_TAG_TAG_ON;
     foreach ($GLOBALS['_MD_TAG_ADDONS'] as $key => $_tag) {
@@ -182,7 +182,7 @@ if (!empty($GLOBALS['_MD_TAG_ADDONS'])) {
     }
 }
 
-$GLOBALS['xoopsTpl']->assign(array(
+$GLOBALS['xoopsTpl']->assign([
                                  'module_name'            => $GLOBALS['xoopsModule']->getVar('name'),
                                  'tag_id'                 => $tag_id,
                                  'tag_term'               => urlencode($tag_term),
@@ -192,7 +192,7 @@ $GLOBALS['xoopsTpl']->assign(array(
                                  'xoops_pagetitle'        => $GLOBALS['xoopsOption']['xoops_pagetitle'],
                                  'xoops_module_header'    => $GLOBALS['xoopsOption']['xoops_module_header'],
                                  'xoops_meta_description' => $GLOBALS['xoopsOption']['xoops_pagetitle']
-                             ));
+                             ]);
 $xoopsTpl->assign_by_ref('tag_addon', $tag_addon);
 $xoopsTpl->assign_by_ref('tag_articles', $items_data);
 $xoopsTpl->assign_by_ref('pagenav', $pagenav);

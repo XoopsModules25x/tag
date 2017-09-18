@@ -90,7 +90,10 @@ function xoops_module_update_tag(XoopsModule $module, $previousVersion = null)
             foreach ($configurator['templateFolders'] as $folder) {
                 $templateFolder = $GLOBALS['xoops']->path('modules/' . $moduleDirName . $folder);
                 if (is_dir($templateFolder)) {
-                    $templateList = array_diff(scandir($templateFolder, SCANDIR_SORT_NONE), array('..', '.'));
+                    $templateList = array_diff(scandir($templateFolder), [
+                        '..',
+                        '.'
+                        ]);
                     foreach ($templateList as $k => $v) {
                         $fileInfo = new SplFileInfo($templateFolder . $v);
                         if ($fileInfo->getExtension() === 'html' && $fileInfo->getFilename() !== 'index.html') {
@@ -144,8 +147,8 @@ function xoops_module_update_tag(XoopsModule $module, $previousVersion = null)
         }
 
         //delete .html entries from the tpl table
-        $sql = 'DELETE FROM ' . $xoopsDB->prefix('tplfile') . " WHERE `tpl_module` = '" . $module->getVar('dirname', 'n') . "' AND `tpl_file` LIKE '%.html%'";
-        $xoopsDB->queryF($sql);
+        $sql = 'DELETE FROM ' . $GLOBALS['xoopsDB']->prefix('tplfile') . " WHERE `tpl_module` = '" . $module->getVar('dirname', 'n') . '\' AND `tpl_file` LIKE \'%.html%\'';
+        $GLOBALS['xoopsDB']->queryF($sql);
 
         /* Do some synchronization */
         include_once __DIR__ . '/functions.recon.php';

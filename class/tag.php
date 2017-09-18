@@ -70,7 +70,7 @@ class TagTagHandler extends XoopsPersistableObjectHandler
      */
     public function getByItem($itemid, $modid = 0, $catid = 0)
     {
-        $ret = array();
+        $ret = [];
 
         $itemid = (int)$itemid;
         $modid  = (empty($modid) && is_object($GLOBALS['xoopsModule'])
@@ -129,7 +129,7 @@ class TagTagHandler extends XoopsPersistableObjectHandler
         }
 
         if (empty($tags)) {
-            $tags = array();
+            $tags = [];
         } elseif (!is_array($tags)) {
             require_once $GLOBALS['xoops']->path('/modules/tag/include/functions.php');
             $tags = tag_parse_tag(addslashes(stripslashes($tags)));
@@ -142,7 +142,7 @@ class TagTagHandler extends XoopsPersistableObjectHandler
 
         if (!empty($tags_delete)) {
             $tags_delete = array_map(array($this->db, 'quoteString'), $tags_delete);
-            if ($tags_id =& $this->getIds(new Criteria('tag_term', '(' . implode(', ', $tags_delete) . ')', 'IN'))) {
+            if ($tags_id = $this->getIds(new Criteria('tag_term', '(' . implode(', ', $tags_delete) . ')', 'IN'))) {
                 $sql = "DELETE FROM {$this->table_link}" . ' WHERE ' . "     {$this->keyName} IN (" . implode(', ', $tags_id) . ')' . "     AND tag_modid = {$modid} AND tag_catid = {$catid} AND tag_itemid = {$itemid}";
                 if (false == ($result = $this->db->queryF($sql))) {
                     //@todo: decide if we should do something here on failure
@@ -161,10 +161,10 @@ class TagTagHandler extends XoopsPersistableObjectHandler
         }
 
         if (!empty($tags_add)) {
-            $tag_link  = array();
-            $tag_count = array();
+            $tag_link  = [];
+            $tag_count = [];
             foreach ($tags_add as $tag) {
-                if ($tags_id =& $this->getIds(new Criteria('tag_term', $tag))) {
+                if ($tags_id = $this->getIds(new Criteria('tag_term', $tag))) {
                     $tag_id      = $tags_id[0];
                     $tag_count[] = $tag_id;
                 } else {
@@ -190,9 +190,9 @@ class TagTagHandler extends XoopsPersistableObjectHandler
             }
         }
         if (is_array($tags_update)) {
-            foreach ($tags_update as $tag_id) {
-                $this->update_stats($tag_id, $modid, $catid);
-            }
+        foreach ($tags_update as $tag_id) {
+            $this->update_stats($tag_id, $modid, $catid);
+        }
         }
 
         return true;
@@ -279,7 +279,7 @@ class TagTagHandler extends XoopsPersistableObjectHandler
         $fromStats = true
     )//&getByLimit($criteria = null, $fromStats = true)
     {
-        $ret = array();
+        $ret = [];
         if ($fromStats) {
             $sql = "SELECT DISTINCT(o.{$this->keyName}), o.tag_term, o.tag_status, SUM(l.tag_count) AS count, l.tag_modid" . " FROM {$this->table} AS o LEFT JOIN {$this->table_stats} AS l ON l.{$this->keyName} = o.{$this->keyName}";
         } else {
@@ -325,13 +325,13 @@ class TagTagHandler extends XoopsPersistableObjectHandler
             $ret = null;
         } else {
             while ($myrow = $this->db->fetchArray($result)) {
-                $ret[$myrow[$this->keyName]] = array(
+                $ret[$myrow[$this->keyName]] = [
                     'id'     => $myrow[$this->keyName],
                     'term'   => htmlspecialchars($myrow['tag_term']),
                     'status' => $myrow['tag_status'],
                     'modid'  => $myrow['tag_modid'],
                     'count'  => (int)$myrow['count']
-                );
+                ];
             }
         }
 
@@ -386,7 +386,7 @@ class TagTagHandler extends XoopsPersistableObjectHandler
      */
     public function &getItems($criteria = null)
     {
-        $ret = array();
+        $ret = [];
         $sql = '    SELECT o.tl_id, o.tag_itemid, o.tag_modid, o.tag_catid, o.tag_time';
         $sql .= "    FROM {$this->table_link} AS o LEFT JOIN {$this->table} AS l ON l.{$this->keyName} = o.{$this->keyName}";
 
@@ -425,15 +425,15 @@ class TagTagHandler extends XoopsPersistableObjectHandler
 
         if (false == ($result = $this->db->query($sql, $limit, $start))) {
             //xoops_error($this->db->error());
-            $ret = array();
+            $ret = [];
         } else {
             while ($myrow = $this->db->fetchArray($result)) {
-                $ret[$myrow['tl_id']] = array(
+                $ret[$myrow['tl_id']] = [
                     'itemid' => $myrow['tag_itemid'],
                     'modid'  => $myrow['tag_modid'],
                     'catid'  => $myrow['tag_catid'],
                     'time'   => $myrow['tag_time']
-                );
+                ];
             }
         }
 
