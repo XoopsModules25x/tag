@@ -85,7 +85,7 @@ class TagTagHandler extends XoopsPersistableObjectHandler
                . " WHERE  l.tag_itemid = {$itemid} AND l.tag_modid = {$modid}"
                . (empty($catid) ? '' : (' AND l.tag_catid=' . (int)$catid))
                . ' ORDER BY o.tag_count DESC';
-        if (false == ($result = $this->db->query($sql))) {
+        if (false === ($result = $this->db->query($sql))) {
             return $ret;
         }
         while ($myrow = $this->db->fetchArray($result)) {
@@ -144,16 +144,16 @@ class TagTagHandler extends XoopsPersistableObjectHandler
             $tags_delete = array_map([$this->db, 'quoteString'], $tags_delete);
             if ($tags_id = $this->getIds(new Criteria('tag_term', '(' . implode(', ', $tags_delete) . ')', 'IN'))) {
                 $sql = "DELETE FROM {$this->table_link}" . ' WHERE ' . "     {$this->keyName} IN (" . implode(', ', $tags_id) . ')' . "     AND tag_modid = {$modid} AND tag_catid = {$catid} AND tag_itemid = {$itemid}";
-                if (false == ($result = $this->db->queryF($sql))) {
+                if (false === ($result = $this->db->queryF($sql))) {
                     //@todo: decide if we should do something here on failure
                 }
                 $sql = 'DELETE FROM ' . $this->table . ' WHERE ' . '    tag_count < 2 AND ' . "     {$this->keyName} IN (" . implode(', ', $tags_id) . ')';
-                if (false == ($result = $this->db->queryF($sql))) {
+                if (false === ($result = $this->db->queryF($sql))) {
                     //xoops_error($this->db->error());
                 }
 
                 $sql = 'UPDATE ' . $this->table . ' SET tag_count = tag_count - 1' . ' WHERE ' . "     {$this->keyName} IN (" . implode(', ', $tags_id) . ')';
-                if (false == ($result = $this->db->queryF($sql))) {
+                if (false === ($result = $this->db->queryF($sql))) {
                     //xoops_error($this->db->error());
                 }
                 $tags_update = $tags_id;
@@ -184,7 +184,7 @@ class TagTagHandler extends XoopsPersistableObjectHandler
             }
             if (!empty($tag_count)) {
                 $sql = 'UPDATE ' . $this->table . ' SET tag_count = tag_count+1' . ' WHERE ' . "     {$this->keyName} IN (" . implode(', ', $tag_count) . ')';
-                if (false == ($result = $this->db->queryF($sql))) {
+                if (false === ($result = $this->db->queryF($sql))) {
                     //xoops_error($this->db->error());
                 }
             }
@@ -235,7 +235,7 @@ class TagTagHandler extends XoopsPersistableObjectHandler
             if (empty($count)) {
                 $sql = "DELETE FROM {$this->table_stats}" . ' WHERE ' . " {$this->keyName} = {$tag_id}" . " AND tag_modid = {$modid}" . " AND tag_catid = {$catid}";
 
-                if (false == $result = $this->db->queryF($sql)) {
+                if (false === $result = $this->db->queryF($sql)) {
                     //xoops_error($this->db->error());
                 }
             } else {
@@ -320,7 +320,7 @@ class TagTagHandler extends XoopsPersistableObjectHandler
                 break;
         }
 
-        if (false == ($result = $this->db->query($sql, $limit, $start))) {
+        if (false === ($result = $this->db->query($sql, $limit, $start))) {
             //xoops_error($this->db->error());
             $ret = null;
         } else {
@@ -423,7 +423,7 @@ class TagTagHandler extends XoopsPersistableObjectHandler
                 break;
         }
 
-        if (false == ($result = $this->db->query($sql, $limit, $start))) {
+        if (false === ($result = $this->db->query($sql, $limit, $start))) {
             //xoops_error($this->db->error());
             $ret = [];
         } else {
@@ -501,7 +501,7 @@ class TagTagHandler extends XoopsPersistableObjectHandler
          */
         $sql = 'DELETE' . " FROM {$this->table_link}" . " WHERE  {$this->keyName} = " . $object->getVar($this->keyName);
         /*
-                if (false ==  ($result = $this->db->{$queryFunc}($sql))) {
+                if (false ===  ($result = $this->db->{$queryFunc}($sql))) {
                    // xoops_error($this->db->error());
                 }
         */
@@ -511,7 +511,7 @@ class TagTagHandler extends XoopsPersistableObjectHandler
         $sql = 'DELETE' . " FROM {$this->table_stats}" . " WHERE  {$this->keyName} = " . $object->getVar($this->keyName);
 
         /*
-                if (false == ($result = $this->db->{$queryFunc}($sql))) {
+                if (false === ($result = $this->db->{$queryFunc}($sql))) {
                    // xoops_error($this->db->error());
                 }
         */
