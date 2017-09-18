@@ -150,4 +150,28 @@ class TagUtility extends XoopsObject
 
         return $success;
     }
+    /**
+     * Checks if a user is admin of Tag
+     *
+     * @return boolean
+     */
+    public static function userIsAdmin()
+    {
+        $tag = Tag::getInstance();
+
+        static $tagIsAdmin;
+
+        if (isset($tagIsAdmin)) {
+            return $tagIsAdmin;
+        }
+
+        if (!$GLOBALS['xoopsUser']) {
+            $tagIsAdmin = false;
+        } else {
+            $tagIsAdmin = $GLOBALS['xoopsUser']->isAdmin($tag->getModule()->getVar('mid'));
+        }
+
+        return $tagIsAdmin;
+    }
+
 }

@@ -22,7 +22,7 @@
 defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
 
 include $GLOBALS['xoops']->path('/modules/tag/include/vars.php');
-require_once $GLOBALS['xoops']->path('/modules/tag/include/functions.php');
+//require_once $GLOBALS['xoops']->path('/modules/tag/include/functions.php');
 
 xoops_loadLanguage('blocks', 'tag');
 xoops_load('constants', 'tag');

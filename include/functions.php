@@ -19,37 +19,32 @@
  * @since           1.00
  */
 
-defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
+defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
 
 if (!defined('TAG_FUNCTIONS')):
     define('TAG_FUNCTIONS', 1);
 
-    include $GLOBALS['xoops']->path('/modules/tag/include/vars.php');
+    include $GLOBALS['xoops']->path('modules/tag/include/vars.php');
 
-    /**
-     * @return bool|null
-     */
-    function tag_getTagHandler()
+    function &tag_getTagHandler()
     {
-        static $tagHandler;
+        static $tag_handler;
 
-        if (isset($tagHandler)) {
-            return $tagHandler;
+        if (isset($tag_handler)) {
+            return $tag_handler;
         }
 
-        $tagHandler = null;
-        if (!($GLOBALS['xoopsModule'] instanceof XoopsModule)
-            || ('tag' !== $GLOBALS['xoopsModule']->getVar('dirname'))) {
-            /** @var XoopsModuleHandler $moduleHandler */
-            $moduleHandler = xoops_getHandler('module');
-            $module        = $moduleHandler->getByDirname('tag');
+        $tag_handler = null;
+        if (!($GLOBALS['xoopsModule'] instanceof XoopsModule) || ('tag' != $GLOBALS['xoopsModule']->getVar('dirname'))) {
+            $module_handler =& xoops_getHandler('module');
+            $module         =& $module_handler->getByDirname('tag');
             if (!$module || !$module->isactive()) {
-                return $tagHandler;
+                return $tag_handler;
             }
         }
-        $tagHandler = @xoops_getModuleHandler('tag', 'tag', true);
+        $tag_handler = @xoops_getModuleHandler('tag', 'tag', true);
 
-        return $tagHandler;
+        return $tag_handler;
     }
 
     /**
@@ -59,28 +54,24 @@ if (!defined('TAG_FUNCTIONS')):
      * @var array $args         array of indexed variables: name and value
      * @var array $args_string  array of string variable values
      *
-     * @return bool true on args parsed
+     * @return bool    true on args parsed
      */
 
-    /** known issues:
+    /* known issues:
      * - "/" in a string
      * - "&" in a string
-     * @param $args_numeric
-     * @param $args
-     * @param $args_string
-     * @return bool|null
-     */
+    */
     function tag_parse_args(&$args_numeric, &$args, &$args_string)
     {
-        $args_abb     = [
+        $args_abb     = array(
             'c' => 'catid',
             'm' => 'modid',
             's' => 'start',
             't' => 'tag'
-        ];
-        $args         = [];
-        $args_numeric = [];
-        $args_string  = [];
+        );
+        $args         = array();
+        $args_numeric = array();
+        $args_string  = array();
         if (preg_match("/[^\?]*\.php[\/|\?]([^\?]*)/i", $_SERVER['REQUEST_URI'], $matches)) {
             $vars = preg_split("/[\/|&]/", $matches[1]);
             $vars = array_map('trim', $vars);
@@ -114,7 +105,7 @@ if (!defined('TAG_FUNCTIONS')):
      */
     function tag_parse_tag($text_tag)
     {
-        $tags = [];
+        $tags = array();
         if (empty($text_tag)) {
             return $tags;
         }
