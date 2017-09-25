@@ -93,7 +93,7 @@ if (!defined('TAG_FUNCTIONS')):
             }
         }
 
-        return (count($args) + count($args_numeric) + count($args_string) == 0) ? null : true;
+        return (0 == count($args) + count($args_numeric) + count($args_string)) ? null : true;
     }
 
     /**

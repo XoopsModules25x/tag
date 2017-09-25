@@ -179,7 +179,7 @@ class TagTagHandler extends XoopsPersistableObjectHandler
                 $tags_update[] = $tag_id;
             }
             $sql = "INSERT INTO {$this->table_link}" . ' (tag_id, tag_itemid, tag_catid, tag_modid, tag_time) ' . ' VALUES ' . implode(', ', $tag_link);
-            if (($result = $this->db->queryF($sql)) === false) {
+            if (false === ($result = $this->db->queryF($sql))) {
                 //xoops_error($this->db->error());
             }
             if (!empty($tag_count)) {
@@ -251,7 +251,7 @@ class TagTagHandler extends XoopsPersistableObjectHandler
                     $sql = "INSERT INTO {$this->table_stats}" . ' (tag_id, tag_modid, tag_catid, tag_count)' . " VALUES ({$tag_id}, {$modid}, {$catid}, {$count})";
                 }
 
-                if (!empty($sql) && ($result = $this->db->queryF($sql)) === false) {
+                if (!empty($sql) && false === ($result = $this->db->queryF($sql))) {
                     //xoops_error($this->db->error());
                 }
             }
@@ -367,7 +367,7 @@ class TagTagHandler extends XoopsPersistableObjectHandler
 
         $sql =     $sql_select . " " . $sql_from . " " . $sql_where;
         */
-        if (($result = $this->db->query($sql)) === false) {
+        if (false === ($result = $this->db->query($sql))) {
             //xoops_error($this->db->error());
             $ret = 0;
         } else {
@@ -468,7 +468,7 @@ class TagTagHandler extends XoopsPersistableObjectHandler
             }
 
             $sql = $sql_select . ' ' . $sql_from . ' ' . $sql_where;
-            if (($result = $this->db->query($sql)) === false) {
+            if (false === ($result = $this->db->query($sql))) {
                 //xoops_error($this->db->error());
                 $ret = 0;
             } else {

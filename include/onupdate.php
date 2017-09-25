@@ -96,7 +96,7 @@ function xoops_module_update_tag(XoopsModule $module, $previousVersion = null)
                     $templateList = array_diff(scandir($templateFolder, SCANDIR_SORT_NONE), ['..', '.']);
                     foreach ($templateList as $k => $v) {
                         $fileInfo = new SplFileInfo($templateFolder . $v);
-                        if ($fileInfo->getExtension() === 'html' && $fileInfo->getFilename() !== 'index.html') {
+                        if ('html' === $fileInfo->getExtension() && 'index.html' !== $fileInfo->getFilename()) {
                             if (file_exists($templateFolder . $v)) {
                                 unlink($templateFolder . $v);
                             }

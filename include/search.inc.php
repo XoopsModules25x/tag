@@ -36,7 +36,7 @@ function &tag_search($queryarray, $andor, $limit, $offset, $userid, $sortby = 't
     $count = is_array($queryarray) ? count($queryarray) : 0;
     $sql   = 'SELECT tag_id, tag_term FROM ' . $GLOBALS['xoopsDB']->prefix('tag_tag');
     if ($count > 0) {
-        if ($andor === 'exact') {
+        if ('exact' === $andor) {
             $sql .= " WHERE tag_term = '{$queryarray[0]}'";
             for ($i = 1; $i < $count; ++$i) {
                 $sql .= " {$andor} tag_term = '{$queryarray[$i]}'";
