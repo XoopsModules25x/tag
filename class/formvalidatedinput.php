@@ -81,19 +81,6 @@ class TagFormValidatedInput extends XoopsFormText
         $this->setType($type);
     }
 
-    /**
-     *
-     * XoopsFormText method is included here as an override for the base class (XoopsFormText)
-     * @param        $caption
-     * @param        $name
-     * @param        $size
-     * @param        $maxlength
-     * @param string $value
-     */
-    public function XoopsFormText(&$caption, &$name, &$size, &$maxlength, $value = '')
-    {
-        self::__construct($caption, $name, $size, $maxlength, $value, 'text');
-    }
 
     /**
      * Get type information value
