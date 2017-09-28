@@ -36,8 +36,8 @@ if (!defined('TAG_FUNCTIONS')):
 
         $tag_handler = null;
         if (!($GLOBALS['xoopsModule'] instanceof XoopsModule) || ('tag' != $GLOBALS['xoopsModule']->getVar('dirname'))) {
-            $module_handler =& xoops_getHandler('module');
-            $module         =& $module_handler->getByDirname('tag');
+            $module_handler = xoops_getHandler('module');
+            $module         = $module_handler->getByDirname('tag');
             if (!$module || !$module->isactive()) {
                 return $tag_handler;
             }
@@ -63,15 +63,15 @@ if (!defined('TAG_FUNCTIONS')):
     */
     function tag_parse_args(&$args_numeric, &$args, &$args_string)
     {
-        $args_abb     = array(
+        $args_abb     = [
             'c' => 'catid',
             'm' => 'modid',
             's' => 'start',
             't' => 'tag'
-        );
-        $args         = array();
-        $args_numeric = array();
-        $args_string  = array();
+        ];
+        $args         = [];
+        $args_numeric = [];
+        $args_string  = [];
         if (preg_match("/[^\?]*\.php[\/|\?]([^\?]*)/i", $_SERVER['REQUEST_URI'], $matches)) {
             $vars = preg_split("/[\/|&]/", $matches[1]);
             $vars = array_map('trim', $vars);
@@ -105,7 +105,7 @@ if (!defined('TAG_FUNCTIONS')):
      */
     function tag_parse_tag($text_tag)
     {
-        $tags = array();
+        $tags = [];
         if (empty($text_tag)) {
             return $tags;
         }
