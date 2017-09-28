@@ -196,7 +196,7 @@ $modversion['config'] = [
         'description' => '_MI_TAG_DOURLREWRITE_DESC',
         'formtype'    => 'yesno',
         'valuetype'   => 'int',
-        'default'     => in_array(php_sapi_name(), ['apache', 'apache2handler'])
+        'default'     => in_array(PHP_SAPI, ['apache', 'apache2handler'])
     ],
 
     [
