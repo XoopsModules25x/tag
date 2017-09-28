@@ -48,6 +48,9 @@ function tdmdownloads_tag_iteminfo(&$items)
     unset($items_obj);
 }
 
+/**
+ * @param $mid
+ */
 function tdmdownloads_tag_synchronization($mid)
 {
     $item_handler = xoops_getModuleHandler('tdmdownloads_downloads', 'tdmdownloads');

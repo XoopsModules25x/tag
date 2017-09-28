@@ -26,6 +26,9 @@ if (!defined('TAG_FUNCTIONS')):
 
     include $GLOBALS['xoops']->path('modules/tag/include/vars.php');
 
+    /**
+     * @return false|null|\XoopsObjectHandler
+     */
     function &tag_getTagHandler()
     {
         static $tag_handler;
