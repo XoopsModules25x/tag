@@ -51,6 +51,7 @@ function newbb_tag_iteminfo(&$items)
             $items_id[] = (int)$item_id;
         }
     }
+    /** @var \NewbbTopicHandler $itemHandler */
     $itemHandler = xoops_getModuleHandler('topic', 'newbb');
     $items_obj   = $itemHandler->getObjects(new Criteria('topic_id', '(' . implode(', ', $items_id) . ')', 'IN'), true);
 

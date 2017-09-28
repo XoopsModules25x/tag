@@ -70,7 +70,7 @@ switch (strtolower($mode_display)) {
         $limit        = empty($tag_config['limit_tag_cloud']) ? 100 : (int)$tag_config['limit_tag_cloud'];
         break;
 }
-
+/** @var \TagTagHandler $tagHandler */
 $tagHandler = xoops_getModuleHandler('tag', 'tag');
 $tag_config = tag_load_config();
 tag_define_url_delimiter();

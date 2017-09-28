@@ -60,6 +60,7 @@ function tagBar($tags, $catid = 0, $modid = 0)
         if (empty($modid) && ($GLOBALS['xoopsModule'] instanceof XoopsModule)) {
             $modid = $GLOBALS['xoopsModule']->getVar('mid');
         }
+        /** @var \TagTagHandler $tagHandler */
         $tagHandler = xoops_getModuleHandler('tag', 'tag');
         if (!$tags = $tagHandler->getByItem($tags, $modid, $catid)) {
             return [];

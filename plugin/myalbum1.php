@@ -51,6 +51,7 @@ function myalbum1_tag_iteminfo(&$items)
             $items_id[] = (int)$item_id;
         }
     }
+    /** @var \Myalbum1PhotosHandler $itemHandler */
     $itemHandler = xoops_getModuleHandler('photos', 'myalbum1');
     $textHandler = xoops_getModuleHandler('text', 'myalbum1');
     $items_obj   = $itemHandler->getObjects(new Criteria('lid', '(' . implode(', ', $items_id) . ')', 'IN'), true);

@@ -266,7 +266,7 @@ class TagTagHandler extends XoopsPersistableObjectHandler
      * @access         public
      * @param int             $limit
      * @param int             $start
-     * @param CriteriaElement $criteria  {@link Criteria}
+     * @param CriteriaCompo $criteria  {@link Criteria}
      * @param null            $fields
      * @param boolean         $fromStats fetch from tag-stats table
      * @return array associative array of tags (id, term, count)
@@ -274,7 +274,7 @@ class TagTagHandler extends XoopsPersistableObjectHandler
     public function &getByLimit(
         $limit = 0,
         $start = 0,
-        CriteriaElement $criteria = null,
+        CriteriaCompo $criteria = null,
         $fields = null,
         $fromStats = true
     )//&getByLimit($criteria = null, $fromStats = true)
@@ -290,7 +290,7 @@ class TagTagHandler extends XoopsPersistableObjectHandler
         $start = null;
         $sort  = '';
         $order = '';
-        if (isset($criteria) && is_subclass_of($criteria, 'CriteriaElement')) {
+        if (isset($criteria) && is_subclass_of($criteria, 'CriteriaCompo')) {
             $sql   .= ' ' . $criteria->renderWhere();
             $sort  = $criteria->getSort();
             $order = $criteria->getOrder();
@@ -342,18 +342,18 @@ class TagTagHandler extends XoopsPersistableObjectHandler
      * Get count of tags
      *
      * @access public
-     * @param CriteriaElement $criteria {@link Criteria)
+     * @param CriteriaCompo $criteria {@link Criteria)
      *
      * @return integer count
      */
-    public function getCount(CriteriaElement $criteria = null)
+    public function getCount(CriteriaCompo $criteria = null)
     {
         /*
         $catid    = (int)($catid);
         $modid    = (int)($modid);
         */
         $sql = "SELECT COUNT(DISTINCT o.{$this->keyName})" . "    FROM {$this->table} AS o LEFT JOIN {$this->table_link} AS l ON l.{$this->keyName} = o.{$this->keyName}";
-        if (isset($criteria) && is_subclass_of($criteria, 'CriteriaElement')) {
+        if (isset($criteria) && is_subclass_of($criteria, 'CriteriaCompo')) {
             $sql .= ' ' . $criteria->renderWhere();
         }
         /*
@@ -380,11 +380,11 @@ class TagTagHandler extends XoopsPersistableObjectHandler
     /**
      * Get items linked with a tag
      *
-     * @param object criteria {@link Criteria}
+     * @param Criteria $criteria {@link Criteria}
      *
      * @return array associative array of items (id, modid, catid)
      */
-    public function &getItems($criteria = null)
+    public function &getItems(Criteria $criteria = null)
     {
         $ret = [];
         $sql = '    SELECT o.tl_id, o.tag_itemid, o.tag_modid, o.tag_catid, o.tag_time';

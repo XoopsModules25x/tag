@@ -46,6 +46,7 @@ class TagFormTag extends XoopsFormText
         // itemid
         if (!empty($value) && is_numeric($value) && ($GLOBALS['xoopsModule'] instanceof XoopsModule)) {
             $modid      = $GLOBALS['xoopsModule']->getVar('mid');
+            /** @var \TagTagHandler $tagHandler */
             $tagHandler = xoops_getModuleHandler('tag', 'tag');
             if ($tags = $tagHandler->getByItem($value, $modid, $catid)) {
                 $value = htmlspecialchars(implode(', ', $tags));

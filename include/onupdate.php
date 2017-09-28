@@ -46,6 +46,7 @@ function tableExists($tablename)
 function xoops_module_pre_update_tag(XoopsModule $module)
 {
     $moduleDirName = basename(dirname(__DIR__));
+    /** @var \TagUtility $utilityClass */
     $className     = ucfirst($moduleDirName) . 'Utility';
     if (!class_exists($className)) {
         xoops_load('utility', $moduleDirName);

@@ -51,6 +51,7 @@ if (empty($modid) && ($GLOBALS['xoopsModule'] instanceof XoopsModule)
 if (empty($tag_id) && empty($tag_term)) {
     redirect_header($GLOBALS['xoops']->url('www/modules/' . $GLOBALS['xoopsModule']->getVar('dirname') . '/index.php'), 2, _MD_TAG_INVALID);
 }
+/** @var \TagTagHandler $tagHandler */
 $tagHandler = xoops_getModuleHandler('tag', 'tag');
 if (!empty($tag_id)) {
     if (!$tag_obj = $tagHandler->get($tag_id)) {

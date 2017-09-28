@@ -29,8 +29,8 @@ function tdmdownloads_tag_iteminfo(&$items)
         }
     }
 
-    $item_handler = xoops_getModuleHandler('tdmdownloads_downloads', 'tdmdownloads');
-    $items_obj = $item_handler->getObjects(new Criteria('lid', '(' . implode(', ', $items_id) . ')', 'IN'), true);
+    $itemHandler = xoops_getModuleHandler('tdmdownloads_downloads', 'tdmdownloads');
+    $items_obj   = $itemHandler->getObjects(new Criteria('lid', '(' . implode(', ', $items_id) . ')', 'IN'), true);
 
     foreach (array_keys($items) as $cat_id) {
         foreach (array_keys($items[$cat_id]) as $item_id) {
@@ -55,21 +55,21 @@ function tdmdownloads_tag_iteminfo(&$items)
  */
 function tdmdownloads_tag_synchronization($mid)
 {
-    $item_handler = xoops_getModuleHandler('tdmdownloads_downloads', 'tdmdownloads');
+    $itemHandler = xoops_getModuleHandler('tdmdownloads_downloads', 'tdmdownloads');
     $link_handler = xoops_getModuleHandler('link', 'tag');
 
     /* clear tag-item links */
     if (version_compare(mysql_get_server_info(), '4.1.0', 'ge')):
     $sql =  "    DELETE FROM {$link_handler->table}" . '    WHERE ' .
             "        tag_modid = {$mid}" . '        AND ' . '        ( tag_itemid NOT IN ' .
-            "            ( SELECT DISTINCT {$item_handler->keyName} " .
-            "                FROM {$item_handler->table} " .
-            "                WHERE {$item_handler->table}.status > 0" . '            ) ' . '        )';
+            "            ( SELECT DISTINCT {$itemHandler->keyName} " .
+            "                FROM {$itemHandler->table} " .
+            "                WHERE {$itemHandler->table}.status > 0" . '            ) ' . '        )';
     else:
     $sql =  "    DELETE {$link_handler->table} FROM {$link_handler->table}" .
-            "    LEFT JOIN {$item_handler->table} AS aa ON {$link_handler->table}.tag_itemid = aa.{$item_handler->keyName} " . '    WHERE ' .
+            "    LEFT JOIN {$itemHandler->table} AS aa ON {$link_handler->table}.tag_itemid = aa.{$itemHandler->keyName} " . '    WHERE ' .
             "        tag_modid = {$mid}" . '        AND ' .
-            "        ( aa.{$item_handler->keyName} IS NULL" . '            OR aa.status < 1' . '        )';
+            "        ( aa.{$itemHandler->keyName} IS NULL" . '            OR aa.status < 1' . '        )';
     endif;
     if (!$result = $link_handler->db->queryF($sql)) {
         //xoops_error($link_handler->db->error());

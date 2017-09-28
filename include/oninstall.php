@@ -29,7 +29,8 @@ use Xmf\Language;
 function xoops_module_pre_install_tag(XoopsModule $module)
 {
     $moduleDirName = basename(dirname(__DIR__));
-    $utilityClass  = ucfirst($moduleDirName) . 'Utility';
+    /** @var \TagUtility $utilityClass */
+    $utilityClass = ucfirst($moduleDirName) . 'Utility';
     if (!class_exists($utilityClass)) {
         xoops_load('utility', $moduleDirName);
     }

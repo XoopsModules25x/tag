@@ -37,6 +37,7 @@ if (!defined('TAG_FUNCTIONS_RECON')):
         $criteria->add(new Criteria('dirname', "('system', 'tag')", 'NOT IN'));
         $modules_obj = $moduleHandler->getObjects($criteria, true);
 
+        /** @var \TagLinkHandler $linkHandler */
         $linkHandler = xoops_getModuleHandler('link', 'tag');
         $linkHandler->deleteAll(new Criteria('tag_modid', '(' . implode(', ', array_keys($modules_obj)) . ')', 'NOT IN'), true);
 

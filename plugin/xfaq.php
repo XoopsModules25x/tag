@@ -38,6 +38,7 @@ function xfaq_tag_iteminfo(&$items)
         }
     }
 
+    /** @var XfaqFaqHandler $itemHandler */
     $itemHandler = xoops_getModuleHandler('faq', 'xfaq');
     $items_obj   = $itemHandler->getObjects(new Criteria('faq_id', '(' . implode(', ', $items_id) . ')', 'IN'), true);
 

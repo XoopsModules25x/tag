@@ -35,7 +35,7 @@ $limit  = $GLOBALS['xoopsModuleConfig']['items_perpage'];
 $modid  = Request::getInt('modid', TagConstants::DEFAULT_ID);
 $start  = Request::getInt('start', TagConstants::BEGINNING);
 $status = Request::getInt('status', TagConstants::STATUS_ALL, 'GET');
-
+/** @var \TagTagHandler $tagHandler */
 $tagHandler  = xoops_getModuleHandler('tag', $moduleDirName);
 $linkHandler = xoops_getModuleHandler('link', $moduleDirName);
 

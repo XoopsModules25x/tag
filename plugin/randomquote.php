@@ -51,6 +51,7 @@ function randomquote_tag_iteminfo(&$items)
     $criteria->add(new Criteria('id', '(' . implode(',', $items_id) . ')', 'IN'));
     $criteria->add(new Criteria('quote_status', RandomquoteConstants::STATUS_ONLINE));
 
+    /** @var \RandomquoteQuotesHandler $quoteHandler */
     $quoteHandler = xoops_getModuleHandler('quotes', 'randomquote');
     $quoteObjs    = $quoteHandler->getObjects($criteria, true);
 

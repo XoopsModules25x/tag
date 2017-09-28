@@ -51,6 +51,7 @@ function article_tag_iteminfo(&$items)
             $items_id[] = (int)$item_id;
         }
     }
+
     $itemHandler = xoops_getModuleHandler('article', 'article');
     $items_obj   = $itemHandler->getObjects(new Criteria('art_id', '(' . implode(', ', $items_id) . ')', 'IN'), true);
 

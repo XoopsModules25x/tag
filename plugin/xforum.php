@@ -51,6 +51,7 @@ function xforum_tag_iteminfo(&$items)
             $items_id[] = (int)$item_id;
         }
     }
+    /** @var XforumPostHandler $itemHandler */
     $itemHandler = xoops_getModuleHandler('post', 'xforum');
     $items_obj   = $itemHandler->getObjects(new Criteria('post_id', '(' . implode(', ', $items_id) . ')', 'IN'), true);
     $myts        = MyTextSanitizer::getInstance();

@@ -41,6 +41,7 @@ function publisher_tag_iteminfo(&$items)
             $items_id[] = (int)$item_id;
         }
     }
+    /** @var \PublisherItemHandler $itemHandler */
     $itemHandler = xoops_getModuleHandler('item', 'publisher');
     $criteria    = new Criteria('itemid', '(' . implode(', ', $items_id) . ')', 'IN');
     $items_obj   = $itemHandler->getObjects($criteria, 'itemid');
@@ -84,7 +85,7 @@ function publisher_tag_synchronization($mid)
               . "            ( SELECT DISTINCT {$itemHandler->keyName} "
               . "                FROM {$itemHandler->table} "
               . "                WHERE {$itemHandler->table}.status = "
-              . _PUBLISHER_STATUS_PUBLISHED
+              . _CO_PUBLISHER_PUBLISHED
               . '            ) '
               . '        )';
     $result = $linkHandler->db->queryF($sql);

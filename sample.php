@@ -56,6 +56,7 @@ $form_item->addElement(new TagFormTag('item_tag', 60, 255, $itemid, $catid = 0))
 
 /* Step 2: add tag storage after item storage */
 // File: submit.item.php
+/** @var \TagTagHandler $tagHandler */
 $tagHandler = xoops_getModuleHandler('tag', 'tag');
 $tagHandler->updateByItem($_POST['item_tag'], $itemid, $GLOBALS['xoopsModule']->getVar('dirname'), $catid = 0);
 

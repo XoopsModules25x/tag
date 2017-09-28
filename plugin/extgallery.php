@@ -40,6 +40,7 @@ function extgallery_tag_iteminfo(&$items)
         }
     }
 
+    /** @var \ExtgalleryPublicPhotoHandler $itemHandler */
     $itemHandler = xoops_getModuleHandler('publicphoto', 'extgallery');
     $items_obj   = $itemHandler->getObjects(new Criteria('photo_id', '(' . implode(', ', $items_id) . ')', 'IN'), true);
 

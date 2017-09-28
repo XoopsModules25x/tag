@@ -96,6 +96,7 @@ function tag_block_cloud_show($options, $dirname = '', $catid = 0)
     }
 
     $block      = [];
+    /** @var \TagTagHandler $tagHandler */
     $tagHandler = xoops_getModuleHandler('tag', 'tag');
     tag_define_url_delimiter();
 
@@ -236,6 +237,8 @@ function tag_block_top_show($options, $dirname = '', $catid = 0)
     }
 
     $block      = [];
+
+    /** @var \TagTagHandler $tagHandler */
     $tagHandler = xoops_getModuleHandler('tag', 'tag');
     tag_define_url_delimiter();
 

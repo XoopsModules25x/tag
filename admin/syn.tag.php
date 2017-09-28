@@ -76,6 +76,7 @@ $opform->addElement($tray);
 $opform->display();
 
 if (isset($_GET['start'])) {
+    /** @var \TagTagHandler $tagHandler */
     $tagHandler = xoops_getModuleHandler('tag', $moduleDirName);
 
     $criteria = new CriteriaCompo();

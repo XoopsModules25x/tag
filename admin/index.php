@@ -25,7 +25,7 @@ xoops_cp_header();
 include $GLOBALS['xoops']->path('/modules/tag/include/vars.php');
 
 $adminObject  = \Xmf\Module\Admin::getInstance();
-
+/** @var \TagTagHandler $tagHandler */
 $tagHandler = xoops_getModuleHandler('tag', $moduleDirName);
 $count_tag   = $tagHandler->getCount();
 

@@ -58,6 +58,7 @@ function smartfaq_tag_iteminfo(&$items)
             $items_id[] = (int)$item_id;
         }
     }
+    /** @var sfFaqHandler $itemHandler */
     $itemHandler = sf_gethandler('faq');
     $items_obj   = $itemHandler->getObjects(new Criteria('faqid', '(' . implode(', ', $items_id) . ')', 'IN'), true);
     $myts        = MyTextSanitizer::getInstance();
