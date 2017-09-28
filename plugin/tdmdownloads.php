@@ -27,7 +27,7 @@ function TDMDownloads_tag_iteminfo(&$items)
         }
     }
 
-    $item_handler = xoops_getmodulehandler('tdmdownloads_downloads', 'TDMDownloads');
+    $item_handler = xoops_getModuleHandler('tdmdownloads_downloads', 'TDMDownloads');
     $items_obj = $item_handler->getObjects(new Criteria("lid", "(" . implode(", ", $items_id) . ")", "IN"), true);
 
     foreach (array_keys($items) as $cat_id) {
@@ -50,8 +50,8 @@ function TDMDownloads_tag_iteminfo(&$items)
 
 function TDMDownloads_tag_synchronization($mid)
 {
-    $item_handler = xoops_getmodulehandler('tdmdownloads_downloads', 'TDMDownloads');
-    $link_handler = xoops_getmodulehandler("link", "tag");
+    $item_handler = xoops_getModuleHandler('tdmdownloads_downloads', 'TDMDownloads');
+    $link_handler = xoops_getModuleHandler("link", "tag");
 
     /* clear tag-item links */
     if (version_compare( mysql_get_server_info(), "4.1.0", "ge" )):
