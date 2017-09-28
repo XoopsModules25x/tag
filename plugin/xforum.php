@@ -86,6 +86,7 @@ function xforum_tag_iteminfo(&$items)
 function xforum_tag_synchronization($mid)
 {
     $itemHandler = xoops_getModuleHandler('post', 'xforum');
+    /** @var \TagLinkHandler $linkHandler */
     $linkHandler = xoops_getModuleHandler('link', 'tag');
 
     $mid = XoopsFilterInput::clean($mid, 'INT');

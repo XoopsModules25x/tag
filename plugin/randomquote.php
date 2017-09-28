@@ -83,7 +83,9 @@ function randomquote_tag_iteminfo(&$items)
 function mymodule_tag_synchronization($mid)
 {
     xoops_load('constants', 'randomquote');
+    /** @var \RandomquoteQuotesHandler $itemHandler */
     $itemHandler = xoops_getModuleHandler('quotes', 'randomquote');
+    /** @var \TagLinkHandler $linkHandler */
     $linkHandler = xoops_getModuleHandler('link', 'tag');
 
     if (!$itemHandler || !$linkHandler) {

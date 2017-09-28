@@ -85,7 +85,9 @@ function myalbum_tag_iteminfo(&$items)
  */
 function myalbum_tag_synchronization($mid)
 {
+    /** @var \MyalbumPhotosHandler $itemHandler */
     $itemHandler = xoops_getModuleHandler('photos', 'myalbum');
+    /** @var \TagLinkHandler $linkHandler */
     $linkHandler = xoops_getModuleHandler('link', 'tag');
 
     $mid = XoopsFilterInput::clean($mid, 'INT');

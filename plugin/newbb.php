@@ -82,7 +82,10 @@ function newbb_tag_iteminfo(&$items)
  */
 function newbb_tag_synchronization($mid)
 {
+
+    /** @var \NewbbTopicHandler $itemHandler */
     $itemHandler = xoops_getModuleHandler('topic', 'newbb');
+    /** @var \TagLinkHandler $linkHandler */
     $linkHandler = xoops_getModuleHandler('link', 'tag');
 
     $mid = XoopsFilterInput::clean($mid, 'INT');

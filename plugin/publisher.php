@@ -71,7 +71,9 @@ function publisher_tag_iteminfo(&$items)
 function publisher_tag_synchronization($mid)
 {
     require_once $GLOBALS['xoops']->path('/modules/publisher/include/constants.php');
+    /** @var \PublisherItemHandler $itemHandler */
     $itemHandler = xoops_getModuleHandler('item', 'publisher');
+    /** @var \TagLinkHandler $linkHandler */
     $linkHandler = xoops_getModuleHandler('link', 'tag');
 
     $mid = XoopsFilterInput::clean($mid, 'INT');

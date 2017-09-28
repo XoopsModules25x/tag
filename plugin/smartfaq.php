@@ -90,7 +90,9 @@ function smartfaq_tag_iteminfo(&$items)
  */
 function smartfaq_tag_synchronization($mid)
 {
+    /** @var \sfFaqHandler $itemHandler */
     $itemHandler = xoops_getModuleHandler('smartfaq', 'smartfaq');
+    /** @var \TagLinkHandler $linkHandler */
     $linkHandler = xoops_getModuleHandler('link', 'tag');
 
     $mid = XoopsFilterInput::clean($mid, 'INT');

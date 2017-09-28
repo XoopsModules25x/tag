@@ -84,6 +84,7 @@ function article_tag_iteminfo(&$items)
 function article_tag_synchronization($mid)
 {
     $itemHandler = xoops_getModuleHandler('article', 'article');
+    /** @var \TagLinkHandler $linkHandler */
     $linkHandler = xoops_getModuleHandler('link', 'tag');
 
     $mid = XoopsFilterInput::clean($mid, 'INT');

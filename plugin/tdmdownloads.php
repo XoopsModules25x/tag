@@ -56,22 +56,23 @@ function tdmdownloads_tag_iteminfo(&$items)
 function tdmdownloads_tag_synchronization($mid)
 {
     $itemHandler = xoops_getModuleHandler('tdmdownloads_downloads', 'tdmdownloads');
-    $link_handler = xoops_getModuleHandler('link', 'tag');
+    /** @var \TagLinkHandler $linkHandler */
+    $linkHandler = xoops_getModuleHandler('link', 'tag');
 
     /* clear tag-item links */
     if (version_compare(mysql_get_server_info(), '4.1.0', 'ge')):
-    $sql =  "    DELETE FROM {$link_handler->table}" . '    WHERE ' .
+    $sql =  "    DELETE FROM {$linkHandler->table}" . '    WHERE ' .
             "        tag_modid = {$mid}" . '        AND ' . '        ( tag_itemid NOT IN ' .
             "            ( SELECT DISTINCT {$itemHandler->keyName} " .
             "                FROM {$itemHandler->table} " .
             "                WHERE {$itemHandler->table}.status > 0" . '            ) ' . '        )';
     else:
-    $sql =  "    DELETE {$link_handler->table} FROM {$link_handler->table}" .
-            "    LEFT JOIN {$itemHandler->table} AS aa ON {$link_handler->table}.tag_itemid = aa.{$itemHandler->keyName} " . '    WHERE ' .
+    $sql =  "    DELETE {$linkHandler->table} FROM {$linkHandler->table}" .
+            "    LEFT JOIN {$itemHandler->table} AS aa ON {$linkHandler->table}.tag_itemid = aa.{$itemHandler->keyName} " . '    WHERE ' .
             "        tag_modid = {$mid}" . '        AND ' .
             "        ( aa.{$itemHandler->keyName} IS NULL" . '            OR aa.status < 1' . '        )';
     endif;
-    if (!$result = $link_handler->db->queryF($sql)) {
-        //xoops_error($link_handler->db->error());
+    if (!$result = $linkHandler->db->queryF($sql)) {
+        //xoops_error($linkHandler->db->error());
     }
 }

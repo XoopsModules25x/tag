@@ -74,7 +74,9 @@ function extgallery_tag_iteminfo(&$items)
  */
 function extgallery_tag_synchronization($mid)
 {
+    /** @var \ExtgalleryPublicPhotoHandler $itemHandler */
     $itemHandler = xoops_getModuleHandler('publicphoto', 'extgallery');
+    /** @var \TagLinkHandler $linkHandler */
     $linkHandler = xoops_getModuleHandler('link', 'tag');
 
     $mid = XoopsFilterInput::clean($mid, 'INT');
