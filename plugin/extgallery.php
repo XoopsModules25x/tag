@@ -25,7 +25,7 @@ defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
  *
  * @param array $items is an array containing category and item information
  *
- * @return null
+ * @return bool
  */
 function extgallery_tag_iteminfo(&$items)
 {

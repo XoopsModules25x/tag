@@ -12,6 +12,8 @@
  * @copyright   Gregory Mage (Aka Mage)
  * @license     GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
  * @author      Gregory Mage (Aka Mage)
+ * @param $items
+ * @return bool
  */
 
 function tdmdownloads_tag_iteminfo(&$items)

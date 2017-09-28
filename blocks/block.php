@@ -357,19 +357,6 @@ function tag_block_top_edit($options)
  * Prepare output for Cumulus block display
  *
  * @param              array    {
- * @type   int         - 0 number of tags to display
- * @type   int         - 1 time duration
- * @type   int         - 2 max font size (px or %)
- * @type   int         - 3 min font size (px or %)
- * @type   int         - 4 cumulus_flash_width
- * @type   int         - 5 cumulus_flash_height
- * @type   string      - 6 cumulus_flash_background
- * @type   string      - 7 cumulus_flash_transparency
- * @type   string      - 8 cumulus_flash_min_font_color
- * @type   string      - 9 cumulus_flash_max_font_color
- * @type   string      -10 cumulus_flash_hicolor
- * @type   string      -11 cumulus_flash_speed
- *                              }
  * @param  null|string $dirname null for all modules, $dirname for specific module
  * @param  int         $catid   category id (only used if $dirname is set)
  * @return array
