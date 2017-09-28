@@ -14,7 +14,7 @@
  * @author      Gregory Mage (Aka Mage)
  */
 
-function TDMDownloads_tag_iteminfo(&$items)
+function tdmdownloads_tag_iteminfo(&$items)
 {
     if (empty($items) || !is_array($items)) {
         return false;
@@ -27,7 +27,7 @@ function TDMDownloads_tag_iteminfo(&$items)
         }
     }
 
-    $item_handler = xoops_getModuleHandler('tdmdownloads_downloads', 'TDMDownloads');
+    $item_handler = xoops_getModuleHandler('tdmdownloads_downloads', 'tdmdownloads');
     $items_obj = $item_handler->getObjects(new Criteria('lid', '(' . implode(', ', $items_id) . ')', 'IN'), true);
 
     foreach (array_keys($items) as $cat_id) {
@@ -48,9 +48,9 @@ function TDMDownloads_tag_iteminfo(&$items)
     unset($items_obj);
 }
 
-function TDMDownloads_tag_synchronization($mid)
+function tdmdownloads_tag_synchronization($mid)
 {
-    $item_handler = xoops_getModuleHandler('tdmdownloads_downloads', 'TDMDownloads');
+    $item_handler = xoops_getModuleHandler('tdmdownloads_downloads', 'tdmdownloads');
     $link_handler = xoops_getModuleHandler('link', 'tag');
 
     /* clear tag-item links */
