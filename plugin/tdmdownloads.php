@@ -23,7 +23,7 @@ function TDMDownloads_tag_iteminfo(&$items)
     $items_id = [];
     foreach (array_keys($items) as $cat_id) {
         foreach (array_keys($items[$cat_id]) as $item_id) {
-            $items_id[] = intval($item_id);
+            $items_id[] = (int)$item_id;
         }
     }
 
