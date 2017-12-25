@@ -61,7 +61,7 @@ function smartfaq_tag_iteminfo(&$items)
     /** @var sfFaqHandler $itemHandler */
     $itemHandler = sf_gethandler('faq');
     $items_obj   = $itemHandler->getObjects(new Criteria('faqid', '(' . implode(', ', $items_id) . ')', 'IN'), true);
-    $myts        = MyTextSanitizer::getInstance();
+    $myts        = \MyTextSanitizer::getInstance();
     foreach (array_keys($items) as $cat_id) {
         foreach (array_keys($items[$cat_id]) as $item_id) {
             $item_obj = $items_obj[$item_id];

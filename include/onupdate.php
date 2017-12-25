@@ -45,23 +45,15 @@ function tableExists($tablename)
  */
 function xoops_module_pre_update_tag(XoopsModule $module)
 {
+    /** @var tag\Helper $helper */
+    /** @var tag\Utility $utility */
     $moduleDirName = basename(dirname(__DIR__));
-    /** @var \TagUtility $utilityClass */
-    $className     = ucfirst($moduleDirName) . 'Utility';
-    if (!class_exists($className)) {
-        xoops_load('utility', $moduleDirName);
-    }
-    //check for minimum XOOPS version
-    if (!$className::checkVerXoops($module)) {
-        return false;
-    }
+    $helper       = tag\Helper::getInstance();
+    $utility      = new tag\Utility();
 
-    // check for minimum PHP version
-    if (!$className::checkVerPhp($module)) {
-        return false;
-    }
-
-    return true;
+    $xoopsSuccess = $utility::checkVerXoops($module);
+    $phpSuccess   = $utility::checkVerPhp($module);
+    return $xoopsSuccess && $phpSuccess;
 }
 
 /**
@@ -79,15 +71,14 @@ function xoops_module_update_tag(XoopsModule $module, $previousVersion = null)
     $moduleDirName = basename(dirname(__DIR__));
     $capsDirName   = strtoupper($moduleDirName);
 
+    /** @var tag\Helper $helper */
+    /** @var tag\Utility $utility */
+    /** @var tag\Configurator $configurator */
+    $helper  = tag\Helper::getInstance();
+    $utility = new tag\Utility();
+    $configurator = new tag\Configurator();
+
     if ($previousVersion < 235) {
-        $configurator = include __DIR__ . '/config.php';
-
-
-        /** @var WflinksUtility $utilityClass */
-        $utilityClass    = ucfirst($moduleDirName) . 'Utility';
-        if (!class_exists($utilityClass)) {
-            xoops_load('utility', $moduleDirName);
-        }
 
         //delete old HTML templates
         if (count($configurator->templateFolders) > 0) {
@@ -154,7 +145,6 @@ function xoops_module_update_tag(XoopsModule $module, $previousVersion = null)
         /** @var XoopsGroupPermHandler $gpermHandler */
         $gpermHandler = xoops_getHandler('groupperm');
         return $gpermHandler->deleteByModule($module->getVar('mid'), 'item_read');
-
     }
     return true;
 }

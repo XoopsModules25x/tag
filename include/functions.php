@@ -19,7 +19,7 @@
  * @since           1.00
  */
 
-defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
+defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
 
 if (!defined('TAG_FUNCTIONS')):
     define('TAG_FUNCTIONS', 1);

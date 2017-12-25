@@ -86,7 +86,15 @@ function xoops_module_pre_install_tag(XoopsModule $module)
  */
 function xoops_module_pre_update_tag(XoopsModule $module)
 {
-    return true;
+    /** @var xxxx\Helper $helper */
+    /** @var xxxx\Utility $utility */
+    $moduleDirName = basename(dirname(__DIR__));
+    $helper       = xxxx\Helper::getInstance();
+    $utility      = new xxxx\Utility();
+
+    $xoopsSuccess = $utility::checkVerXoops($module);
+    $phpSuccess   = $utility::checkVerPhp($module);
+    return $xoopsSuccess && $phpSuccess;
 }
 
 /**

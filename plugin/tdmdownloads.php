@@ -16,7 +16,7 @@
  * @return bool
  */
 
-function tdmdownloads_tag_iteminfo(&$items)
+function tdmdownloads_tag_iteminfo($items)
 {
     if (empty($items) || !is_array($items)) {
         return false;
@@ -44,8 +44,8 @@ function tdmdownloads_tag_iteminfo(&$items)
                     'tags' => '',
                     'content' => '',
                     ];
-                }
             }
+        }
     }
     unset($items_obj);
 }
@@ -60,13 +60,12 @@ function tdmdownloads_tag_synchronization($mid)
     $linkHandler = xoops_getModuleHandler('link', 'tag');
 
     /* clear tag-item links */
-    if (version_compare(mysql_get_server_info(), '4.1.0', 'ge')):
+    if (version_compare($GLOBALS['xoopsDB']->getServerVersion(), '4.1.0', 'ge')):
     $sql =  "    DELETE FROM {$linkHandler->table}" . '    WHERE ' .
             "        tag_modid = {$mid}" . '        AND ' . '        ( tag_itemid NOT IN ' .
             "            ( SELECT DISTINCT {$itemHandler->keyName} " .
             "                FROM {$itemHandler->table} " .
-            "                WHERE {$itemHandler->table}.status > 0" . '            ) ' . '        )';
-    else:
+            "                WHERE {$itemHandler->table}.status > 0" . '            ) ' . '        )'; else:
     $sql =  "    DELETE {$linkHandler->table} FROM {$linkHandler->table}" .
             "    LEFT JOIN {$itemHandler->table} AS aa ON {$linkHandler->table}.tag_itemid = aa.{$itemHandler->keyName} " . '    WHERE ' .
             "        tag_modid = {$mid}" . '        AND ' .

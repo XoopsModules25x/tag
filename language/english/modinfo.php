@@ -21,7 +21,7 @@
 
 defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
 
-define('_MI_TAG_NAME', 'XOOPS Tag');
+define('_MI_TAG_NAME', 'Tag');
 define('_MI_TAG_DESC', 'For site-wide Tag management');
 
 define('_MI_TAG_BLOCK_CLOUD', 'Tag Cloud');

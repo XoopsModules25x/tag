@@ -422,7 +422,7 @@ function tag_block_cumulus_show(array $options, $dirname = '', $catid = 0)
             'font'  => $count_interval ? floor(($tags[$key]['count'] - $count_min) * $font_ratio + $font_min) : 12,
             'level' => empty($count_max) ? 0 : floor(($tags[$key]['count'] - $count_min) * $level_limit / $count_max),
             'term'  => urlencode($tags[$key]['term']),
-            'title' => htmlspecialchars($tags[$key]['term']),            
+            'title' => htmlspecialchars($tags[$key]['term']),
             'count' => $tags[$key]['count']
         ];
     }

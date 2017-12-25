@@ -54,7 +54,7 @@ function xforum_tag_iteminfo(&$items)
     /** @var XforumPostHandler $itemHandler */
     $itemHandler = xoops_getModuleHandler('post', 'xforum');
     $items_obj   = $itemHandler->getObjects(new Criteria('post_id', '(' . implode(', ', $items_id) . ')', 'IN'), true);
-    $myts        = MyTextSanitizer::getInstance();
+    $myts        = \MyTextSanitizer::getInstance();
     foreach (array_keys($items) as $cat_id) {
         foreach (array_keys($items[$cat_id]) as $item_id) {
             $item_obj = $items_obj[$item_id];

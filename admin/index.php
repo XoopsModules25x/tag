@@ -59,9 +59,9 @@ if (false === ($result = $GLOBALS['xoopsDB']->query($sql))) {
 }
 
 $adminObject->addInfoBox(_AM_TAG_STATS);
-$adminObject->addInfoBoxLine(sprintf( '<infolabel>' . _AM_TAG_COUNT_TAG . '</infolabel>', $count_tag));
-$adminObject->addInfoBoxLine(sprintf( '<infolabel>' . _AM_TAG_COUNT_ITEM . '</infolabel>', $count_item . '<br><br>'));
-$adminObject->addInfoBoxLine(sprintf( '<infolabel>' . _AM_TAG_COUNT_MODULE . '</infolabel>' . '<infotext>' . _AM_TAG_COUNT_MODULE_TITLE . '</infotext>'));
+$adminObject->addInfoBoxLine(sprintf('<infolabel>' . _AM_TAG_COUNT_TAG . '</infolabel>', $count_tag));
+$adminObject->addInfoBoxLine(sprintf('<infolabel>' . _AM_TAG_COUNT_ITEM . '</infolabel>', $count_item . '<br><br>'));
+$adminObject->addInfoBoxLine(sprintf('<infolabel>' . _AM_TAG_COUNT_MODULE . '</infolabel>' . '<infotext>' . _AM_TAG_COUNT_MODULE_TITLE . '</infotext>'));
 
 foreach ($counts_module as $module => $count) {
     $moduleStat = '<infolabel>'
@@ -83,12 +83,12 @@ foreach ($counts_module as $module => $count) {
                   . _AM_TAG_SYNCHRONIZATION
                   . "</a>]\n"
                   . "</infotext> \n";
-    $adminObject->addInfoBoxLine(sprintf( $moduleStat));
+    $adminObject->addInfoBoxLine(sprintf($moduleStat));
 }
 
 if (empty($counts_module)) {  // there aren't any so just display "none"
     $moduleStat = "<infolabel>%s</infolabel><infotext>0 / 0</infotext> \n";
-    $adminObject->addInfoBoxLine(sprintf( $moduleStat, _NONE));
+    $adminObject->addInfoBoxLine(sprintf($moduleStat, _NONE));
 }
 
 $adminObject->displayNavigation(basename(__FILE__));
