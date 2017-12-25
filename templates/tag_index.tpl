@@ -8,9 +8,9 @@
     <form id="form-tag-jumpto" name="form-tag-jumpto" action="<{$xoops_url}>/modules/<{$xoops_dirname}>/view.tag.php"
           method="get">
         <div>
-            <{$lang_jumpto}>: <input type="text" id="term" name="term" value="" size="20"> <input type="submit"
-                                                                                                   name="submit"
-                                                                                                   value="<{$smarty.const._SUBMIT}>">
+            <label for="term"><{$lang_jumpto}>: </label><input type="text" id="term" name="term" value="" size="20"> <input type="submit"
+                                                                                                                            name="submit"
+                                                                                                                            value="<{$smarty.const._SUBMIT}>">
         </div>
     </form>
 </div>
