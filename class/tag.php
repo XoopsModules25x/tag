@@ -274,7 +274,7 @@ class TagTagHandler extends XoopsPersistableObjectHandler
     public function &getByLimit(
         $limit = 0,
         $start = 0,
-        CriteriaCompo $criteria = null,
+        CriteriaElement $criteria = null,
         $fields = null,
         $fromStats = true
     )//&getByLimit($criteria = null, $fromStats = true)
@@ -346,7 +346,7 @@ class TagTagHandler extends XoopsPersistableObjectHandler
      *
      * @return integer count
      */
-    public function getCount(CriteriaCompo $criteria = null)
+    public function getCount(CriteriaElement $criteria = null)
     {
         /*
         $catid    = (int)($catid);
@@ -384,7 +384,7 @@ class TagTagHandler extends XoopsPersistableObjectHandler
      *
      * @return array associative array of items (id, modid, catid)
      */
-    public function &getItems(Criteria $criteria = null)
+    public function &getItems(CriteriaElement $criteria = null)
     {
         $ret = [];
         $sql = '    SELECT o.tl_id, o.tag_itemid, o.tag_modid, o.tag_catid, o.tag_time';
