@@ -29,11 +29,11 @@ if (!defined('TAG_FUNCTIONS')):
     /**
      * @return false|null|\XoopsObjectHandler
      */
-    function &tag_getTagHandler()
+    function tag_getTagHandler()
     {
         static $tag_handler;
 
-        if (isset($tag_handler)) {
+        if (null !== $tag_handler) {
             return $tag_handler;
         }
 

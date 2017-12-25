@@ -37,7 +37,7 @@ function tag_load_config()
 {
     static $moduleConfig;
 
-    if (!isset($moduleConfig)) {
+    if (null === $moduleConfig) {
         if (isset($GLOBALS['xoopsModule']) && ($GLOBALS['xoopsModule'] instanceof XoopsModule) && ('tag' === $GLOBALS['xoopsModule']->getVar('dirname', 'n'))) {
             if (!empty($GLOBALS['xoopsModuleConfig'])) {
                 $moduleConfig = $GLOBALS['xoopsModuleConfig'];

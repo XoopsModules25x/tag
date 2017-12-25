@@ -290,7 +290,7 @@ class TagTagHandler extends XoopsPersistableObjectHandler
         $start = null;
         $sort  = '';
         $order = '';
-        if (isset($criteria) && is_subclass_of($criteria, 'CriteriaCompo')) {
+        if (null !== $criteria && is_subclass_of($criteria, 'CriteriaCompo')) {
             $sql   .= ' ' . $criteria->renderWhere();
             $sort  = $criteria->getSort();
             $order = $criteria->getOrder();
@@ -353,7 +353,7 @@ class TagTagHandler extends XoopsPersistableObjectHandler
         $modid    = (int)($modid);
         */
         $sql = "SELECT COUNT(DISTINCT o.{$this->keyName})" . "    FROM {$this->table} AS o LEFT JOIN {$this->table_link} AS l ON l.{$this->keyName} = o.{$this->keyName}";
-        if (isset($criteria) && is_subclass_of($criteria, 'CriteriaElement')) {
+        if ((null !== $criteria) && is_subclass_of($criteria, 'CriteriaElement')) {
             $sql .= ' ' . $criteria->renderWhere();
         }
         /*
@@ -394,7 +394,7 @@ class TagTagHandler extends XoopsPersistableObjectHandler
         $start = null;
         $sort  = '';
         $order = '';
-        if (isset($criteria) && is_subclass_of($criteria, 'CriteriaElement')) {
+        if ((null !== $criteria) && is_subclass_of($criteria, 'CriteriaElement')) {
             $sql   .= ' ' . $criteria->renderWhere();
             $sort  = $criteria->getSort();
             $order = $criteria->getOrder();

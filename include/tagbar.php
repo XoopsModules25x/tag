@@ -39,7 +39,7 @@ function tagBar($tags, $catid = 0, $modid = 0)
         return [];
     }
 
-    if (!isset($loaded)) {
+    if (null === $loaded) {
         include $GLOBALS['xoops']->path('/modules/tag/include/vars.php');
         require_once $GLOBALS['xoops']->path('/modules/tag/include/functions.php');
         tag_define_url_delimiter();

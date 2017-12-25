@@ -11,6 +11,7 @@ class Utility extends \XoopsObject
      * @param string $folder The full path of the directory to check
      *
      * @return void
+     * @throws \RuntimeException
      */
     public static function createFolder($folder)
     {
@@ -144,7 +145,7 @@ class Utility extends \XoopsObject
 
         static $tagIsAdmin;
 
-        if (isset($tagIsAdmin)) {
+        if (null !== $tagIsAdmin) {
             return $tagIsAdmin;
         }
 
