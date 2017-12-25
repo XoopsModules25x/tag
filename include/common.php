@@ -17,46 +17,86 @@
  * @author     XOOPS Development Team
  */
 
-if (!defined('TAG_MODULE_PATH')) {
-    define('TAG_DIRNAME', basename(dirname(__DIR__)));
-    define('TAG_URL', XOOPS_URL . '/modules/' . TAG_DIRNAME);
-    define('TAG_IMAGE_URL', TAG_URL . '/assets/images/');
-    define('TAG_ROOT_PATH', XOOPS_ROOT_PATH . '/modules/' . TAG_DIRNAME);
-    define('TAG_IMAGE_PATH', TAG_ROOT_PATH . '/assets/images');
-    define('TAG_ADMIN_URL', TAG_URL . '/admin/');
-    define('TAG_UPLOAD_URL', XOOPS_UPLOAD_URL . '/' . TAG_DIRNAME);
-    define('TAG_UPLOAD_PATH', XOOPS_UPLOAD_PATH . '/' . TAG_DIRNAME);
+use Xoopsmodules\tag;
+include __DIR__ . '/../preloads/autoloader.php';
+
+$moduleDirName = basename(dirname(__DIR__));
+$moduleDirNameUpper   = strtoupper($moduleDirName); //$capsDirName
+
+
+/** @var \XoopsDatabase $db */
+/** @var tag\Helper $helper */
+/** @var tag\Utility $utility */
+$db      = \XoopsDatabaseFactory::getDatabaseConnection();
+$helper  = tag\Helper::getInstance();
+$utility = new tag\Utility();
+//$configurator = new tag\common\Configurator();
+
+$helper->loadLanguage('common');
+
+//handlers
+//$categoryHandler     = new tag\CategoryHandler($db);
+//$downloadHandler     = new tag\DownloadHandler($db);
+
+if (!defined($moduleDirNameUpper . '_CONSTANTS_DEFINED')) {
+    define($moduleDirNameUpper . '_DIRNAME', basename(dirname(__DIR__)));
+    define($moduleDirNameUpper . '_ROOT_PATH', XOOPS_ROOT_PATH . '/modules/' . $moduleDirName . '/');
+    define($moduleDirNameUpper . '_URL', XOOPS_URL . '/modules/' . $moduleDirName . '/');
+    define($moduleDirNameUpper . '_IMAGE_URL', constant($moduleDirNameUpper . '_URL') . '/assets/images/');
+    define($moduleDirNameUpper . '_IMAGE_PATH', constant($moduleDirNameUpper . '_ROOT_PATH') . '/assets/images');
+    define($moduleDirNameUpper . '_ADMIN_URL', constant($moduleDirNameUpper . '_URL') . '/admin/');
+    define($moduleDirNameUpper . '_ADMIN_PATH', constant($moduleDirNameUpper . '_ROOT_PATH') . '/admin/');
+    define($moduleDirNameUpper . '_PATH', XOOPS_ROOT_PATH . '/modules/' . constant($moduleDirNameUpper . '_DIRNAME'));
+    define($moduleDirNameUpper . '_ADMIN', constant($moduleDirNameUpper . '_URL') . '/admin/index.php');
+    define($moduleDirNameUpper . '_AUTHOR_LOGOIMG', constant($moduleDirNameUpper . '_URL') . '/assets/images/logoModule.png');
+    define($moduleDirNameUpper . '_UPLOAD_URL', XOOPS_UPLOAD_URL . '/' . $moduleDirName); // WITHOUT Trailing slash
+    define($moduleDirNameUpper . '_UPLOAD_PATH', XOOPS_UPLOAD_PATH . '/' . $moduleDirName); // WITHOUT Trailing slash
+    define($moduleDirNameUpper . '_CONSTANTS_DEFINED', 1);
 }
-xoops_loadLanguage('common', TAG_DIRNAME);
 
-require_once TAG_ROOT_PATH . '/include/functions.php';
-//require_once TAG_ROOT_PATH . '/include/constants.php';
-//require_once TAG_ROOT_PATH . '/include/seo_functions.php';
-//require_once TAG_ROOT_PATH . '/class/metagen.php';
-//require_once TAG_ROOT_PATH . '/class/session.php';
-//require_once TAG_ROOT_PATH . '/class/xoalbum.php';
-//require_once TAG_ROOT_PATH . '/class/request.php';
 
-require_once TAG_ROOT_PATH . '/class/helper.php';
-//require_once PUBLISHER_ROOT_PATH . '/class/request.php';
+$pathIcon16    = Xmf\Module\Admin::iconUrl('', 16);
+$pathIcon32    = Xmf\Module\Admin::iconUrl('', 32);
+//$pathModIcon16 = $helper->getModule()->getInfo('modicons16');
+//$pathModIcon32 = $helper->getModule()->getInfo('modicons32');
 
-// module information
-$mod_copyright = "<a href='https://xoops.org' title='XOOPS Project' target='_blank'>
-                     <img src='" . PUBLISHER_AUTHOR_LOGOIMG . "' alt='XOOPS Project'></a>";
+$icons = [
+    'edit'    => "<img src='" . $pathIcon16 . "/edit.png'  alt=" . _EDIT . "' align='middle'>",
+    'delete'  => "<img src='" . $pathIcon16 . "/delete.png' alt='" . _DELETE . "' align='middle'>",
+    'clone'   => "<img src='" . $pathIcon16 . "/editcopy.png' alt='" . _CLONE . "' align='middle'>",
+    'preview' => "<img src='" . $pathIcon16 . "/view.png' alt='" . _PREVIEW . "' align='middle'>",
+    'print'   => "<img src='" . $pathIcon16 . "/printer.png' alt='" . _CLONE . "' align='middle'>",
+    'pdf'     => "<img src='" . $pathIcon16 . "/pdf.png' alt='" . _CLONE . "' align='middle'>",
+    'add'     => "<img src='" . $pathIcon16 . "/add.png' alt='" . _ADD . "' align='middle'>",
+    '0'       => "<img src='" . $pathIcon16 . "/0.png' alt='" . 0 . "' align='middle'>",
+    '1'       => "<img src='" . $pathIcon16 . "/1.png' alt='" . 1 . "' align='middle'>",
+];
 
-xoops_loadLanguage('common', PUBLISHER_DIRNAME);
+$debug = false;
 
-xoops_load('constants', PUBLISHER_DIRNAME);
-xoops_load('utility', PUBLISHER_DIRNAME);
+// MyTextSanitizer object
+$myts = \MyTextSanitizer::getInstance();
 
-$debug     = false;
-$tag = Tag::getInstance($debug);
+if (!isset($GLOBALS['xoopsTpl']) || !($GLOBALS['xoopsTpl'] instanceof \XoopsTpl)) {
+    require_once $GLOBALS['xoops']->path('class/template.php');
+    $GLOBALS['xoopsTpl'] = new \XoopsTpl();
+}
 
-//This is needed or it will not work in blocks.
-global $tagIsAdmin;
+$GLOBALS['xoopsTpl']->assign('mod_url', XOOPS_URL . '/modules/' . $moduleDirName);
+// Local icons path
+if (is_object($helper->getModule())) {
+    $pathModIcon16 = $helper->getModule()->getInfo('modicons16');
+    $pathModIcon32 = $helper->getModule()->getInfo('modicons32');
 
-// Load only if module is installed
-if (is_object($tag->getModule())) {
-    // Find if the user is admin of the module
-    $tagIsAdmin = TagUtility::userIsAdmin();
+    $GLOBALS['xoopsTpl']->assign('pathModIcon16', XOOPS_URL . '/modules/' . $moduleDirName . '/' . $pathModIcon16);
+    $GLOBALS['xoopsTpl']->assign('pathModIcon32', $pathModIcon32);
+
+    //This is needed or it will not work in blocks.
+    global $tagIsAdmin;
+
+    // Load only if module is installed
+    if (is_object($helper->getModule())) {
+        // Find if the user is admin of the module
+        $tagIsAdmin = $helper->isUserAdmin();
+    }
 }

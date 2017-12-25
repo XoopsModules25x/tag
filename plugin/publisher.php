@@ -43,7 +43,7 @@ function publisher_tag_iteminfo(&$items)
     }
     /** @var \PublisherItemHandler $itemHandler */
     $itemHandler = xoops_getModuleHandler('item', 'publisher');
-    $criteria    = new Criteria('itemid', '(' . implode(', ', $items_id) . ')', 'IN');
+    $criteria    = new \Criteria('itemid', '(' . implode(', ', $items_id) . ')', 'IN');
     $items_obj   = $itemHandler->getObjects($criteria, 'itemid');
 
     foreach (array_keys($items) as $cat_id) {

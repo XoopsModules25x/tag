@@ -1,4 +1,5 @@
 <?php
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -142,7 +143,7 @@ class TagTagHandler extends XoopsPersistableObjectHandler
 
         if (!empty($tags_delete)) {
             $tags_delete = array_map([$this->db, 'quoteString'], $tags_delete);
-            if ($tags_id = $this->getIds(new Criteria('tag_term', '(' . implode(', ', $tags_delete) . ')', 'IN'))) {
+            if ($tags_id =& $this->getIds(new \Criteria('tag_term', '(' . implode(', ', $tags_delete) . ')', 'IN'))) {
                 $sql = "DELETE FROM {$this->table_link}" . ' WHERE ' . "     {$this->keyName} IN (" . implode(', ', $tags_id) . ')' . "     AND tag_modid = {$modid} AND tag_catid = {$catid} AND tag_itemid = {$itemid}";
                 if (false === ($result = $this->db->queryF($sql))) {
                     //@todo: decide if we should do something here on failure
@@ -164,7 +165,7 @@ class TagTagHandler extends XoopsPersistableObjectHandler
             $tag_link  = [];
             $tag_count = [];
             foreach ($tags_add as $tag) {
-                if ($tags_id = $this->getIds(new Criteria('tag_term', $tag))) {
+                if ($tags_id =& $this->getIds(new \Criteria('tag_term', $tag))) {
                     $tag_id      = $tags_id[0];
                     $tag_count[] = $tag_id;
                 } else {
@@ -266,7 +267,7 @@ class TagTagHandler extends XoopsPersistableObjectHandler
      * @access         public
      * @param int             $limit
      * @param int             $start
-     * @param null|CriteriaElement $criteria  {@link Criteria}
+     * @param null|\CriteriaElement $criteria  {@link Criteria}
      * @param null            $fields
      * @param boolean         $fromStats fetch from tag-stats table
      * @return array associative array of tags (id, term, count)
@@ -274,7 +275,7 @@ class TagTagHandler extends XoopsPersistableObjectHandler
     public function &getByLimit(
         $limit = 0,
         $start = 0,
-        CriteriaElement $criteria = null,
+        \CriteriaElement $criteria = null,
         $fields = null,
         $fromStats = true
     )//&getByLimit($criteria = null, $fromStats = true)
@@ -342,11 +343,11 @@ class TagTagHandler extends XoopsPersistableObjectHandler
      * Get count of tags
      *
      * @access public
-     * @param null|CriteriaElement $criteria {@link Criteria)
+     * @param null|\CriteriaElement $criteria {@link Criteria)
      *
      * @return integer count
      */
-    public function getCount(CriteriaElement $criteria = null)
+    public function getCount(\CriteriaElement $criteria = null)
     {
         /*
         $catid    = (int)($catid);
@@ -384,7 +385,7 @@ class TagTagHandler extends XoopsPersistableObjectHandler
      *
      * @return array associative array of items (id, modid, catid)
      */
-    public function getItems(CriteriaElement $criteria = null)
+    public function getItems(\CriteriaElement $criteria = null)
     {
         $ret = [];
         $sql = '    SELECT o.tl_id, o.tag_itemid, o.tag_modid, o.tag_catid, o.tag_time';
@@ -545,7 +546,7 @@ class TagTagHandler extends XoopsPersistableObjectHandler
      * @param  CriteriaElement $ids
      * @return array|bool      object IDs or false on failure
      */
-    public function &getIds(CriteriaElement $ids = null)
+    public function &getIds(\CriteriaElement $ids = null)
     {
         return parent::getIds($ids);
     }

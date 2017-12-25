@@ -40,7 +40,7 @@ function xfaq_tag_iteminfo(&$items)
 
     /** @var XfaqFaqHandler $itemHandler */
     $itemHandler = xoops_getModuleHandler('faq', 'xfaq');
-    $items_obj   = $itemHandler->getObjects(new Criteria('faq_id', '(' . implode(', ', $items_id) . ')', 'IN'), true);
+    $items_obj   =& $itemHandler->getObjects(new \Criteria('faq_id', '(' . implode(', ', $items_id) . ')', 'IN'), true);
 
     foreach (array_keys($items) as $cat_id) {
         foreach (array_keys($items[$cat_id]) as $item_id) {

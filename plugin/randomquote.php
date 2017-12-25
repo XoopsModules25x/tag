@@ -47,13 +47,13 @@ function randomquote_tag_iteminfo(&$items)
         }
     }
 
-    $criteria = new CriteriaCompo();
-    $criteria->add(new Criteria('id', '(' . implode(',', $items_id) . ')', 'IN'));
-    $criteria->add(new Criteria('quote_status', RandomquoteConstants::STATUS_ONLINE));
+    $criteria = new \CriteriaCompo();
+    $criteria->add(new \Criteria('id', '(' . implode(',', $items_id) . ')', 'IN'));
+    $criteria->add(new \Criteria('quote_status', RandomquoteConstants::STATUS_ONLINE));
 
     /** @var \RandomquoteQuotesHandler $quoteHandler */
     $quoteHandler = xoops_getModuleHandler('quotes', 'randomquote');
-    $quoteObjs    = $quoteHandler->getObjects($criteria, true);
+    $quoteObjs    =& $quoteHandler->getObjects($criteria, true);
 
     foreach ($cats_id as $cat_id) {
         foreach ($items_id as $item_id) {

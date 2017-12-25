@@ -1,4 +1,4 @@
-<?php namespace Xoopsmodules\xxxxx\common;
+<?php namespace Xoopsmodules\tag\common;
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -14,7 +14,7 @@
  * @copyright   The XOOPS Project http://sourceforge.net/projects/xoops/
  * @license     http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author      lucio <lucio.rota@gmail.com>
- * @package     xxxxx
+ * @package     tag
  *
  * Example:
  * $breadcrumb = new PedigreeBreadcrumb();
@@ -63,11 +63,11 @@ class Breadcrumb
     {
         if (!isset($GLOBALS['xoTheme']) || !is_object($GLOBALS['xoTheme'])) {
             require_once $GLOBALS['xoops']->path('class/theme.php');
-            $GLOBALS['xoTheme'] = new xos_opal_Theme();
+            $GLOBALS['xoTheme'] = new \Xos_opal_Theme();
         }
 
         require_once $GLOBALS['xoops']->path('class/template.php');
-        $breadcrumbTpl = new XoopsTpl();
+        $breadcrumbTpl = new \XoopsTpl();
         $breadcrumbTpl->assign('breadcrumb', $this->bread);
         $html = $breadcrumbTpl->fetch('db:' . $this->dirname . '_common_breadcrumb.tpl');
         unset($breadcrumbTpl);

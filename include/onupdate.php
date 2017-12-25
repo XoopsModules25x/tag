@@ -17,7 +17,7 @@
  * @author       XOOPS Development Team
  */
 
-use Xmf\Language;
+use Xoopsmodules\tag;
 
 if ((!defined('XOOPS_ROOT_PATH')) || !($GLOBALS['xoopsUser'] instanceof XoopsUser)
     || !$GLOBALS['xoopsUser']->IsAdmin()) {
@@ -69,7 +69,6 @@ function xoops_module_update_tag(XoopsModule $module, $previousVersion = null)
 {
     global $xoopsDB;
     $moduleDirName = basename(dirname(__DIR__));
-    $capsDirName   = strtoupper($moduleDirName);
 
     /** @var tag\Helper $helper */
     /** @var tag\Utility $utility */
@@ -125,7 +124,7 @@ function xoops_module_update_tag(XoopsModule $module, $previousVersion = null)
         if (count($configurator->uploadFolders) > 0) {
             //    foreach (array_keys($GLOBALS['uploadFolders']) as $i) {
             foreach (array_keys($configurator->uploadFolders) as $i) {
-                $utilityClass::createFolder($configurator->uploadFolders[$i]);
+                $utility::createFolder($configurator->uploadFolders[$i]);
             }
         }
 
@@ -134,7 +133,7 @@ function xoops_module_update_tag(XoopsModule $module, $previousVersion = null)
             $file = __DIR__ . '/../assets/images/blank.png';
             foreach (array_keys($configurator->blankFiles) as $i) {
                 $dest = $configurator->blankFiles[$i] . '/blank.png';
-                $utilityClass::copyFile($file, $dest);
+                $utility::copyFile($file, $dest);
             }
         }
 

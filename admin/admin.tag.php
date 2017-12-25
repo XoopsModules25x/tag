@@ -73,39 +73,39 @@ if (false === $result) {
     if (!empty($counts_module)) {
         /** @var XoopsModuleHandler $moduleHandler */
         $moduleHandler = xoops_getHandler('module');
-        $module_list   = $moduleHandler->getList(new Criteria('mid', '(' . implode(', ', array_keys($counts_module)) . ')', 'IN'));
+        $module_list   = $moduleHandler->getList(new \Criteria('mid', '(' . implode(', ', array_keys($counts_module)) . ')', 'IN'));
     }
 }
 
-$opform     = new XoopsSimpleForm('', 'moduleform', xoops_getenv('PHP_SELF'), 'get', true);
-$tray       = new XoopsFormElementTray('');
-$mod_select = new XoopsFormSelect(_SELECT, 'modid', $modid);
+$opform     = new \XoopsSimpleForm('', 'moduleform', xoops_getenv('PHP_SELF'), 'get', true);
+$tray       = new \XoopsFormElementTray('');
+$mod_select = new \XoopsFormSelect(_SELECT, 'modid', $modid);
 $mod_select->addOption(0, _ALL);
 foreach ($module_list as $module => $module_name) {
     $mod_select->addOption($module, $module_name . ' (' . $counts_module[$module] . ')');
 }
 $tray->addElement($mod_select);
-$status_select = new XoopsFormRadio('', 'status', $status);
+$status_select = new \XoopsFormRadio('', 'status', $status);
 $status_select->addOption(TagConstants::STATUS_ALL, _ALL);
 $status_select->addOption(TagConstants::STATUS_ACTIVE, _AM_TAG_ACTIVE);
 $status_select->addOption(TagConstants::STATUS_INACTIVE, _AM_TAG_INACTIVE);
 $tray->addElement($status_select);
-$tray->addElement(new XoopsFormButton('', 'submit', _SUBMIT, 'submit'));
+$tray->addElement(new \XoopsFormButton('', 'submit', _SUBMIT, 'submit'));
 $opform->addElement($tray);
 $opform->display();
 
-$criteria = new CriteriaCompo();
+$criteria = new \CriteriaCompo();
 $criteria->setSort('a');
 $criteria->setOrder('ASC');
 $criteria->setStart($start);
 $criteria->setLimit($limit);
 if ($status >= TagConstants::STATUS_ACTIVE) {
-    $criteria->add(new Criteria('o.tag_status', $status));
+    $criteria->add(new \Criteria('o.tag_status', $status));
 }
 if (!empty($modid)) {
-    $criteria->add(new Criteria('l.tag_modid', $modid));
+    $criteria->add(new \Criteria('l.tag_modid', $modid));
 }
-$tags = $tagHandler->getByLimit(0, 0, $criteria, null, false);
+$tags =& $tagHandler->getByLimit(0, 0, $criteria, null, false);
 
 $form_tags = "<form name='tags' method='post' action='"
              . xoops_getenv('PHP_SELF')
@@ -158,7 +158,7 @@ if (empty($tags)) {
         $count_tag = $tagHandler->getCount($criteria);
 
         include $GLOBALS['xoops']->path('/class/pagenav.php');
-        $nav       = new XoopsPageNav($count_tag, $limit, $start, 'start', "modid={$modid}&amp;status={$status}");
+        $nav       = new \XoopsPageNav($count_tag, $limit, $start, 'start', "modid={$modid}&amp;status={$status}");
         $form_tags .= "  <tr><td colspan='4' class='txtright'>" . $nav->renderNav(4) . "</td></tr>\n";
     }
     $form_tags .= "  </tbody>\n"

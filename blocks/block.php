@@ -19,12 +19,17 @@
  * @since           1.00
  */
 
+use Xoopsmodules\tag;
+
 defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
 
 include $GLOBALS['xoops']->path('/modules/tag/include/vars.php');
 //require_once $GLOBALS['xoops']->path('/modules/tag/include/functions.php');
 
-xoops_loadLanguage('blocks', 'tag');
+/** @var tag\Helper $helper */
+$helper = tag\Helper::getInstance();
+
+$helper->loadLanguage('blocks');
 xoops_load('constants', 'tag');
 
 /**#@+
@@ -95,23 +100,23 @@ function tag_block_cloud_show($options, $dirname = '', $catid = 0)
         $modid         = $module->getVar('mid');
     }
 
-    $block      = [];
+    $block = [];
     /** @var \TagTagHandler $tagHandler */
     $tagHandler = xoops_getModuleHandler('tag', 'tag');
     tag_define_url_delimiter();
 
-    $criteria = new CriteriaCompo();
+    $criteria = new \CriteriaCompo();
     $criteria->setSort('count');
     $criteria->setOrder('DESC');
     $criteria->setLimit($options[0]);
-    $criteria->add(new Criteria('o.tag_status', TagConstants::STATUS_ACTIVE));
+    $criteria->add(new \Criteria('o.tag_status', TagConstants::STATUS_ACTIVE));
     if (!empty($modid)) {
-        $criteria->add(new Criteria('l.tag_modid', $modid));
+        $criteria->add(new \Criteria('l.tag_modid', $modid));
         if ($catid >= TagConstants::DEFAULT_ID) {
-            $criteria->add(new Criteria('l.tag_catid', $catid));
+            $criteria->add(new \Criteria('l.tag_catid', $catid));
         }
     }
-    if (!$tags = $tagHandler->getByLimit(0, 0, $criteria, null, empty($options[1]))) {
+    if (!$tags =& $tagHandler->getByLimit(0, 0, $criteria, null, empty($options[1]))) {
         return $block;
     }
 
@@ -236,14 +241,14 @@ function tag_block_top_show($options, $dirname = '', $catid = 0)
         $modid         = $module->getVar('mid');
     }
 
-    $block      = [];
+    $block = [];
 
     /** @var \TagTagHandler $tagHandler */
     $tagHandler = xoops_getModuleHandler('tag', 'tag');
     tag_define_url_delimiter();
 
-    $criteria = new CriteriaCompo();
-    $sort = '';
+    $criteria = new \CriteriaCompo();
+    $sort     = '';
     if (isset($options[2])) {
         $sort = (('a' === $options[2]) || ('alphabet' === $options[2])) ? 'count' : $options[2];
     }
@@ -251,18 +256,18 @@ function tag_block_top_show($options, $dirname = '', $catid = 0)
     $criteria->setSort($sort);
     $criteria->setOrder('DESC');
     $criteria->setLimit((int)$options[0]);
-    $criteria->add(new Criteria('o.tag_status', TagConstants::STATUS_ACTIVE));
+    $criteria->add(new \Criteria('o.tag_status', TagConstants::STATUS_ACTIVE));
     if (!empty($options[1])) {
-        $criteria->add(new Criteria('l.tag_time', time() - (float)$options[1] * 24 * 3600, '>'));
+        $criteria->add(new \Criteria('l.tag_time', time() - (float)$options[1] * 24 * 3600, '>'));
     }
     if (!empty($modid)) {
-        $criteria->add(new Criteria('l.tag_modid', $modid));
+        $criteria->add(new \Criteria('l.tag_modid', $modid));
         $catid = (int)$catid;
         if ($catid >= 0) {
-            $criteria->add(new Criteria('l.tag_catid', $catid));
+            $criteria->add(new \Criteria('l.tag_catid', $catid));
         }
     }
-    if (!$tags = $tagHandler->getByLimit(0, 0, $criteria, null, empty($options[1]))) {
+    if (!$tags =& $tagHandler->getByLimit(0, 0, $criteria, null, empty($options[1]))) {
         return $block;
     }
 
@@ -366,31 +371,38 @@ function tag_block_top_edit($options)
  */
 function tag_block_cumulus_show(array $options, $dirname = '', $catid = 0)
 {
-    if (empty($dirname)) {
+    if (null === $dirname) {
         $modid = 0;
     } elseif (isset($GLOBALS['xoopsModule']) && ($GLOBALS['xoopsModule'] instanceof XoopsModule)
               && ($GLOBALS['xoopsModule']->getVar('dirname') == $dirname)) {
         $modid = $GLOBALS['xoopsModule']->getVar('mid');
     } else {
-        /** @var XoopsModuleHandler $moduleHandler */
-        $moduleHandler = xoops_getHandler('module');
-        $module        = $moduleHandler->getByDirname($dirname);
-        $modid         = $module->getVar('mid');
+        //        /** @var XoopsModuleHandler $moduleHandler */
+        //        $moduleHandler = xoops_getHandler('module');
+        //        $module        = $moduleHandler->getByDirname($dirname);
+        //        $modid         = $module->getVar('mid');
+
+        /** @var tag\Helper $helper */
+        $helper = tag\Helper::getInstance();
+        $module = $helper->getModule();
+//        $modid  = $module->getVar('mid');
+        $modid  = $helper->getModule()->getVar('mid');
+
     }
 
-    $block       = [];
+    $block      = [];
     $tagHandler = xoops_getModuleHandler('tag', 'tag');
     tag_define_url_delimiter();
 
-    $criteria = new CriteriaCompo();
+    $criteria = new \CriteriaCompo();
     $criteria->setSort('count');
     $criteria->setOrder('DESC');
     $criteria->setLimit($options[0]);
-    $criteria->add(new Criteria('o.tag_status', TagConstants::STATUS_ACTIVE));
+    $criteria->add(new \Criteria('o.tag_status', TagConstants::STATUS_ACTIVE));
     if (!empty($modid)) {
-        $criteria->add(new Criteria('l.tag_modid', $modid));
+        $criteria->add(new \Criteria('l.tag_modid', $modid));
         if ($catid >= 0) {
-            $criteria->add(new Criteria('l.tag_catid', $catid));
+            $criteria->add(new \Criteria('l.tag_catid', $catid));
         }
     }
     if (!$tags = $tagHandler->getByLimit(0, 0, $criteria, null, empty($options[1]))) {
@@ -445,17 +457,17 @@ function tag_block_cumulus_show(array $options, $dirname = '', $catid = 0)
             return '';
         }, $options[6]),
         'color'      => '0x' . preg_replace_callback('/(#)/i', function ($m) {
-            return '';
-        }, $options[8]),
+                return '';
+            }, $options[8]),
         'hicolor'    => '0x' . preg_replace_callback('/(#)/i', function ($m) {
-            return '';
-        }, $options[9]),
+                return '';
+            }, $options[9]),
         'tcolor'     => '0x' . preg_replace_callback('/(#)/i', function ($m) {
-            return '';
-        }, $options[8]),
+                return '';
+            }, $options[8]),
         'tcolor2'    => '0x' . preg_replace_callback('/(#)/i', function ($m) {
-            return '';
-        }, $options[10]),
+                return '';
+            }, $options[10]),
         'speed'      => (int)$options[11]
     ];
 
@@ -498,14 +510,14 @@ function tag_block_cumulus_edit($options)
     $form->addElement(new TagFormValidatedInput(_MB_TAG_FONTSIZE_MIN, 'options[3]', 25, 25, $options[3], 'number'));
     $form->addElement(new TagFormValidatedInput(_MB_TAG_FLASH_WIDTH, 'options[4]', 25, 25, $options[4], 'number'));
     $form->addElement(new TagFormValidatedInput(_MB_TAG_FLASH_HEIGHT, 'options[5]', 25, 25, $options[5], 'number'));
-    $form->addElement(new XoopsFormColorPicker(_MB_TAG_FLASH_BACKGROUND, 'options[6]', $options[6]));
-    $form_cumulus_flash_transparency = new XoopsFormSelect(_MB_TAG_FLASH_TRANSPARENCY, 'options[7]', $options[7]);
+    $form->addElement(new \XoopsFormColorPicker(_MB_TAG_FLASH_BACKGROUND, 'options[6]', $options[6]));
+    $form_cumulus_flash_transparency = new \XoopsFormSelect(_MB_TAG_FLASH_TRANSPARENCY, 'options[7]', $options[7]);
     $form_cumulus_flash_transparency->addOption(0, _NONE);
     $form_cumulus_flash_transparency->addOption(1, _MB_TAG_FLASH_TRANSPARENT);
     $form->addElement($form_cumulus_flash_transparency);
-    $form->addElement(new XoopsFormColorPicker(_MB_TAG_FLASH_MINFONTCOLOR, 'options[8]', $options[8]));
-    $form->addElement(new XoopsFormColorPicker(_MB_TAG_FLASH_MAXFONTCOLOR, 'options[9]', $options[9]));
-    $form->addElement(new XoopsFormColorPicker(_MB_TAG_FLASH_HILIGHTFONTCOLOR, 'options[10]', $options[10]));
+    $form->addElement(new \XoopsFormColorPicker(_MB_TAG_FLASH_MINFONTCOLOR, 'options[8]', $options[8]));
+    $form->addElement(new \XoopsFormColorPicker(_MB_TAG_FLASH_MAXFONTCOLOR, 'options[9]', $options[9]));
+    $form->addElement(new \XoopsFormColorPicker(_MB_TAG_FLASH_HILIGHTFONTCOLOR, 'options[10]', $options[10]));
     $form->addElement(new TagFormValidatedInput(_MB_TAG_FLASH_SPEED, 'options[11]', 25, 25, $options[11], 'number'));
 
     return $form->render();

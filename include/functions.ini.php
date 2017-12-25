@@ -51,7 +51,7 @@ function tag_load_config()
 
             /** @var \XoopsConfigHandler $configHandler */
             $configHandler = xoops_getHandler('config');
-            $criteria      = new CriteriaCompo(new Criteria('conf_modid', $module->getVar('mid')));
+            $criteria      = new \CriteriaCompo(new \Criteria('conf_modid', $module->getVar('mid')));
             $configs       = $configHandler->getConfigs($criteria);
             foreach (array_keys($configs) as $i) {
                 $moduleConfig[$configs[$i]->getVar('conf_name')] = $configs[$i]->getConfValueForOutput();

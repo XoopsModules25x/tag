@@ -1,4 +1,4 @@
-<?php namespace Xoopsmodules\xxxxx\common;
+<?php namespace Xoopsmodules\tag\common;
 
 /*
  You may not change or alter any portion of this comment or credits
@@ -29,6 +29,7 @@ trait VersionChecks
     public static function checkVerXoops(\XoopsModule $module = null, $requiredVer = null)
     {
         $moduleDirName = basename(dirname(dirname(__DIR__)));
+        $moduleDirNameUpper = strtoupper($moduleDirName);
         if (null === $module) {
             $module = \XoopsModule::getByDirname($moduleDirName);
         }

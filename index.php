@@ -32,11 +32,11 @@ $tagHandler = xoops_getModuleHandler('tag', 'tag');
 $tag_config  = tag_load_config();
 tag_define_url_delimiter();
 
-$criteria = new CriteriaCompo();
+$criteria = new \CriteriaCompo();
 $criteria->setSort('count');
 $criteria->setOrder('DESC');
 $criteria->setLimit($limit);
-$tags = $tagHandler->getByLimit(0, 0, $criteria);
+$tags =& $tagHandler->getByLimit(0, 0, $criteria);
 
 $count_max = 0;
 $count_min = 0;

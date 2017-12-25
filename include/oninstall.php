@@ -17,7 +17,7 @@
  * @author       XOOPS Development Team
  */
 
-use Xmf\Language;
+use Xoopsmodules\tag;
 
 /**
  *
@@ -29,22 +29,19 @@ use Xmf\Language;
 function xoops_module_pre_install_tag(XoopsModule $module)
 {
     $moduleDirName = basename(dirname(__DIR__));
-    /** @var \TagUtility $utilityClass */
-    $utilityClass = ucfirst($moduleDirName) . 'Utility';
-    if (!class_exists($utilityClass)) {
-        xoops_load('utility', $moduleDirName);
-    }
+    /** @var tag\Utility $utility */
+    $utility = new tag\Utility();
     //check for minimum XOOPS version
-    if (!$utilityClass::checkVerXoops($module)) {
+    if (!$utility::checkVerXoops($module)) {
         return false;
     }
 
     // check for minimum PHP version
-    if (!$utilityClass::checkVerPhp($module)) {
+    if (!$utility::checkVerPhp($module)) {
         return false;
     }
 
-    $mod_tables = $module->getInfo('tables');
+    $mod_tables =& $module->getInfo('tables');
     foreach ($mod_tables as $table) {
         $GLOBALS['xoopsDB']->queryF('DROP TABLE IF EXISTS ' . $GLOBALS['xoopsDB']->prefix($table) . ';');
     }

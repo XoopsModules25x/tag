@@ -33,13 +33,13 @@ if (!defined('TAG_FUNCTIONS_RECON')):
     {
         /** @var XoopsModuleHandler $moduleHandler */
         $moduleHandler = xoops_getHandler('module');
-        $criteria      = new CriteriaCompo(new Criteria('isactive', 1));
-        $criteria->add(new Criteria('dirname', "('system', 'tag')", 'NOT IN'));
+        $criteria      = new \CriteriaCompo(new \Criteria('isactive', 1));
+        $criteria->add(new \Criteria('dirname', "('system', 'tag')", 'NOT IN'));
         $modules_obj = $moduleHandler->getObjects($criteria, true);
 
         /** @var \TagLinkHandler $linkHandler */
         $linkHandler = xoops_getModuleHandler('link', 'tag');
-        $linkHandler->deleteAll(new Criteria('tag_modid', '(' . implode(', ', array_keys($modules_obj)) . ')', 'NOT IN'), true);
+        $linkHandler->deleteAll(new \Criteria('tag_modid', '(' . implode(', ', array_keys($modules_obj)) . ')', 'NOT IN'), true);
 
         foreach (array_keys($modules_obj) as $mid) {
             $dirname = $modules_obj[$mid]->getVar('dirname');

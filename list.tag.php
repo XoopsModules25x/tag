@@ -75,19 +75,19 @@ $tagHandler = xoops_getModuleHandler('tag', 'tag');
 $tag_config = tag_load_config();
 tag_define_url_delimiter();
 
-$criteria = new CriteriaCompo();
+$criteria = new \CriteriaCompo();
 $criteria->setSort($sort);
 $criteria->setOrder($order);
 $criteria->setStart($start);
 $criteria->setLimit($limit);
-$criteria->add(new Criteria('o.tag_status', TagConstants::STATUS_ACTIVE));
+$criteria->add(new \Criteria('o.tag_status', TagConstants::STATUS_ACTIVE));
 if (!empty($modid)) {
-    $criteria->add(new Criteria('l.tag_modid', $modid));
+    $criteria->add(new \Criteria('l.tag_modid', $modid));
     if ($catid >= 0) {
-        $criteria->add(new Criteria('l.tag_catid', $catid));
+        $criteria->add(new \Criteria('l.tag_catid', $catid));
     }
 }
-$tags = $tagHandler->getByLimit(0, 0, $criteria);
+$tags =& $tagHandler->getByLimit(0, 0, $criteria);
 
 $count_max = 0;
 $count_min = 0;
@@ -130,7 +130,7 @@ if (!empty($start) || count($tags_data) >= $limit) {
 
     if ('list' === mb_strtolower($mode_display)) {
         include $GLOBALS['xoops']->path('/class/pagenav.php');
-        $nav     = new XoopsPageNav($count_tag, $limit, $start, 'start', "catid={$catid}&amp;mode={$mode_display}");
+        $nav     = new \XoopsPageNav($count_tag, $limit, $start, 'start', "catid={$catid}&amp;mode={$mode_display}");
         $pagenav = $nav->renderNav(4);
     } else {
         $pagenav = "<a href='" . xoops_getenv('PHP_SELF') . "?catid={$catid}&amp;mode={$mode_display}\">" . _MORE . '</a>';

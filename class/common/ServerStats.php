@@ -1,4 +1,4 @@
-<?php namespace Xoopsmodules\xxxxx\common;
+<?php namespace Xoopsmodules\tag\common;
 
 /*
  You may not change or alter any portion of this comment or credits
@@ -15,6 +15,9 @@
  * @license     http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author      mamba <mambax7@gmail.com>
  */
+
+use Xoopsmodules\tag;
+
 trait ServerStats
 {
     /**
@@ -27,7 +30,10 @@ trait ServerStats
         //mb    $wfdownloads = WfdownloadsWfdownloads::getInstance();
         $moduleDirName      = basename(dirname(dirname(__DIR__)));
         $moduleDirNameUpper = strtoupper($moduleDirName);
-        xoops_loadLanguage('common', $moduleDirName);
+        $helper = tag\Helper::getInstance();
+        $helper->loadLanguage('common');
+
+//        xoops_loadLanguage('common', $moduleDirName);
         $html = '';
         //        $sql   = 'SELECT metavalue';
         //        $sql   .= ' FROM ' . $GLOBALS['xoopsDB']->prefix('wfdownloads_meta');

@@ -59,7 +59,7 @@ if (!empty($tag_id)) {
     }
     $tag_term = $tag_obj->getVar('tag_term', 'n');
 } else {
-    if (!$tags_obj = $tagHandler->getObjects(new Criteria('tag_term', $myts->addSlashes(trim($tag_term))))) {
+    if (!$tags_obj =& $tagHandler->getObjects(new \Criteria('tag_term', $myts->addSlashes(trim($tag_term))))) {
         redirect_header($GLOBALS['xoops']->url('www/modules/' . $GLOBALS['xoopsModule']->getVar('dirname') . '/index.php'), 2, _MD_TAG_INVALID);
     }
     $tag_obj = $tags_obj[0];
@@ -83,15 +83,15 @@ tag_define_url_delimiter();
 
 $limit = empty($tag_config['items_perpage']) ? TagConstants::DEFAULT_LIMIT : $tag_config['items_perpage'];
 
-$criteria = new CriteriaCompo(new Criteria('o.tag_id', $tag_id));
+$criteria = new \CriteriaCompo(new \Criteria('o.tag_id', $tag_id));
 $criteria->setSort('time');
 $criteria->setOrder('DESC');
 $criteria->setStart($start);
 $criteria->setLimit($limit);
 if (!empty($modid)) {
-    $criteria->add(new Criteria('o.tag_modid', $modid));
+    $criteria->add(new \Criteria('o.tag_modid', $modid));
     if ($catid >= 0) {
-        $criteria->add(new Criteria('o.tag_catid', $catid));
+        $criteria->add(new \Criteria('o.tag_catid', $catid));
     }
 }
 $items = $tagHandler->getItems($criteria); // Tag, imist, start, sort, order, modid, catid
@@ -104,7 +104,7 @@ if (!empty($items)) {
     }
     /** @var XoopsModuleHandler $moduleHandler */
     $moduleHandler = xoops_getHandler('module');
-    $modules_obj   = $moduleHandler->getObjects(new Criteria('mid', '(' . implode(', ', array_keys($items_module)) . ')', 'IN'), true);
+    $modules_obj   = $moduleHandler->getObjects(new \Criteria('mid', '(' . implode(', ', array_keys($items_module)) . ')', 'IN'), true);
     foreach (array_keys($modules_obj) as $mid) {
         $dirname = $modules_obj[$mid]->getVar('dirname', 'n');
         if (file_exists($GLOBALS['xoops']->path("/modules/{$dirname}/class/plugins/plugin.tag.php"))) {
@@ -167,7 +167,7 @@ if (!empty($start) || count($items_data) >= $limit) {
     $count_item = $tagHandler->getItemCount($tag_id, $modid, $catid); // Tag, modid, catid
 
     require_once $GLOBALS['xoops']->path('/class/pagenav.php');
-    $nav     = new XoopsPageNav($count_item, $limit, $start, 'start', "tag={$tag_id}&amp;catid={$catid}");
+    $nav     = new \XoopsPageNav($count_item, $limit, $start, 'start', "tag={$tag_id}&amp;catid={$catid}");
     $pagenav = $nav->renderNav(4);
 } else {
     $pagenav = '';

@@ -20,6 +20,8 @@
  * @since          1.00
  */
 
+use Xoopsmodules\tag;
+
 require_once __DIR__ . '/admin_header.php';
 xoops_cp_header();
 include $GLOBALS['xoops']->path('/modules/tag/include/vars.php');
@@ -53,7 +55,7 @@ if (false === ($result = $GLOBALS['xoopsDB']->query($sql))) {
     if (!empty($counts_module)) {
         /** @var XoopsModuleHandler $moduleHandler */
         $moduleHandler = xoops_getHandler('module');
-        $module_list   = $moduleHandler->getList(new Criteria('mid', '(' . implode(', ', array_keys($counts_module)) . ')', 'IN'));
+        $module_list   = $moduleHandler->getList(new \Criteria('mid', '(' . implode(', ', array_keys($counts_module)) . ')', 'IN'));
     } else {
     }
 }
@@ -93,6 +95,8 @@ if (empty($counts_module)) {  // there aren't any so just display "none"
 
 $adminObject->displayNavigation(basename(__FILE__));
 $adminObject->displayIndex();
+
+echo $utility::getServerStats();
 
 include __DIR__ . '/admin_footer.php';
 //xoops_cp_footer();
