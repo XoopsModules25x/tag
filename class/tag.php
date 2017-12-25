@@ -190,9 +190,9 @@ class TagTagHandler extends XoopsPersistableObjectHandler
             }
         }
         if (is_array($tags_update)) {
-            foreach ($tags_update as $tag_id) {
-                $this->update_stats($tag_id, $modid, $catid);
-            }
+        foreach ($tags_update as $tag_id) {
+            $this->update_stats($tag_id, $modid, $catid);
+        }
         }
 
         return true;
@@ -384,7 +384,7 @@ class TagTagHandler extends XoopsPersistableObjectHandler
      *
      * @return array associative array of items (id, modid, catid)
      */
-    public function getItems(CriteriaCompo $criteria = null)
+    public function getItems(CriteriaElement $criteria = null)
     {
         $ret = [];
         $sql = '    SELECT o.tl_id, o.tag_itemid, o.tag_modid, o.tag_catid, o.tag_time';

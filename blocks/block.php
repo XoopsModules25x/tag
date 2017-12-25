@@ -318,7 +318,7 @@ function tag_block_top_show($options, $dirname = '', $catid = 0)
 function tag_block_top_edit($options)
 {
     $form = _MB_TAG_ITEMS . ":&nbsp;&nbsp;<input type='number' name='options[0]' value='{$options[0]}' min='0' ><br>\n";
-    $form .= _MB_TAG_TIME_DURATION . ":&nbsp;&nbsp;<input type='number' name='options[1]' value=\"{$options[1]}' min='0' ><br>\n";
+    $form .= _MB_TAG_TIME_DURATION . ":&nbsp;&nbsp;<input type='number' name='options[1]' value='{$options[1]}' min='0' ><br>\n";
     $form .= _MB_TAG_SORT . ":&nbsp;&nbsp;<select name='options[2]'>\n";
     $form .= "<option value='a'";
     if ('a' === $options[2]) {
