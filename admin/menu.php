@@ -19,9 +19,9 @@
  * @since           1.00
  */
 
-use Xoopsmodules\tag;
+use XoopsModules\Tag;
 
-$helper = tag\Helper::getInstance();
+$helper = Tag\Helper::getInstance();
 
 $pathIcon32 = \Xmf\Module\Admin::menuIconPath('');
 $pathModIcon32 = $helper->getModule()->getInfo('modicons32');

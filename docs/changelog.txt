@@ -1,4 +1,4 @@
-<h5>2.34 RC-1         [NOT RELEASED]</h5>
+<h5>2.34 RC-1         [NOT RELEASED]</h5>  Dev: Xoops 2.5.9, PHP 7.2.0
 <hr>
 - update Help (mamba)
 - Updates for PayPal changes (zyspec)

@@ -1,9 +1,9 @@
-<?php namespace Xoopsmodules\tag;
+<?php namespace XoopsModules\Tag;
 
 
 use Xmf\Request;
-use Xoopsmodules\tag;
-use Xoopsmodules\tag\common;
+use XoopsModules\Tag;
+use XoopsModules\Tag\Common;
 
 /**
  * Class Utility

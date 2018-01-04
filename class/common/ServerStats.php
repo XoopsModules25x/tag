@@ -1,4 +1,4 @@
-<?php namespace Xoopsmodules\tag\common;
+<?php namespace XoopsModules\Tag\Common;
 
 /*
  You may not change or alter any portion of this comment or credits
@@ -16,7 +16,7 @@
  * @author      mamba <mambax7@gmail.com>
  */
 
-use Xoopsmodules\tag;
+use XoopsModules\Tag;
 
 trait ServerStats
 {
@@ -30,7 +30,7 @@ trait ServerStats
         //mb    $wfdownloads = WfdownloadsWfdownloads::getInstance();
         $moduleDirName      = basename(dirname(dirname(__DIR__)));
         $moduleDirNameUpper = strtoupper($moduleDirName);
-        $helper = tag\Helper::getInstance();
+        $helper = Tag\Helper::getInstance();
         $helper->loadLanguage('common');
 
 //        xoops_loadLanguage('common', $moduleDirName);

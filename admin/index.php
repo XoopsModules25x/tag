@@ -20,7 +20,7 @@
  * @since          1.00
  */
 
-use Xoopsmodules\tag;
+use XoopsModules\Tag;
 
 require_once __DIR__ . '/admin_header.php';
 xoops_cp_header();

@@ -1,4 +1,4 @@
-<?php namespace Xoopsmodules\tag\common;
+<?php namespace XoopsModules\Tag\Common;
 
 /*
  You may not change or alter any portion of this comment or credits

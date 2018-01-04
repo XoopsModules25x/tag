@@ -19,15 +19,15 @@
  * @since           1.00
  */
 
-use Xoopsmodules\tag;
+use XoopsModules\Tag;
 
 defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
 
 include $GLOBALS['xoops']->path('/modules/tag/include/vars.php');
 //require_once $GLOBALS['xoops']->path('/modules/tag/include/functions.php');
 
-/** @var tag\Helper $helper */
-$helper = tag\Helper::getInstance();
+/** @var Tag\Helper $helper */
+$helper = Tag\Helper::getInstance();
 
 $helper->loadLanguage('blocks');
 xoops_load('constants', 'tag');
@@ -382,8 +382,8 @@ function tag_block_cumulus_show(array $options, $dirname = '', $catid = 0)
         //        $module        = $moduleHandler->getByDirname($dirname);
         //        $modid         = $module->getVar('mid');
 
-        /** @var tag\Helper $helper */
-        $helper = tag\Helper::getInstance();
+        /** @var Tag\Helper $helper */
+        $helper = Tag\Helper::getInstance();
         $module = $helper->getModule();
 //        $modid  = $module->getVar('mid');
         $modid  = $helper->getModule()->getVar('mid');

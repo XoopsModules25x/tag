@@ -17,7 +17,7 @@
  * @author       XOOPS Development Team
  */
 
-use Xoopsmodules\tag;
+use XoopsModules\Tag;
 
 /**
  *
@@ -29,8 +29,8 @@ use Xoopsmodules\tag;
 function xoops_module_pre_install_tag(XoopsModule $module)
 {
     $moduleDirName = basename(dirname(__DIR__));
-    /** @var tag\Utility $utility */
-    $utility = new tag\Utility();
+    /** @var Tag\Utility $utility */
+    $utility = new Tag\Utility();
     //check for minimum XOOPS version
     if (!$utility::checkVerXoops($module)) {
         return false;

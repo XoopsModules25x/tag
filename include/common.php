@@ -17,7 +17,7 @@
  * @author     XOOPS Development Team
  */
 
-use Xoopsmodules\tag;
+use XoopsModules\Tag;
 include __DIR__ . '/../preloads/autoloader.php';
 
 $moduleDirName = basename(dirname(__DIR__));
@@ -25,18 +25,18 @@ $moduleDirNameUpper   = strtoupper($moduleDirName); //$capsDirName
 
 
 /** @var \XoopsDatabase $db */
-/** @var tag\Helper $helper */
-/** @var tag\Utility $utility */
+/** @var Tag\Helper $helper */
+/** @var Tag\Utility $utility */
 $db      = \XoopsDatabaseFactory::getDatabaseConnection();
-$helper  = tag\Helper::getInstance();
-$utility = new tag\Utility();
-//$configurator = new tag\common\Configurator();
+$helper  = Tag\Helper::getInstance();
+$utility = new Tag\Utility();
+//$configurator = new Tag\Common\Configurator();
 
 $helper->loadLanguage('common');
 
 //handlers
-//$categoryHandler     = new tag\CategoryHandler($db);
-//$downloadHandler     = new tag\DownloadHandler($db);
+//$categoryHandler     = new Tag\CategoryHandler($db);
+//$downloadHandler     = new Tag\DownloadHandler($db);
 
 if (!defined($moduleDirNameUpper . '_CONSTANTS_DEFINED')) {
     define($moduleDirNameUpper . '_DIRNAME', basename(dirname(__DIR__)));

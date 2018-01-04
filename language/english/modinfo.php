@@ -65,3 +65,6 @@ define('_MI_TAG_LIMITPERLIST_DESC', '');
 define('_MI_TAG_LIMITPERCLOUD', 'Limit number of items per cloud');
 define('_MI_TAG_LIMITPERCLOUD_DESC', '');
 define('_MI_TAG_VIEW_SEARCH', 'Search');
+
+//2.34
+define('_MI_TAG_INDEX_TPL_DESK_DESC', 'Links of a custom tags ');

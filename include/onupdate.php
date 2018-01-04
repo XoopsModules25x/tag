@@ -17,7 +17,7 @@
  * @author       XOOPS Development Team
  */
 
-use Xoopsmodules\tag;
+use XoopsModules\Tag;
 
 if ((!defined('XOOPS_ROOT_PATH')) || !($GLOBALS['xoopsUser'] instanceof XoopsUser)
     || !$GLOBALS['xoopsUser']->IsAdmin()) {
@@ -33,7 +33,7 @@ function tableExists($tablename)
 {
     $result = $GLOBALS['xoopsDB']->queryF("SHOW TABLES LIKE '$tablename'");
 
-    return ($GLOBALS['xoopsDB']->getRowsNum($result) > 0) ? true : false;
+    return $GLOBALS['xoopsDB']->getRowsNum($result) > 0;
 }
 
 /**
@@ -45,11 +45,11 @@ function tableExists($tablename)
  */
 function xoops_module_pre_update_tag(XoopsModule $module)
 {
-    /** @var tag\Helper $helper */
-    /** @var tag\Utility $utility */
+    /** @var Tag\Helper $helper */
+    /** @var Tag\Utility $utility */
     $moduleDirName = basename(dirname(__DIR__));
-    $helper       = tag\Helper::getInstance();
-    $utility      = new tag\Utility();
+    $helper       = Tag\Helper::getInstance();
+    $utility      = new Tag\Utility();
 
     $xoopsSuccess = $utility::checkVerXoops($module);
     $phpSuccess   = $utility::checkVerPhp($module);
@@ -70,12 +70,12 @@ function xoops_module_update_tag(XoopsModule $module, $previousVersion = null)
     global $xoopsDB;
     $moduleDirName = basename(dirname(__DIR__));
 
-    /** @var tag\Helper $helper */
-    /** @var tag\Utility $utility */
-    /** @var tag\Configurator $configurator */
-    $helper  = tag\Helper::getInstance();
-    $utility = new tag\Utility();
-    $configurator = new tag\Configurator();
+    /** @var Tag\Helper $helper */
+    /** @var Tag\Utility $utility */
+    /** @var Tag\Configurator $configurator */
+    $helper  = Tag\Helper::getInstance();
+    $utility = new Tag\Utility();
+    $configurator = new Tag\Configurator();
 
     if ($previousVersion < 235) {
 

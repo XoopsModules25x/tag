@@ -18,7 +18,7 @@
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
  * */
 
-use Xoopsmodules\tag;
+use XoopsModules\Tag;
 
 defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
 defined('TAG_INI') || include __DIR__ . '/vars.php';
@@ -88,9 +88,9 @@ function xoops_module_pre_install_tag(XoopsModule $module)
  */
 function xoops_module_pre_update_tag(XoopsModule $module)
 {
-    /** @var tag\Utility $utility */
+    /** @var Tag\Utility $utility */
     $moduleDirName = basename(dirname(__DIR__));
-    $utility      = new tag\Utility();
+    $utility      = new Tag\Utility();
 
     $xoopsSuccess = $utility::checkVerXoops($module);
     $phpSuccess   = $utility::checkVerPhp($module);

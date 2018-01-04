@@ -100,12 +100,11 @@ class TagTagHandler extends XoopsPersistableObjectHandler
      * Update tags linked to an item
      *
      * @access   public
-     * @param             $tags
+     * @param  array|string $tags   array of $tags or a single tag
      * @param  int        $itemid item ID
      * @param  int|string $modid  module ID or module dirname, optional
      * @param  int        $catid  id of corresponding category, optional
      * @return bool
-     * @internal param array|string $array of $tags   or a single tag
      */
     public function updateByItem($tags, $itemid, $modid = '', $catid = 0)
     {

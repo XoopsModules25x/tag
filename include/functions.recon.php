@@ -31,7 +31,7 @@ if (!defined('TAG_FUNCTIONS_RECON')):
      */
     function tag_synchronization()
     {
-        /** @var XoopsModuleHandler $moduleHandler */
+        /** @var \XoopsModuleHandler $moduleHandler */
         $moduleHandler = xoops_getHandler('module');
         $criteria      = new \CriteriaCompo(new \Criteria('isactive', 1));
         $criteria->add(new \Criteria('dirname', "('system', 'tag')", 'NOT IN'));

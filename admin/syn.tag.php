@@ -19,7 +19,7 @@
  * @since           1.00
  */
 use Xmf\Request;
-use Xoopsmodules\tag;
+use XoopsModules\Tag;
 
 require_once __DIR__ . '/admin_header.php';
 require_once $GLOBALS['xoops']->path('/class/xoopsformloader.php');
