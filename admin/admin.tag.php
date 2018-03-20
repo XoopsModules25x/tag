@@ -20,6 +20,8 @@
  */
 
 use Xmf\Request;
+use XoopsModules\Tag;
+use XoopsModules\Tag\Constants;
 
 require_once __DIR__ . '/admin_header.php';
 require_once $GLOBALS['xoops']->path('/class/xoopsformloader.php');
@@ -32,22 +34,27 @@ include $GLOBALS['xoops']->path('/modules/tag/include/vars.php');
 $adminObject->displayNavigation(basename(__FILE__));
 
 $limit  = $GLOBALS['xoopsModuleConfig']['items_perpage'];
-$modid  = Request::getInt('modid', TagConstants::DEFAULT_ID);
-$start  = Request::getInt('start', TagConstants::BEGINNING);
-$status = Request::getInt('status', TagConstants::STATUS_ALL, 'GET');
-/** @var \TagTagHandler $tagHandler */
-$tagHandler  = xoops_getModuleHandler('tag', $moduleDirName);
-$linkHandler = xoops_getModuleHandler('link', $moduleDirName);
+$modid  = Request::getInt('modid', Constants::DEFAULT_ID);
+$start  = Request::getInt('start', Constants::BEGINNING);
+$status = Request::getInt('status', Constants::STATUS_ALL, 'GET');
+///** @var \XoopsModules\Tag\Handler $tagHandler */
+//$tagHandler  = xoops_getModuleHandler('tag', $moduleDirName);
+//$linkHandler = xoops_getModuleHandler('link', $moduleDirName);
+
+/** @var Tag\TagHandler $tagHandler */
+/** @var Tag\LinkHandler $linkHandler */
+$tagHandler = Tag\Helper::getInstance()->getHandler('Tag');
+$linkHandler = Tag\Helper::getInstance()->getHandler('Link');
 
 $postTags = Request::getArray('tags', [], 'POST');
 if (!empty($postTags)) {
     $msgDBUpdated = '';
     foreach ($postTags as $tag => $tag_status) {
         $tag_obj = $tagHandler->get($tag);
-        if (!($tag_obj instanceof TagTag) || !$tag_obj->getVar('tag_id')) {
+        if (!($tag_obj instanceof Tag) || !$tag_obj->getVar('tag_id')) {
             continue;
         }
-        if ($tag_status < TagConstants::STATUS_ACTIVE) {
+        if ($tag_status < Constants::STATUS_ACTIVE) {
             $tagHandler->delete($tag_obj);
         } elseif ($tag_status != $tag_obj->getVar('tag_status')) {
             $tag_obj->setVar('tag_status', $tag_status);
@@ -55,7 +62,7 @@ if (!empty($postTags)) {
             $msgDBUpdated = _AM_TAG_DB_UPDATED;
         }
     }
-    redirect_header("admin.tag.php?modid={$modid}&amp;start={$start}&amp;status={$status}", TagConstants::REDIRECT_DELAY_MEDIUM, $msgDBUpdated);
+    redirect_header("admin.tag.php?modid={$modid}&amp;start={$start}&amp;status={$status}", Constants::REDIRECT_DELAY_MEDIUM, $msgDBUpdated);
 }
 
 $sql           = 'SELECT tag_modid, COUNT(DISTINCT tag_id) AS count_tag';
@@ -67,7 +74,7 @@ $result        = $GLOBALS['xoopsDB']->query($sql);
 if (false === $result) {
     xoops_error($GLOBALS['xoopsDB']->error());
 } else {
-    while ($myrow = $GLOBALS['xoopsDB']->fetchArray($result)) {
+    while (false !== ($myrow = $GLOBALS['xoopsDB']->fetchArray($result))) {
         $counts_module[$myrow['tag_modid']] = $myrow['count_tag'];
     }
     if (!empty($counts_module)) {
@@ -86,9 +93,9 @@ foreach ($module_list as $module => $module_name) {
 }
 $tray->addElement($mod_select);
 $status_select = new \XoopsFormRadio('', 'status', $status);
-$status_select->addOption(TagConstants::STATUS_ALL, _ALL);
-$status_select->addOption(TagConstants::STATUS_ACTIVE, _AM_TAG_ACTIVE);
-$status_select->addOption(TagConstants::STATUS_INACTIVE, _AM_TAG_INACTIVE);
+$status_select->addOption(Constants::STATUS_ALL, _ALL);
+$status_select->addOption(Constants::STATUS_ACTIVE, _AM_TAG_ACTIVE);
+$status_select->addOption(Constants::STATUS_INACTIVE, _AM_TAG_INACTIVE);
 $tray->addElement($status_select);
 $tray->addElement(new \XoopsFormButton('', 'submit', _SUBMIT, 'submit'));
 $opform->addElement($tray);
@@ -99,7 +106,7 @@ $criteria->setSort('a');
 $criteria->setOrder('ASC');
 $criteria->setStart($start);
 $criteria->setLimit($limit);
-if ($status >= TagConstants::STATUS_ACTIVE) {
+if ($status >= Constants::STATUS_ACTIVE) {
     $criteria->add(new \Criteria('o.tag_status', $status));
 }
 if (!empty($modid)) {
@@ -139,17 +146,17 @@ if (empty($tags)) {
                       . $tags[$key]['term']
                       . "</td>\n"
                       . "    <td  class='txtcenter'><input type='radio' name='tags[{$key}]' value='"
-                      . TagConstants::STATUS_INACTIVE
+                      . Constants::STATUS_INACTIVE
                       . "'"
                       . ($tags[$key]['status'] ? ' checked' : " '' ")
                       . "></td>\n"
                       . "    <td  class='txtcenter'><input type='radio' name='tags[{$key}]' value='"
-                      . TagConstants::STATUS_ACTIVE
+                      . Constants::STATUS_ACTIVE
                       . "'"
                       . ($tags[$key]['status'] ? " '' " : ' checked')
                       . "></td>\n"
                       . "    <td  class='txtcenter'><input type='radio' name='tags[{$key}]' value='"
-                      . TagConstants::STATUS_DELETE
+                      . Constants::STATUS_DELETE
                       . "'></td>\n"
                       . "  </tr>\n";
         $class_tr  = ('even' === $class_tr) ? 'odd' : 'even';

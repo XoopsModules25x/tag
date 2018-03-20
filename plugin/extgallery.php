@@ -18,7 +18,7 @@
  * @since           1.00
  */
 
-defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
+defined('XOOPS_ROOT_PATH') || die('Restricted access');
 /**
  *
  * Generate tag item information
@@ -77,7 +77,7 @@ function extgallery_tag_synchronization($mid)
     /** @var \ExtgalleryPublicPhotoHandler $itemHandler */
     $itemHandler = xoops_getModuleHandler('publicphoto', 'extgallery');
     /** @var \TagLinkHandler $linkHandler */
-    $linkHandler = xoops_getModuleHandler('link', 'tag');
+    $linkHandler = \XoopsModules\Tag\Helper::getInstance()->getHandler('Link'); //@var \XoopsModules\Tag\Handler $tagHandler
 
     $mid = XoopsFilterInput::clean($mid, 'INT');
 

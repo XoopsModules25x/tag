@@ -19,7 +19,7 @@
  * @since           1.00
  */
 
-defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
+defined('XOOPS_ROOT_PATH') || die('Restricted access');
 
 /**
  * Get item fields:
@@ -84,8 +84,10 @@ function article_tag_iteminfo(&$items)
 function article_tag_synchronization($mid)
 {
     $itemHandler = xoops_getModuleHandler('article', 'article');
-    /** @var \TagLinkHandler $linkHandler */
-    $linkHandler = xoops_getModuleHandler('link', 'tag');
+//    /** @var \TagLinkHandler $linkHandler */
+//    $linkHandler = \XoopsModules\Tag\Helper::getInstance()->getHandler('Link'); //@var \XoopsModules\Tag\Handler $tagHandler
+    /** @var \XoopsModules\Tag\LinkHandler $itemHandler */
+    $linkHandler = \XoopsModules\Tag\Helper::getInstance()->getHandler('Link');
 
     $mid = XoopsFilterInput::clean($mid, 'INT');
 

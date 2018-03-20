@@ -1,4 +1,5 @@
-<?php
+<?php namespace XoopsModules\Tag;
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -21,12 +22,14 @@
  * @since           2.33
  */
 
+use XoopsModules\Tag;
+
 require_once $GLOBALS['xoops']->path('/class/xoopsformloader.php');
 
 /**
- * Class TagBlockForm
+ * Class BlockForm
  */
-class TagBlockForm extends XoopsForm
+class BlockForm extends \XoopsForm
 {
 
     /**

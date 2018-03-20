@@ -24,7 +24,7 @@
 The functions loaded on initializtion
 */
 
-//defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
+//defined('XOOPS_ROOT_PATH') || die('Restricted access');
 defined('TAG_INI') || exit();
 (!defined('TAG_FUNCTIONS_INI')) || exit();
 

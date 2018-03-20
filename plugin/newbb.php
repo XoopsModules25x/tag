@@ -19,7 +19,7 @@
  * @since           1.00
  */
 
-defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
+defined('XOOPS_ROOT_PATH') || die('Restricted access');
 
 /**
  * Get item fields:
@@ -86,7 +86,7 @@ function newbb_tag_synchronization($mid)
     /** @var \NewbbTopicHandler $itemHandler */
     $itemHandler = xoops_getModuleHandler('topic', 'newbb');
     /** @var \TagLinkHandler $linkHandler */
-    $linkHandler = xoops_getModuleHandler('link', 'tag');
+    $linkHandler = \XoopsModules\Tag\Helper::getInstance()->getHandler('Link'); //@var \XoopsModules\Tag\Handler $tagHandler
 
     $mid = XoopsFilterInput::clean($mid, 'INT');
 

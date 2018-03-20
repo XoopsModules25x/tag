@@ -19,7 +19,9 @@
  * @since           1.00
  */
 
-defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
+use XoopsModules\Tag;
+
+defined('XOOPS_ROOT_PATH') || die('Restricted access');
 
 if (!defined('TAG_FUNCTIONS')):
     define('TAG_FUNCTIONS', 1);

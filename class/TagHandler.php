@@ -1,4 +1,4 @@
-<?php
+<?php namespace XoopsModules\Tag;
 
 /*
  You may not change or alter any portion of this comment or credits
@@ -21,29 +21,12 @@
  * @since           1.00
  */
 
-defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
+defined('XOOPS_ROOT_PATH') || die('Restricted access');
 
 /**
- * Class TagTag
+ * Class TagHandler
  */
-class TagTag extends XoopsObject
-{
-    /**
-     * TagTag constructor.
-     */
-    public function __construct()
-    {
-        $this->initVar('tag_id', XOBJ_DTYPE_INT, null, false);
-        $this->initVar('tag_term', XOBJ_DTYPE_TXTBOX, '', true);
-        $this->initVar('tag_status', XOBJ_DTYPE_INT, 0);
-        $this->initVar('tag_count', XOBJ_DTYPE_INT, 0);
-    }
-}
-
-/**
- * Class TagTagHandler
- */
-class TagTagHandler extends XoopsPersistableObjectHandler
+class TagHandler extends \XoopsPersistableObjectHandler
 {
     public $table_link;
     public $table_stats;
@@ -51,11 +34,12 @@ class TagTagHandler extends XoopsPersistableObjectHandler
     /**
      * Constructor
      *
-     * @param XoopsDatabase $db reference to the {@link XoopsDatabase} object
-     **/
-    public function __construct(XoopsDatabase $db)
+     * @param \XoopsDatabase $db reference to the {@link XoopsDatabase}
+     *                           object
+     */
+    public function __construct(\XoopsDatabase $db)
     {
-        parent::__construct($db, 'tag_tag', 'TagTag', 'tag_id', 'tag_term');
+        parent::__construct($db, 'tag_tag', Tag::class, 'tag_id', 'tag_term');
         $this->table_link  = $this->db->prefix('tag_link');
         $this->table_stats = $this->db->prefix('tag_stats');
     }
@@ -89,7 +73,7 @@ class TagTagHandler extends XoopsPersistableObjectHandler
         if (false === ($result = $this->db->query($sql))) {
             return $ret;
         }
-        while ($myrow = $this->db->fetchArray($result)) {
+        while (false !== ($myrow = $this->db->fetchArray($result))) {
             $ret[$myrow[$this->keyName]] = $myrow['tag_term'];
         }
 
@@ -190,9 +174,9 @@ class TagTagHandler extends XoopsPersistableObjectHandler
             }
         }
         if (is_array($tags_update)) {
-        foreach ($tags_update as $tag_id) {
-            $this->update_stats($tag_id, $modid, $catid);
-        }
+            foreach ($tags_update as $tag_id) {
+                $this->update_stats($tag_id, $modid, $catid);
+            }
         }
 
         return true;
@@ -324,7 +308,7 @@ class TagTagHandler extends XoopsPersistableObjectHandler
             //xoops_error($this->db->error());
             $ret = null;
         } else {
-            while ($myrow = $this->db->fetchArray($result)) {
+            while (false !== ($myrow = $this->db->fetchArray($result))) {
                 $ret[$myrow[$this->keyName]] = [
                     'id'     => $myrow[$this->keyName],
                     'term'   => htmlspecialchars($myrow['tag_term']),
@@ -380,7 +364,7 @@ class TagTagHandler extends XoopsPersistableObjectHandler
     /**
      * Get items linked with a tag
      *
-     * @param null|CriteriaCompo $criteria {@link Criteria}
+     * @param \CriteriaElement $criteria {@link Criteria}
      *
      * @return array associative array of items (id, modid, catid)
      */
@@ -427,7 +411,7 @@ class TagTagHandler extends XoopsPersistableObjectHandler
             //xoops_error($this->db->error());
             $ret = [];
         } else {
-            while ($myrow = $this->db->fetchArray($result)) {
+            while (false !== ($myrow = $this->db->fetchArray($result))) {
                 $ret[$myrow['tl_id']] = [
                     'itemid' => $myrow['tag_itemid'],
                     'modid'  => $myrow['tag_modid'],
@@ -483,13 +467,13 @@ class TagTagHandler extends XoopsPersistableObjectHandler
      * delete an object as well as links relying on it
      *
      * @access public
-     * @param  XoopsObject |TagTag $object $object {@link TagTag}
-     * @param  bool                $force  flag to force the query execution despite security settings
+     * @param \XoopsObject $object $object {@link Tag}
+     * @param  bool        $force  flag to force the query execution despite security settings
      * @return bool
      */
-    public function delete(XoopsObject $object, $force = true)
+    public function delete(\XoopsObject $object, $force = true)
     {
-        /* {@internal - this isn't needed if we type hint TagTag}
+        /* {@internal - this isn't needed if we type hint Tag}
         if (!is_object($object) || !$object->getVar($this->keyName)) {
             return false;
         }
@@ -542,7 +526,7 @@ class TagTagHandler extends XoopsPersistableObjectHandler
      * this is a public function called by plugins
      *
      * @access public
-     * @param  CriteriaElement $ids
+     * @param \CriteriaElement $ids
      * @return array|bool      object IDs or false on failure
      */
     public function &getIds(\CriteriaElement $ids = null)

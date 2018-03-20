@@ -20,14 +20,14 @@
 
 use XoopsModules\Tag;
 
-defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
+defined('XOOPS_ROOT_PATH') || die('Restricted access');
 defined('TAG_INI') || include __DIR__ . '/vars.php';
 
 /**
  * @param  XoopsModule $module
  * @return bool
  */
-function xoops_module_install_tag(XoopsModule $module)
+function xoops_module_install_tag(\XoopsModule $module)
 {
     return true;
 }
@@ -36,7 +36,7 @@ function xoops_module_install_tag(XoopsModule $module)
  * @param  XoopsModule $module
  * @return bool
  */
-function xoops_module_pre_install_tag(XoopsModule $module)
+function xoops_module_pre_install_tag(\XoopsModule $module)
 {
     //check for minimum XOOPS version
     $currentVer  = substr(XOOPS_VERSION, 6); // get the numeric part of string
@@ -86,7 +86,7 @@ function xoops_module_pre_install_tag(XoopsModule $module)
  * @param  XoopsModule $module
  * @return bool
  */
-function xoops_module_pre_update_tag(XoopsModule $module)
+function xoops_module_pre_update_tag(\XoopsModule $module)
 {
     /** @var Tag\Utility $utility */
     $moduleDirName = basename(dirname(__DIR__));
@@ -101,7 +101,7 @@ function xoops_module_pre_update_tag(XoopsModule $module)
  * @param  XoopsModule $module
  * @return bool
  */
-function xoops_module_pre_uninstall_tag(XoopsModule $module)
+function xoops_module_pre_uninstall_tag(\XoopsModule $module)
 {
     return true;
 }
@@ -111,7 +111,7 @@ function xoops_module_pre_uninstall_tag(XoopsModule $module)
  * @param  null        $prev_version
  * @return bool
  */
-function xoops_module_update_tag(XoopsModule $module, $prev_version = null)
+function xoops_module_update_tag(\XoopsModule $module, $prev_version = null)
 {
     //load_functions("config");
     //mod_clearConfg($module->getVar("dirname", "n"));

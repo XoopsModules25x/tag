@@ -1,4 +1,5 @@
-<?php
+<?php namespace XoopsModules\Tag;
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -13,20 +14,32 @@
  * XOOPS tag management module
  *
  * @package         tag
+ * @subpackage      class
  * @copyright       {@link http://sourceforge.net/projects/xoops/ The XOOPS Project}
  * @license         {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
- * @author          Taiwen Jiang (phppp or D.J.) <php_pp@hotmail.com>
+ * @author          Taiwen Jiang <phppp@users.sourceforge.net>
  * @since           1.00
  */
 
+use XoopsModules\Tag;
+
 defined('XOOPS_ROOT_PATH') || die('Restricted access');
 
-/*
- * Due to the difference of word boundary for different languages, delimiters also depend on languages
- * You need specify all possbile deimiters here, (",", ";", " ", "|") will be taken if no delimiter is set
- *
- * Tips:
- * For English sites, you can set as array(",", ";", " ", "|")
- * For Chinese sites, set as array(",", ";", " ", "|", "��")
+/**
+ * Class TagLink
  */
-$GLOBALS['tag_delimiter'] = [',', ' ', '|', ';'];
+class Link extends \XoopsObject
+{
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->initVar('tl_id', XOBJ_DTYPE_INT, null, false);
+        $this->initVar('tag_id', XOBJ_DTYPE_INT, 0);
+        $this->initVar('tag_modid', XOBJ_DTYPE_INT, 0);
+        $this->initVar('tag_catid', XOBJ_DTYPE_INT, 0);
+        $this->initVar('tag_itemid', XOBJ_DTYPE_INT, 0);
+        $this->initVar('tag_time', XOBJ_DTYPE_INT, 0);
+    }
+}

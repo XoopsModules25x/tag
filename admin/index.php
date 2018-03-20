@@ -27,8 +27,11 @@ xoops_cp_header();
 include $GLOBALS['xoops']->path('/modules/tag/include/vars.php');
 
 $adminObject  = \Xmf\Module\Admin::getInstance();
-/** @var \TagTagHandler $tagHandler */
-$tagHandler = xoops_getModuleHandler('tag', $moduleDirName);
+///** @var \XoopsModules\Tag\Handler $tagHandler */
+//$tagHandler = xoops_getModuleHandler('tag', $moduleDirName);
+/** @var Tag\TagHandler $tagHandler */
+$tagHandler = Tag\Helper::getInstance()->getHandler('Tag');
+
 $count_tag   = $tagHandler->getCount();
 
 $count_item = 0;
@@ -46,7 +49,7 @@ $counts_module = [];
 if (false === ($result = $GLOBALS['xoopsDB']->query($sql))) {
     xoops_error($GLOBALS['xoopsDB']->error());
 } else {
-    while ($myrow = $GLOBALS['xoopsDB']->fetchArray($result)) {
+    while (false !== ($myrow = $GLOBALS['xoopsDB']->fetchArray($result))) {
         $counts_module[$myrow['tag_modid']] = [
             'count_item' => $myrow['count_item'],
             'count_tag'  => $myrow['count_tag']

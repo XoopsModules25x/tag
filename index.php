@@ -27,8 +27,8 @@ $page_title                     = sprintf(_MD_TAG_TAGLIST, $GLOBALS['xoopsConfig
 $xoopsOption['template_main']   = 'tag_index.tpl';
 $xoopsOption['xoops_pagetitle'] = strip_tags($page_title);
 include $GLOBALS['xoops']->path('/header.php');
-/** @var \TagTagHandler $tagHandler */
-$tagHandler = xoops_getModuleHandler('tag', 'tag');
+/** @var \XoopsModules\Tag\Handler $tagHandler */
+$tagHandler = \XoopsModules\Tag\Helper::getInstance()->getHandler('Tag'); // xoops_getModuleHandler('tag', 'tag');
 $tag_config  = tag_load_config();
 tag_define_url_delimiter();
 

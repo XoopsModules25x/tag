@@ -18,7 +18,9 @@
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
  */
 
-defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
+use XoopsModules\Tag;
+
+defined('XOOPS_ROOT_PATH') || die('Restricted access');
 
 defined('TAG_FUNCTIONS_INI') || require_once __DIR__ . '/functions.ini.php';
 define('TAG_FUNCTIONS_RECON_LOADED', true);
@@ -37,8 +39,8 @@ if (!defined('TAG_FUNCTIONS_RECON')):
         $criteria->add(new \Criteria('dirname', "('system', 'tag')", 'NOT IN'));
         $modules_obj = $moduleHandler->getObjects($criteria, true);
 
-        /** @var \TagLinkHandler $linkHandler */
-        $linkHandler = xoops_getModuleHandler('link', 'tag');
+        /** @var Tag\LinkHandler $linkHandler */
+        $linkHandler = \XoopsModules\Tag\Helper::getInstance()->getHandler('Link'); //@var \XoopsModules\Tag\Handler $tagHandler
         $linkHandler->deleteAll(new \Criteria('tag_modid', '(' . implode(', ', array_keys($modules_obj)) . ')', 'NOT IN'), true);
 
         foreach (array_keys($modules_obj) as $mid) {
@@ -69,8 +71,8 @@ if (!defined('TAG_FUNCTIONS_RECON')):
      */
     function tag_cleanOrphan()
     {
-        /** @var \TagTagHandler $tagHandler */
-        $tagHandler = xoops_getModuleHandler('tag', 'tag');
+        /** @var \XoopsModules\Tag\Handler $tagHandler */
+        $tagHandler = \XoopsModules\Tag\Helper::getInstance()->getHandler('Tag'); // xoops_getModuleHandler('tag', 'tag');
 
         $success = true;
         /* clear item-tag links */

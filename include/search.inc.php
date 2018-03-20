@@ -19,7 +19,7 @@
  * @since           1.00
  */
 
-defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
+defined('XOOPS_ROOT_PATH') || die('Restricted access');
 
 /**
  * @param         $queryarray
@@ -56,7 +56,7 @@ function &tag_search($queryarray, $andor, $limit, $offset, $userid, $sortby = 't
     }
     $result = $GLOBALS['xoopsDB']->query($sql, $limit, $offset);
     $i      = 0;
-    while ($myrow = $GLOBALS['xoopsDB']->fetchArray($result)) {
+    while (false !== ($myrow = $GLOBALS['xoopsDB']->fetchArray($result))) {
         $ret[$i]['link']  = 'view.tag.php?tag=' . $myrow['tag_id'];
         $ret[$i]['title'] = $myrow['tag_term'];
         ++$i;

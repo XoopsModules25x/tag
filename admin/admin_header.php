@@ -21,7 +21,7 @@
 use XoopsModules\Tag;
 
 require_once __DIR__ . '/../../../include/cp_header.php';
-require_once __DIR__ . '/../class/constants.php';
+// require_once __DIR__ . '/../class/constants.php';
 require_once __DIR__ . '/../include/common.php';
 
 $moduleDirName = basename(dirname(__DIR__));

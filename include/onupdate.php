@@ -19,7 +19,7 @@
 
 use XoopsModules\Tag;
 
-if ((!defined('XOOPS_ROOT_PATH')) || !($GLOBALS['xoopsUser'] instanceof XoopsUser)
+if ((!defined('XOOPS_ROOT_PATH')) || !($GLOBALS['xoopsUser'] instanceof \XoopsUser)
     || !$GLOBALS['xoopsUser']->IsAdmin()) {
     exit('Restricted access' . PHP_EOL);
 }
@@ -43,7 +43,7 @@ function tableExists($tablename)
  *
  * @return bool true if ready to install, false if not
  */
-function xoops_module_pre_update_tag(XoopsModule $module)
+function xoops_module_pre_update_tag(\XoopsModule $module)
 {
     /** @var Tag\Helper $helper */
     /** @var Tag\Utility $utility */
@@ -65,7 +65,7 @@ function xoops_module_pre_update_tag(XoopsModule $module)
  * @return bool true if update successful, false if not
  */
 
-function xoops_module_update_tag(XoopsModule $module, $previousVersion = null)
+function xoops_module_update_tag(\XoopsModule $module, $previousVersion = null)
 {
     global $xoopsDB;
     $moduleDirName = basename(dirname(__DIR__));
@@ -86,7 +86,7 @@ function xoops_module_update_tag(XoopsModule $module, $previousVersion = null)
                 if (is_dir($templateFolder)) {
                     $templateList = array_diff(scandir($templateFolder, SCANDIR_SORT_NONE), ['..', '.']);
                     foreach ($templateList as $k => $v) {
-                        $fileInfo = new SplFileInfo($templateFolder . $v);
+                        $fileInfo = new \SplFileInfo($templateFolder . $v);
                         if ('html' === $fileInfo->getExtension() && 'index.html' !== $fileInfo->getFilename()) {
                             if (file_exists($templateFolder . $v)) {
                                 unlink($templateFolder . $v);
@@ -129,10 +129,10 @@ function xoops_module_update_tag(XoopsModule $module, $previousVersion = null)
         }
 
         //  ---  COPY blank.png FILES ---------------
-        if (count($configurator->blankFiles) > 0) {
+        if (count($configurator->copyBlankFiles) > 0) {
             $file = __DIR__ . '/../assets/images/blank.png';
-            foreach (array_keys($configurator->blankFiles) as $i) {
-                $dest = $configurator->blankFiles[$i] . '/blank.png';
+            foreach (array_keys($configurator->copyBlankFiles) as $i) {
+                $dest = $configurator->copyBlankFiles[$i] . '/blank.png';
                 $utility::copyFile($file, $dest);
             }
         }

@@ -19,10 +19,21 @@
  * @since           1.00
  */
 
+use XoopsModules\Tag;
+
 require_once __DIR__ . '/../../mainfile.php';
 include __DIR__ . '/include/vars.php';
 require_once __DIR__ . '/include/functions.php';
-xoops_load('constants', 'tag');
+
+require_once __DIR__ . '/include/common.php';
+
+/** @var Tag\Helper $helper */
+$helper = Tag\Helper::getInstance();
+
+// Load language files
+$helper->loadLanguage('main');
+
+//xoops_load('constants', 'tag');
 
 $xoopsOption['xoops_module_header'] = "<link rel='stylesheet' type='text/css' href='" . $GLOBALS['xoops']->url('www/modules/tag/assets/css/style.css') . "' >";
 $myts                               = \MyTextSanitizer::getInstance();

@@ -1,4 +1,5 @@
-<?php
+<?php namespace XoopsModules\Tag;
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -19,14 +20,17 @@
  * @since           1.00
  */
 
-defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
+use XoopsModules\Tag;
+
+defined('XOOPS_ROOT_PATH') || die('Restricted access');
 
 xoops_load('xoopsformtext');
+
 
 /**
  * Class TagFormTag
  */
-class TagFormTag extends XoopsFormText
+class FormTag extends \XoopsFormText
 {
     /**
      * TagFormTag constructor.
@@ -46,8 +50,8 @@ class TagFormTag extends XoopsFormText
         // itemid
         if (!empty($value) && is_numeric($value) && ($GLOBALS['xoopsModule'] instanceof XoopsModule)) {
             $modid      = $GLOBALS['xoopsModule']->getVar('mid');
-            /** @var \TagTagHandler $tagHandler */
-            $tagHandler = xoops_getModuleHandler('tag', 'tag');
+            /** @var \XoopsModules\Tag\Handler $tagHandler */
+            $tagHandler = Tag\Helper::getInstance()->getHandler('Tag'); // xoops_getModuleHandler('tag', 'tag');
             if ($tags = $tagHandler->getByItem($value, $modid, $catid)) {
                 $value = htmlspecialchars(implode(', ', $tags));
             } else {
@@ -75,3 +79,5 @@ class TagFormTag extends XoopsFormText
         return $render;
     }
 }
+
+class_alias(FormTag::class, 'TagFormTag');

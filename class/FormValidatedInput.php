@@ -1,4 +1,5 @@
-<?php
+<?php namespace XoopsModules\Tag;
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -21,12 +22,12 @@
  * @since           2.33
  */
 
-defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
+defined('XOOPS_ROOT_PATH') || die('Restricted access');
 
 /**
  * A simple HTML5 type validated input field
  */
-class TagFormValidatedInput extends XoopsFormText
+class FormValidatedInput extends \XoopsFormText
 {
 
     /**

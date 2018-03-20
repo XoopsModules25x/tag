@@ -19,7 +19,7 @@
  * @since          1.00
  */
 
-defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
+defined('XOOPS_ROOT_PATH') || die('Restricted access');
 define('_AM_TAG_TERM', 'Tag');
 
 define('_AM_TAG_STATS', 'Statistic Infomation');

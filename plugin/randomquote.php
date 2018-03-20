@@ -20,7 +20,9 @@
  * @since          2.33
  */
 
-defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
+use XoopsModules\Randomquote\Constants;
+
+defined('XOOPS_ROOT_PATH') || die('Restricted access');
 
 XoopsLoad::load('XoopsFilterInput');
 
@@ -35,8 +37,6 @@ XoopsLoad::load('XoopsFilterInput');
  **/
 function randomquote_tag_iteminfo(&$items)
 {
-    xoops_load('constants', 'randomquote');
-
     $items_id = [];
     $cats_id  = [];
 
@@ -49,10 +49,11 @@ function randomquote_tag_iteminfo(&$items)
 
     $criteria = new \CriteriaCompo();
     $criteria->add(new \Criteria('id', '(' . implode(',', $items_id) . ')', 'IN'));
-    $criteria->add(new \Criteria('quote_status', RandomquoteConstants::STATUS_ONLINE));
+    $criteria->add(new \Criteria('quote_status', Constants::STATUS_ONLINE));
 
-    /** @var \RandomquoteQuotesHandler $quoteHandler */
-    $quoteHandler = xoops_getModuleHandler('quotes', 'randomquote');
+    /** @var \ \XoopsModules\Randomquote\Helper $quoteHandler */
+    $quoteHandler = \XoopsModules\Randomquote\Helper::getInstance()->getHandler('Quotes');
+
     $quoteObjs    =& $quoteHandler->getObjects($criteria, true);
 
     foreach ($cats_id as $cat_id) {
@@ -80,13 +81,12 @@ function randomquote_tag_iteminfo(&$items)
  * @param  int $mid module ID
  * @return bool
  */
-function mymodule_tag_synchronization($mid)
+function randomquote_tag_synchronization($mid)
 {
-    xoops_load('constants', 'randomquote');
-    /** @var \RandomquoteQuotesHandler $itemHandler */
-    $itemHandler = xoops_getModuleHandler('quotes', 'randomquote');
-    /** @var \TagLinkHandler $linkHandler */
-    $linkHandler = xoops_getModuleHandler('link', 'tag');
+    /** @var \ \XoopsModules\Randomquote\Helper $itemHandler */
+    $itemHandler = \XoopsModules\Randomquote\Helper::getInstance()->getHandler('Quotes');
+    /** @var \XoopsModules\Tag\LinkHandler $itemHandler */
+    $linkHandler = \XoopsModules\Tag\Helper::getInstance()->getHandler('Link');
 
     if (!$itemHandler || !$linkHandler) {
         $result = false;
@@ -105,7 +105,7 @@ function mymodule_tag_synchronization($mid)
                       . "        (SELECT DISTINCT {$itemHandler->keyName} "
                       . "           FROM {$itemHandler->table} "
                       . "           WHERE {$itemHandler->table}.quote_status = "
-                      . RandomquoteConstants::STATUS_ONLINE
+                      .Constants::STATUS_ONLINE
                       . '        )'
                       . '    )';
             $result = $linkHandler->db->queryF($sql);

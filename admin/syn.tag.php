@@ -18,8 +18,10 @@
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
  * @since           1.00
  */
+
 use Xmf\Request;
 use XoopsModules\Tag;
+use XoopsModules\Tag\Constants;
 
 require_once __DIR__ . '/admin_header.php';
 require_once $GLOBALS['xoops']->path('/class/xoopsformloader.php');
@@ -33,9 +35,9 @@ xoops_cp_header();
 $adminObject = \Xmf\Module\Admin::getInstance();
 $adminObject->displayNavigation(basename(__FILE__));
 
-$modid = Request::getInt('modid', TagConstants::DEFAULT_ID);
-$start = Request::getInt('start', TagConstants::BEGINNING);
-$limit = Request::getInt('limit', TagConstants::DEFAULT_LIMIT);
+$modid = Request::getInt('modid', Constants::DEFAULT_ID);
+$start = Request::getInt('start', Constants::BEGINNING);
+$limit = Request::getInt('limit', Constants::DEFAULT_LIMIT);
 
 $sql           = 'SELECT tag_modid, COUNT(DISTINCT tag_id) AS count_tag';
 $sql           .= ' FROM ' . $GLOBALS['xoopsDB']->prefix('tag_link');
@@ -43,7 +45,7 @@ $sql           .= ' GROUP BY tag_modid';
 $counts_module = [];
 $module_list   = [];
 if ($result = $GLOBALS['xoopsDB']->query($sql)) {
-    while ($myrow = $GLOBALS['xoopsDB']->fetchArray($result)) {
+    while (false !== ($myrow = $GLOBALS['xoopsDB']->fetchArray($result))) {
         $counts_module[$myrow['tag_modid']] = $myrow['count_tag'];
     }
     if (!empty($counts_module)) {
@@ -77,13 +79,15 @@ $opform->addElement($tray);
 $opform->display();
 
 if (isset($_GET['start'])) {
-    /** @var \TagTagHandler $tagHandler */
-    $tagHandler = xoops_getModuleHandler('tag', $moduleDirName);
+//    /** @var \XoopsModules\Tag\Handler $tagHandler */
+//    $tagHandler = xoops_getModuleHandler('tag', $moduleDirName);
+    /** @var Tag\TagHandler $tagHandler */
+    $tagHandler = Tag\Helper::getInstance()->getHandler('Tag');
 
     $criteria = new \CriteriaCompo();
     $criteria->setStart($start);
     $criteria->setLimit($limit);
-    if ($modid > TagConstants::DEFAULT_ID) {
+    if ($modid > Constants::DEFAULT_ID) {
         $criteria->add(new \Criteria('l.tag_modid', $modid));
     }
     $tags =& $tagHandler->getByLimit(0, 0, $criteria, null, false);
@@ -91,9 +95,9 @@ if (isset($_GET['start'])) {
         echo '<h2>' . _AM_TAG_FINISHED . "</h2>\n";
     } else {
         foreach (array_keys($tags) as $tag_id) {
-            $tagHandler->update_stats($tag_id, (-1 == $modid) ? TagConstants::DEFAULT_ID : $tags[$tag_id]['modid']);
+            $tagHandler->update_stats($tag_id, (-1 == $modid) ? Constants::DEFAULT_ID : $tags[$tag_id]['modid']);
         }
-        redirect_header("syn.tag.php?modid={$modid}&amp;start=" . ($start + $limit) . "&amp;limit={$limit}", TagConstants::REDIRECT_DELAY_SHORT, _AM_TAG_IN_PROCESS);
+        redirect_header("syn.tag.php?modid={$modid}&amp;start=" . ($start + $limit) . "&amp;limit={$limit}", Constants::REDIRECT_DELAY_SHORT, _AM_TAG_IN_PROCESS);
     }
 }
 include __DIR__ . '/admin_footer.php';

@@ -18,6 +18,10 @@
 
 use XoopsModules\Tag;
 
+/**
+ * Trait ServerStats
+ * @package XoopsModules\Tag\Common
+ */
 trait ServerStats
 {
     /**
@@ -51,7 +55,7 @@ trait ServerStats
         $gdlib = function_exists('gd_info') ? '<span style="color: green;">' . constant('CO_' . $moduleDirNameUpper . '_GDON') . '</span>' : '<span style="color: red;">' . constant('CO_' . $moduleDirNameUpper . '_GDOFF') . '</span>';
         $html  .= '<li>' . constant('CO_' . $moduleDirNameUpper . '_GDLIBSTATUS') . $gdlib;
         if (function_exists('gd_info')) {
-            if ($gdlib = true === gd_info()) {
+            if (true === ($gdlib = gd_info())) {
                 $html .= '<li>' . constant('CO_' . $moduleDirNameUpper . '_GDLIBVERSION') . '<b>' . $gdlib['GD Version'] . '</b>';
             }
         }

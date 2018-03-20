@@ -19,7 +19,9 @@
  * @author          The SmartFactory <www.smartfactory.ca>
  */
 
-defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
+//use XoopsModules\Publisher\Constants;
+
+defined('XOOPS_ROOT_PATH') || die('Restricted access');
 
 /**
  * Get item fields: title, content, time, link, uid, uname, tags
@@ -41,8 +43,9 @@ function publisher_tag_iteminfo(&$items)
             $items_id[] = (int)$item_id;
         }
     }
-    /** @var \PublisherItemHandler $itemHandler */
-    $itemHandler = xoops_getModuleHandler('item', 'publisher');
+    /** @var \XoopsModules\Publisher\ItemHandler $itemHandler */
+    $itemHandler = \XoopsModules\Publisher\Helper::getInstance()->getHandler('Item');
+
     $criteria    = new \Criteria('itemid', '(' . implode(', ', $items_id) . ')', 'IN');
     $items_obj   = $itemHandler->getObjects($criteria, 'itemid');
 
@@ -70,11 +73,11 @@ function publisher_tag_iteminfo(&$items)
  */
 function publisher_tag_synchronization($mid)
 {
-    require_once $GLOBALS['xoops']->path('/modules/publisher/include/constants.php');
+
     /** @var \PublisherItemHandler $itemHandler */
     $itemHandler = xoops_getModuleHandler('item', 'publisher');
-    /** @var \TagLinkHandler $linkHandler */
-    $linkHandler = xoops_getModuleHandler('link', 'tag');
+    /** @var \XoopsModules\Tag\LinkHandler $itemHandler */
+    $linkHandler = \XoopsModules\Tag\Helper::getInstance()->getHandler('Link');
 
     $mid = XoopsFilterInput::clean($mid, 'INT');
 

@@ -19,7 +19,7 @@
  * @since          1.00
  */
 
-(defined('XOOPS_ROOT_PATH') && ($GLOBALS['xoopsModule'] instanceof XoopsModule)) || exit('Restricted access');
+(defined('XOOPS_ROOT_PATH') && ($GLOBALS['xoopsModule'] instanceof XoopsModule)) || die('Restricted access');
 
 /**
  * Display tag list
@@ -60,8 +60,8 @@ function tagBar($tags, $catid = 0, $modid = 0)
         if (empty($modid) && ($GLOBALS['xoopsModule'] instanceof XoopsModule)) {
             $modid = $GLOBALS['xoopsModule']->getVar('mid');
         }
-        /** @var \TagTagHandler $tagHandler */
-        $tagHandler = xoops_getModuleHandler('tag', 'tag');
+        /** @var \XoopsModules\Tag\Handler $tagHandler */
+        $tagHandler = \XoopsModules\Tag\Helper::getInstance()->getHandler('Tag'); // xoops_getModuleHandler('tag', 'tag');
         if (!$tags = $tagHandler->getByItem($tags, $modid, $catid)) {
             return [];
         }

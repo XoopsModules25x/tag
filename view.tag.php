@@ -19,10 +19,11 @@
  * */
 
 use Xmf\Request;
+use XoopsModules\Tag\Constants;
 
 include __DIR__ . '/header.php';
 
-xoops_loadLanguage('main', 'tag');
+//xoops_loadLanguage('main', 'tag');
 /*
 if (!($GLOBALS["xoopsModule"] instanceof XoopsModule) || "tag" != $GLOBALS["xoopsModule"]->getVar("dirname", "n")) {
     xoops_loadLanguage("main", "tag");
@@ -51,8 +52,8 @@ if (empty($modid) && ($GLOBALS['xoopsModule'] instanceof XoopsModule)
 if (empty($tag_id) && empty($tag_term)) {
     redirect_header($GLOBALS['xoops']->url('www/modules/' . $GLOBALS['xoopsModule']->getVar('dirname') . '/index.php'), 2, _MD_TAG_INVALID);
 }
-/** @var \TagTagHandler $tagHandler */
-$tagHandler = xoops_getModuleHandler('tag', 'tag');
+/** @var \XoopsModules\Tag\Handler $tagHandler */
+$tagHandler = \XoopsModules\Tag\Helper::getInstance()->getHandler('Tag'); // xoops_getModuleHandler('tag', 'tag');
 if (!empty($tag_id)) {
     if (!$tag_obj = $tagHandler->get($tag_id)) {
         redirect_header($GLOBALS['xoops']->url('www/modules/' . $GLOBALS['xoopsModule']->getVar('dirname') . '/index.php'), 2, _MD_TAG_INVALID);
@@ -81,7 +82,7 @@ include $GLOBALS['xoops']->path('/header.php');
 $tag_config = tag_load_config();
 tag_define_url_delimiter();
 
-$limit = empty($tag_config['items_perpage']) ? TagConstants::DEFAULT_LIMIT : $tag_config['items_perpage'];
+$limit = empty($tag_config['items_perpage']) ? Constants::DEFAULT_LIMIT : $tag_config['items_perpage'];
 
 $criteria = new \CriteriaCompo(new \Criteria('o.tag_id', $tag_id));
 $criteria->setSort('time');

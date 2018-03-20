@@ -19,12 +19,14 @@
  * @since           1.00
  */
 
-xoops_load('formtag', 'tag');
+use XoopsModules\Tag;
+
+//xoops_load('formtag', 'tag');
 
 /**
  * Class XoopsFormTag
  */
-class XoopsFormTag extends TagFormTag
+class XoopsFormTag extends Tag\FormTag
 {
     /**
      * Constructor

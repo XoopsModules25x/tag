@@ -48,6 +48,7 @@ function tdmdownloads_tag_iteminfo($items)
         }
     }
     unset($items_obj);
+    return '';
 }
 
 /**
@@ -57,7 +58,7 @@ function tdmdownloads_tag_synchronization($mid)
 {
     $itemHandler = xoops_getModuleHandler('tdmdownloads_downloads', 'tdmdownloads');
     /** @var \TagLinkHandler $linkHandler */
-    $linkHandler = xoops_getModuleHandler('link', 'tag');
+    $linkHandler = \XoopsModules\Tag\Helper::getInstance()->getHandler('Link'); //@var \XoopsModules\Tag\Handler $tagHandler
 
     /* clear tag-item links */
     if (version_compare($GLOBALS['xoopsDB']->getServerVersion(), '4.1.0', 'ge')):

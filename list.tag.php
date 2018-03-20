@@ -19,6 +19,8 @@
  * @since           1.00
  */
 
+use XoopsModules\Tag\Constants;
+
 include __DIR__ . '/header.php';
 
 xoops_loadLanguage('main', 'tag');
@@ -70,8 +72,8 @@ switch (strtolower($mode_display)) {
         $limit        = empty($tag_config['limit_tag_cloud']) ? 100 : (int)$tag_config['limit_tag_cloud'];
         break;
 }
-/** @var \TagTagHandler $tagHandler */
-$tagHandler = xoops_getModuleHandler('tag', 'tag');
+/** @var \XoopsModules\Tag\Handler $tagHandler */
+$tagHandler = \XoopsModules\Tag\Helper::getInstance()->getHandler('Tag'); // xoops_getModuleHandler('tag', 'tag');
 $tag_config = tag_load_config();
 tag_define_url_delimiter();
 
@@ -80,7 +82,7 @@ $criteria->setSort($sort);
 $criteria->setOrder($order);
 $criteria->setStart($start);
 $criteria->setLimit($limit);
-$criteria->add(new \Criteria('o.tag_status', TagConstants::STATUS_ACTIVE));
+$criteria->add(new \Criteria('o.tag_status', Constants::STATUS_ACTIVE));
 if (!empty($modid)) {
     $criteria->add(new \Criteria('l.tag_modid', $modid));
     if ($catid >= 0) {
