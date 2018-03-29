@@ -121,7 +121,7 @@ foreach (array_keys($tags) as $key) {
         'font'  => empty($count_interval) ? 100 : floor(($tags[$key]['count'] - $count_min) * $font_ratio) + $font_min,
         'level' => empty($count_max) ? 0 : floor(($tags[$key]['count'] - $count_min) * $level_limit / $count_max),
         'term'  => urlencode($tags[$key]['term']),
-        'title' => htmlspecialchars($tags[$key]['term']),
+        'title' => htmlspecialchars($tags[$key]['term'], ENT_QUOTES | ENT_HTML5),
         'count' => $tags[$key]['count']
     ];
 }

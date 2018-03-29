@@ -72,7 +72,7 @@ if (!empty($tag_desc)) {
     $page_title = $tag_desc;
 } else {
     $module_name = ('tag' === $GLOBALS['xoopsModule']->getVar('dirname', 'n')) ? $GLOBALS['xoopsConfig']['sitename'] : $GLOBALS['xoopsModule']->getVar('name', 'n');
-    $page_title  = sprintf(_MD_TAG_TAGVIEW, htmlspecialchars($tag_term), $module_name);
+    $page_title  = sprintf(_MD_TAG_TAGVIEW, htmlspecialchars($tag_term, ENT_QUOTES | ENT_HTML5), $module_name);
 }
 $GLOBALS['xoopsOption']['template_main']   = 'tag_view.tpl';
 $GLOBALS['xoopsOption']['xoops_pagetitle'] = strip_tags($page_title);
@@ -188,7 +188,7 @@ $GLOBALS['xoopsTpl']->assign([
                                  'module_name'            => $GLOBALS['xoopsModule']->getVar('name'),
                                  'tag_id'                 => $tag_id,
                                  'tag_term'               => urlencode($tag_term),
-                                 'tag_title'              => htmlspecialchars($tag_term),
+                                 'tag_title'              => htmlspecialchars($tag_term, ENT_QUOTES | ENT_HTML5),
                                  'tag_page_title'         => $page_title,
                                  // Loading module meta data, NOT THE RIGHT WAY DOING IT
                                  'xoops_pagetitle'        => $GLOBALS['xoopsOption']['xoops_pagetitle'],

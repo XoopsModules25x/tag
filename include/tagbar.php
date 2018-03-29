@@ -75,7 +75,7 @@ function tagBar($tags, $catid = 0, $modid = 0)
     }
     $tags_data = [];
     foreach ($tags as $tag) {
-        $tags_data[] = "<a href='" . $GLOBALS['xoops']->url('www/modules/' . $GLOBALS['xoopsModule']->getVar('dirname') . '/view.tag.php' . URL_DELIMITER . urlencode($tag)) . "' title='" . htmlspecialchars($tag) . "'>" . htmlspecialchars($tag) . '</a>';
+        $tags_data[] = "<a href='" . $GLOBALS['xoops']->url('www/modules/' . $GLOBALS['xoopsModule']->getVar('dirname') . '/view.tag.php' . URL_DELIMITER . urlencode($tag)) . "' title='" . htmlspecialchars($tag, ENT_QUOTES | ENT_HTML5) . "'>" . htmlspecialchars($tag, ENT_QUOTES | ENT_HTML5) . '</a>';
     }
 
     return [

@@ -311,7 +311,7 @@ class TagHandler extends \XoopsPersistableObjectHandler
             while (false !== ($myrow = $this->db->fetchArray($result))) {
                 $ret[$myrow[$this->keyName]] = [
                     'id'     => $myrow[$this->keyName],
-                    'term'   => htmlspecialchars($myrow['tag_term']),
+                    'term'   => htmlspecialchars($myrow['tag_term'], ENT_QUOTES | ENT_HTML5),
                     'status' => $myrow['tag_status'],
                     'modid'  => $myrow['tag_modid'],
                     'count'  => (int)$myrow['count']
