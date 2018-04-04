@@ -72,10 +72,10 @@ function xoops_module_update_tag(\XoopsModule $module, $previousVersion = null)
 
     /** @var Tag\Helper $helper */
     /** @var Tag\Utility $utility */
-    /** @var Tag\Configurator $configurator */
+    /** @var Tag\Common\Configurator $configurator */
     $helper  = Tag\Helper::getInstance();
     $utility = new Tag\Utility();
-    $configurator = new Tag\Configurator();
+    $configurator = new Tag\Common\Configurator();
 
     if ($previousVersion < 235) {
 
@@ -141,9 +141,9 @@ function xoops_module_update_tag(\XoopsModule $module, $previousVersion = null)
         $sql = 'DELETE FROM ' . $GLOBALS['xoopsDB']->prefix('tplfile') . " WHERE `tpl_module` = '" . $module->getVar('dirname', 'n') . '\' AND `tpl_file` LIKE \'%.html%\'';
         $GLOBALS['xoopsDB']->queryF($sql);
 
-        /** @var XoopsGroupPermHandler $gpermHandler */
-        $gpermHandler = xoops_getHandler('groupperm');
-        return $gpermHandler->deleteByModule($module->getVar('mid'), 'item_read');
+        /** @var XoopsGroupPermHandler $grouppermHandler */
+        $grouppermHandler = xoops_getHandler('groupperm');
+        return $grouppermHandler->deleteByModule($module->getVar('mid'), 'item_read');
     }
     return true;
 }
