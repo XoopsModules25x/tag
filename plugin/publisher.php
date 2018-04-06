@@ -79,7 +79,8 @@ function publisher_tag_synchronization($mid)
     /** @var \XoopsModules\Tag\LinkHandler $itemHandler */
     $linkHandler = \XoopsModules\Tag\Helper::getInstance()->getHandler('Link');
 
-    $mid = XoopsFilterInput::clean($mid, 'INT');
+//    $mid = XoopsFilterInput::clean($mid, 'INT');
+    $mid = \Xmf\Request::getInt('mid');
 
     /* clear tag-item links */
     $sql    = "    DELETE FROM {$linkHandler->table}"

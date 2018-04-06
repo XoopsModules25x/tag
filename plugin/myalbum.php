@@ -90,7 +90,8 @@ function myalbum_tag_synchronization($mid)
     /** @var \TagLinkHandler $linkHandler */
     $linkHandler = \XoopsModules\Tag\Helper::getInstance()->getHandler('Link'); //@var \XoopsModules\Tag\Handler $tagHandler
 
-    $mid = XoopsFilterInput::clean($mid, 'INT');
+//    $mid = XoopsFilterInput::clean($mid, 'INT');
+    $mid = \Xmf\Request::getInt('mid', 0, 'POST');
 
     /* clear tag-item links */
     /** {@internal the following statement isn't really needed any more (MySQL is really old)

@@ -91,7 +91,8 @@ function randomquote_tag_synchronization($mid)
     if (!$itemHandler || !$linkHandler) {
         $result = false;
     } else {
-        $mid           = XoopsFilterInput::clean($mid, 'INT');
+//        $mid           = XoopsFilterInput::clean($mid, 'INT');
+        $mid = \Xmf\Request::getInt('mid');
         $moduleHandler = xoops_getHandler('module');
         $rqModule      = XoopsModule::getByDirname('randomquote');
 
