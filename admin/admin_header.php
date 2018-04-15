@@ -20,9 +20,9 @@
 
 use XoopsModules\Tag;
 
-require_once __DIR__ . '/../../../include/cp_header.php';
-// require_once __DIR__ . '/../class/constants.php';
-require_once __DIR__ . '/../include/common.php';
+require_once  dirname(dirname(dirname(__DIR__))) . '/include/cp_header.php';
+// require_once  dirname(__DIR__) . '/class/constants.php';
+require_once  dirname(__DIR__) . '/include/common.php';
 
 $moduleDirName = basename(dirname(__DIR__));
 /** @var Tag\Helper $helper */

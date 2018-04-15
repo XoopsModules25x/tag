@@ -158,7 +158,7 @@ foreach (array_keys($items) as $key) {
     $uids[$item['uid']] = 1;
 }
 xoops_load('XoopsUserUtility');
-$users = XoopsUserUtility::getUnameFromIds(array_keys($uids));
+$users = \XoopsUserUtility::getUnameFromIds(array_keys($uids));
 
 foreach (array_keys($items_data) as $key) {
     $items_data[$key]['uname'] = $users[$items_data[$key]['uid']];

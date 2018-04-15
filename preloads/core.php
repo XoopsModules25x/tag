@@ -20,7 +20,7 @@ defined('XOOPS_ROOT_PATH') || die('Restricted access');
 /**
  * Class TagCorePreload
  */
-class TagCorePreload extends XoopsPreloadItem
+class TagCorePreload extends \XoopsPreloadItem
 {
     // to add PSR-4 autoloader
     /**
