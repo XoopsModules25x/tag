@@ -75,7 +75,7 @@ function xoops_module_update_tag(\XoopsModule $module, $previousVersion = null)
     /** @var Tag\Configurator $configurator */
     $helper  = Tag\Helper::getInstance();
     $utility = new Tag\Utility();
-    $configurator = new Tag\Configurator();
+    $configurator = new Tag\Common\Configurator();
 
     if ($previousVersion < 235) {
 
