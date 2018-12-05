@@ -44,6 +44,7 @@ $sql           .= ' FROM ' . $GLOBALS['xoopsDB']->prefix('tag_link');
 $sql           .= ' GROUP BY tag_modid';
 $counts_module = [];
 $module_list   = [];
+
 if ($result = $GLOBALS['xoopsDB']->query($sql)) {
     while (false !== ($myrow = $GLOBALS['xoopsDB']->fetchArray($result))) {
         $counts_module[$myrow['tag_modid']] = $myrow['count_tag'];
@@ -91,13 +92,12 @@ if (\Xmf\Request::hasVar('start', 'GET')) {
         $criteria->add(new \Criteria('l.tag_modid', $modid));
     }
     $tags =& $tagHandler->getByLimit(0, 0, $criteria, null, false);
-    if (empty($tags)) {
-        echo '<h2>' . _AM_TAG_FINISHED . "</h2>\n";
-    } else {
+    if (empty($tags) && count($tags) > 0) {
         foreach (array_keys($tags) as $tag_id) {
             $tagHandler->update_stats($tag_id, (-1 == $modid) ? Constants::DEFAULT_ID : $tags[$tag_id]['modid']);
         }
         redirect_header("syn.tag.php?modid={$modid}&amp;start=" . ($start + $limit) . "&amp;limit={$limit}", Constants::REDIRECT_DELAY_SHORT, _AM_TAG_IN_PROCESS);
     }
+    echo '<h2>' . _AM_TAG_FINISHED . "</h2>\n";
 }
 require_once __DIR__   . '/admin_footer.php';
