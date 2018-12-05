@@ -361,11 +361,12 @@ function tag_block_top_edit($options)
  *                    $options[10] - cumulus_flash_hicolor
  *                    $options[11] - cumulus_flash_speed
  */
+
 /**
  *
  * Prepare output for Cumulus block display
  *
- * @param              array    {
+ * @param  array  $options
  * @param  null|string $dirname null for all modules, $dirname for specific module
  * @param  int         $catid   category id (only used if $dirname is set)
  * @return array
