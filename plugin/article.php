@@ -52,7 +52,8 @@ function article_tag_iteminfo(&$items)
         }
     }
 
-    $itemHandler = xoops_getModuleHandler('article', 'article');
+    /** @var \XoopsModules\Article\ArticleHandler $itemHandler */
+    $itemHandler = $helper->getHandler('Article', 'article');
     $items_obj   = $itemHandler->getObjects(new \Criteria('art_id', '(' . implode(', ', $items_id) . ')', 'IN'), true);
 
     foreach (array_keys($items) as $cat_id) {
@@ -83,7 +84,8 @@ function article_tag_iteminfo(&$items)
  */
 function article_tag_synchronization($mid)
 {
-    $itemHandler = xoops_getModuleHandler('article', 'article');
+    /** @var \XoopsModules\Article\ArticleHandler $itemHandler */
+    $itemHandler = $helper->getHandler('Article', 'article');
 //    /** @var \TagLinkHandler $linkHandler */
 //    $linkHandler = \XoopsModules\Tag\Helper::getInstance()->getHandler('Link'); //@var \XoopsModules\Tag\Handler $tagHandler
     /** @var \XoopsModules\Tag\LinkHandler $itemHandler */

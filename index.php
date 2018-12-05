@@ -19,15 +19,15 @@
  * @since           1.00
  */
 
-include __DIR__ . '/header.php';
+require_once __DIR__   . '/header.php';
 
 $limit = empty($tag_config['limit_tag_could']) ? 100 : $tag_config['limit_tag_could'];
 
 $page_title                     = sprintf(_MD_TAG_TAGLIST, $GLOBALS['xoopsConfig']['sitename']);
 $xoopsOption['template_main']   = 'tag_index.tpl';
 $xoopsOption['xoops_pagetitle'] = strip_tags($page_title);
-include $GLOBALS['xoops']->path('/header.php');
-/** @var \XoopsModules\Tag\Handler $tagHandler */
+require_once $GLOBALS['xoops']->path('/header.php');
+/** @var \XoopsModules\Tag\TagHandler $tagHandler */
 $tagHandler = \XoopsModules\Tag\Helper::getInstance()->getHandler('Tag'); // xoops_getModuleHandler('tag', 'tag');
 $tag_config  = tag_load_config();
 tag_define_url_delimiter();

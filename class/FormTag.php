@@ -42,7 +42,7 @@ class FormTag extends \XoopsFormText
      */
     public function __construct($name, $size, $maxlength, $value = null, $catid = 0)
     {
-        include $GLOBALS['xoops']->path('/modules/tag/include/vars.php');
+        require_once $GLOBALS['xoops']->path('/modules/tag/include/vars.php');
         if (!($GLOBALS['xoopsModule'] instanceof XoopsModule) || 'tag' !== $GLOBALS['xoopsModule']->getVar('dirname')) {
             xoops_loadLanguage('main', 'tag');
         }
@@ -50,7 +50,7 @@ class FormTag extends \XoopsFormText
         // itemid
         if (!empty($value) && is_numeric($value) && ($GLOBALS['xoopsModule'] instanceof XoopsModule)) {
             $modid      = $GLOBALS['xoopsModule']->getVar('mid');
-            /** @var \XoopsModules\Tag\Handler $tagHandler */
+            /** @var \XoopsModules\Tag\TagHandler $tagHandler */
             $tagHandler = Tag\Helper::getInstance()->getHandler('Tag'); // xoops_getModuleHandler('tag', 'tag');
             if ($tags = $tagHandler->getByItem($value, $modid, $catid)) {
                 $value = htmlspecialchars(implode(', ', $tags), ENT_QUOTES | ENT_HTML5);

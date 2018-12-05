@@ -35,7 +35,7 @@ define('_MD_TAG_INVALID', 'Invalid query');
  *    <li>key: like "google", nothing but only for "target" in anchor;</li>
  *    <li>title: link title;</li>
  *    <li>link: link prototype, %s for the urlencode'd term;</li>
- *    <li>function: optional, some sites might require different charset encoding, you can create your functions or use PHP functions like utf8_encode.
+ *    <li>function: optional, some sites might require_once different charset encoding, you can create your functions or use PHP functions like utf8_encode.
  *                  This is required by non-latin languages for technorati or flickr.
  *    </li>
  * </ul>

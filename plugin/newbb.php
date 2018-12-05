@@ -51,8 +51,8 @@ function newbb_tag_iteminfo(&$items)
             $items_id[] = (int)$item_id;
         }
     }
-    /** @var \NewbbTopicHandler $itemHandler */
-    $itemHandler = xoops_getModuleHandler('topic', 'newbb');
+    /** @var \XoopsModules\Newbb\TopicHandler $itemHandler */
+    $itemHandler = new \XoopsModules\Newbb\TopicHandler();
     $items_obj   =& $itemHandler->getObjects(new \Criteria('topic_id', '(' . implode(', ', $items_id) . ')', 'IN'), true);
 
     foreach (array_keys($items) as $cat_id) {
@@ -83,9 +83,9 @@ function newbb_tag_iteminfo(&$items)
 function newbb_tag_synchronization($mid)
 {
 
-    /** @var \NewbbTopicHandler $itemHandler */
-    $itemHandler = xoops_getModuleHandler('topic', 'newbb');
-    /** @var \TagLinkHandler $linkHandler */
+    /** @var \XoopsModules\Newbb\TopicHandler $itemHandler */
+    $itemHandler = new \XoopsModules\Newbb\TopicHandler();
+    /** @var \XoopsModules\Tag\LinkHandler $linkHandler */
     $linkHandler = \XoopsModules\Tag\Helper::getInstance()->getHandler('Link'); //@var \XoopsModules\Tag\Handler $tagHandler
 
 //    $mid = XoopsFilterInput::clean($mid, 'INT');

@@ -51,10 +51,11 @@ function randomquote_tag_iteminfo(&$items)
     $criteria->add(new \Criteria('id', '(' . implode(',', $items_id) . ')', 'IN'));
     $criteria->add(new \Criteria('quote_status', Constants::STATUS_ONLINE));
 
-    /** @var \ \XoopsModules\Randomquote\Helper $quoteHandler */
-    $quoteHandler = \XoopsModules\Randomquote\Helper::getInstance()->getHandler('Quotes');
 
-    $quoteObjs    =& $quoteHandler->getObjects($criteria, true);
+    /** @var \XoopsModules\Randomquote\QuotesHandler $itemHandler */
+    $itemHandler = new \XoopsModules\Randomquote\QuotesHandler();
+
+    $quoteObjs    =& $itemHandler->getObjects($criteria, true);
 
     foreach ($cats_id as $cat_id) {
         foreach ($items_id as $item_id) {
@@ -83,8 +84,8 @@ function randomquote_tag_iteminfo(&$items)
  */
 function randomquote_tag_synchronization($mid)
 {
-    /** @var \ \XoopsModules\Randomquote\Helper $itemHandler */
-    $itemHandler = \XoopsModules\Randomquote\Helper::getInstance()->getHandler('Quotes');
+    /** @var \XoopsModules\Randomquote\QuotesHandler $itemHandler */
+    $itemHandler = new \XoopsModules\Randomquote\QuotesHandler();
     /** @var \XoopsModules\Tag\LinkHandler $itemHandler */
     $linkHandler = \XoopsModules\Tag\Helper::getInstance()->getHandler('Link');
 

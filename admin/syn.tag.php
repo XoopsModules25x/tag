@@ -28,7 +28,7 @@ require_once $GLOBALS['xoops']->path('/class/xoopsformloader.php');
 
 //require_once $GLOBALS['xoops']->path("/modules/" . $GLOBALS['xoopsModule']->getVar("dirname") . "/class/admin.php");
 
-include $GLOBALS['xoops']->path('/modules/tag/include/vars.php');
+require_once $GLOBALS['xoops']->path('/modules/tag/include/vars.php');
 
 xoops_cp_header();
 
@@ -78,8 +78,8 @@ $tray->addElement(new \XoopsFormHidden('start', $start));
 $opform->addElement($tray);
 $opform->display();
 
-if (isset($_GET['start'])) {
-//    /** @var \XoopsModules\Tag\Handler $tagHandler */
+if (\Xmf\Request::hasVar('start', 'GET')) {
+//    /** @var \XoopsModules\Tag\TagHandler $tagHandler */
 //    $tagHandler = xoops_getModuleHandler('tag', $moduleDirName);
     /** @var Tag\TagHandler $tagHandler */
     $tagHandler = Tag\Helper::getInstance()->getHandler('Tag');
@@ -100,4 +100,4 @@ if (isset($_GET['start'])) {
         redirect_header("syn.tag.php?modid={$modid}&amp;start=" . ($start + $limit) . "&amp;limit={$limit}", Constants::REDIRECT_DELAY_SHORT, _AM_TAG_IN_PROCESS);
     }
 }
-include __DIR__ . '/admin_footer.php';
+require_once __DIR__   . '/admin_footer.php';

@@ -21,7 +21,7 @@
 
 defined('XOOPS_ROOT_PATH') || die('Restricted access');
 
-include __DIR__ . '/preloads/autoloader.php';
+require_once __DIR__   . '/preloads/autoloader.php';
 
 $moduleDirName = basename(__DIR__);
 
@@ -29,7 +29,7 @@ $moduleDirName = basename(__DIR__);
 $modversion = [
     'version'             => 2.34,
     'module_status'       => 'RC-1',
-    'release_date'        => '2017/07/01',
+    'release_date'        => '2018/09/22',
     'name'                => _MI_TAG_NAME,
     'description'         => _MI_TAG_DESC,
     'official'            => 0,

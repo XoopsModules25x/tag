@@ -21,10 +21,13 @@
 
 use XoopsModules\Tag;
 
+/** @var Tag\Helper $helper */
 $helper = Tag\Helper::getInstance();
 
 $pathIcon32 = \Xmf\Module\Admin::menuIconPath('');
-$pathModIcon32 = $helper->getModule()->getInfo('modicons32');
+if (is_object($helper->getModule())) {
+    $pathModIcon32 = $helper->getModule()->getInfo('modicons32');
+}
 
 $adminmenu = [
     [

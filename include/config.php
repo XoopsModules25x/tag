@@ -32,23 +32,22 @@ function getConfig()
             'uploadUrl'  => XOOPS_UPLOAD_URL . '/' . $moduleDirName,
         ],
         'uploadFolders'  => [
-            constant($moduleDirNameUpper . '_UPLOAD_PATH'),
-            constant($moduleDirNameUpper . '_UPLOAD_PATH') . '/category',
-            constant($moduleDirNameUpper . '_UPLOAD_PATH') . '/screenshots',
+            XOOPS_UPLOAD_PATH . '/' . $moduleDirName,
+            XOOPS_UPLOAD_PATH . '/' . $moduleDirName . '/category',
+            XOOPS_UPLOAD_PATH . '/' . $moduleDirName . '/screenshots',
             //XOOPS_UPLOAD_PATH . '/flags'
         ],
         'copyBlankFiles' => [
-            constant($moduleDirNameUpper . '_UPLOAD_PATH'),
-            constant($moduleDirNameUpper . '_UPLOAD_PATH') . '/category',
-            constant($moduleDirNameUpper . '_UPLOAD_PATH') . '/screenshots',
+            XOOPS_UPLOAD_PATH . '/' . $moduleDirName,
+            XOOPS_UPLOAD_PATH . '/' . $moduleDirName . '/category',
+            XOOPS_UPLOAD_PATH . '/' . $moduleDirName . '/screenshots',
             //XOOPS_UPLOAD_PATH . '/flags'
         ],
 
         'copyTestFolders' => [
-            //        constant($moduleDirNameUpper . '_UPLOAD_PATH'),
             //[
             //    constant($moduleDirNameUpper . '_PATH') . '/testdata/images',
-            //    constant($moduleDirNameUpper . '_UPLOAD_PATH') . '/images',
+            //    XOOPS_UPLOAD_PATH . '/' . $moduleDirName . '/images',
             //]
         ],
 
@@ -74,7 +73,10 @@ function getConfig()
             '/tcpdf',
             '/images',
         ],
-        'modCopyright'    => "<a href='https://xoops.org' title='XOOPS Project' target='_blank'>
-                     <img src='" . constant($moduleDirNameUpper . '_AUTHOR_LOGOIMG') . '\' alt=\'XOOPS Project\' /></a>',
+        'renameTables'    => [
+//         'XX_archive'     => 'ZZZZ_archive',
+],
+'modCopyright'    => "<a href='https://xoops.org' title='XOOPS Project' target='_blank'>
+                     <img src='" . constant($moduleDirNameUpper . '_AUTHOR_LOGOIMG') . '\' alt=\'XOOPS Project\'></a>',
     ];
 }

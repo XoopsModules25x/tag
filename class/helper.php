@@ -28,7 +28,7 @@ class Helper extends \Xmf\Module\Helper
     public $debug;
 
     /**
-     * 
+     *
      * @param bool $debug
      */
     public function __construct($debug = false)

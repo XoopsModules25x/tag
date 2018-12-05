@@ -51,8 +51,8 @@ function xforum_tag_iteminfo(&$items)
             $items_id[] = (int)$item_id;
         }
     }
-    /** @var XforumPostHandler $itemHandler */
-    $itemHandler = xoops_getModuleHandler('post', 'xforum');
+    /** @var \XoopsModules\Xforum\PostHandler $itemHandler */
+    $itemHandler = new \XoopsModules\Xforum\PostHandler();
     $items_obj   = $itemHandler->getObjects(new \Criteria('post_id', '(' . implode(', ', $items_id) . ')', 'IN'), true);
     $myts        = \MyTextSanitizer::getInstance();
     foreach (array_keys($items) as $cat_id) {
@@ -85,8 +85,9 @@ function xforum_tag_iteminfo(&$items)
  */
 function xforum_tag_synchronization($mid)
 {
-    $itemHandler = xoops_getModuleHandler('post', 'xforum');
-    /** @var \TagLinkHandler $linkHandler */
+    /** @var \XoopsModules\Xforum\PostHandler $itemHandler */
+    $itemHandler = new \XoopsModules\Xforum\PostHandler();
+    /** @var \XoopsModules\Tag\LinkHandler $linkHandler */
     $linkHandler = \XoopsModules\Tag\Helper::getInstance()->getHandler('Link'); //@var \XoopsModules\Tag\Handler $tagHandler
 
 //    $mid = XoopsFilterInput::clean($mid, 'INT');

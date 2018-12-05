@@ -40,7 +40,7 @@ function tagBar($tags, $catid = 0, $modid = 0)
     }
 
     if (null === $loaded) {
-        include $GLOBALS['xoops']->path('/modules/tag/include/vars.php');
+        require_once $GLOBALS['xoops']->path('/modules/tag/include/vars.php');
         require_once $GLOBALS['xoops']->path('/modules/tag/include/functions.php');
         tag_define_url_delimiter();
         if (!($GLOBALS['xoopsModule'] instanceof XoopsModule)
@@ -60,7 +60,7 @@ function tagBar($tags, $catid = 0, $modid = 0)
         if (empty($modid) && ($GLOBALS['xoopsModule'] instanceof XoopsModule)) {
             $modid = $GLOBALS['xoopsModule']->getVar('mid');
         }
-        /** @var \XoopsModules\Tag\Handler $tagHandler */
+        /** @var \XoopsModules\Tag\TagHandler $tagHandler */
         $tagHandler = \XoopsModules\Tag\Helper::getInstance()->getHandler('Tag'); // xoops_getModuleHandler('tag', 'tag');
         if (!$tags = $tagHandler->getByItem($tags, $modid, $catid)) {
             return [];

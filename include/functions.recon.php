@@ -71,7 +71,7 @@ if (!defined('TAG_FUNCTIONS_RECON')):
      */
     function tag_cleanOrphan()
     {
-        /** @var \XoopsModules\Tag\Handler $tagHandler */
+        /** @var \XoopsModules\Tag\TagHandler $tagHandler */
         $tagHandler = \XoopsModules\Tag\Helper::getInstance()->getHandler('Tag'); // xoops_getModuleHandler('tag', 'tag');
 
         $success = true;

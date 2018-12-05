@@ -52,11 +52,11 @@ To enable tag for a module ("mymodule"), following steps are need:
 // File: edit.item.php
 $itemid = $item_obj->isNew() ? 0 : $item_obj->getVar('itemid');
 XoopsLoad::load('formtag', 'tag');  // get the TagFormTag class
-$form_item->addElement(new TagFormTag('item_tag', 60, 255, $itemid, $catid = 0));
+$form_item->addElement(new \XoopsModules\Tag\FormTag('item_tag', 60, 255, $itemid, $catid = 0));
 
 /* Step 2: add tag storage after item storage */
 // File: submit.item.php
-/** @var \XoopsModules\Tag\Handler $tagHandler */
+/** @var \XoopsModules\Tag\TagHandler $tagHandler */
 $tagHandler = \XoopsModules\Tag\Helper::getInstance()->getHandler('Tag'); // xoops_getModuleHandler('tag', 'tag');
 $tagHandler->updateByItem($_POST['item_tag'], $itemid, $GLOBALS['xoopsModule']->getVar('dirname'), $catid = 0);
 
@@ -76,7 +76,7 @@ function mymodule_tag_iteminfo($items)
             $items_id[] = (int)$item_id;
         }
     }
-    $itemHandler = xoops_getModuleHandler('item', 'module');
+    $itemHandler = $helper->getHandler('Item', 'module');
     $items_obj   = $itemHandler->getObjects(new \Criteria('itemid', '(' . implode(', ', $items_id) . ')', 'IN'), true);
 
     foreach (array_keys($items) as $cat_id) {
@@ -112,11 +112,11 @@ $GLOBALS['xoopsTpl']->display('db:tag_bar.tpl');
 
 /* Step 5: create tag list page and tag view page */
 // File: list.tag.php
-include __DIR__ . '/header.php';
-include $GLOBALS['xoops']->path('/modules/tag/list.tag.php');
+require_once __DIR__   . '/header.php';
+require_once $GLOBALS['xoops']->path('/modules/tag/list.tag.php');
 // File: view.tag.php
-include __DIR__ . '/header.php';
-include $GLOBALS['xoops']->path('/modules/tag/view.tag.php');
+require_once __DIR__   . '/header.php';
+require_once $GLOBALS['xoops']->path('/modules/tag/view.tag.php');
 
 /* Step 6: create tag blocks */
 // File: xoops_version.php

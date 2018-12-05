@@ -68,3 +68,5 @@ define('_MI_TAG_VIEW_SEARCH', 'Search');
 
 //2.34
 define('_MI_TAG_INDEX_TPL_DESK_DESC', 'Links of a custom tags ');
+
+define('_MI_TAG_ADMENU_MIGRATE', 'Migrate');

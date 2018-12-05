@@ -29,7 +29,11 @@ function tdmdownloads_tag_iteminfo($items)
         }
     }
 
-    $itemHandler = xoops_getModuleHandler('tdmdownloads_downloads', 'tdmdownloads');
+//    $itemHandler = $helper->getHandler('Tdmdownloads_downloads', 'tdmdownloads');
+
+    /** @var \XoopsModules\Tdmdownloads\DownloadsHandler $itemHandler */
+    $itemHandler = new \XoopsModules\Tdmdownloads\DownloadsHandler();
+
     $items_obj   = $itemHandler->getObjects(new \Criteria('lid', '(' . implode(', ', $items_id) . ')', 'IN'), true);
 
     foreach (array_keys($items) as $cat_id) {
@@ -56,8 +60,12 @@ function tdmdownloads_tag_iteminfo($items)
  */
 function tdmdownloads_tag_synchronization($mid)
 {
-    $itemHandler = xoops_getModuleHandler('tdmdownloads_downloads', 'tdmdownloads');
-    /** @var \TagLinkHandler $linkHandler */
+//    $itemHandler = $helper->getHandler('Downloads', 'tdmdownloads');
+
+    /** @var \XoopsModules\Tdmdownloads\DownloadsHandler $itemHandler */
+    $itemHandler = new \XoopsModules\Tdmdownloads\DownloadsHandler();
+
+    /** @var \XoopsModules\Tag\LinkHandler $linkHandler */
     $linkHandler = \XoopsModules\Tag\Helper::getInstance()->getHandler('Link'); //@var \XoopsModules\Tag\Handler $tagHandler
 
     /* clear tag-item links */

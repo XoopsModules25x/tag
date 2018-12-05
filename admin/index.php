@@ -24,10 +24,10 @@ use XoopsModules\Tag;
 
 require_once __DIR__ . '/admin_header.php';
 xoops_cp_header();
-include $GLOBALS['xoops']->path('/modules/tag/include/vars.php');
+require_once $GLOBALS['xoops']->path('/modules/tag/include/vars.php');
 
 $adminObject  = \Xmf\Module\Admin::getInstance();
-///** @var \XoopsModules\Tag\Handler $tagHandler */
+///** @var \XoopsModules\Tag\TagHandler $tagHandler */
 //$tagHandler = xoops_getModuleHandler('tag', $moduleDirName);
 /** @var Tag\TagHandler $tagHandler */
 $tagHandler = Tag\Helper::getInstance()->getHandler('Tag');
@@ -101,5 +101,5 @@ $adminObject->displayIndex();
 
 echo $utility::getServerStats();
 
-include __DIR__ . '/admin_footer.php';
+require_once __DIR__   . '/admin_footer.php';
 //xoops_cp_footer();

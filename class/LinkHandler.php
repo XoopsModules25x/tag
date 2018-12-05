@@ -42,9 +42,9 @@ class LinkHandler extends \XoopsPersistableObjectHandler
 
     /**
      * TagLinkHandler constructor.
-     * @param \XoopsDatabase $db
+     * @param \XoopsDatabase|null $db
      */
-    public function __construct(\XoopsDatabase $db)
+    public function __construct(\XoopsDatabase $db = null)
     {
         parent::__construct($db, 'tag_link', Link::class, 'tl_id', 'tag_itemid');
         $this->table_stats = $this->db->prefix('tag_stats');

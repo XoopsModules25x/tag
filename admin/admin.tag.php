@@ -30,14 +30,14 @@ $adminObject = \Xmf\Module\Admin::getInstance();
 
 xoops_cp_header();
 
-include $GLOBALS['xoops']->path('/modules/tag/include/vars.php');
+require_once $GLOBALS['xoops']->path('/modules/tag/include/vars.php');
 $adminObject->displayNavigation(basename(__FILE__));
 
 $limit  = $GLOBALS['xoopsModuleConfig']['items_perpage'];
 $modid  = Request::getInt('modid', Constants::DEFAULT_ID);
 $start  = Request::getInt('start', Constants::BEGINNING);
 $status = Request::getInt('status', Constants::STATUS_ALL, 'GET');
-///** @var \XoopsModules\Tag\Handler $tagHandler */
+///** @var \XoopsModules\Tag\TagHandler $tagHandler */
 //$tagHandler  = xoops_getModuleHandler('tag', $moduleDirName);
 //$linkHandler = xoops_getModuleHandler('link', $moduleDirName);
 
@@ -164,7 +164,7 @@ if (empty($tags)) {
     if (!empty($start) || (count($tags) >= $limit)) {
         $count_tag = $tagHandler->getCount($criteria);
 
-        include $GLOBALS['xoops']->path('/class/pagenav.php');
+        require_once $GLOBALS['xoops']->path('/class/pagenav.php');
         $nav       = new \XoopsPageNav($count_tag, $limit, $start, 'start', "modid={$modid}&amp;status={$status}");
         $form_tags .= "  <tr><td colspan='4' class='txtright'>" . $nav->renderNav(4) . "</td></tr>\n";
     }
@@ -188,4 +188,4 @@ if (empty($tags)) {
 $form_tags .= "  </tbody>\n" . "</table>\n" . "</form>\n";
 
 echo $form_tags;
-include __DIR__ . '/admin_footer.php';
+require_once __DIR__   . '/admin_footer.php';

@@ -24,7 +24,7 @@ use XoopsModules\Tag\Constants;
 
 defined('XOOPS_ROOT_PATH') || die('Restricted access');
 
-include $GLOBALS['xoops']->path('/modules/tag/include/vars.php');
+require_once $GLOBALS['xoops']->path('/modules/tag/include/vars.php');
 //require_once $GLOBALS['xoops']->path('/modules/tag/include/functions.php');
 
 /** @var Tag\Helper $helper */

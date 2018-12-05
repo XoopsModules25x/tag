@@ -52,8 +52,8 @@ function myalbum2_tag_iteminfo(&$items)
         }
     }
     /** @var \Myalbum2PhotosHandler $itemHandler */
-    $itemHandler = xoops_getModuleHandler('photos', 'myalbum2');
-    $textHandler = xoops_getModuleHandler('text', 'myalbum2');
+    $itemHandler = $helper->getHandler('Photos', 'myalbum2');
+    $textHandler = $helper->getHandler('Text', 'myalbum2');
     $items_obj   =& $itemHandler->getObjects(new \Criteria('lid', '(' . implode(', ', $items_id) . ')', 'IN'), true);
 
     foreach (array_keys($items) as $cat_id) {
@@ -86,8 +86,8 @@ function myalbum2_tag_iteminfo(&$items)
 function myalbum2_tag_synchronization($mid)
 {
     /** @var \Myalbum2PhotosHandler $itemHandler */
-    $itemHandler = xoops_getModuleHandler('photos', 'myalbum2');
-    /** @var \TagLinkHandler $linkHandler */
+    $itemHandler = $helper->getHandler('Photos', 'myalbum2');
+    /** @var \XoopsModules\Tag\LinkHandler $linkHandler */
     $linkHandler = \XoopsModules\Tag\Helper::getInstance()->getHandler('Link'); //@var \XoopsModules\Tag\Handler $tagHandler
 
 //    $mid = XoopsFilterInput::clean($mid, 'INT');

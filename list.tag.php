@@ -21,7 +21,7 @@
 
 use XoopsModules\Tag\Constants;
 
-include __DIR__ . '/header.php';
+require_once __DIR__   . '/header.php';
 
 xoops_loadLanguage('main', 'tag');
 /*
@@ -54,7 +54,7 @@ if (!empty($tag_desc)) {
 }
 $xoopsOption['template_main']   = 'tag_list.tpl';
 $xoopsOption['xoops_pagetitle'] = strip_tags($page_title);
-include $GLOBALS['xoops']->path('/header.php');
+require_once $GLOBALS['xoops']->path('/header.php');
 
 $mode_display = empty($mode_display) ? @$_GET['mode'] : $mode_display;
 switch (strtolower($mode_display)) {
@@ -72,7 +72,7 @@ switch (strtolower($mode_display)) {
         $limit        = empty($tag_config['limit_tag_cloud']) ? 100 : (int)$tag_config['limit_tag_cloud'];
         break;
 }
-/** @var \XoopsModules\Tag\Handler $tagHandler */
+/** @var \XoopsModules\Tag\TagHandler $tagHandler */
 $tagHandler = \XoopsModules\Tag\Helper::getInstance()->getHandler('Tag'); // xoops_getModuleHandler('tag', 'tag');
 $tag_config = tag_load_config();
 tag_define_url_delimiter();
@@ -131,7 +131,7 @@ if (!empty($start) || count($tags_data) >= $limit) {
     $count_tag = $tagHandler->getCount($criteria); // modid, catid
 
     if ('list' === mb_strtolower($mode_display)) {
-        include $GLOBALS['xoops']->path('/class/pagenav.php');
+        require_once $GLOBALS['xoops']->path('/class/pagenav.php');
         $nav     = new \XoopsPageNav($count_tag, $limit, $start, 'start', "catid={$catid}&amp;mode={$mode_display}");
         $pagenav = $nav->renderNav(4);
     } else {

@@ -21,7 +21,7 @@
 use Xmf\Request;
 use XoopsModules\Tag\Constants;
 
-include __DIR__ . '/header.php';
+require_once __DIR__   . '/header.php';
 
 //xoops_loadLanguage('main', 'tag');
 /*
@@ -52,7 +52,7 @@ if (empty($modid) && ($GLOBALS['xoopsModule'] instanceof XoopsModule)
 if (empty($tag_id) && empty($tag_term)) {
     redirect_header($GLOBALS['xoops']->url('www/modules/' . $GLOBALS['xoopsModule']->getVar('dirname') . '/index.php'), 2, _MD_TAG_INVALID);
 }
-/** @var \XoopsModules\Tag\Handler $tagHandler */
+/** @var \XoopsModules\Tag\TagHandler $tagHandler */
 $tagHandler = \XoopsModules\Tag\Helper::getInstance()->getHandler('Tag'); // xoops_getModuleHandler('tag', 'tag');
 if (!empty($tag_id)) {
     if (!$tag_obj = $tagHandler->get($tag_id)) {
@@ -77,7 +77,7 @@ if (!empty($tag_desc)) {
 $GLOBALS['xoopsOption']['template_main']   = 'tag_view.tpl';
 $GLOBALS['xoopsOption']['xoops_pagetitle'] = strip_tags($page_title);
 
-include $GLOBALS['xoops']->path('/header.php');
+require_once $GLOBALS['xoops']->path('/header.php');
 
 $tag_config = tag_load_config();
 tag_define_url_delimiter();

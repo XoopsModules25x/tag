@@ -25,8 +25,8 @@ The functions loaded on initializtion
 */
 
 //defined('XOOPS_ROOT_PATH') || die('Restricted access');
-defined('TAG_INI') || exit();
-(!defined('TAG_FUNCTIONS_INI')) || exit();
+defined('TAG_INI') || die();
+(!defined('TAG_FUNCTIONS_INI')) || die();
 
 define('TAG_FUNCTIONS_INI', 1);
 
@@ -59,7 +59,7 @@ function tag_load_config()
             unset($configs);
         }
         if (file_exists($GLOBALS['xoops']->path('/modules/tag/include/plugin.php'))) {
-            $customConfig = include $GLOBALS['xoops']->path('/modules/tag/include/plugin.php');
+            $customConfig = require_once $GLOBALS['xoops']->path('/modules/tag/include/plugin.php');
             $moduleConfig = array_merge($moduleConfig, $customConfig);
         }
     }

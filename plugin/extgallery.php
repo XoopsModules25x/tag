@@ -40,8 +40,8 @@ function extgallery_tag_iteminfo(&$items)
         }
     }
 
-    /** @var \ExtgalleryPublicPhotoHandler $itemHandler */
-    $itemHandler = xoops_getModuleHandler('publicphoto', 'extgallery');
+    /** @var \XoopsModules\Extgallery\PublicPhotoHandler $itemHandler */
+    $itemHandler = new \XoopsModules\Extgallery\PublicPhotoHandler();
     $items_obj   = $itemHandler->getObjects(new \Criteria('photo_id', '(' . implode(', ', $items_id) . ')', 'IN'), true);
 
     foreach (array_keys($items) as $cat_id) {
@@ -74,9 +74,9 @@ function extgallery_tag_iteminfo(&$items)
  */
 function extgallery_tag_synchronization($mid)
 {
-    /** @var \ExtgalleryPublicPhotoHandler $itemHandler */
-    $itemHandler = xoops_getModuleHandler('publicphoto', 'extgallery');
-    /** @var \TagLinkHandler $linkHandler */
+    /** @var \XoopsModules\Extgallery\PublicPhotoHandler $itemHandler */
+    $itemHandler = new \XoopsModules\Extgallery\PublicPhotoHandler();
+    /** @var \XoopsModules\Tag\LinkHandler $linkHandler */
     $linkHandler = \XoopsModules\Tag\Helper::getInstance()->getHandler('Link'); //@var \XoopsModules\Tag\Handler $tagHandler
 
 //    $mid = XoopsFilterInput::clean($mid, 'INT');

@@ -34,6 +34,7 @@ trait ServerStats
         //mb    $wfdownloads = WfdownloadsWfdownloads::getInstance();
         $moduleDirName      = basename(dirname(dirname(__DIR__)));
         $moduleDirNameUpper = strtoupper($moduleDirName);
+        /** @var Tag\Helper $helper */
         $helper = Tag\Helper::getInstance();
         $helper->loadLanguage('common');
 

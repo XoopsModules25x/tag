@@ -38,8 +38,11 @@ function xfaq_tag_iteminfo(&$items)
         }
     }
 
-    /** @var XfaqFaqHandler $itemHandler */
-    $itemHandler = xoops_getModuleHandler('faq', 'xfaq');
+    /** @var \XoopsDatabase $db */
+    $db = \XoopsDatabaseFactory::getDatabase();
+    /** @var \XoopsModules\Xfaq\XfaqHandler $itemHandler */
+    $itemHandler = new \XoopsModules\Xfaq\XfaqHandler($db) ;
+
     $items_obj   =& $itemHandler->getObjects(new \Criteria('faq_id', '(' . implode(', ', $items_id) . ')', 'IN'), true);
 
     foreach (array_keys($items) as $cat_id) {
