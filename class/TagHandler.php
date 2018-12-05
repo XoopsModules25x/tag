@@ -96,7 +96,7 @@ class TagHandler extends \XoopsPersistableObjectHandler
         $itemid = (int)$itemid;
 
         if (!empty($modid) && !is_numeric($modid)) {
-            if (($GLOBALS['xoopsModule'] instanceof XoopsModule)
+            if (($GLOBALS['xoopsModule'] instanceof \XoopsModule)
                 && ($modid == $GLOBALS['xoopsModule']->getVar('dirname'))) {
                 $modid = $GLOBALS['xoopsModule']->getVar('mid');
             } else {
@@ -250,7 +250,7 @@ class TagHandler extends \XoopsPersistableObjectHandler
      * @access         public
      * @param int             $limit
      * @param int             $start
-     * @param null|\CriteriaElement $criteria  {@link Criteria}
+     * @param null|\CriteriaElement|\CriteriaCompo $criteria  {@link Criteria}
      * @param null            $fields
      * @param boolean         $fromStats fetch from tag-stats table
      * @return array associative array of tags (id, term, count)
@@ -326,7 +326,7 @@ class TagHandler extends \XoopsPersistableObjectHandler
      * Get count of tags
      *
      * @access public
-     * @param null|\CriteriaElement $criteria {@link Criteria)
+     * @param null|\CriteriaElement|\CriteriaCompo $criteria {@link Criteria)
      *
      * @return integer count
      */

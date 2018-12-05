@@ -96,7 +96,7 @@ class FormValidatedInput extends \XoopsFormText
     /**
      * Get HTML types supported
      *
-     * @return array containing HTML type(s) supported
+     * @return string|array containing HTML type(s) supported
      */
     public function getHtmlTypes()
     {

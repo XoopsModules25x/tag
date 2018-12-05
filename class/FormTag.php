@@ -43,7 +43,7 @@ class FormTag extends \XoopsFormText
     public function __construct($name, $size, $maxlength, $value = null, $catid = 0)
     {
         require_once $GLOBALS['xoops']->path('/modules/tag/include/vars.php');
-        if (!($GLOBALS['xoopsModule'] instanceof XoopsModule) || 'tag' !== $GLOBALS['xoopsModule']->getVar('dirname')) {
+        if (!($GLOBALS['xoopsModule'] instanceof \XoopsModule) || 'tag' !== $GLOBALS['xoopsModule']->getVar('dirname')) {
             xoops_loadLanguage('main', 'tag');
         }
         $value = empty($value) ? '' : $value;
