@@ -1,4 +1,13 @@
-<h5>2.34 RC-1         [NOT RELEASED]</h5>  Dev: Xoops 2.5.9, PHP 7.2.3
+<h5>2.34 RC 2          [2019-02-11]</h5>  Dev: Xoops 2.5.10, PHP 7.3.2
+<hr>
+- bug fixes/updates (mamba)
+- fixes (aerograf)
+- Optimize images (mamba)
+- bug fixes (alfredx)
+
+
+
+<h5>2.34 RC 1         [NOT RELEASED]</h5>  Dev: Xoops 2.5.9, PHP 7.2.3
 <hr>
 - update Help (mamba)
 - Updates for PayPal changes (zyspec)
@@ -8,6 +17,8 @@
 - changed _handler to Handler (mamba)
 - reference mismatch (mamba)
 - added debug_backtrace (mamba)
+- namespaces, autoloading (mamba)
+- updates (mage)
 - started conversion to XMF (mamba)
     &nbsp;&nbsp;- updated addInfoBoxLine entries (mamba)
     &nbsp;&nbsp;- displayNavigation(basename(__FILE__))  (mamba)
