@@ -57,13 +57,10 @@ if (!defined('TAG_FUNCTIONS')):
     /**
      * Function to parse arguments for a page according to $_SERVER['REQUEST_URI']
      *
-     * @var array   $args_numeric array of numeric variable values
-     * @var array   $args         array of indexed variables: name and value
-     * @var array   $args_string  array of string variable values
      *
-     * @param mixed $args_numeric
-     * @param mixed $args
-     * @param mixed $args_string
+     * @param mixed $args_numeric array of numeric variable values
+     * @param mixed $args         array of indexed variables: name and value
+     * @param mixed $args_string  array of string variable values
      * @return bool    true on args parsed
      */
 

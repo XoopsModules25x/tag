@@ -157,7 +157,7 @@ function tag_block_cloud_show($options, $dirname = '', $catid = 0)
     if (!empty($modid)) {
         /** @var \XoopsModuleHandler $moduleHandler */
         $moduleHandler = xoops_getHandler('module');
-        if ($module_obj = $moduleHandler->get($modid)) {
+        if (false !== ($module_obj = $moduleHandler->get($modid))) {
             $block['tag_dirname'] = $module_obj->getVar('dirname');
         }
     }
@@ -309,7 +309,7 @@ function tag_block_top_show($options, $dirname = '', $catid = 0)
     if (!empty($modid)) {
         /** @var \XoopsModuleHandler $moduleHandler */
         $moduleHandler = xoops_getHandler('module');
-        if ($module_obj = $moduleHandler->get($modid)) {
+        if (false !== ($module_obj = $moduleHandler->get($modid))) {
             $block['tag_dirname'] = $module_obj->getVar('dirname');
         }
     }
@@ -447,7 +447,7 @@ function tag_block_cumulus_show(array $options, $dirname = '', $catid = 0)
     if (!empty($modid)) {
         /** @var \XoopsModuleHandler $moduleHandler */
         $moduleHandler = xoops_getHandler('module');
-        if ($module_obj = $moduleHandler->get($modid)) {
+        if (false !== ($module_obj = $moduleHandler->get($modid))) {
             $block['tag_dirname'] = $module_obj->getVar('dirname');
         }
     }

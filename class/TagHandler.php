@@ -105,7 +105,7 @@ class TagHandler extends \XoopsPersistableObjectHandler
                 $moduleHandler = xoops_getHandler('module');
                 $modid         = ($module_obj = $moduleHandler->getByDirname($modid)) ? $module_obj->getVar('mid') : 0;
             }
-        } elseif ($GLOBALS['xoopsModule'] instanceof XoopsModule) {
+        } elseif ($GLOBALS['xoopsModule'] instanceof \XoopsModule) {
             $modid = $GLOBALS['xoopsModule']->getVar('mid');
         }
 
@@ -195,6 +195,7 @@ class TagHandler extends \XoopsPersistableObjectHandler
     public function update_stats($tag_id, $modid = 0, $catid = 0)
     {
         $tag_id = (int)$tag_id;
+        $tag_count = [];
         if (empty($tag_id)) {
             return true;
         }
@@ -273,7 +274,7 @@ class TagHandler extends \XoopsPersistableObjectHandler
         $start = null;
         $sort  = '';
         $order = '';
-        if (null !== $criteria && is_subclass_of($criteria, 'CriteriaCompo')) {
+        if (null !== $criteria && $criteria instanceof \CriteriaCompo) {
             $sql   .= ' ' . $criteria->renderWhere();
             $sort  = $criteria->getSort();
             $order = $criteria->getOrder();
@@ -336,7 +337,7 @@ class TagHandler extends \XoopsPersistableObjectHandler
         $modid    = (int)($modid);
         */
         $sql = "SELECT COUNT(DISTINCT o.{$this->keyName})" . "    FROM {$this->table} AS o LEFT JOIN {$this->table_link} AS l ON l.{$this->keyName} = o.{$this->keyName}";
-        if ((null !== $criteria) && is_subclass_of($criteria, 'CriteriaElement')) {
+        if ((null !== $criteria) && $criteria instanceof \CriteriaElement) {
             $sql .= ' ' . $criteria->renderWhere();
         }
         /*
@@ -377,7 +378,7 @@ class TagHandler extends \XoopsPersistableObjectHandler
         $start = null;
         $sort  = '';
         $order = '';
-        if ((null !== $criteria) && is_subclass_of($criteria, 'CriteriaElement')) {
+        if ((null !== $criteria) && $criteria instanceof \CriteriaElement) {
             $sql   .= ' ' . $criteria->renderWhere();
             $sort  = $criteria->getSort();
             $order = $criteria->getOrder();

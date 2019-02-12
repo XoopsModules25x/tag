@@ -44,7 +44,6 @@ function publisher_tag_iteminfo(&$items)
         }
     }
     /** @var \XoopsModules\Publisher\ItemHandler $itemHandler */
-    //    $itemHandler = \XoopsModules\Publisher\Helper::getInstance()->getHandler('Item');
     $itemHandler = new \XoopsModules\Publisher\ItemHandler();
 
     $criteria  = new \Criteria('itemid', '(' . implode(', ', $items_id) . ')', 'IN');

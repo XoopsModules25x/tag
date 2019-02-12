@@ -51,7 +51,7 @@ if (!empty($postTags)) {
     $msgDBUpdated = '';
     foreach ($postTags as $tag => $tag_status) {
         $tag_obj = $tagHandler->get($tag);
-        if (!($tag_obj instanceof Tag) || !$tag_obj->getVar('tag_id')) {
+        if (!($tag_obj instanceof Tag\Tag) || !$tag_obj->getVar('tag_id')) {
             continue;
         }
         if ($tag_status < Constants::STATUS_ACTIVE) {
