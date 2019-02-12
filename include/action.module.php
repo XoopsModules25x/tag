@@ -49,7 +49,7 @@ function xoops_module_pre_install_tag(\XoopsModule $module)
         $success = true;
     }
 
-    if (false === $success) {
+    if (!$success) {
         $module->setErrors("This module requires XOOPS {$requiredVer}+ ({$currentVer} installed)");
 
         return false;
