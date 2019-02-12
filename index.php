@@ -18,8 +18,7 @@
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
  * @since           1.00
  */
-
-require_once __DIR__   . '/header.php';
+require_once __DIR__ . '/header.php';
 
 $limit = empty($tag_config['limit_tag_could']) ? 100 : $tag_config['limit_tag_could'];
 
@@ -29,14 +28,14 @@ $xoopsOption['xoops_pagetitle'] = strip_tags($page_title);
 require_once $GLOBALS['xoops']->path('/header.php');
 /** @var \XoopsModules\Tag\TagHandler $tagHandler */
 $tagHandler = \XoopsModules\Tag\Helper::getInstance()->getHandler('Tag'); // xoops_getModuleHandler('tag', 'tag');
-$tag_config  = tag_load_config();
+$tag_config = tag_load_config();
 tag_define_url_delimiter();
 
 $criteria = new \CriteriaCompo();
 $criteria->setSort('count');
 $criteria->setOrder('DESC');
 $criteria->setLimit($limit);
-$tags =& $tagHandler->getByLimit(0, 0, $criteria);
+$tags = &$tagHandler->getByLimit(0, 0, $criteria);
 
 $count_max = 0;
 $count_min = 0;
@@ -64,7 +63,7 @@ foreach (array_keys($tags) as $key) {
         'level' => empty($count_max) ? 0 : floor(($tags[$key]['count'] - $count_min) * $level_limit / $count_max),
         'term'  => urlencode($tags[$key]['term']),
         'title' => htmlspecialchars($tags[$key]['term'], ENT_QUOTES | ENT_HTML5),
-        'count' => $tags[$key]['count']
+        'count' => $tags[$key]['count'],
     ];
 }
 unset($tags, $tags_term);
@@ -73,7 +72,7 @@ $pagenav = "<a href='" . $GLOBALS['xoops']->url('www/modules/tag/list.tag.php') 
 $GLOBALS['xoopsTpl']->assign([
                                  'lang_jumpto'    => _MD_TAG_JUMPTO,
                                  'pagenav'        => $pagenav,
-                                 'tag_page_title' => $page_title
+                                 'tag_page_title' => $page_title,
                              ]);
 $GLOBALS['xoopsTpl']->assign_by_ref('tags', $tags_data);
 

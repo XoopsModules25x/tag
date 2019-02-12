@@ -64,7 +64,6 @@ if (!defined('TAG_FUNCTIONS_RECON')):
     }
 
     /**
-     *
      * Cleans orphans from dB table
      *
      * @return bool true successfully deleted all orphans, false otherwise

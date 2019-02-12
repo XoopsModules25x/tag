@@ -18,7 +18,6 @@
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
  * @since           1.00
  */
-
 defined('XOOPS_ROOT_PATH') || die('Restricted access');
 
 /**
@@ -33,8 +32,7 @@ defined('XOOPS_ROOT_PATH') || die('Restricted access');
  *
  * @param array $items associative array of items: [modid][catid][itemid]
  *
- * @return boolean
- *
+ * @return bool
  */
 function article_tag_iteminfo(&$items)
 {
@@ -65,7 +63,7 @@ function article_tag_iteminfo(&$items)
                 'link'    => "view.article.php?article={$item_id}",
                 'time'    => $item_obj->getVar('art_time_publish'),
                 'tags'    => tag_parse_tag($item_obj->getVar('art_keywords', 'n')),
-                'content' => ''
+                'content' => '',
             ];
         }
     }
@@ -79,19 +77,18 @@ function article_tag_iteminfo(&$items)
  *
  * @param int $mid module ID
  *
- * @return boolean
- *
+ * @return bool
  */
 function article_tag_synchronization($mid)
 {
     /** @var \XoopsModules\Article\ArticleHandler $itemHandler */
     $itemHandler = $helper->getHandler('Article', 'article');
-//    /** @var \TagLinkHandler $linkHandler */
-//    $linkHandler = \XoopsModules\Tag\Helper::getInstance()->getHandler('Link'); //@var \XoopsModules\Tag\Handler $tagHandler
+    //    /** @var \TagLinkHandler $linkHandler */
+    //    $linkHandler = \XoopsModules\Tag\Helper::getInstance()->getHandler('Link'); //@var \XoopsModules\Tag\Handler $tagHandler
     /** @var \XoopsModules\Tag\LinkHandler $itemHandler */
     $linkHandler = \XoopsModules\Tag\Helper::getInstance()->getHandler('Link');
 
-//    $mid = XoopsFilterInput::clean($mid, 'INT');
+    //    $mid = XoopsFilterInput::clean($mid, 'INT');
     $mid = \Xmf\Request::getInt('mid');
     /* clear tag-item links */
     /** {@internal the following statement isn't really needed any more (MySQL is really old)

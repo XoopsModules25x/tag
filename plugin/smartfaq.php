@@ -18,7 +18,6 @@
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
  * @since           1.00
  */
-
 defined('XOOPS_ROOT_PATH') || die('Restricted access');
 
 /**
@@ -33,10 +32,8 @@ defined('XOOPS_ROOT_PATH') || die('Restricted access');
  *
  * @var array $items associative array of items: [modid][catid][itemid]
  *
- * @return boolean
- *
+ * @return bool
  */
-
 require_once $GLOBALS['xoops']->path('/modules/smartfaq/include/functions.php');
 
 /**
@@ -61,10 +58,10 @@ function smartfaq_tag_iteminfo(&$items)
     /** @var \XoopsDatabase $db */
     $db = \XoopsDatabaseFactory::getDatabase();
     /** @var \XoopsModules\Smartfaq\FaqHandler $itemHandler */
-    $itemHandler = new \XoopsModules\Smartfaq\FaqHandler($db );
+    $itemHandler = new \XoopsModules\Smartfaq\FaqHandler($db);
 
-    $items_obj   = $itemHandler->getObjects(new \Criteria('faqid', '(' . implode(', ', $items_id) . ')', 'IN'), true);
-    $myts        = \MyTextSanitizer::getInstance();
+    $items_obj = $itemHandler->getObjects(new \Criteria('faqid', '(' . implode(', ', $items_id) . ')', 'IN'), true);
+    $myts      = \MyTextSanitizer::getInstance();
     foreach (array_keys($items) as $cat_id) {
         foreach (array_keys($items[$cat_id]) as $item_id) {
             $item_obj = $items_obj[$item_id];
@@ -75,7 +72,7 @@ function smartfaq_tag_iteminfo(&$items)
                     'link'    => 'faq.php?faqid=' . $item_id,
                     'time'    => strtotime($item_obj->getVar('datesub')),
                     'tags'    => tag_parse_tag($item_obj->getVar('tags', 'n')),
-                    'content' => $myts->displayTarea($item_obj->answer(), 1, 1, 1, 1, 1, 1)
+                    'content' => $myts->displayTarea($item_obj->answer(), 1, 1, 1, 1, 1, 1),
                 ];
             }
         }
@@ -97,13 +94,12 @@ function smartfaq_tag_synchronization($mid)
     $db = \XoopsDatabaseFactory::getDatabase();
 
     /** @var \XoopsModules\Smartfaq\FaqHandler $itemHandler */
-    $itemHandler = new \XoopsModules\Smartfaq\FaqHandler($db );
+    $itemHandler = new \XoopsModules\Smartfaq\FaqHandler($db);
 
     /** @var \XoopsModules\Tag\LinkHandler $itemHandler */
     $linkHandler = \XoopsModules\Tag\Helper::getInstance()->getHandler('Link');
 
-
-//    $mid = XoopsFilterInput::clean($mid, 'INT');
+    //    $mid = XoopsFilterInput::clean($mid, 'INT');
     $mid = \Xmf\Request::getInt('mid');
 
     /* clear tag-item links */

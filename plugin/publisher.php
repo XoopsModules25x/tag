@@ -44,11 +44,11 @@ function publisher_tag_iteminfo(&$items)
         }
     }
     /** @var \XoopsModules\Publisher\ItemHandler $itemHandler */
-//    $itemHandler = \XoopsModules\Publisher\Helper::getInstance()->getHandler('Item');
+    //    $itemHandler = \XoopsModules\Publisher\Helper::getInstance()->getHandler('Item');
     $itemHandler = new \XoopsModules\Publisher\ItemHandler();
 
-    $criteria    = new \Criteria('itemid', '(' . implode(', ', $items_id) . ')', 'IN');
-    $items_obj   = $itemHandler->getObjects($criteria, 'itemid');
+    $criteria  = new \Criteria('itemid', '(' . implode(', ', $items_id) . ')', 'IN');
+    $items_obj = $itemHandler->getObjects($criteria, 'itemid');
 
     foreach (array_keys($items) as $cat_id) {
         foreach (array_keys($items[$cat_id]) as $item_id) {
@@ -59,7 +59,7 @@ function publisher_tag_iteminfo(&$items)
                 'link'    => "item.php?itemid={$item_id}",
                 'time'    => $item_obj->getVar('datesub'),
                 'tags'    => tag_parse_tag($item_obj->getVar('item_tag', 'n')), // optional
-                'content' => ''
+                'content' => '',
             ];
         }
     }
@@ -74,15 +74,14 @@ function publisher_tag_iteminfo(&$items)
  */
 function publisher_tag_synchronization($mid)
 {
-
     /** @var \XoopsModules\Publisher\ItemHandler $itemHandler */
-//    $itemHandler = \XoopsModules\Publisher\Helper::getInstance()->getHandler('Item');
+    //    $itemHandler = \XoopsModules\Publisher\Helper::getInstance()->getHandler('Item');
     $itemHandler = new \XoopsModules\Publisher\ItemHandler();
 
     /** @var \XoopsModules\Tag\LinkHandler $itemHandler */
     $linkHandler = \XoopsModules\Tag\Helper::getInstance()->getHandler('Link');
 
-//    $mid = XoopsFilterInput::clean($mid, 'INT');
+    //    $mid = XoopsFilterInput::clean($mid, 'INT');
     $mid = \Xmf\Request::getInt('mid');
 
     /* clear tag-item links */

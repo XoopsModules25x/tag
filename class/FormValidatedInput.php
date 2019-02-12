@@ -1,4 +1,6 @@
-<?php namespace XoopsModules\Tag;
+<?php
+
+namespace XoopsModules\Tag;
 
 /*
  You may not change or alter any portion of this comment or credits
@@ -21,7 +23,6 @@
  * @author          ZySpec <owners@zyspec.com>
  * @since           2.33
  */
-
 defined('XOOPS_ROOT_PATH') || die('Restricted access');
 
 /**
@@ -29,7 +30,6 @@ defined('XOOPS_ROOT_PATH') || die('Restricted access');
  */
 class FormValidatedInput extends \XoopsFormText
 {
-
     /**
      * Initial type
      *
@@ -72,7 +72,7 @@ class FormValidatedInput extends \XoopsFormText
             'text',
             'time',
             'url',
-            'week'
+            'week',
         ];
         $this->setCaption($caption);
         $this->setName($name);
@@ -81,7 +81,6 @@ class FormValidatedInput extends \XoopsFormText
         $this->setValue($value);
         $this->setType($type);
     }
-
 
     /**
      * Get type information value
@@ -113,12 +112,12 @@ class FormValidatedInput extends \XoopsFormText
         if (isset($value)) {
             if (is_array($value)) {
                 $value       = isset($value['type']) ? mb_strtolower($value['type']) : 'text';
-                $this->_type = in_array($value, $this->_htmlTypes) ? $value : 'text';
+                $this->_type = in_array($value, $this->_htmlTypes, true) ? $value : 'text';
                 if (in_array($value['type'], [
                     'number',
                     'date',
-                    'range'
-                    ])) {
+                    'range',
+                ], true)) {
                     if (isset($value['min'])) {
                         $this->setExtra('min=' . $value['min']);
                     }
@@ -128,7 +127,7 @@ class FormValidatedInput extends \XoopsFormText
                 }
             } else {
                 $value       = isset($value) ? mb_strtolower($value) : 'text';
-                $this->_type = in_array($value, $this->_htmlTypes) ? $value : 'text';
+                $this->_type = in_array($value, $this->_htmlTypes, true) ? $value : 'text';
             }
         } else {
             $this->_type = 'text';

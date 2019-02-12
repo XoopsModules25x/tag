@@ -1,4 +1,6 @@
-<?php namespace XoopsModules\Tag\Common;
+<?php
+
+namespace XoopsModules\Tag\Common;
 
 /*
  You may not change or alter any portion of this comment or credits
@@ -22,7 +24,6 @@ trait FilesManagement
      *
      * @param string $folder The full path of the directory to check
      *
-     * @return void
      * @throws \RuntimeException
      */
     public static function createFolder($folder)
@@ -35,7 +36,8 @@ trait FilesManagement
 
                 file_put_contents($folder . '/index.html', '<script>history.go(-1);</script>');
             }
-        } catch (\Exception $e) {
+        }
+        catch (\Exception $e) {
             echo 'Caught exception: ', $e->getMessage(), "\n", '<br>';
         }
     }
@@ -61,20 +63,19 @@ trait FilesManagement
         if (!@mkdir($dst) && !is_dir($dst)) {
             throw new \RuntimeException('The directory ' . $dst . ' could not be created.');
         }
-            while (false !== ($file = readdir($dir))) {
-                if (('.' !== $file) && ('..' !== $file)) {
-                    if (is_dir($src . '/' . $file)) {
-                        self::recurseCopy($src . '/' . $file, $dst . '/' . $file);
-                    } else {
-                        copy($src . '/' . $file, $dst . '/' . $file);
-                    }
+        while (false !== ($file = readdir($dir))) {
+            if (('.' !== $file) && ('..' !== $file)) {
+                if (is_dir($src . '/' . $file)) {
+                    self::recurseCopy($src . '/' . $file, $dst . '/' . $file);
+                } else {
+                    copy($src . '/' . $file, $dst . '/' . $file);
                 }
             }
+        }
         closedir($dir);
     }
 
     /**
-     *
      * Remove files and (sub)directories
      *
      * @param string $src source directory to delete
@@ -119,11 +120,11 @@ trait FilesManagement
             // input is not a valid directory
             $success = false;
         }
+
         return $success;
     }
 
     /**
-     *
      * Recursively remove directory
      *
      * @todo currently won't remove directories with hidden files, should it?
@@ -144,7 +145,7 @@ trait FilesManagement
             return false;
         }
 
-//        $success = true;
+        //        $success = true;
 
         // Open the source directory to read in files
         $iterator = new \DirectoryIterator($src);
@@ -241,6 +242,7 @@ trait FilesManagement
                 self::rcopy($fObj->getPathname(), "{$dest}/" . $fObj->getFilename());
             }
         }
+
         return true;
     }
 }

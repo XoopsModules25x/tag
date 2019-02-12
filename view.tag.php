@@ -21,7 +21,7 @@
 use Xmf\Request;
 use XoopsModules\Tag\Constants;
 
-require_once __DIR__   . '/header.php';
+require_once __DIR__ . '/header.php';
 
 //xoops_loadLanguage('main', 'tag');
 /*
@@ -60,7 +60,7 @@ if (!empty($tag_id)) {
     }
     $tag_term = $tag_obj->getVar('tag_term', 'n');
 } else {
-    if (!$tags_obj =& $tagHandler->getObjects(new \Criteria('tag_term', $myts->addSlashes(trim($tag_term))))) {
+    if (!$tags_obj = &$tagHandler->getObjects(new \Criteria('tag_term', $myts->addSlashes(trim($tag_term))))) {
         redirect_header($GLOBALS['xoops']->url('www/modules/' . $GLOBALS['xoopsModule']->getVar('dirname') . '/index.php'), 2, _MD_TAG_INVALID);
     }
     $tag_obj = $tags_obj[0];
@@ -103,7 +103,7 @@ if (!empty($items)) {
     foreach (array_keys($items) as $key) {
         $items_module[$items[$key]['modid']][$items[$key]['catid']][$items[$key]['itemid']] = [];
     }
-    /** @var XoopsModuleHandler $moduleHandler */
+    /** @var \XoopsModuleHandler $moduleHandler */
     $moduleHandler = xoops_getHandler('module');
     $modules_obj   = $moduleHandler->getObjects(new \Criteria('mid', '(' . implode(', ', array_keys($items_module)) . ')', 'IN'), true);
     foreach (array_keys($modules_obj) as $mid) {
@@ -193,7 +193,7 @@ $GLOBALS['xoopsTpl']->assign([
                                  // Loading module meta data, NOT THE RIGHT WAY DOING IT
                                  'xoops_pagetitle'        => $GLOBALS['xoopsOption']['xoops_pagetitle'],
                                  'xoops_module_header'    => $GLOBALS['xoopsOption']['xoops_module_header'],
-                                 'xoops_meta_description' => $GLOBALS['xoopsOption']['xoops_pagetitle']
+                                 'xoops_meta_description' => $GLOBALS['xoopsOption']['xoops_pagetitle'],
                              ]);
 $xoopsTpl->assign_by_ref('tag_addon', $tag_addon);
 $xoopsTpl->assign_by_ref('tag_articles', $items_data);

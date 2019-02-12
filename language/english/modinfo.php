@@ -18,7 +18,6 @@
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
  * @since           1.00
  */
-
 defined('XOOPS_ROOT_PATH') || die('Restricted access');
 
 define('_MI_TAG_NAME', 'Tag');

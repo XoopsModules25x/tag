@@ -18,7 +18,6 @@
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
  * @since           1.00
  */
-
 defined('XOOPS_ROOT_PATH') || die('Restricted access');
 
 /**
@@ -33,8 +32,7 @@ defined('XOOPS_ROOT_PATH') || die('Restricted access');
  *
  * @param array $items associative array of items: [modid][catid][itemid]
  *
- * @return boolean
- *
+ * @return bool
  */
 function myalbum_tag_iteminfo(&$items)
 {
@@ -55,7 +53,7 @@ function myalbum_tag_iteminfo(&$items)
     $itemHandler = new \XoopsModules\Myalbum\PhotosHandler();
     /** @var \XoopsModules\Myalbum\TextHandler $itemHandler */
     $textHandler = new \XoopsModules\Myalbum\TextHandler();
-    $items_obj   =& $itemHandler->getObjects(new \Criteria('lid', '(' . implode(', ', $items_id) . ')', 'IN'), true);
+    $items_obj   = &$itemHandler->getObjects(new \Criteria('lid', '(' . implode(', ', $items_id) . ')', 'IN'), true);
 
     foreach (array_keys($items) as $cat_id) {
         foreach (array_keys($items[$cat_id]) as $item_id) {
@@ -67,7 +65,7 @@ function myalbum_tag_iteminfo(&$items)
                 'link'    => "photo.php?lid={$item_id}&cid=" . $item_obj->getVar('cid'),
                 'time'    => $item_obj->getVar('date'),
                 'tags'    => tag_parse_tag($item_obj->getVar('tags', 'n')),
-                'content' => $GLOBALS['myts']->displayTarea($text->getVar('description'), 1, 1, 1, 1, 1, 1)
+                'content' => $GLOBALS['myts']->displayTarea($text->getVar('description'), 1, 1, 1, 1, 1, 1),
             ];
         }
     }
@@ -81,8 +79,7 @@ function myalbum_tag_iteminfo(&$items)
  *
  * @param int $mid module id
  *
- * @return boolean
- *
+ * @return bool
  */
 function myalbum_tag_synchronization($mid)
 {
@@ -91,7 +88,7 @@ function myalbum_tag_synchronization($mid)
     /** @var \XoopsModules\Tag\LinkHandler $linkHandler */
     $linkHandler = \XoopsModules\Tag\Helper::getInstance()->getHandler('Link'); //@var \XoopsModules\Tag\Handler $tagHandler
 
-//    $mid = XoopsFilterInput::clean($mid, 'INT');
+    //    $mid = XoopsFilterInput::clean($mid, 'INT');
     $mid = \Xmf\Request::getInt('mid', 0, 'POST');
 
     /* clear tag-item links */

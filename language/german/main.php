@@ -18,12 +18,11 @@
  * @author          Taiwen Jiang (phppp or D.J.) <php_pp@hotmail.com>
  * @since           1.00
  */
-
 defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
 define('_MD_TAG_TAGS', 'Tags');
 define('_MD_TAG_TAG_ON', 'Tag On');
-define('_MD_TAG_TAGVIEW', "Items of Tag <strong>%1\$s</strong> in %2\$s");
+define('_MD_TAG_TAGVIEW', 'Items of Tag <strong>%1$s</strong> in %2$s');
 define('_MD_TAG_TAGLIST', 'Tag List of <strong>%s</strong>');
 define('_MD_TAG_JUMPTO', 'Jump to');
 define('_MD_TAG_TAG_DELIMITER', 'Following delimiters are valid for multiple tags');
@@ -40,18 +39,18 @@ define('_MD_TAG_INVALID', 'Invalid query');
  *    </li>
  * </ul>
  */
-$GLOBALS['_MD_TAG_ADDONS'] = array(
-    'google' => array(
+$GLOBALS['_MD_TAG_ADDONS'] = [
+    'google' => [
         'title' => 'Google',
-        'link'  => 'http://www.google.com/search?q=%s'
-    ),
-    'techno' => array(
+        'link'  => 'http://www.google.com/search?q=%s',
+    ],
+    'techno' => [
         'title' => 'Technorati',
-        'link'  => 'http://technorati.com/tag/%s/'
-    ),
-    'flickr' => array(
+        'link'  => 'http://technorati.com/tag/%s/',
+    ],
+    'flickr' => [
         'title'    => 'Flickr',
         'link'     => 'http://www.flickr.com/photos/tags/%s/',
-        'function' => 'utf8_encode'
-    )
-);
+        'function' => 'utf8_encode',
+    ],
+];

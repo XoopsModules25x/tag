@@ -1,4 +1,6 @@
-<?php namespace XoopsModules\Tag;
+<?php
+
+namespace XoopsModules\Tag;
 
 /*
  You may not change or alter any portion of this comment or credits
@@ -25,7 +27,6 @@ use XoopsModules\Tag;
 
 defined('XOOPS_ROOT_PATH') || die('Restricted access');
 
-
 /**
  * Tag link handler class.
  * @package     tag
@@ -34,7 +35,6 @@ defined('XOOPS_ROOT_PATH') || die('Restricted access');
  * @copyright   copyright &copy; The XOOPS Project
  *
  * {@link XoopsPersistableObjectHandler}
- *
  */
 class LinkHandler extends \XoopsPersistableObjectHandler
 {

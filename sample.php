@@ -88,7 +88,7 @@ function mymodule_tag_iteminfo($items)
                 'link'    => "view.item.php?itemid={$item_id}",
                 'time'    => $item_obj->getVar('item_time'),
                 'tags'    => tag_parse_tag($item_obj->getVar('item_tags', 'n')), // optional
-                'content' => ''
+                'content' => '',
             ];
         }
     }
@@ -112,10 +112,10 @@ $GLOBALS['xoopsTpl']->display('db:tag_bar.tpl');
 
 /* Step 5: create tag list page and tag view page */
 // File: list.tag.php
-require_once __DIR__   . '/header.php';
+require_once __DIR__ . '/header.php';
 require_once $GLOBALS['xoops']->path('/modules/tag/list.tag.php');
 // File: view.tag.php
-require_once __DIR__   . '/header.php';
+require_once __DIR__ . '/header.php';
 require_once $GLOBALS['xoops']->path('/modules/tag/view.tag.php');
 
 /* Step 6: create tag blocks */
@@ -134,7 +134,7 @@ $modversion['blocks'][] = [
     'show_func'   => 'mymodule_tag_block_cloud_show',
     'edit_func'   => 'mymodule_tag_block_cloud_edit',
     'options'     => '100|0|150|80',
-    'template'    => 'mymodule_tag_block_cloud.tpl'
+    'template'    => 'mymodule_tag_block_cloud.tpl',
 ];
 /*
  * $options:
@@ -149,7 +149,7 @@ $modversion['blocks'][] = [
     'show_func'   => 'mymodule_tag_block_top_show',
     'edit_func'   => 'mymodule_tag_block_top_edit',
     'options'     => '50|30|c',
-    'template'    => 'mymodule_tag_block_top.tpl'
+    'template'    => 'mymodule_tag_block_top.tpl',
 ];
 // File: module_block_tag.php
 /**

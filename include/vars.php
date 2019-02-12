@@ -18,7 +18,6 @@
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
  * @since           1.00
  */
-
 if (!defined('TAG_INI')) {
     define('TAG_INI', 1);
 }

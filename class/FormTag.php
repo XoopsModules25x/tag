@@ -1,4 +1,6 @@
-<?php namespace XoopsModules\Tag;
+<?php
+
+namespace XoopsModules\Tag;
 
 /*
  You may not change or alter any portion of this comment or credits
@@ -26,7 +28,6 @@ defined('XOOPS_ROOT_PATH') || die('Restricted access');
 
 xoops_load('xoopsformtext');
 
-
 /**
  * Class TagFormTag
  */
@@ -49,7 +50,7 @@ class FormTag extends \XoopsFormText
         $value = empty($value) ? '' : $value;
         // itemid
         if (!empty($value) && is_numeric($value) && ($GLOBALS['xoopsModule'] instanceof XoopsModule)) {
-            $modid      = $GLOBALS['xoopsModule']->getVar('mid');
+            $modid = $GLOBALS['xoopsModule']->getVar('mid');
             /** @var \XoopsModules\Tag\TagHandler $tagHandler */
             $tagHandler = Tag\Helper::getInstance()->getHandler('Tag'); // xoops_getModuleHandler('tag', 'tag');
             if ($tags = $tagHandler->getByItem($value, $modid, $catid)) {

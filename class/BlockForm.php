@@ -1,4 +1,6 @@
-<?php namespace XoopsModules\Tag;
+<?php
+
+namespace XoopsModules\Tag;
 
 /*
  You may not change or alter any portion of this comment or credits
@@ -31,7 +33,6 @@ require_once $GLOBALS['xoops']->path('/class/xoopsformloader.php');
  */
 class BlockForm extends \XoopsForm
 {
-
     /**
      * create HTML to output the form as a table
      *

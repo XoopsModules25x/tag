@@ -1,4 +1,6 @@
-<?php namespace XoopsModules\Tag;
+<?php
+
+namespace XoopsModules\Tag;
 
 /*
  You may not change or alter any portion of this comment or credits

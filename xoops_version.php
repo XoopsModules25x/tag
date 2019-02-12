@@ -18,10 +18,9 @@
  * @author         Taiwen Jiang <phppp@users.sourceforge.net>
  * @since          1.00
  */
-
 defined('XOOPS_ROOT_PATH') || die('Restricted access');
 
-require_once __DIR__   . '/preloads/autoloader.php';
+require_once __DIR__ . '/preloads/autoloader.php';
 
 $moduleDirName = basename(__DIR__);
 
@@ -44,7 +43,7 @@ $modversion = [
     // ------------------- Folders & Files -------------------
     'release_info'        => 'Changelog',
     'release_file'        => XOOPS_URL . "/modules/$moduleDirName/docs/changelog.txt",
-    //
+
     'manual'              => 'link to manual file',
     'manual_file'         => XOOPS_URL . "/modules/$moduleDirName/docs/install.txt",
     // images
@@ -81,7 +80,7 @@ $modversion = [
     'sub'                 => [
         [
             'name' => _MI_TAG_VIEW_SEARCH,
-            'url'  => 'index.php'
+            'url'  => 'index.php',
         ],
     ],
 
@@ -94,13 +93,13 @@ $modversion = [
         'business'      => 'foundation@xoops.org',
         'item_name'     => 'Donation : ' . _MI_TAG_NAME,
         'amount'        => 0,
-        'currency_code' => 'USD'
+        'currency_code' => 'USD',
     ],
     // ------------------- Search ---------------------------
     'hasSearch'           => 1,
     'search'              => [
         'file' => 'include/search.inc.php',
-        'func' => 'tag_search'
+        'func' => 'tag_search',
     ],
     // ------------------- Comments -------------------------
     'hasComments'         => 0,
@@ -128,7 +127,7 @@ $modversion['templates'] = [
     ['file' => 'tag_view.tpl', 'description' => _MI_TAG_INDEX_TPL_VIEW_DESC],
     ['file' => 'tag_bar.tpl', 'description' => _MI_TAG_INDEX_TPL_BAR_DESC],
     ['file' => "admin/{$moduleDirName}_admin_about.tpl", 'description' => _MI_TAG_INDEX_ADMINTPL_ABOUT_DESC],
-    ['file' => "admin/{$moduleDirName}_admin_help.tpl", 'description' => _MI_TAG_INDEX_ADMINTPL_HELP_DESC]
+    ['file' => "admin/{$moduleDirName}_admin_help.tpl", 'description' => _MI_TAG_INDEX_ADMINTPL_HELP_DESC],
 ];
 
 // Blocks
@@ -147,7 +146,7 @@ $modversion['blocks'] = [
         'show_func'   => 'tag_block_cloud_show',
         'edit_func'   => 'tag_block_cloud_edit',
         'options'     => '100|0|150|80',
-        'template'    => 'tag_block_cloud.tpl'
+        'template'    => 'tag_block_cloud.tpl',
     ],
     /*
      * $options:
@@ -162,7 +161,7 @@ $modversion['blocks'] = [
         'show_func'   => 'tag_block_top_show',
         'edit_func'   => 'tag_block_top_edit',
         'options'     => '50|30|a',
-        'template'    => 'tag_block_top.tpl'
+        'template'    => 'tag_block_top.tpl',
     ],
 
     /*
@@ -187,8 +186,8 @@ $modversion['blocks'] = [
         'show_func'   => 'tag_block_cumulus_show',
         'edit_func'   => 'tag_block_cumulus_edit',
         'options'     => '100|0|24|12|160|140|#ffffff|0|#000000|#003300|#00ff00|100',
-        'template'    => 'tag_block_cumulus.tpl'
-    ]
+        'template'    => 'tag_block_cumulus.tpl',
+    ],
 ];
 
 // Configs
@@ -199,7 +198,7 @@ $modversion['config'] = [
         'description' => '_MI_TAG_DOURLREWRITE_DESC',
         'formtype'    => 'yesno',
         'valuetype'   => 'int',
-        'default'     => in_array(PHP_SAPI, ['apache', 'apache2handler'])
+        'default'     => in_array(PHP_SAPI, ['apache', 'apache2handler'], true),
     ],
 
     [
@@ -208,7 +207,7 @@ $modversion['config'] = [
         'description' => '_MI_TAG_ITEMSPERPAGE_DESC',
         'formtype'    => 'textbox',
         'valuetype'   => 'int',
-        'default'     => 10
+        'default'     => 10,
     ],
 
     [
@@ -217,7 +216,7 @@ $modversion['config'] = [
         'description' => '_MI_TAG_LIMITPERLIST_DESC',
         'formtype'    => 'textbox',
         'valuetype'   => 'int',
-        'default'     => 10
+        'default'     => 10,
     ],
 
     [
@@ -226,6 +225,6 @@ $modversion['config'] = [
         'description' => '_MI_TAG_LIMITPERCLOUD_DESC',
         'formtype'    => 'textbox',
         'valuetype'   => 'int',
-        'default'     => 100
-    ]
+        'default'     => 100,
+    ],
 ];

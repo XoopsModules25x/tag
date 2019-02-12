@@ -36,8 +36,9 @@ if (!defined('XOOPS_ROOT_PATH')) {
  *
  * @var        array $items associative array of items: [modid][catid][itemid]
  *
- * @return    boolean
  *
+ * @param mixed      $items
+ * @return    bool
  */
 function smartsection_tag_iteminfo(&$items)
 {
@@ -58,11 +59,11 @@ function smartsection_tag_iteminfo(&$items)
     /** @var \XoopsModules\Smartsection\ItemHandler $itemHandler */
     $itemHandler = new \XoopsModules\Smartsection\ItemHandler();
 
-    $items_obj    = $itemHandler->getObjects(new Criteria('itemid', '(' . implode(', ', $items_id) . ')', 'IN'), true);
+    $items_obj = $itemHandler->getObjects(new Criteria('itemid', '(' . implode(', ', $items_id) . ')', 'IN'), true);
 
     foreach (array_keys($items) as $cat_id) {
         foreach (array_keys($items[$cat_id]) as $item_id) {
-            $item_obj                 =& $items_obj[$item_id];
+            $item_obj                 = &$items_obj[$item_id];
             $items[$cat_id][$item_id] = [
                 'title'   => $item_obj->getVar('title'),
                 'uid'     => $item_obj->getVar('uid'),
@@ -80,7 +81,6 @@ function smartsection_tag_iteminfo(&$items)
  * Remove orphan tag-item links
  *
  * @param $mid
- * @return void
  */
 function article_tag_synchronization($mid)
 {

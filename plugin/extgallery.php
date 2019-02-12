@@ -17,10 +17,8 @@
  * @license         {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
  * @since           1.00
  */
-
 defined('XOOPS_ROOT_PATH') || die('Restricted access');
 /**
- *
  * Generate tag item information
  *
  * @param array $items is an array containing category and item information
@@ -54,7 +52,7 @@ function extgallery_tag_iteminfo(&$items)
                     'link'    => "public-photo.php?photoId={$item_id}#photoNav",
                     'time'    => $item_obj->getVar('photo_date'),
                     'tags'    => '',
-                    'content' => ''
+                    'content' => '',
                 ];
             }
         }
@@ -69,8 +67,7 @@ function extgallery_tag_iteminfo(&$items)
  *
  * @param int $mid module id
  *
- * @return boolean
- *
+ * @return bool
  */
 function extgallery_tag_synchronization($mid)
 {
@@ -79,7 +76,7 @@ function extgallery_tag_synchronization($mid)
     /** @var \XoopsModules\Tag\LinkHandler $linkHandler */
     $linkHandler = \XoopsModules\Tag\Helper::getInstance()->getHandler('Link'); //@var \XoopsModules\Tag\Handler $tagHandler
 
-//    $mid = XoopsFilterInput::clean($mid, 'INT');
+    //    $mid = XoopsFilterInput::clean($mid, 'INT');
     $mid = \Xmf\Request::getInt('mid');
 
     /* clear tag-item links */

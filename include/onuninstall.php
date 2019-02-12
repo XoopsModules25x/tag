@@ -14,7 +14,6 @@
  *
  * @return bool true if ready to uninstall, false if not
  */
-
 function xoops_module_pre_uninstall_tag(\XoopsModule $module)
 {
     // Do some synchronization
@@ -22,7 +21,6 @@ function xoops_module_pre_uninstall_tag(\XoopsModule $module)
 }
 
 /**
- *
  * Performs tasks required during uninstallation of the module
  * @param XoopsModule $module {@link XoopsModule}
  *

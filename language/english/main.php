@@ -18,7 +18,6 @@
  * @author          Taiwen Jiang (phppp or D.J.) <php_pp@hotmail.com>
  * @since           1.00
  */
-
 defined('XOOPS_ROOT_PATH') || die('Restricted access');
 
 define('_MD_TAG_TAGS', 'Tags');
@@ -43,15 +42,15 @@ define('_MD_TAG_INVALID', 'Invalid query');
 $GLOBALS['_MD_TAG_ADDONS'] = [
     'google' => [
         'title' => 'Google',
-        'link'  => 'http://www.google.com/search?q=%s'
+        'link'  => 'http://www.google.com/search?q=%s',
     ],
     'techno' => [
         'title' => 'Technorati',
-        'link'  => 'http://technorati.com/tag/%s/'
+        'link'  => 'http://technorati.com/tag/%s/',
     ],
     'flickr' => [
         'title'    => 'Flickr',
         'link'     => 'http://www.flickr.com/photos/tags/%s/',
-        'function' => 'utf8_encode'
-    ]
+        'function' => 'utf8_encode',
+    ],
 ];

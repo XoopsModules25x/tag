@@ -1,4 +1,6 @@
-<?php namespace XoopsModules\Tag;
+<?php
+
+namespace XoopsModules\Tag;
 
 /*
  You may not change or alter any portion of this comment or credits
@@ -26,7 +28,6 @@
  * @author       ::     ZySpec <owners@zyspec.com>
  * @since        ::      2.33
  **/
-
 defined('XOOPS_ROOT_PATH') || die('Restricted access');
 
 /**

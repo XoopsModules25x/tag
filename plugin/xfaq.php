@@ -18,7 +18,6 @@
  * @author          Gregory Mage (Aka Mage)
  * @since           1.00
  */
-
 defined('XOOPS_ROOT_PATH') || die('Restricted access');
 
 /**
@@ -41,9 +40,9 @@ function xfaq_tag_iteminfo(&$items)
     /** @var \XoopsDatabase $db */
     $db = \XoopsDatabaseFactory::getDatabase();
     /** @var \XoopsModules\Xfaq\XfaqHandler $itemHandler */
-    $itemHandler = new \XoopsModules\Xfaq\XfaqHandler($db) ;
+    $itemHandler = new \XoopsModules\Xfaq\XfaqHandler($db);
 
-    $items_obj   =& $itemHandler->getObjects(new \Criteria('faq_id', '(' . implode(', ', $items_id) . ')', 'IN'), true);
+    $items_obj = &$itemHandler->getObjects(new \Criteria('faq_id', '(' . implode(', ', $items_id) . ')', 'IN'), true);
 
     foreach (array_keys($items) as $cat_id) {
         foreach (array_keys($items[$cat_id]) as $item_id) {
@@ -55,7 +54,7 @@ function xfaq_tag_iteminfo(&$items)
                     'link'    => "faq.php?faq_id={$item_id}",
                     'time'    => $item_obj->getVar('faq_date_created'),
                     'tags'    => '',
-                    'content' => ''
+                    'content' => '',
                 ];
             }
         }

@@ -18,7 +18,6 @@
  * @author         Taiwen Jiang <phppp@users.sourceforge.net>
  * @since          1.00
  */
-
 (defined('XOOPS_ROOT_PATH') && ($GLOBALS['xoopsModule'] instanceof XoopsModule)) || die('Restricted access');
 
 /**
@@ -68,19 +67,24 @@ function tagBar($tags, $catid = 0, $modid = 0)
 
         // if ready, do nothing
     } elseif (is_array($tags)) {
-
         // parse
     } elseif (!$tags = tag_parse_tag($tags)) {
         return [];
     }
     $tags_data = [];
     foreach ($tags as $tag) {
-        $tags_data[] = "<a href='" . $GLOBALS['xoops']->url('www/modules/' . $GLOBALS['xoopsModule']->getVar('dirname') . '/view.tag.php' . URL_DELIMITER . urlencode($tag)) . "' title='" . htmlspecialchars($tag, ENT_QUOTES | ENT_HTML5) . "'>" . htmlspecialchars($tag, ENT_QUOTES | ENT_HTML5) . '</a>';
+        $tags_data[] = "<a href='"
+                       . $GLOBALS['xoops']->url('www/modules/' . $GLOBALS['xoopsModule']->getVar('dirname') . '/view.tag.php' . URL_DELIMITER . urlencode($tag))
+                       . "' title='"
+                       . htmlspecialchars($tag, ENT_QUOTES | ENT_HTML5)
+                       . "'>"
+                       . htmlspecialchars($tag, ENT_QUOTES | ENT_HTML5)
+                       . '</a>';
     }
 
     return [
         'title'     => _MD_TAG_TAGS,
         'delimiter' => $delimiter,
-        'tags'      => $tags_data
+        'tags'      => $tags_data,
     ];
 }

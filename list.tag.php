@@ -21,7 +21,7 @@
 
 use XoopsModules\Tag\Constants;
 
-require_once __DIR__   . '/header.php';
+require_once __DIR__ . '/header.php';
 
 xoops_loadLanguage('main', 'tag');
 /*
@@ -57,7 +57,7 @@ $xoopsOption['xoops_pagetitle'] = strip_tags($page_title);
 require_once $GLOBALS['xoops']->path('/header.php');
 
 $mode_display = empty($mode_display) ? @$_GET['mode'] : $mode_display;
-switch (strtolower($mode_display)) {
+switch (mb_strtolower($mode_display)) {
     case 'list':
         $mode_display = 'list';
         $sort         = 'count';
@@ -89,7 +89,7 @@ if (!empty($modid)) {
         $criteria->add(new \Criteria('l.tag_catid', $catid));
     }
 }
-$tags =& $tagHandler->getByLimit(0, 0, $criteria);
+$tags = &$tagHandler->getByLimit(0, 0, $criteria);
 
 $count_max = 0;
 $count_min = 0;
@@ -101,7 +101,7 @@ foreach (array_keys($tags) as $key) {
     if ($tags[$key]['count'] < $count_min) {
         $count_min = $tags[$key]['count'];
     }
-    $tags_term[] = strtolower($tags[$key]['term']);
+    $tags_term[] = mb_strtolower($tags[$key]['term']);
 }
 array_multisort($tags_term, SORT_ASC, $tags);
 $count_interval = $count_max - $count_min;
@@ -122,7 +122,7 @@ foreach (array_keys($tags) as $key) {
         'level' => empty($count_max) ? 0 : floor(($tags[$key]['count'] - $count_min) * $level_limit / $count_max),
         'term'  => urlencode($tags[$key]['term']),
         'title' => htmlspecialchars($tags[$key]['term'], ENT_QUOTES | ENT_HTML5),
-        'count' => $tags[$key]['count']
+        'count' => $tags[$key]['count'],
     ];
 }
 unset($tags, $tags_term);

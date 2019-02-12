@@ -26,13 +26,13 @@ require_once __DIR__ . '/admin_header.php';
 xoops_cp_header();
 require_once $GLOBALS['xoops']->path('/modules/tag/include/vars.php');
 
-$adminObject  = \Xmf\Module\Admin::getInstance();
+$adminObject = \Xmf\Module\Admin::getInstance();
 ///** @var \XoopsModules\Tag\TagHandler $tagHandler */
 //$tagHandler = xoops_getModuleHandler('tag', $moduleDirName);
 /** @var Tag\TagHandler $tagHandler */
 $tagHandler = Tag\Helper::getInstance()->getHandler('Tag');
 
-$count_tag   = $tagHandler->getCount();
+$count_tag = $tagHandler->getCount();
 
 $count_item = 0;
 $sql        = 'SELECT COUNT(DISTINCT tl_id) FROM ' . $GLOBALS['xoopsDB']->prefix('tag_link');
@@ -52,14 +52,13 @@ if (false === ($result = $GLOBALS['xoopsDB']->query($sql))) {
     while (false !== ($myrow = $GLOBALS['xoopsDB']->fetchArray($result))) {
         $counts_module[$myrow['tag_modid']] = [
             'count_item' => $myrow['count_item'],
-            'count_tag'  => $myrow['count_tag']
+            'count_tag'  => $myrow['count_tag'],
         ];
     }
     if (!empty($counts_module)) {
-        /** @var XoopsModuleHandler $moduleHandler */
+        /** @var \XoopsModuleHandler $moduleHandler */
         $moduleHandler = xoops_getHandler('module');
         $module_list   = $moduleHandler->getList(new \Criteria('mid', '(' . implode(', ', array_keys($counts_module)) . ')', 'IN'));
-    } else {
     }
 }
 
@@ -101,5 +100,5 @@ $adminObject->displayIndex();
 
 echo $utility::getServerStats();
 
-require_once __DIR__   . '/admin_footer.php';
+require_once __DIR__ . '/admin_footer.php';
 //xoops_cp_footer();

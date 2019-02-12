@@ -18,7 +18,6 @@
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
  * @since           1.00
  */
-
 defined('XOOPS_ROOT_PATH') || die('Restricted access');
 
 /**
@@ -33,8 +32,7 @@ defined('XOOPS_ROOT_PATH') || die('Restricted access');
  *
  * @param array $items associative array of items: [modid][catid][itemid]
  *
- * @return boolean
- *
+ * @return bool
  */
 function xforum_tag_iteminfo(&$items)
 {
@@ -65,7 +63,7 @@ function xforum_tag_iteminfo(&$items)
                     'link'    => "viewpost.php?post_id={$item_id}",
                     'time'    => strtotime(date(_DATESTRING, $item_obj->getVar('post_time'))),
                     'tags'    => tag_parse_tag($item_obj->getVar('tags', 'n')),
-                    'content' => $myts->displayTarea($item_obj->getVar('post_text'), true, true, true, true, true, true)
+                    'content' => $myts->displayTarea($item_obj->getVar('post_text'), true, true, true, true, true, true),
                 ];
             }
         }
@@ -80,8 +78,7 @@ function xforum_tag_iteminfo(&$items)
  *
  * @param int $mid module id
  *
- * @return boolean
- *
+ * @return bool
  */
 function xforum_tag_synchronization($mid)
 {
@@ -90,7 +87,7 @@ function xforum_tag_synchronization($mid)
     /** @var \XoopsModules\Tag\LinkHandler $linkHandler */
     $linkHandler = \XoopsModules\Tag\Helper::getInstance()->getHandler('Link'); //@var \XoopsModules\Tag\Handler $tagHandler
 
-//    $mid = XoopsFilterInput::clean($mid, 'INT');
+    //    $mid = XoopsFilterInput::clean($mid, 'INT');
     $mid = \Xmf\Request::getInt('mid');
     /* clear tag-item links */
     /** {@internal the following statement isn't really needed any more (MySQL is really old)

@@ -18,7 +18,6 @@
  * @author          Taiwen Jiang (phppp or D.J.) <php_pp@hotmail.com>
  * @since           1.00
  */
-
 defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
 /*
@@ -29,4 +28,4 @@ defined('XOOPS_ROOT_PATH') || exit('Restricted access');
  * For English sites, you can set as array(",", ";", " ", "|")
  * For Chinese sites, set as array(",", ";", " ", "|", "��")
  */
-$GLOBALS['tag_delimiter'] = array(',', ' ', '|', ';');
+$GLOBALS['tag_delimiter'] = [',', ' ', '|', ';'];

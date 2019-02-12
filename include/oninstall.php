@@ -20,7 +20,6 @@
 use XoopsModules\Tag;
 
 /**
- *
  * Prepares system prior to attempting to install module
  * @param XoopsModule $module {@link XoopsModule}
  *
@@ -41,7 +40,7 @@ function xoops_module_pre_install_tag(\XoopsModule $module)
         return false;
     }
 
-    $mod_tables =& $module->getInfo('tables');
+    $mod_tables = &$module->getInfo('tables');
     foreach ($mod_tables as $table) {
         $GLOBALS['xoopsDB']->queryF('DROP TABLE IF EXISTS ' . $GLOBALS['xoopsDB']->prefix($table) . ';');
     }
@@ -50,7 +49,6 @@ function xoops_module_pre_install_tag(\XoopsModule $module)
 }
 
 /**
- *
  * Performs tasks required during installation of the module
  * @param XoopsModule $module {@link XoopsModule}
  *

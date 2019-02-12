@@ -19,7 +19,6 @@
  * @author          Mamba
  * @since           2.31
  */
-
 require_once __DIR__ . '/admin_header.php';
 xoops_cp_header();
 

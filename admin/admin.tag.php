@@ -43,7 +43,7 @@ $status = Request::getInt('status', Constants::STATUS_ALL, 'GET');
 
 /** @var Tag\TagHandler $tagHandler */
 /** @var Tag\LinkHandler $linkHandler */
-$tagHandler = Tag\Helper::getInstance()->getHandler('Tag');
+$tagHandler  = Tag\Helper::getInstance()->getHandler('Tag');
 $linkHandler = Tag\Helper::getInstance()->getHandler('Link');
 
 $postTags = Request::getArray('tags', [], 'POST');
@@ -78,7 +78,7 @@ if (false === $result) {
         $counts_module[$myrow['tag_modid']] = $myrow['count_tag'];
     }
     if (!empty($counts_module)) {
-        /** @var XoopsModuleHandler $moduleHandler */
+        /** @var \XoopsModuleHandler $moduleHandler */
         $moduleHandler = xoops_getHandler('module');
         $module_list   = $moduleHandler->getList(new \Criteria('mid', '(' . implode(', ', array_keys($counts_module)) . ')', 'IN'));
     }
@@ -112,7 +112,7 @@ if ($status >= Constants::STATUS_ACTIVE) {
 if (!empty($modid)) {
     $criteria->add(new \Criteria('l.tag_modid', $modid));
 }
-$tags =& $tagHandler->getByLimit(0, 0, $criteria, null, false);
+$tags = &$tagHandler->getByLimit(0, 0, $criteria, null, false);
 
 $form_tags = "<form name='tags' method='post' action='"
              . xoops_getenv('PHP_SELF')
@@ -188,4 +188,4 @@ if (empty($tags)) {
 $form_tags .= "  </tbody>\n" . "</table>\n" . "</form>\n";
 
 echo $form_tags;
-require_once __DIR__   . '/admin_footer.php';
+require_once __DIR__ . '/admin_footer.php';

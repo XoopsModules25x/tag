@@ -45,7 +45,7 @@ function tag_load_config()
                 $moduleConfig = null;
             }
         } else {
-            /** @var XoopsModuleHandler $moduleHandler */
+            /** @var \XoopsModuleHandler $moduleHandler */
             $moduleHandler = xoops_getHandler('module');
             $module        = $moduleHandler->getByDirname('tag');
 
@@ -70,7 +70,7 @@ function tag_load_config()
 function tag_define_url_delimiter()
 {
     if (defined('URL_DELIMITER')) {
-        if (!in_array(URL_DELIMITER, ['?', '/'])) {
+        if (!in_array(URL_DELIMITER, ['?', '/'], true)) {
             exit('Security Violation');
         }
     } else {

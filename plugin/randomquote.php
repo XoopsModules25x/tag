@@ -51,11 +51,10 @@ function randomquote_tag_iteminfo(&$items)
     $criteria->add(new \Criteria('id', '(' . implode(',', $items_id) . ')', 'IN'));
     $criteria->add(new \Criteria('quote_status', Constants::STATUS_ONLINE));
 
-
     /** @var \XoopsModules\Randomquote\QuotesHandler $itemHandler */
     $itemHandler = new \XoopsModules\Randomquote\QuotesHandler();
 
-    $quoteObjs    =& $itemHandler->getObjects($criteria, true);
+    $quoteObjs = &$itemHandler->getObjects($criteria, true);
 
     foreach ($cats_id as $cat_id) {
         foreach ($items_id as $item_id) {
@@ -66,7 +65,7 @@ function randomquote_tag_iteminfo(&$items)
                 'link'    => "index.php?id={$item_id}",
                 'time'    => strtotime($quoteObj->getVar('create_date')),
                 //                                               "tags" => tag_parse_tag($quoteObj->getVar("item_tag", "n")), // optional
-                'content' => ''
+                'content' => '',
             ];
         }
     }
@@ -92,8 +91,8 @@ function randomquote_tag_synchronization($mid)
     if (!$itemHandler || !$linkHandler) {
         $result = false;
     } else {
-//        $mid           = XoopsFilterInput::clean($mid, 'INT');
-        $mid = \Xmf\Request::getInt('mid');
+        //        $mid           = XoopsFilterInput::clean($mid, 'INT');
+        $mid           = \Xmf\Request::getInt('mid');
         $moduleHandler = xoops_getHandler('module');
         $rqModule      = XoopsModule::getByDirname('randomquote');
 
@@ -107,7 +106,7 @@ function randomquote_tag_synchronization($mid)
                       . "        (SELECT DISTINCT {$itemHandler->keyName} "
                       . "           FROM {$itemHandler->table} "
                       . "           WHERE {$itemHandler->table}.quote_status = "
-                      .Constants::STATUS_ONLINE
+                      . Constants::STATUS_ONLINE
                       . '        )'
                       . '    )';
             $result = $linkHandler->db->queryF($sql);

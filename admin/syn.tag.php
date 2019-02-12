@@ -50,7 +50,7 @@ if ($result = $GLOBALS['xoopsDB']->query($sql)) {
         $counts_module[$myrow['tag_modid']] = $myrow['count_tag'];
     }
     if (!empty($counts_module)) {
-        /** @var XoopsModuleHandler $moduleHandler */
+        /** @var \XoopsModuleHandler $moduleHandler */
         $moduleHandler = xoops_getHandler('module');
         $module_list   = $moduleHandler->getList(new \Criteria('mid', '(' . implode(', ', array_keys($counts_module)) . ')', 'IN'));
     }
@@ -67,12 +67,12 @@ foreach ($module_list as $module => $module_name) {
 $tray->addElement($mod_select);
 $num_select = new \XoopsFormSelect(_AM_TAG_NUM, 'limit', $limit);
 $num_select->addOptionArray([
-       0 => _ALL,
-       10 => 10,
-       50 => 50,
-       100 => 100,
-       500 => 500
-      ]);
+                                0   => _ALL,
+                                10  => 10,
+                                50  => 50,
+                                100 => 100,
+                                500 => 500,
+                            ]);
 $tray->addElement($num_select);
 $tray->addElement(new \XoopsFormButton('', 'submit', _SUBMIT, 'submit'));
 $tray->addElement(new \XoopsFormHidden('start', $start));
@@ -80,8 +80,8 @@ $opform->addElement($tray);
 $opform->display();
 
 if (\Xmf\Request::hasVar('start', 'GET')) {
-//    /** @var \XoopsModules\Tag\TagHandler $tagHandler */
-//    $tagHandler = xoops_getModuleHandler('tag', $moduleDirName);
+    //    /** @var \XoopsModules\Tag\TagHandler $tagHandler */
+    //    $tagHandler = xoops_getModuleHandler('tag', $moduleDirName);
     /** @var Tag\TagHandler $tagHandler */
     $tagHandler = Tag\Helper::getInstance()->getHandler('Tag');
 
@@ -91,7 +91,7 @@ if (\Xmf\Request::hasVar('start', 'GET')) {
     if ($modid > Constants::DEFAULT_ID) {
         $criteria->add(new \Criteria('l.tag_modid', $modid));
     }
-    $tags =& $tagHandler->getByLimit(0, 0, $criteria, null, false);
+    $tags = &$tagHandler->getByLimit(0, 0, $criteria, null, false);
     if (empty($tags) && count($tags) > 0) {
         foreach (array_keys($tags) as $tag_id) {
             $tagHandler->update_stats($tag_id, (-1 == $modid) ? Constants::DEFAULT_ID : $tags[$tag_id]['modid']);
@@ -100,4 +100,4 @@ if (\Xmf\Request::hasVar('start', 'GET')) {
     }
     echo '<h2>' . _AM_TAG_FINISHED . "</h2>\n";
 }
-require_once __DIR__   . '/admin_footer.php';
+require_once __DIR__ . '/admin_footer.php';

@@ -37,7 +37,6 @@ function tableExists($tablename)
 }
 
 /**
- *
  * Prepares system prior to attempting to install module
  * @param XoopsModule $module {@link XoopsModule}
  *
@@ -48,23 +47,22 @@ function xoops_module_pre_update_tag(\XoopsModule $module)
     /** @var Tag\Helper $helper */
     /** @var Tag\Utility $utility */
     $moduleDirName = basename(dirname(__DIR__));
-    $helper       = Tag\Helper::getInstance();
-    $utility      = new Tag\Utility();
+    $helper        = Tag\Helper::getInstance();
+    $utility       = new Tag\Utility();
 
     $xoopsSuccess = $utility::checkVerXoops($module);
     $phpSuccess   = $utility::checkVerPhp($module);
+
     return $xoopsSuccess && $phpSuccess;
 }
 
 /**
- *
  * Performs tasks required during update of the module
  * @param XoopsModule $module {@link XoopsModule}
  * @param null        $previousVersion
  *
  * @return bool true if update successful, false if not
  */
-
 function xoops_module_update_tag(\XoopsModule $module, $previousVersion = null)
 {
     global $xoopsDB;
@@ -73,12 +71,11 @@ function xoops_module_update_tag(\XoopsModule $module, $previousVersion = null)
     /** @var Tag\Helper $helper */
     /** @var Tag\Utility $utility */
     /** @var Tag\Common\Configurator $configurator */
-    $helper  = Tag\Helper::getInstance();
-    $utility = new Tag\Utility();
+    $helper       = Tag\Helper::getInstance();
+    $utility      = new Tag\Utility();
     $configurator = new Tag\Common\Configurator();
 
     if ($previousVersion < 235) {
-
         //delete old HTML templates
         if (count($configurator->templateFolders) > 0) {
             foreach ($configurator->templateFolders as $folder) {
@@ -130,7 +127,7 @@ function xoops_module_update_tag(\XoopsModule $module, $previousVersion = null)
 
         //  ---  COPY blank.png FILES ---------------
         if (count($configurator->copyBlankFiles) > 0) {
-            $file =  dirname(__DIR__) . '/assets/images/blank.png';
+            $file = dirname(__DIR__) . '/assets/images/blank.png';
             foreach (array_keys($configurator->copyBlankFiles) as $i) {
                 $dest = $configurator->copyBlankFiles[$i] . '/blank.png';
                 $utility::copyFile($file, $dest);
@@ -141,9 +138,11 @@ function xoops_module_update_tag(\XoopsModule $module, $previousVersion = null)
         $sql = 'DELETE FROM ' . $GLOBALS['xoopsDB']->prefix('tplfile') . " WHERE `tpl_module` = '" . $module->getVar('dirname', 'n') . '\' AND `tpl_file` LIKE \'%.html%\'';
         $GLOBALS['xoopsDB']->queryF($sql);
 
-        /** @var XoopsGroupPermHandler $grouppermHandler */
+        /** @var \XoopsGroupPermHandler $grouppermHandler */
         $grouppermHandler = xoops_getHandler('groupperm');
+
         return $grouppermHandler->deleteByModule($module->getVar('mid'), 'item_read');
     }
+
     return true;
 }

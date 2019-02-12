@@ -21,7 +21,7 @@
 use XoopsModules\Tag;
 
 defined('XOOPS_ROOT_PATH') || die('Restricted access');
-defined('TAG_INI') || require_once __DIR__   . '/vars.php';
+defined('TAG_INI') || require_once __DIR__ . '/vars.php';
 
 /**
  * @param  XoopsModule $module
@@ -39,7 +39,7 @@ function xoops_module_install_tag(\XoopsModule $module)
 function xoops_module_pre_install_tag(\XoopsModule $module)
 {
     //check for minimum XOOPS version
-    $currentVer  = substr(XOOPS_VERSION, 6); // get the numeric part of string
+    $currentVer  = mb_substr(XOOPS_VERSION, 6); // get the numeric part of string
     $currArray   = explode('.', $currentVer);
     $requiredVer = '' . $module->getInfo('min_xoops'); //making sure it's a string
     $reqArray    = explode('.', $requiredVer);
@@ -56,10 +56,10 @@ function xoops_module_pre_install_tag(\XoopsModule $module)
     }
 
     // check for minimum PHP version
-    $phpLen   = strlen(PHP_VERSION);
-    $extraLen = strlen(PHP_EXTRA_VERSION);
-    $verNum   = substr(PHP_VERSION, 0, $phpLen - $extraLen);
-    $reqVer   =& $module->getInfo('min_php');
+    $phpLen   = mb_strlen(PHP_VERSION);
+    $extraLen = mb_strlen(PHP_EXTRA_VERSION);
+    $verNum   = mb_substr(PHP_VERSION, 0, $phpLen - $extraLen);
+    $reqVer   = &$module->getInfo('min_php');
     if ($verNum < $reqVer) {
         $module->setErrors("The module requires PHP {$reqVer}+ ({$verNum} installed)");
 
@@ -74,7 +74,7 @@ function xoops_module_pre_install_tag(\XoopsModule $module)
     }
     */
 
-    $mod_tables =& $module->getInfo('tables');
+    $mod_tables = &$module->getInfo('tables');
     foreach ($mod_tables as $table) {
         $GLOBALS['xoopsDB']->queryF('DROP TABLE IF EXISTS ' . $GLOBALS['xoopsDB']->prefix($table) . ';');
     }
@@ -90,10 +90,11 @@ function xoops_module_pre_update_tag(\XoopsModule $module)
 {
     /** @var Tag\Utility $utility */
     $moduleDirName = basename(dirname(__DIR__));
-    $utility      = new Tag\Utility();
+    $utility       = new Tag\Utility();
 
     $xoopsSuccess = $utility::checkVerXoops($module);
     $phpSuccess   = $utility::checkVerPhp($module);
+
     return $xoopsSuccess && $phpSuccess;
 }
 
