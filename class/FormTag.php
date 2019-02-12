@@ -72,7 +72,7 @@ class FormTag extends \XoopsFormText
     {
         $delimiters = tag_get_delimiter();
         foreach (array_keys($delimiters) as $key) {
-            $delimiters[$key] = "<em style='font-weight: bold; color: red; font-style: normal;'>" . htmlspecialchars($delimiters[$key], ENT_QUOTES | ENT_HTML5) . '</em>';
+            $delimiters[$key] = "<em style='font-weight: bold; color: #ff0000; font-style: normal;'>" . htmlspecialchars($delimiters[$key], ENT_QUOTES | ENT_HTML5) . '</em>';
         }
         $render = "<input type='text' name='" . $this->getName() . "' id='" . $this->getName() . "' size='" . $this->getSize() . "' maxlength='" . $this->getMaxlength() . "' value='" . $this->getValue() . "' " . $this->getExtra() . '>';
         $render .= '<br>' . _MD_TAG_TAG_DELIMITER . ': [' . implode('], [', $delimiters) . ']';
