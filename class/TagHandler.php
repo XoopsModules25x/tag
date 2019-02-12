@@ -105,7 +105,7 @@ class TagHandler extends \XoopsPersistableObjectHandler
                 $moduleHandler = xoops_getHandler('module');
                 $modid         = ($module_obj = $moduleHandler->getByDirname($modid)) ? $module_obj->getVar('mid') : 0;
             }
-        } elseif ($GLOBALS['xoopsModule'] instanceof XoopsModule) {
+        } elseif ($GLOBALS['xoopsModule'] instanceof \XoopsModule) {
             $modid = $GLOBALS['xoopsModule']->getVar('mid');
         }
 
@@ -195,6 +195,7 @@ class TagHandler extends \XoopsPersistableObjectHandler
     public function update_stats($tag_id, $modid = 0, $catid = 0)
     {
         $tag_id = (int)$tag_id;
+        $tag_count = [];
         if (empty($tag_id)) {
             return true;
         }
