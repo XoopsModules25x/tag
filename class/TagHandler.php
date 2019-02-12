@@ -194,7 +194,7 @@ class TagHandler extends \XoopsPersistableObjectHandler
      */
     public function update_stats($tag_id, $modid = 0, $catid = 0)
     {
-        $tag_id = (int)$tag_id;
+        $tag_id    = (int)$tag_id;
         $tag_count = [];
         if (empty($tag_id)) {
             return true;

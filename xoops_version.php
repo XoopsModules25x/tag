@@ -27,8 +27,8 @@ $moduleDirName = basename(__DIR__);
 // ------------------- Informations ------------------- //
 $modversion = [
     'version'             => 2.34,
-    'module_status'       => 'RC-1',
-    'release_date'        => '2018/09/22',
+    'module_status'       => 'RC-2',
+    'release_date'        => '2019/02/11',
     'name'                => _MI_TAG_NAME,
     'description'         => _MI_TAG_DESC,
     'official'            => 0,
@@ -36,7 +36,7 @@ $modversion = [
     'author'              => 'Taiwen Jiang <phppp@users.sourceforge.net>',
     'author_website_url'  => 'https://xoops.org',
     'author_website_name' => 'XOOPS',
-    'credits'             => 'XOOPS Development Team, Trabis, Mamba',
+    'credits'             => 'XOOPS Development Team, Trabis, Mamba, Aerograf, Mage, Alfredx',
     'license'             => 'GPL 2.0 or later',
     'license_url'         => 'www.gnu.org/licenses/gpl-2.0.html/',
     'help'                => 'page=help',
@@ -52,9 +52,6 @@ $modversion = [
     'iconbig'             => 'assets/images/iconbig.png',
     'dirname'             => $moduleDirName,
     //Frameworks
-    //    'dirmoduleadmin'      => 'Frameworks/moduleclasses/moduleadmin',
-    //    'sysicons16'          => 'Frameworks/moduleclasses/icons/16',
-    //    'sysicons32'          => 'Frameworks/moduleclasses/icons/32',
     // Local path icons
     'modicons16'          => 'assets/images/icons/16',
     'modicons32'          => 'assets/images/icons/32',
