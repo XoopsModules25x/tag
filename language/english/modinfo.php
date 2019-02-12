@@ -18,10 +18,9 @@
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
  * @since           1.00
  */
+defined('XOOPS_ROOT_PATH') || die('Restricted access');
 
-defined('XOOPS_ROOT_PATH') || exit('Restricted access');
-
-define('_MI_TAG_NAME', 'XOOPS Tag');
+define('_MI_TAG_NAME', 'Tag');
 define('_MI_TAG_DESC', 'For site-wide Tag management');
 
 define('_MI_TAG_BLOCK_CLOUD', 'Tag Cloud');
@@ -64,3 +63,9 @@ define('_MI_TAG_LIMITPERLIST', 'Limit number of items per list');
 define('_MI_TAG_LIMITPERLIST_DESC', '');
 define('_MI_TAG_LIMITPERCLOUD', 'Limit number of items per cloud');
 define('_MI_TAG_LIMITPERCLOUD_DESC', '');
+define('_MI_TAG_VIEW_SEARCH', 'Search');
+
+//2.34
+define('_MI_TAG_INDEX_TPL_DESK_DESC', 'Links of a custom tags ');
+
+define('_MI_TAG_ADMENU_MIGRATE', 'Migrate');

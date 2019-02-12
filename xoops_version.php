@@ -18,107 +18,120 @@
  * @author         Taiwen Jiang <phppp@users.sourceforge.net>
  * @since          1.00
  */
+defined('XOOPS_ROOT_PATH') || die('Restricted access');
 
-defined('XOOPS_ROOT_PATH') || exit('Restricted access');
+require_once __DIR__ . '/preloads/autoloader.php';
 
 $moduleDirName = basename(__DIR__);
 
-$modversion                        = array();
-$modversion['name']                = _MI_TAG_NAME;
-$modversion['version']             = 2.33;
-$modversion['description']         = _MI_TAG_DESC;
-$modversion['image']               = 'assets/images/logo_module.png';
-$modversion['dirname']             = $moduleDirName;
-$modversion['author']              = 'Taiwen Jiang <phppp@users.sourceforge.net>';
-$modversion['nickname']            = 'phppp';
-$modversion['credits']             = 'http://xoops.org, Trabis, Mamba';
-$modversion['help']                = 'page=help';
-$modversion['license']             = 'GNU General Public License';
-$modversion['license_url']         = 'http://www.gnu.org/licenses/gpl.html';
-$modversion['official']            = 0;
-$modversion['author_website_url']  = 'http://xoops.org';
-$modversion['author_website_name'] = 'XOOPS';
-$modversion['dirmoduleadmin']      = 'Frameworks/moduleclasses';
-$modversion['icons16']             = 'Frameworks/moduleclasses/icons/16';
-$modversion['icons32']             = 'Frameworks/moduleclasses/icons/32';
+// ------------------- Informations ------------------- //
+$modversion = [
+    'version'             => 2.34,
+    'module_status'       => 'RC-1',
+    'release_date'        => '2018/09/22',
+    'name'                => _MI_TAG_NAME,
+    'description'         => _MI_TAG_DESC,
+    'official'            => 0,
+    //1 indicates official XOOPS module supported by XOOPS Dev Team, 0 means 3rd party supported
+    'author'              => 'Taiwen Jiang <phppp@users.sourceforge.net>',
+    'author_website_url'  => 'https://xoops.org',
+    'author_website_name' => 'XOOPS',
+    'credits'             => 'XOOPS Development Team, Trabis, Mamba',
+    'license'             => 'GPL 2.0 or later',
+    'license_url'         => 'www.gnu.org/licenses/gpl-2.0.html/',
+    'help'                => 'page=help',
+    // ------------------- Folders & Files -------------------
+    'release_info'        => 'Changelog',
+    'release_file'        => XOOPS_URL . "/modules/$moduleDirName/docs/changelog.txt",
 
-//about
-$modversion['module_status']       = 'RC 1';
-$modversion['release_file']        = $GLOBALS['xoops']->url("www/modules/{$moduleDirName}/docs/changelog.txt");
-$modversion['release_date']        = '2016/06/01';
-$modversion['demo_site_url']       = '';
-$modversion['demo_site_name']      = '';
-$modversion['module_website_url']  = 'http://xoops.org';
-$modversion['module_website_name'] = 'XOOPS';
-$modversion['min_php']             = '5.5';
-$modversion['min_xoops']           = '2.5.8';
-$modversion['min_admin']           = '1.1';
-$modversion['min_db']              = array('mysql' => '5.0.7', 'mysqli' => '5.0.7');
+    'manual'              => 'link to manual file',
+    'manual_file'         => XOOPS_URL . "/modules/$moduleDirName/docs/install.txt",
+    // images
+    'image'               => 'assets/images/logoModule.png',
+    'iconsmall'           => 'assets/images/iconsmall.png',
+    'iconbig'             => 'assets/images/iconbig.png',
+    'dirname'             => $moduleDirName,
+    //Frameworks
+    //    'dirmoduleadmin'      => 'Frameworks/moduleclasses/moduleadmin',
+    //    'sysicons16'          => 'Frameworks/moduleclasses/icons/16',
+    //    'sysicons32'          => 'Frameworks/moduleclasses/icons/32',
+    // Local path icons
+    'modicons16'          => 'assets/images/icons/16',
+    'modicons32'          => 'assets/images/icons/32',
+    //About
+    'demo_site_url'       => 'https://xoops.org',
+    'demo_site_name'      => 'XOOPS Demo Site',
+    'support_url'         => 'https://xoops.org/modules/newbb/viewforum.php?forum=28/',
+    'support_name'        => 'Support Forum',
+    'module_website_url'  => 'www.xoops.org',
+    'module_website_name' => 'XOOPS Project',
+    // ------------------- Min Requirements -------------
+    'min_php'             => '5.5',
+    'min_xoops'           => '2.5.9',
+    'min_admin'           => '1.2',
+    'min_db'              => ['mysql' => '5.5'],
+    // ------------------- Admin Menu -------------------
+    'system_menu'         => 1,
+    'hasAdmin'            => 1,
+    'adminindex'          => 'admin/index.php',
+    'adminmenu'           => 'admin/menu.php',
+    // ------------------- Main Menu ---------------------
+    'hasMain'             => 1,
+    'sub'                 => [
+        [
+            'name' => _MI_TAG_VIEW_SEARCH,
+            'url'  => 'index.php',
+        ],
+    ],
 
-// database tables
-$modversion['sqlfile']['mysql'] = 'sql/mysql.sql';
-$modversion['tables']           = array(
-    'tag_tag',
-    'tag_link',
-    'tag_stats'
-);
+    // ------------------- Install/Update -------------------
+    'onInstall'           => 'include/oninstall.php',
+    'onUpdate'            => 'include/onupdate.php',
+    'onUninstall'         => 'include/onuninstall.php',
+    // -------------------  PayPal ---------------------------
+    'paypal'              => [
+        'business'      => 'foundation@xoops.org',
+        'item_name'     => 'Donation : ' . _MI_TAG_NAME,
+        'amount'        => 0,
+        'currency_code' => 'USD',
+    ],
+    // ------------------- Search ---------------------------
+    'hasSearch'           => 1,
+    'search'              => [
+        'file' => 'include/search.inc.php',
+        'func' => 'tag_search',
+    ],
+    // ------------------- Comments -------------------------
+    'hasComments'         => 0,
 
-// Admin things
-$modversion['hasAdmin']   = 1;
-$modversion['adminindex'] = 'admin/index.php';
-$modversion['adminmenu']  = 'admin/menu.php';
+    // ------------------- Notification ----------------------
+    'hasNotification'     => 0,
 
-// Menu
-$modversion['hasMain'] = 1;
-
-// Admin menu
-// Set to 1 if you want to display menu generated by system module
-$modversion['system_menu'] = 1;
-
-$modversion['onInstall']   = 'include/oninstall.php';
-$modversion['onUpdate']    = 'include/onupdate.php';
-$modversion['onUninstall'] = 'include/onuninstall.php';
+    // ------------------- Mysql -----------------------------
+    'sqlfile'             => ['mysql' => 'sql/mysql.sql'],
+    // ------------------- Tables ----------------------------
+    'tables'              => [
+        $moduleDirName . '_' . 'tag',
+        $moduleDirName . '_' . 'link',
+        $moduleDirName . '_' . 'stats',
+    ],
+];
 
 // Use smarty
 $modversion['use_smarty'] = 1;
 
-/**
- * Templates
- */
-$modversion['templates'] = array(
-    array(
-        'file'        => 'tag_index.tpl',
-        'description' => '_MI_TAG_INDEX_TPL_DESC'
-    ),
-
-    array(
-        'file'        => 'tag_list.tpl',
-        'description' => _MI_TAG_INDEX_TPL_LIST_DESC
-    ),
-
-    array(
-        'file'        => 'tag_view.tpl',
-        'description' => _MI_TAG_INDEX_TPL_VIEW_DESC
-    ),
-
-    array(
-        'file'        => 'tag_bar.tpl',
-        'description' => _MI_TAG_INDEX_TPL_BAR_DESC
-    ),
-
-    array(
-        'file'        => "admin/{$moduleDirName}_admin_about.tpl",
-        'description' => _MI_TAG_INDEX_ADMINTPL_ABOUT_DESC
-    ),
-
-    array(
-        'file'        => "admin/{$moduleDirName}_admin_help.tpl",
-        'description' => _MI_TAG_INDEX_ADMINTPL_HELP_DESC
-    )
-);
+// ------------------- Templates ------------------- //
+$modversion['templates'] = [
+    ['file' => 'tag_index.tpl', 'description' => '_MI_TAG_INDEX_TPL_DESC'],
+    ['file' => 'tag_list.tpl', 'description' => _MI_TAG_INDEX_TPL_LIST_DESC],
+    ['file' => 'tag_view.tpl', 'description' => _MI_TAG_INDEX_TPL_VIEW_DESC],
+    ['file' => 'tag_bar.tpl', 'description' => _MI_TAG_INDEX_TPL_BAR_DESC],
+    ['file' => "admin/{$moduleDirName}_admin_about.tpl", 'description' => _MI_TAG_INDEX_ADMINTPL_ABOUT_DESC],
+    ['file' => "admin/{$moduleDirName}_admin_help.tpl", 'description' => _MI_TAG_INDEX_ADMINTPL_HELP_DESC],
+];
 
 // Blocks
-$modversion['blocks'] = array(
+$modversion['blocks'] = [
     /*
      * $options:
      *                    $options[0] - number of tags to display
@@ -126,30 +139,30 @@ $modversion['blocks'] = array(
      *                    $options[2] - max font size (px or %)
      *                    $options[3] - min font size (px or %)
      */
-    array(
+    [
         'file'        => 'block.php',
         'name'        => _MI_TAG_BLOCK_CLOUD,
         'description' => _MI_TAG_BLOCK_CLOUD_DESC,
         'show_func'   => 'tag_block_cloud_show',
         'edit_func'   => 'tag_block_cloud_edit',
         'options'     => '100|0|150|80',
-        'template'    => 'tag_block_cloud.tpl'
-    ),
+        'template'    => 'tag_block_cloud.tpl',
+    ],
     /*
      * $options:
      *                    $options[0] - number of tags to display
      *                    $options[1] - time duration, in days, 0 for all the time
      *                    $options[2] - sort: a - alphabet; c - count; t - time
      */
-    array(
+    [
         'file'        => 'block.php',
         'name'        => _MI_TAG_BLOCK_TOP,
         'description' => _MI_TAG_BLOCK_TOP_DESC,
         'show_func'   => 'tag_block_top_show',
         'edit_func'   => 'tag_block_top_edit',
         'options'     => '50|30|a',
-        'template'    => 'tag_block_top.tpl'
-    ),
+        'template'    => 'tag_block_top.tpl',
+    ],
 
     /*
      * $options for cumulus:
@@ -166,65 +179,52 @@ $modversion['blocks'] = array(
      *                    $options[10] - cumulus_flash_hicolor
      *                    $options[11] - cumulus_flash_speed
      */
-    array(
+    [
         'file'        => 'block.php',
         'name'        => _MI_TAG_BLOCK_CUMULUS,
         'description' => _MI_TAG_BLOCK_CUMULUS_DESC,
         'show_func'   => 'tag_block_cumulus_show',
         'edit_func'   => 'tag_block_cumulus_edit',
         'options'     => '100|0|24|12|160|140|#ffffff|0|#000000|#003300|#00ff00|100',
-        'template'    => 'tag_block_cumulus.tpl'
-    )
-);
-
-// Search
-$modversion['hasSearch']      = 1;
-$modversion['search']['file'] = 'include/search.inc.php';
-$modversion['search']['func'] = 'tag_search';
-
-// Comments
-$modversion['hasComments'] = 0;
+        'template'    => 'tag_block_cumulus.tpl',
+    ],
+];
 
 // Configs
-$modversion['config'] = array(
-    array(
+$modversion['config'] = [
+    [
         'name'        => 'do_urw',
         'title'       => '_MI_TAG_DOURLREWRITE',
         'description' => '_MI_TAG_DOURLREWRITE_DESC',
         'formtype'    => 'yesno',
         'valuetype'   => 'int',
-        'default'     => in_array(php_sapi_name(), array('apache', 'apache2handler'))
-    ),
+        'default'     => in_array(PHP_SAPI, ['apache', 'apache2handler'], true),
+    ],
 
-    array(
+    [
         'name'        => 'items_perpage',
         'title'       => '_MI_TAG_ITEMSPERPAGE',
         'description' => '_MI_TAG_ITEMSPERPAGE_DESC',
         'formtype'    => 'textbox',
         'valuetype'   => 'int',
-        'default'     => 10
-    ),
+        'default'     => 10,
+    ],
 
-    array(
+    [
         'name'        => 'limit_tag_list',
         'title'       => '_MI_TAG_LIMITPERLIST',
         'description' => '_MI_TAG_LIMITPERLIST_DESC',
         'formtype'    => 'textbox',
         'valuetype'   => 'int',
-        'default'     => 10
-    ),
+        'default'     => 10,
+    ],
 
-    array(
+    [
         'name'        => 'limit_cloud_list',
         'title'       => '_MI_TAG_LIMITPERCLOUD',
         'description' => '_MI_TAG_LIMITPERCLOUD_DESC',
         'formtype'    => 'textbox',
         'valuetype'   => 'int',
-        'default'     => 100
-    )
-);
-
-// Notification
-
-$modversion['hasNotification'] = 0;
-$modversion['notification']    = array();
+        'default'     => 100,
+    ],
+];

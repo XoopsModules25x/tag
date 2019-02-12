@@ -1,4 +1,7 @@
 <?php
+
+namespace XoopsModules\Tag;
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -20,26 +23,9 @@
  * @since           1.00
  */
 
-defined('XOOPS_ROOT_PATH') || exit('Restricted access');
+use XoopsModules\Tag;
 
-/**
- * Class TagLink
- */
-class TagLink extends XoopsObject
-{
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->initVar('tl_id', XOBJ_DTYPE_INT, null, false);
-        $this->initVar('tag_id', XOBJ_DTYPE_INT, 0);
-        $this->initVar('tag_modid', XOBJ_DTYPE_INT, 0);
-        $this->initVar('tag_catid', XOBJ_DTYPE_INT, 0);
-        $this->initVar('tag_itemid', XOBJ_DTYPE_INT, 0);
-        $this->initVar('tag_time', XOBJ_DTYPE_INT, 0);
-    }
-}
+defined('XOOPS_ROOT_PATH') || die('Restricted access');
 
 /**
  * Tag link handler class.
@@ -49,19 +35,18 @@ class TagLink extends XoopsObject
  * @copyright   copyright &copy; The XOOPS Project
  *
  * {@link XoopsPersistableObjectHandler}
- *
  */
-class TagLinkHandler extends XoopsPersistableObjectHandler
+class LinkHandler extends \XoopsPersistableObjectHandler
 {
     public $table_stats;
 
     /**
      * TagLinkHandler constructor.
-     * @param XoopsDatabase $db
+     * @param \XoopsDatabase|null $db
      */
-    public function __construct(XoopsDatabase $db)
+    public function __construct(\XoopsDatabase $db = null)
     {
-        parent::__construct($db, 'tag_link', 'TagLink', 'tl_id', 'tag_itemid');
+        parent::__construct($db, 'tag_link', Link::class, 'tl_id', 'tag_itemid');
         $this->table_stats = $this->db->prefix('tag_stats');
     }
 

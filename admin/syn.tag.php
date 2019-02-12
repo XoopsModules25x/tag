@@ -19,71 +19,85 @@
  * @since           1.00
  */
 
+use Xmf\Request;
+use XoopsModules\Tag;
+use XoopsModules\Tag\Constants;
+
 require_once __DIR__ . '/admin_header.php';
 require_once $GLOBALS['xoops']->path('/class/xoopsformloader.php');
-xoops_load('xoopsrequest');
-//include_once $GLOBALS['xoops']->path("/modules/" . $GLOBALS['xoopsModule']->getVar("dirname") . "/class/admin.php");
 
-include $GLOBALS['xoops']->path('/modules/tag/include/vars.php');
+//require_once $GLOBALS['xoops']->path("/modules/" . $GLOBALS['xoopsModule']->getVar("dirname") . "/class/admin.php");
+
+require_once $GLOBALS['xoops']->path('/modules/tag/include/vars.php');
 
 xoops_cp_header();
 
-$index_admin = new ModuleAdmin();
-echo $index_admin->addNavigation(basename(__FILE__));
+$adminObject = \Xmf\Module\Admin::getInstance();
+$adminObject->displayNavigation(basename(__FILE__));
 
-$modid = XoopsRequest::getInt('modid', TagConstants::DEFAULT_ID);
-$start = XoopsRequest::getInt('start', TagConstants::BEGINNING);
-$limit = XoopsRequest::getInt('limit', TagConstants::DEFAULT_LIMIT);
+$modid = Request::getInt('modid', Constants::DEFAULT_ID);
+$start = Request::getInt('start', Constants::BEGINNING);
+$limit = Request::getInt('limit', Constants::DEFAULT_LIMIT);
 
-$sql = 'SELECT tag_modid, COUNT(DISTINCT tag_id) AS count_tag';
-$sql .= ' FROM ' . $GLOBALS['xoopsDB']->prefix('tag_link');
-$sql .= ' GROUP BY tag_modid';
-$counts_module = array();
-$module_list   = array();
+$sql           = 'SELECT tag_modid, COUNT(DISTINCT tag_id) AS count_tag';
+$sql           .= ' FROM ' . $GLOBALS['xoopsDB']->prefix('tag_link');
+$sql           .= ' GROUP BY tag_modid';
+$counts_module = [];
+$module_list   = [];
+
 if ($result = $GLOBALS['xoopsDB']->query($sql)) {
-    while ($myrow = $GLOBALS['xoopsDB']->fetchArray($result)) {
+    while (false !== ($myrow = $GLOBALS['xoopsDB']->fetchArray($result))) {
         $counts_module[$myrow['tag_modid']] = $myrow['count_tag'];
     }
     if (!empty($counts_module)) {
+        /** @var \XoopsModuleHandler $moduleHandler */
         $moduleHandler = xoops_getHandler('module');
-        $module_list   = $moduleHandler->getList(new Criteria('mid', '(' . implode(', ', array_keys($counts_module)) . ')', 'IN'));
+        $module_list   = $moduleHandler->getList(new \Criteria('mid', '(' . implode(', ', array_keys($counts_module)) . ')', 'IN'));
     }
 }
 
-$opform     = new XoopsSimpleForm('', 'moduleform', xoops_getenv('PHP_SELF'), 'get');
-$tray       = new XoopsFormElementTray('');
-$mod_select = new XoopsFormSelect(_SELECT, 'modid', $modid);
+$opform     = new \XoopsSimpleForm('', 'moduleform', xoops_getenv('PHP_SELF'), 'get', true);
+$tray       = new \XoopsFormElementTray('');
+$mod_select = new \XoopsFormSelect(_SELECT, 'modid', $modid);
 $mod_select->addOption(-1, _AM_TAG_GLOBAL);
 $mod_select->addOption(0, _AM_TAG_ALL);
 foreach ($module_list as $module => $module_name) {
     $mod_select->addOption($module, $module_name . ' (' . $counts_module[$module] . ')');
 }
 $tray->addElement($mod_select);
-$num_select = new XoopsFormSelect(_AM_TAG_NUM, 'limit', $limit);
-$num_select->addOptionArray(array(0 => _ALL, 10 => 10, 50 => 50, 100 => 100, 500 => 500));
+$num_select = new \XoopsFormSelect(_AM_TAG_NUM, 'limit', $limit);
+$num_select->addOptionArray([
+                                0   => _ALL,
+                                10  => 10,
+                                50  => 50,
+                                100 => 100,
+                                500 => 500,
+                            ]);
 $tray->addElement($num_select);
-$tray->addElement(new XoopsFormButton('', 'submit', _SUBMIT, 'submit'));
-$tray->addElement(new XoopsFormHidden('start', $start));
+$tray->addElement(new \XoopsFormButton('', 'submit', _SUBMIT, 'submit'));
+$tray->addElement(new \XoopsFormHidden('start', $start));
 $opform->addElement($tray);
 $opform->display();
 
-if (isset($_GET['start'])) {
-    $tag_handler = xoops_getModuleHandler('tag', $thisModuleDir);
+if (\Xmf\Request::hasVar('start', 'GET')) {
+    //    /** @var \XoopsModules\Tag\TagHandler $tagHandler */
+    //    $tagHandler = xoops_getModuleHandler('tag', $moduleDirName);
+    /** @var Tag\TagHandler $tagHandler */
+    $tagHandler = Tag\Helper::getInstance()->getHandler('Tag');
 
-    $criteria = new CriteriaCompo();
+    $criteria = new \CriteriaCompo();
     $criteria->setStart($start);
     $criteria->setLimit($limit);
-    if ($modid > TagConstants::DEFAULT_ID) {
-        $criteria->add(new Criteria('l.tag_modid', $modid));
+    if ($modid > Constants::DEFAULT_ID) {
+        $criteria->add(new \Criteria('l.tag_modid', $modid));
     }
-    $tags = $tag_handler->getByLimit(0, 0, $criteria, null, false);
-    if (empty($tags)) {
-        echo '<h2>' . _AM_TAG_FINISHED . "</h2>\n";
-    } else {
+    $tags = &$tagHandler->getByLimit(0, 0, $criteria, null, false);
+    if (empty($tags) && count($tags) > 0) {
         foreach (array_keys($tags) as $tag_id) {
-            $tag_handler->update_stats($tag_id, (-1 == $modid) ? TagConstants::DEFAULT_ID : $tags[$tag_id]['modid']);
+            $tagHandler->update_stats($tag_id, (-1 == $modid) ? Constants::DEFAULT_ID : $tags[$tag_id]['modid']);
         }
-        redirect_header("syn.tag.php?modid={$modid}&amp;start=" . ($start + $limit) . "&amp;limit={$limit}", TagConstants::REDIRECT_DELAY_SHORT, _AM_TAG_IN_PROCESS);
+        redirect_header("syn.tag.php?modid={$modid}&amp;start=" . ($start + $limit) . "&amp;limit={$limit}", Constants::REDIRECT_DELAY_SHORT, _AM_TAG_IN_PROCESS);
     }
+    echo '<h2>' . _AM_TAG_FINISHED . "</h2>\n";
 }
-include __DIR__ . '/admin_footer.php';
+require_once __DIR__ . '/admin_footer.php';

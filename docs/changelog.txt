@@ -1,19 +1,36 @@
-2.33 RC 1         2016-06-01
-=================================
+<h5>2.34 RC-1         [NOT RELEASED]</h5>  Dev: Xoops 2.5.9, PHP 7.2.3
+<hr>
+- update Help (mamba)
+- Updates for PayPal changes (zyspec)
+- added Contributing.md (mamba)
+- replaced include with require (mamba)
+- added 'true' for tokens in forms (mamba)
+- changed _handler to Handler (mamba)
+- reference mismatch (mamba)
+- added debug_backtrace (mamba)
+- started conversion to XMF (mamba)
+    &nbsp;&nbsp;- updated addInfoBoxLine entries (mamba)
+    &nbsp;&nbsp;- displayNavigation(basename(__FILE__))  (mamba)
+    &nbsp;&nbsp;- changed to ->displayButton('left') (mamba)
+
+
+<h5>2.33 RC 1         [2016-06-01]</h5>
+<hr>
 - added check for plugins in /class/plugins (in preparation for next version of XOOPS (mamba)
 - fixed XOOPS version check on install (zyspec)
 - fixed call to XoopsFormText in TagFormTag class (zyspec)
 - removed @version (mamba)
 - code cosmetics (mamba)
-- replaced <b /> with <b> (mamba)
+- replaced < br /> with < br > (mamba)
 - XOOPS 2.5.8 and PHP 7 fixes (mamba)
 - addNavigation(basename(__FILE__)) (mamba)
 - Unnecessary double quotes (mamba)
 - reference mismatch (mamba)
 - Hardening to type safe (mamba)
 
-2.33 Beta 1       2014-12-05
-=================================
+
+<h5>2.33 Beta 1       [2014-12-05]</h5>
+<hr>
 + minor code cleanup (zyspec)
   * moved some hardcoded language strings to language files (zyspec)
   * file formatting (tabs-> 4 spaces) (zyspec)
@@ -34,44 +51,52 @@
 + modified module defines naming to standardize with other XOOPS modules (zyspec)
 + added randomquote ./plugin (zyspec)
 
-2.32 Beta 2       2014-04-23
-=================================
+
+<h5>2.32 Beta 2       [2014-04-23]</h5>
+<hr>
 + moved all images, CSS, and JS files to /assets (mamba)
 + renamed .html Smarty templates to .tpl (mamba)
 
-2.32 Beta 1     (2013-08-12)
-=================================
+
+<h5>2.32 Beta 1     [2013-08-12]</h5>
+<hr>
 + fixed pagination (mamba)
 + fixed updates and refresh of links in admin (mamba)
 + Items per page taken now from Preferences (mamba)
 + standardized look of the table in Tag Admin
 
-2.31 Final (Dec. 12, 2012)
-=================================
+<h5>2.31 Final [Dec. 12, 2012]</h5>
+<hr>
 + small code adjustments
 
-2.31 Beta (July 10, 2011)
-=================================
+
+<h5>2.31 Beta [July 10, 2011]</h5>
+<hr>
 + removed all icon files and point them to /Frameworks/moduleclasses (Mamba)
 + Updated GUI to XOOPS Module Standard (Mamba)
 + Fix tag phrase (Voltan)
 
-2.3 Final (August 11th, 2010)
-=================================
+
+<h5>2.3 Final [August 11th, 2010]</h5>
+<hr>
 + Fixed footer.php file inclusion
 
-2.30 RC (October 12th, 2008)
-=================================
+
+<h5>2.30 RC [October 12th, 2008]</h5>
+<hr>
 + For XOOPS 2.3+
 
-2.0 (May 4th, 2008)
-=================================
+
+<h5>2.0 [May 4th, 2008]</h5>
+<hr>
 + For XOOPS 2.3.0
 
-1.60 (Jan 3rd, 2007)
-=================================
+
+<h5>1.60 [Jan 3rd, 2007]</h5>
+<hr>
 + Added global search
 
-Oct 29th, 2006
-=================================
+
+<h5>1.x   [Oct 29th, 2006]</h5>
+<hr>
 + Minor bugfix by Gizmhail

@@ -18,8 +18,7 @@
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
  * @since           1.00
  */
-
-defined('XOOPS_ROOT_PATH') || exit('Restricted access');
+defined('XOOPS_ROOT_PATH') || die('Restricted access');
 
 /**
  * @param         $queryarray
@@ -32,11 +31,11 @@ defined('XOOPS_ROOT_PATH') || exit('Restricted access');
  */
 function &tag_search($queryarray, $andor, $limit, $offset, $userid, $sortby = 'tag_term ASC')
 {
-    $ret   = array();
+    $ret   = [];
     $count = is_array($queryarray) ? count($queryarray) : 0;
     $sql   = 'SELECT tag_id, tag_term FROM ' . $GLOBALS['xoopsDB']->prefix('tag_tag');
     if ($count > 0) {
-        if ($andor === 'exact') {
+        if ('exact' === $andor) {
             $sql .= " WHERE tag_term = '{$queryarray[0]}'";
             for ($i = 1; $i < $count; ++$i) {
                 $sql .= " {$andor} tag_term = '{$queryarray[$i]}'";
@@ -56,7 +55,7 @@ function &tag_search($queryarray, $andor, $limit, $offset, $userid, $sortby = 't
     }
     $result = $GLOBALS['xoopsDB']->query($sql, $limit, $offset);
     $i      = 0;
-    while ($myrow = $GLOBALS['xoopsDB']->fetchArray($result)) {
+    while (false !== ($myrow = $GLOBALS['xoopsDB']->fetchArray($result))) {
         $ret[$i]['link']  = 'view.tag.php?tag=' . $myrow['tag_id'];
         $ret[$i]['title'] = $myrow['tag_term'];
         ++$i;

@@ -1,4 +1,7 @@
 <?php
+
+namespace XoopsModules\Tag;
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -20,15 +23,13 @@
  * @author          ZySpec <owners@zyspec.com>
  * @since           2.33
  */
-
-defined('XOOPS_ROOT_PATH') || exit('Restricted access');
+defined('XOOPS_ROOT_PATH') || die('Restricted access');
 
 /**
  * A simple HTML5 type validated input field
  */
-class TagFormValidatedInput extends XoopsFormText
+class FormValidatedInput extends \XoopsFormText
 {
-
     /**
      * Initial type
      *
@@ -57,7 +58,7 @@ class TagFormValidatedInput extends XoopsFormText
      */
     public function __construct($caption, $name, $size, $maxlength, $value = '', $type = 'text')
     {
-        $this->_htmlTypes = array(
+        $this->_htmlTypes = [
             'color',
             'date',
             'datetime',
@@ -71,28 +72,14 @@ class TagFormValidatedInput extends XoopsFormText
             'text',
             'time',
             'url',
-            'week'
-        );
+            'week',
+        ];
         $this->setCaption($caption);
         $this->setName($name);
         $this->_size      = (int)$size;
         $this->_maxlength = (int)$maxlength;
         $this->setValue($value);
         $this->setType($type);
-    }
-
-    /**
-     *
-     * XoopsFormText method is included here as an override for the base class (XoopsFormText)
-     * @param        $caption
-     * @param        $name
-     * @param        $size
-     * @param        $maxlength
-     * @param string $value
-     */
-    public function XoopsFormText(&$caption, &$name, &$size, &$maxlength, $value = '')
-    {
-        self::__construct($caption, $name, $size, $maxlength, $value, 'text');
     }
 
     /**
@@ -108,7 +95,7 @@ class TagFormValidatedInput extends XoopsFormText
     /**
      * Get HTML types supported
      *
-     * @return array containing HTML type(s) supported
+     * @return string|array containing HTML type(s) supported
      */
     public function getHtmlTypes()
     {
@@ -125,8 +112,12 @@ class TagFormValidatedInput extends XoopsFormText
         if (isset($value)) {
             if (is_array($value)) {
                 $value       = isset($value['type']) ? mb_strtolower($value['type']) : 'text';
-                $this->_type = in_array($value, $this->_htmlTypes) ? $value : 'text';
-                if (in_array($value['type'], array('number', 'date', 'range'))) {
+                $this->_type = in_array($value, $this->_htmlTypes, true) ? $value : 'text';
+                if (in_array($value['type'], [
+                    'number',
+                    'date',
+                    'range',
+                ], true)) {
                     if (isset($value['min'])) {
                         $this->setExtra('min=' . $value['min']);
                     }
@@ -136,7 +127,7 @@ class TagFormValidatedInput extends XoopsFormText
                 }
             } else {
                 $value       = isset($value) ? mb_strtolower($value) : 'text';
-                $this->_type = in_array($value, $this->_htmlTypes) ? $value : 'text';
+                $this->_type = in_array($value, $this->_htmlTypes, true) ? $value : 'text';
             }
         } else {
             $this->_type = 'text';
@@ -153,23 +144,6 @@ class TagFormValidatedInput extends XoopsFormText
         $myClasses = $this->getClass();
         $classes   = $myClasses ? " class='{$myClasses}'" : '';
 
-        return "<input type='"
-               . $this->_type
-               . "' name='"
-               . $this->getName()
-               . "' title='"
-               . $this->getTitle()
-               . "' id='"
-               . $this->getName()
-               . "' size='"
-               . $this->getSize()
-               . "' maxlength='"
-               . $this->getMaxlength()
-               . "' value='"
-               . $this->getValue()
-               . "'"
-               . $classes
-               . $this->getExtra()
-               . ' />';
+        return "<input type='" . $this->_type . "' name='" . $this->getName() . "' title='" . $this->getTitle() . "' id='" . $this->getName() . "' size='" . $this->getSize() . "' maxlength='" . $this->getMaxlength() . "' value='" . $this->getValue() . "'" . $classes . $this->getExtra() . '>';
     }
 }

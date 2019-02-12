@@ -19,91 +19,100 @@
  * @since           1.00
  */
 
+use Xmf\Request;
+use XoopsModules\Tag;
+use XoopsModules\Tag\Constants;
+
 require_once __DIR__ . '/admin_header.php';
 require_once $GLOBALS['xoops']->path('/class/xoopsformloader.php');
-xoops_load('xoopsrequest');
 
-$indexAdmin = new ModuleAdmin();
+$adminObject = \Xmf\Module\Admin::getInstance();
 
 xoops_cp_header();
 
-include $GLOBALS['xoops']->path('/modules/tag/include/vars.php');
-echo $indexAdmin->addNavigation(basename(__FILE__));
+require_once $GLOBALS['xoops']->path('/modules/tag/include/vars.php');
+$adminObject->displayNavigation(basename(__FILE__));
 
 $limit  = $GLOBALS['xoopsModuleConfig']['items_perpage'];
-$modid  = XoopsRequest::getInt('modid', TagConstants::DEFAULT_ID);
-$start  = XoopsRequest::getInt('start', TagConstants::BEGINNING);
-$status = XoopsRequest::getInt('status', TagConstants::STATUS_ALL, 'GET');
+$modid  = Request::getInt('modid', Constants::DEFAULT_ID);
+$start  = Request::getInt('start', Constants::BEGINNING);
+$status = Request::getInt('status', Constants::STATUS_ALL, 'GET');
+///** @var \XoopsModules\Tag\TagHandler $tagHandler */
+//$tagHandler  = xoops_getModuleHandler('tag', $moduleDirName);
+//$linkHandler = xoops_getModuleHandler('link', $moduleDirName);
 
-$tag_handler  = xoops_getModuleHandler('tag', $thisModuleDir);
-$link_handler = xoops_getModuleHandler('link', $thisModuleDir);
+/** @var Tag\TagHandler $tagHandler */
+/** @var Tag\LinkHandler $linkHandler */
+$tagHandler  = Tag\Helper::getInstance()->getHandler('Tag');
+$linkHandler = Tag\Helper::getInstance()->getHandler('Link');
 
-$postTags = XoopsRequest::getArray('tags', array(), 'POST');
+$postTags = Request::getArray('tags', [], 'POST');
 if (!empty($postTags)) {
     $msgDBUpdated = '';
     foreach ($postTags as $tag => $tag_status) {
-        $tag_obj =& $tag_handler->get($tag);
-        if (!($tag_obj instanceof TagTag) || !$tag_obj->getVar('tag_id')) {
+        $tag_obj = $tagHandler->get($tag);
+        if (!($tag_obj instanceof Tag) || !$tag_obj->getVar('tag_id')) {
             continue;
         }
-        if ($tag_status < TagConstants::STATUS_ACTIVE) {
-            $tag_handler->delete($tag_obj);
+        if ($tag_status < Constants::STATUS_ACTIVE) {
+            $tagHandler->delete($tag_obj);
         } elseif ($tag_status != $tag_obj->getVar('tag_status')) {
             $tag_obj->setVar('tag_status', $tag_status);
-            $tag_handler->insert($tag_obj);
+            $tagHandler->insert($tag_obj);
             $msgDBUpdated = _AM_TAG_DB_UPDATED;
         }
     }
-    redirect_header("admin.tag.php?modid={$modid}&amp;start={$start}&amp;status={$status}", TagConstants::REDIRECT_DELAY_MEDIUM, $msgDBUpdated);
+    redirect_header("admin.tag.php?modid={$modid}&amp;start={$start}&amp;status={$status}", Constants::REDIRECT_DELAY_MEDIUM, $msgDBUpdated);
 }
 
-$sql = 'SELECT tag_modid, COUNT(DISTINCT tag_id) AS count_tag';
-$sql .= ' FROM ' . $GLOBALS['xoopsDB']->prefix('tag_link');
-$sql .= ' GROUP BY tag_modid';
-$counts_module = array();
-$module_list   = array();
+$sql           = 'SELECT tag_modid, COUNT(DISTINCT tag_id) AS count_tag';
+$sql           .= ' FROM ' . $GLOBALS['xoopsDB']->prefix('tag_link');
+$sql           .= ' GROUP BY tag_modid';
+$counts_module = [];
+$module_list   = [];
 $result        = $GLOBALS['xoopsDB']->query($sql);
 if (false === $result) {
     xoops_error($GLOBALS['xoopsDB']->error());
 } else {
-    while ($myrow = $GLOBALS['xoopsDB']->fetchArray($result)) {
+    while (false !== ($myrow = $GLOBALS['xoopsDB']->fetchArray($result))) {
         $counts_module[$myrow['tag_modid']] = $myrow['count_tag'];
     }
     if (!empty($counts_module)) {
+        /** @var \XoopsModuleHandler $moduleHandler */
         $moduleHandler = xoops_getHandler('module');
-        $module_list   = $moduleHandler->getList(new Criteria('mid', '(' . implode(', ', array_keys($counts_module)) . ')', 'IN'));
+        $module_list   = $moduleHandler->getList(new \Criteria('mid', '(' . implode(', ', array_keys($counts_module)) . ')', 'IN'));
     }
 }
 
-$opform     = new XoopsSimpleForm('', 'moduleform', xoops_getenv('PHP_SELF'), 'get');
-$tray       = new XoopsFormElementTray('');
-$mod_select = new XoopsFormSelect(_SELECT, 'modid', $modid);
+$opform     = new \XoopsSimpleForm('', 'moduleform', xoops_getenv('PHP_SELF'), 'get', true);
+$tray       = new \XoopsFormElementTray('');
+$mod_select = new \XoopsFormSelect(_SELECT, 'modid', $modid);
 $mod_select->addOption(0, _ALL);
 foreach ($module_list as $module => $module_name) {
     $mod_select->addOption($module, $module_name . ' (' . $counts_module[$module] . ')');
 }
 $tray->addElement($mod_select);
-$status_select = new XoopsFormRadio('', 'status', $status);
-$status_select->addOption(TagConstants::STATUS_ALL, _ALL);
-$status_select->addOption(TagConstants::STATUS_ACTIVE, _AM_TAG_ACTIVE);
-$status_select->addOption(TagConstants::STATUS_INACTIVE, _AM_TAG_INACTIVE);
+$status_select = new \XoopsFormRadio('', 'status', $status);
+$status_select->addOption(Constants::STATUS_ALL, _ALL);
+$status_select->addOption(Constants::STATUS_ACTIVE, _AM_TAG_ACTIVE);
+$status_select->addOption(Constants::STATUS_INACTIVE, _AM_TAG_INACTIVE);
 $tray->addElement($status_select);
-$tray->addElement(new XoopsFormButton('', 'submit', _SUBMIT, 'submit'));
+$tray->addElement(new \XoopsFormButton('', 'submit', _SUBMIT, 'submit'));
 $opform->addElement($tray);
 $opform->display();
 
-$criteria = new CriteriaCompo();
+$criteria = new \CriteriaCompo();
 $criteria->setSort('a');
 $criteria->setOrder('ASC');
 $criteria->setStart($start);
 $criteria->setLimit($limit);
-if ($status >= TagConstants::STATUS_ACTIVE) {
-    $criteria->add(new Criteria('o.tag_status', $status));
+if ($status >= Constants::STATUS_ACTIVE) {
+    $criteria->add(new \Criteria('o.tag_status', $status));
 }
 if (!empty($modid)) {
-    $criteria->add(new Criteria('l.tag_modid', $modid));
+    $criteria->add(new \Criteria('l.tag_modid', $modid));
 }
-$tags = $tag_handler->getByLimit(0, 0, $criteria, null, false);
+$tags = &$tagHandler->getByLimit(0, 0, $criteria, null, false);
 
 $form_tags = "<form name='tags' method='post' action='"
              . xoops_getenv('PHP_SELF')
@@ -137,41 +146,41 @@ if (empty($tags)) {
                       . $tags[$key]['term']
                       . "</td>\n"
                       . "    <td  class='txtcenter'><input type='radio' name='tags[{$key}]' value='"
-                      . TagConstants::STATUS_INACTIVE
+                      . Constants::STATUS_INACTIVE
                       . "'"
                       . ($tags[$key]['status'] ? ' checked' : " '' ")
                       . "></td>\n"
                       . "    <td  class='txtcenter'><input type='radio' name='tags[{$key}]' value='"
-                      . TagConstants::STATUS_ACTIVE
+                      . Constants::STATUS_ACTIVE
                       . "'"
                       . ($tags[$key]['status'] ? " '' " : ' checked')
                       . "></td>\n"
                       . "    <td  class='txtcenter'><input type='radio' name='tags[{$key}]' value='"
-                      . TagConstants::STATUS_DELETE
+                      . Constants::STATUS_DELETE
                       . "'></td>\n"
                       . "  </tr>\n";
-        $class_tr = ('even' === $class_tr) ? 'odd' : 'even';
+        $class_tr  = ('even' === $class_tr) ? 'odd' : 'even';
     }
     if (!empty($start) || (count($tags) >= $limit)) {
-        $count_tag = $tag_handler->getCount($criteria);
+        $count_tag = $tagHandler->getCount($criteria);
 
-        include $GLOBALS['xoops']->path('/class/pagenav.php');
-        $nav = new XoopsPageNav($count_tag, $limit, $start, 'start', "modid={$modid}&amp;status={$status}");
+        require_once $GLOBALS['xoops']->path('/class/pagenav.php');
+        $nav       = new \XoopsPageNav($count_tag, $limit, $start, 'start', "modid={$modid}&amp;status={$status}");
         $form_tags .= "  <tr><td colspan='4' class='txtright'>" . $nav->renderNav(4) . "</td></tr>\n";
     }
     $form_tags .= "  </tbody>\n"
                   . "  <tfoot>\n"
                   . "  <tr>\n"
                   . "    <td class='txtcenter' colspan='4'>\n"
-                  . "      <input type='hidden' name='status' value='{$status}' /> \n"
-                  . "      <input type='hidden' name='start' value='{$start}' /> \n"
-                  . "      <input type='hidden' name='modid' value='{$modid}' /> \n"
+                  . "      <input type='hidden' name='status' value='{$status}'> \n"
+                  . "      <input type='hidden' name='start' value='{$start}'> \n"
+                  . "      <input type='hidden' name='modid' value='{$modid}'> \n"
                   . "      <input type='submit' name='submit' value='"
                   . _SUBMIT
-                  . "' /> \n"
+                  . "'> \n"
                   . "      <input type='reset' name='submit' value='"
                   . _CANCEL
-                  . "' />\n"
+                  . "'>\n"
                   . "    </td>\n"
                   . "  </tr>\n"
                   . "  </tfoot>\n";
@@ -179,4 +188,4 @@ if (empty($tags)) {
 $form_tags .= "  </tbody>\n" . "</table>\n" . "</form>\n";
 
 echo $form_tags;
-include __DIR__ . '/admin_footer.php';
+require_once __DIR__ . '/admin_footer.php';

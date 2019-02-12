@@ -1,4 +1,7 @@
 <?php
+
+namespace XoopsModules\Tag;
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -21,17 +24,16 @@
  * @category     Module
  * @package      tag
  * @copyright    ::  {@link http://sourceforge.net/projects/xoops/ The XOOPS Project}
- * @license      ::  {@link http://www.gnu.org/licenses/gpl-2.0.html GNU Public License}
- * @author       ::  ZySpec <owners@zyspec.com>
- * @since        ::  2.33
+ * @license      ::    {@link http://www.gnu.org/licenses/gpl-2.0.html GNU Public License}
+ * @author       ::     ZySpec <owners@zyspec.com>
+ * @since        ::      2.33
  **/
-
-defined('XOOPS_ROOT_PATH') or die('Restricted access');
+defined('XOOPS_ROOT_PATH') || die('Restricted access');
 
 /**
- * Interface TagConstants
+ * class Constants
  */
-interface TagConstants
+class Constants
 {
     /**#@+
      * Constant definition

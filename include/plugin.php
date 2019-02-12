@@ -25,7 +25,7 @@
 /*
  * Add customized configs, variables or functions
  */
-$customConfig = array();
+$customConfig = [];
 
 /*
  * Due to the difference of word boundary for different languages, delimiters also depend on languages
@@ -39,11 +39,11 @@ $customConfig = array();
  * For Chinese sites, you can set as array(",", ";", " ", "|", "��")
  *
  */
-$customConfig = array(
-    'tag_delimiter' => array(',', ' ', '|', ';'),
+$customConfig = [
+    'tag_delimiter' => [',', ' ', '|', ';'],
     'limit_tag'     => 100,
     'font_max'      => 150,
-    'font_min'      => 80
-);
+    'font_min'      => 80,
+];
 
 return $customConfig;

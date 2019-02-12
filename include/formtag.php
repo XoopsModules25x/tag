@@ -15,16 +15,18 @@
  * @package         tag
  * @copyright       {@link http://sourceforge.net/projects/xoops/ The XOOPS Project}
  * @license         {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
- * @author          XOOPS Module Development Team {@link http://www.xoops.org}
+ * @author          XOOPS Module Development Team {@link https://xoops.org}
  * @since           1.00
  */
 
-xoops_load('formtag', 'tag');
+use XoopsModules\Tag;
+
+//xoops_load('formtag', 'tag');
 
 /**
  * Class XoopsFormTag
  */
-class XoopsFormTag extends TagFormTag
+class XoopsFormTag extends Tag\FormTag
 {
     /**
      * Constructor
@@ -37,7 +39,8 @@ class XoopsFormTag extends TagFormTag
      */
     public function __construct($name, $size, $maxlength, $value = null, $catid = 0)
     {
-        $GLOBALS['xoopsLogger']->addDeprecated(__CLASS__ . ' is deprecated use TagFormTag instead.');
+        $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1);
+        $GLOBALS['xoopsLogger']->addDeprecated(__CLASS__ . ' is deprecated use TagFormTag instead.' . ". Called from {$trace[0]['file']}line {$trace[0]['line']}");
         parent::__construct($name, $size, $maxlength, $value, $catid);
     }
 }

@@ -18,5 +18,4 @@
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
  * @since           1.00
  */
-
-include_once $GLOBALS['xoops']->path('/footer.php');
+require_once $GLOBALS['xoops']->path('/footer.php');

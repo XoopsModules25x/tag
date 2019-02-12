@@ -1,4 +1,7 @@
 <?php
+
+namespace XoopsModules\Tag;
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -19,14 +22,16 @@
  * @since           1.00
  */
 
-defined('XOOPS_ROOT_PATH') || exit('Restricted access');
+use XoopsModules\Tag;
+
+defined('XOOPS_ROOT_PATH') || die('Restricted access');
 
 xoops_load('xoopsformtext');
 
 /**
  * Class TagFormTag
  */
-class TagFormTag extends XoopsFormText
+class FormTag extends \XoopsFormText
 {
     /**
      * TagFormTag constructor.
@@ -38,17 +43,18 @@ class TagFormTag extends XoopsFormText
      */
     public function __construct($name, $size, $maxlength, $value = null, $catid = 0)
     {
-        include $GLOBALS['xoops']->path('/modules/tag/include/vars.php');
-        if (!($GLOBALS['xoopsModule'] instanceof XoopsModule) || 'tag' !== $GLOBALS['xoopsModule']->getVar('dirname')) {
+        require_once $GLOBALS['xoops']->path('/modules/tag/include/vars.php');
+        if (!($GLOBALS['xoopsModule'] instanceof \XoopsModule) || 'tag' !== $GLOBALS['xoopsModule']->getVar('dirname')) {
             xoops_loadLanguage('main', 'tag');
         }
         $value = empty($value) ? '' : $value;
         // itemid
         if (!empty($value) && is_numeric($value) && ($GLOBALS['xoopsModule'] instanceof XoopsModule)) {
-            $modid       = $GLOBALS['xoopsModule']->getVar('mid');
-            $tag_handler = xoops_getModuleHandler('tag', 'tag');
-            if ($tags = $tag_handler->getByItem($value, $modid, $catid)) {
-                $value = htmlspecialchars(implode(', ', $tags));
+            $modid = $GLOBALS['xoopsModule']->getVar('mid');
+            /** @var \XoopsModules\Tag\TagHandler $tagHandler */
+            $tagHandler = Tag\Helper::getInstance()->getHandler('Tag'); // xoops_getModuleHandler('tag', 'tag');
+            if ($tags = $tagHandler->getByItem($value, $modid, $catid)) {
+                $value = htmlspecialchars(implode(', ', $tags), ENT_QUOTES | ENT_HTML5);
             } else {
                 $value = '';
             }
@@ -66,23 +72,13 @@ class TagFormTag extends XoopsFormText
     {
         $delimiters = tag_get_delimiter();
         foreach (array_keys($delimiters) as $key) {
-            $delimiters[$key] = "<em style='font-weight: bold; color: red; font-style: normal;'>" . htmlspecialchars($delimiters[$key]) . '</em>';
+            $delimiters[$key] = "<em style='font-weight: bold; color: red; font-style: normal;'>" . htmlspecialchars($delimiters[$key], ENT_QUOTES | ENT_HTML5) . '</em>';
         }
-        $render = "<input type='text' name='"
-                  . $this->getName()
-                  . "' id='"
-                  . $this->getName()
-                  . "' size='"
-                  . $this->getSize()
-                  . "' maxlength='"
-                  . $this->getMaxlength()
-                  . "' value='"
-                  . $this->getValue()
-                  . "' "
-                  . $this->getExtra()
-                  . ' />';
+        $render = "<input type='text' name='" . $this->getName() . "' id='" . $this->getName() . "' size='" . $this->getSize() . "' maxlength='" . $this->getMaxlength() . "' value='" . $this->getValue() . "' " . $this->getExtra() . '>';
         $render .= '<br>' . _MD_TAG_TAG_DELIMITER . ': [' . implode('], [', $delimiters) . ']';
 
         return $render;
     }
 }
+
+class_alias(FormTag::class, 'TagFormTag');

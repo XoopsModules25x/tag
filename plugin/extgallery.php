@@ -17,15 +17,13 @@
  * @license         {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
  * @since           1.00
  */
-
-defined('XOOPS_ROOT_PATH') || exit('Restricted access');
+defined('XOOPS_ROOT_PATH') || die('Restricted access');
 /**
- *
  * Generate tag item information
  *
  * @param array $items is an array containing category and item information
  *
- * @return null
+ * @return bool
  */
 function extgallery_tag_iteminfo(&$items)
 {
@@ -33,28 +31,29 @@ function extgallery_tag_iteminfo(&$items)
         return false;
     }
 
-    $items_id = array();
+    $items_id = [];
     foreach (array_keys($items) as $cat_id) {
         foreach (array_keys($items[$cat_id]) as $item_id) {
             $items_id[] = (int)$item_id;
         }
     }
 
-    $item_handler = xoops_getModuleHandler('publicphoto', 'extgallery');
-    $items_obj    = $item_handler->getObjects(new Criteria('photo_id', '(' . implode(', ', $items_id) . ')', 'IN'), true);
+    /** @var \XoopsModules\Extgallery\PublicPhotoHandler $itemHandler */
+    $itemHandler = new \XoopsModules\Extgallery\PublicPhotoHandler();
+    $items_obj   = $itemHandler->getObjects(new \Criteria('photo_id', '(' . implode(', ', $items_id) . ')', 'IN'), true);
 
     foreach (array_keys($items) as $cat_id) {
         foreach (array_keys($items[$cat_id]) as $item_id) {
             if (isset($items_obj[$item_id])) {
-                $item_obj                 =& $items_obj[$item_id];
-                $items[$cat_id][$item_id] = array(
+                $item_obj                 = $items_obj[$item_id];
+                $items[$cat_id][$item_id] = [
                     'title'   => $item_obj->getVar('photo_title'),
                     'uid'     => $item_obj->getVar('uid'),
                     'link'    => "public-photo.php?photoId={$item_id}#photoNav",
                     'time'    => $item_obj->getVar('photo_date'),
                     'tags'    => '',
-                    'content' => ''
-                );
+                    'content' => '',
+                ];
             }
         }
     }
@@ -68,44 +67,39 @@ function extgallery_tag_iteminfo(&$items)
  *
  * @param int $mid module id
  *
- * @return boolean
- *
+ * @return bool
  */
 function extgallery_tag_synchronization($mid)
 {
-    $item_handler = xoops_getModuleHandler('publicphoto', 'extgallery');
-    $link_handler = xoops_getModuleHandler('link', 'tag');
+    /** @var \XoopsModules\Extgallery\PublicPhotoHandler $itemHandler */
+    $itemHandler = new \XoopsModules\Extgallery\PublicPhotoHandler();
+    /** @var \XoopsModules\Tag\LinkHandler $linkHandler */
+    $linkHandler = \XoopsModules\Tag\Helper::getInstance()->getHandler('Link'); //@var \XoopsModules\Tag\Handler $tagHandler
 
-    $mid = XoopsFilterInput::clean($mid, 'INT');
+    //    $mid = XoopsFilterInput::clean($mid, 'INT');
+    $mid = \Xmf\Request::getInt('mid');
 
     /* clear tag-item links */
     /** {@internal the following statement isn't really needed any more (MySQL is really old)
-     *   and some hosting companies block the mysql_get_server_info() function for security
+     *   and some hosting companies block the $GLOBALS['xoopsDB']->getServerVersion() function for security
      *   reasons.}
      */
-    //    if (version_compare( mysql_get_server_info(), "4.1.0", "ge" )):
-    $sql = "DELETE FROM {$link_handler->table}"
-           . " WHERE tag_modid = {$mid}"
-           . ' AND (tag_itemid NOT IN '
-           . "       (SELECT DISTINCT {$item_handler->keyName} "
-           . "        FROM {$item_handler->table} "
-           . "          WHERE {$item_handler->table}.photo_approved > 0"
-           . '       )'
-           . '     )';
+    //    if (version_compare( $GLOBALS['xoopsDB']->getServerVersion(), "4.1.0", "ge" )):
+    $sql = "DELETE FROM {$linkHandler->table}" . " WHERE tag_modid = {$mid}" . ' AND (tag_itemid NOT IN ' . "       (SELECT DISTINCT {$itemHandler->keyName} " . "        FROM {$itemHandler->table} " . "          WHERE {$itemHandler->table}.photo_approved > 0" . '       )' . '     )';
     /*
         else:
-        $sql =  "    DELETE {$link_handler->table} FROM {$link_handler->table}" .
-                "    LEFT JOIN {$item_handler->table} AS aa ON {$link_handler->table}.tag_itemid = aa.{$item_handler->keyName} " .
+        $sql =  "    DELETE {$linkHandler->table} FROM {$linkHandler->table}" .
+                "    LEFT JOIN {$itemHandler->table} AS aa ON {$linkHandler->table}.tag_itemid = aa.{$itemHandler->keyName} " .
                 "    WHERE " .
                 "        tag_modid = {$mid}" .
                 "        AND " .
-                "        ( aa.{$item_handler->keyName} IS NULL" .
+                "        ( aa.{$itemHandler->keyName} IS NULL" .
                 "            OR aa.photo_approved < 1" .
                 "        )";
         endif;
     */
-    if (!$result = $link_handler->db->queryF($sql)) {
-        //xoops_error($link_handler->db->error());
+    if (!$result = $linkHandler->db->queryF($sql)) {
+        //xoops_error($linkHandler->db->error());
     }
 
     return $result ? true : false;

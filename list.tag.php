@@ -19,7 +19,9 @@
  * @since           1.00
  */
 
-include __DIR__ . '/header.php';
+use XoopsModules\Tag\Constants;
+
+require_once __DIR__ . '/header.php';
 
 xoops_loadLanguage('main', 'tag');
 /*
@@ -39,7 +41,8 @@ $start = (int)(empty($_GET['start']) ? @$args['start'] : $_GET['start']);
 $sort  = '';
 $order = '';
 
-if (empty($modid) && ($GLOBALS['xoopsModule'] instanceof XoopsModule) && ('tag' !== $GLOBALS['xoopsModule']->getVar('dirname'))) {
+if (empty($modid) && ($GLOBALS['xoopsModule'] instanceof XoopsModule)
+    && ('tag' !== $GLOBALS['xoopsModule']->getVar('dirname'))) {
     $modid = $GLOBALS['xoopsModule']->getVar('mid');
 }
 
@@ -51,10 +54,10 @@ if (!empty($tag_desc)) {
 }
 $xoopsOption['template_main']   = 'tag_list.tpl';
 $xoopsOption['xoops_pagetitle'] = strip_tags($page_title);
-include $GLOBALS['xoops']->path('/header.php');
+require_once $GLOBALS['xoops']->path('/header.php');
 
 $mode_display = empty($mode_display) ? @$_GET['mode'] : $mode_display;
-switch (strtolower($mode_display)) {
+switch (mb_strtolower($mode_display)) {
     case 'list':
         $mode_display = 'list';
         $sort         = 'count';
@@ -69,28 +72,28 @@ switch (strtolower($mode_display)) {
         $limit        = empty($tag_config['limit_tag_cloud']) ? 100 : (int)$tag_config['limit_tag_cloud'];
         break;
 }
-
-$tag_handler = xoops_getModuleHandler('tag', 'tag');
-$tag_config  = tag_load_config();
+/** @var \XoopsModules\Tag\TagHandler $tagHandler */
+$tagHandler = \XoopsModules\Tag\Helper::getInstance()->getHandler('Tag'); // xoops_getModuleHandler('tag', 'tag');
+$tag_config = tag_load_config();
 tag_define_url_delimiter();
 
-$criteria = new CriteriaCompo();
+$criteria = new \CriteriaCompo();
 $criteria->setSort($sort);
 $criteria->setOrder($order);
 $criteria->setStart($start);
 $criteria->setLimit($limit);
-$criteria->add(new Criteria('o.tag_status', TagConstants::STATUS_ACTIVE));
+$criteria->add(new \Criteria('o.tag_status', Constants::STATUS_ACTIVE));
 if (!empty($modid)) {
-    $criteria->add(new Criteria('l.tag_modid', $modid));
+    $criteria->add(new \Criteria('l.tag_modid', $modid));
     if ($catid >= 0) {
-        $criteria->add(new Criteria('l.tag_catid', $catid));
+        $criteria->add(new \Criteria('l.tag_catid', $catid));
     }
 }
-$tags = $tag_handler->getByLimit(0, 0, $criteria);
+$tags = &$tagHandler->getByLimit(0, 0, $criteria);
 
 $count_max = 0;
 $count_min = 0;
-$tags_term = array();
+$tags_term = [];
 foreach (array_keys($tags) as $key) {
     if ($tags[$key]['count'] > $count_max) {
         $count_max = $tags[$key]['count'];
@@ -98,7 +101,7 @@ foreach (array_keys($tags) as $key) {
     if ($tags[$key]['count'] < $count_min) {
         $count_min = $tags[$key]['count'];
     }
-    $tags_term[] = strtolower($tags[$key]['term']);
+    $tags_term[] = mb_strtolower($tags[$key]['term']);
 }
 array_multisort($tags_term, SORT_ASC, $tags);
 $count_interval = $count_max - $count_min;
@@ -108,28 +111,28 @@ $font_max   = $tag_config['font_max'];
 $font_min   = $tag_config['font_min'];
 $font_ratio = $count_interval ? ($font_max - $font_min) / $count_interval : 1;
 
-$tags_data = array();
+$tags_data = [];
 foreach (array_keys($tags) as $key) {
     /*
      * Font-size = ((tag.count - count.min) * (font.max - font.min) / (count.max - count.min) ) * 100%
      */
-    $tags_data[] = array(
+    $tags_data[] = [
         'id'    => $tags[$key]['id'],
         'font'  => empty($count_interval) ? 100 : floor(($tags[$key]['count'] - $count_min) * $font_ratio) + $font_min,
         'level' => empty($count_max) ? 0 : floor(($tags[$key]['count'] - $count_min) * $level_limit / $count_max),
         'term'  => urlencode($tags[$key]['term']),
-        'title' => htmlspecialchars($tags[$key]['term']),
-        'count' => $tags[$key]['count']
-    );
+        'title' => htmlspecialchars($tags[$key]['term'], ENT_QUOTES | ENT_HTML5),
+        'count' => $tags[$key]['count'],
+    ];
 }
 unset($tags, $tags_term);
 
 if (!empty($start) || count($tags_data) >= $limit) {
-    $count_tag = $tag_handler->getCount($criteria); // modid, catid
+    $count_tag = $tagHandler->getCount($criteria); // modid, catid
 
     if ('list' === mb_strtolower($mode_display)) {
-        include $GLOBALS['xoops']->path('/class/pagenav.php');
-        $nav     = new XoopsPageNav($count_tag, $limit, $start, 'start', "catid={$catid}&amp;mode={$mode_display}");
+        require_once $GLOBALS['xoops']->path('/class/pagenav.php');
+        $nav     = new \XoopsPageNav($count_tag, $limit, $start, 'start', "catid={$catid}&amp;mode={$mode_display}");
         $pagenav = $nav->renderNav(4);
     } else {
         $pagenav = "<a href='" . xoops_getenv('PHP_SELF') . "?catid={$catid}&amp;mode={$mode_display}\">" . _MORE . '</a>';
@@ -147,4 +150,4 @@ $xoopsTpl->assign('xoops_pagetitle', $xoopsOption['xoops_pagetitle']);
 $xoopsTpl->assign('xoops_module_header', $xoopsOption['xoops_module_header']);
 $xoopsTpl->assign('xoops_meta_description', $xoopsOption['xoops_pagetitle']);
 
-include_once __DIR__ . '/footer.php';
+require_once __DIR__ . '/footer.php';

@@ -19,66 +19,69 @@
  * @since           1.00
  */
 
-defined('XOOPS_ROOT_PATH') || exit('Restricted access');
+use XoopsModules\Tag;
+
+defined('XOOPS_ROOT_PATH') || die('Restricted access');
 
 if (!defined('TAG_FUNCTIONS')):
     define('TAG_FUNCTIONS', 1);
 
-    include $GLOBALS['xoops']->path('/modules/tag/include/vars.php');
+    require_once $GLOBALS['xoops']->path('modules/tag/include/vars.php');
 
     /**
      * @return bool|null
      */
     function tag_getTagHandler()
     {
-        static $tag_handler;
+        static $tagHandler;
 
-        if (isset($tag_handler)) {
-            return $tag_handler;
+        if (isset($tagHandler)) {
+            return $tagHandler;
         }
 
-        $tag_handler = null;
-        if (!($GLOBALS['xoopsModule'] instanceof XoopsModule) || ('tag' !== $GLOBALS['xoopsModule']->getVar('dirname'))) {
+        $tagHandler = null;
+        if (!($GLOBALS['xoopsModule'] instanceof XoopsModule)
+            || ('tag' !== $GLOBALS['xoopsModule']->getVar('dirname'))) {
+            /** @var \XoopsModuleHandler $moduleHandler */
             $moduleHandler = xoops_getHandler('module');
             $module        = $moduleHandler->getByDirname('tag');
             if (!$module || !$module->isactive()) {
-                return $tag_handler;
+                return $tagHandler;
             }
         }
-        $tag_handler = @xoops_getModuleHandler('tag', 'tag', true);
+        $tagHandler = \XoopsModules\Tag\Helper::getInstance()->getHandler('Tag'); //@xoops_getModuleHandler('tag', 'tag', true);
 
-        return $tag_handler;
+        return $tagHandler;
     }
 
     /**
      * Function to parse arguments for a page according to $_SERVER['REQUEST_URI']
      *
-     * @var array $args_numeric array of numeric variable values
-     * @var array $args         array of indexed variables: name and value
-     * @var array $args_string  array of string variable values
+     * @var array   $args_numeric array of numeric variable values
+     * @var array   $args         array of indexed variables: name and value
+     * @var array   $args_string  array of string variable values
      *
-     * @return bool true on args parsed
+     * @param mixed $args_numeric
+     * @param mixed $args
+     * @param mixed $args_string
+     * @return bool    true on args parsed
      */
 
-    /** known issues:
+    /* known issues:
      * - "/" in a string
      * - "&" in a string
-     * @param $args_numeric
-     * @param $args
-     * @param $args_string
-     * @return bool|null
-     */
+    */
     function tag_parse_args(&$args_numeric, &$args, &$args_string)
     {
-        $args_abb     = array(
+        $args_abb     = [
             'c' => 'catid',
             'm' => 'modid',
             's' => 'start',
-            't' => 'tag'
-        );
-        $args         = array();
-        $args_numeric = array();
-        $args_string  = array();
+            't' => 'tag',
+        ];
+        $args         = [];
+        $args_numeric = [];
+        $args_string  = [];
         if (preg_match("/[^\?]*\.php[\/|\?]([^\?]*)/i", $_SERVER['REQUEST_URI'], $matches)) {
             $vars = preg_split("/[\/|&]/", $matches[1]);
             $vars = array_map('trim', $vars);
@@ -87,9 +90,9 @@ if (!defined('TAG_FUNCTIONS')):
                     if (is_numeric($var)) {
                         //$args_numeric[] = $var;
                         $args_string[] = $var;
-                    } elseif (false === strpos($var, '=')) {
-                        if (is_numeric(substr($var, 1))) {
-                            $args[$args_abb[mb_strtolower($var{0})]] = (int)substr($var, 1);
+                    } elseif (false === mb_strpos($var, '=')) {
+                        if (is_numeric(mb_substr($var, 1))) {
+                            $args[$args_abb[mb_strtolower($var[0])]] = (int)mb_substr($var, 1);
                         } else {
                             $args_string[] = urldecode($var);
                         }
@@ -100,7 +103,7 @@ if (!defined('TAG_FUNCTIONS')):
             }
         }
 
-        return (count($args) + count($args_numeric) + count($args_string) == 0) ? null : true;
+        return (0 == count($args) + count($args_numeric) + count($args_string)) ? null : true;
     }
 
     /**
@@ -112,7 +115,7 @@ if (!defined('TAG_FUNCTIONS')):
      */
     function tag_parse_tag($text_tag)
     {
-        $tags = array();
+        $tags = [];
         if (empty($text_tag)) {
             return $tags;
         }

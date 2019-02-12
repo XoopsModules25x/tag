@@ -18,8 +18,7 @@
  * @author          Gregory Mage (Aka Mage)
  * @since           1.00
  */
-
-defined('XOOPS_ROOT_PATH') || exit('Restricted access');
+defined('XOOPS_ROOT_PATH') || die('Restricted access');
 
 /**
  * @param $items
@@ -31,28 +30,32 @@ function xfaq_tag_iteminfo(&$items)
         return false;
     }
 
-    $items_id = array();
+    $items_id = [];
     foreach (array_keys($items) as $cat_id) {
         foreach (array_keys($items[$cat_id]) as $item_id) {
             $items_id[] = (int)$item_id;
         }
     }
 
-    $item_handler = xoops_getModuleHandler('faq', 'xfaq');
-    $items_obj    = $item_handler->getObjects(new Criteria('faq_id', '(' . implode(', ', $items_id) . ')', 'IN'), true);
+    /** @var \XoopsDatabase $db */
+    $db = \XoopsDatabaseFactory::getDatabase();
+    /** @var \XoopsModules\Xfaq\XfaqHandler $itemHandler */
+    $itemHandler = new \XoopsModules\Xfaq\XfaqHandler($db);
+
+    $items_obj = &$itemHandler->getObjects(new \Criteria('faq_id', '(' . implode(', ', $items_id) . ')', 'IN'), true);
 
     foreach (array_keys($items) as $cat_id) {
         foreach (array_keys($items[$cat_id]) as $item_id) {
             if (isset($items_obj[$item_id])) {
-                $item_obj                 =& $items_obj[$item_id];
-                $items[$cat_id][$item_id] = array(
+                $item_obj                 = $items_obj[$item_id];
+                $items[$cat_id][$item_id] = [
                     'title'   => $item_obj->getVar('faq_question'),
                     'uid'     => $item_obj->getVar('faq_submitter'),
                     'link'    => "faq.php?faq_id={$item_id}",
                     'time'    => $item_obj->getVar('faq_date_created'),
                     'tags'    => '',
-                    'content' => ''
-                );
+                    'content' => '',
+                ];
             }
         }
     }

@@ -1,4 +1,7 @@
 <?php
+
+namespace XoopsModules\Tag;
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -21,14 +24,15 @@
  * @since           2.33
  */
 
-include_once $GLOBALS['xoops']->path('/class/xoopsformloader.php');
+use XoopsModules\Tag;
+
+require_once $GLOBALS['xoops']->path('/class/xoopsformloader.php');
 
 /**
- * Class TagBlockForm
+ * Class BlockForm
  */
-class TagBlockForm extends XoopsForm
+class BlockForm extends \XoopsForm
 {
-
     /**
      * create HTML to output the form as a table
      *
@@ -44,12 +48,7 @@ class TagBlockForm extends XoopsForm
                 $ret .= $ele;
             } elseif (!$ele->isHidden()) {
                 if ('' != $caption = $ele->getCaption()) {
-                    $ret .= "<div class='xoops-form-element-caption"
-                            . ($ele->isRequired() ? '-required' : '')
-                            . "'>\n"
-                            . "  <span class='caption-text'>{$caption}</span>\n"
-                            . "  <span class='caption-marker'>*</span>\n"
-                            . "</div>\n";
+                    $ret .= "<div class='xoops-form-element-caption" . ($ele->isRequired() ? '-required' : '') . "'>\n" . "  <span class='caption-text'>{$caption}</span>\n" . "  <span class='caption-marker'>*</span>\n" . "</div>\n";
                 }
 
                 $ret .= "<div style='margin:5px 0 8px 0; '>" . $ele->render() . "</div>\n";

@@ -12,29 +12,26 @@
 /**
  * XOOPS tag management module
  *
- * @copyright       XOOPS Project (http://xoops.org)
+ * @copyright       XOOPS Project (https://xoops.org)
  * @license         http://www.fsf.org/copyleft/gpl.html GNU public license
  * @since           1.00
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
  * */
 
-$path = dirname(dirname(dirname(__DIR__)));
-require_once $path . '/include/cp_header.php';
+use XoopsModules\Tag;
 
-require_once dirname(__DIR__) . '/include/vars.php';
-require_once dirname(__DIR__) . '/include/functions.php';
-xoops_load('constants', 'tag');
+require_once dirname(dirname(dirname(__DIR__))) . '/include/cp_header.php';
+// require_once  dirname(__DIR__) . '/class/constants.php';
+require_once dirname(__DIR__) . '/include/common.php';
 
-$thisModuleDir = $GLOBALS['xoopsModule']->getVar('dirname');
+$moduleDirName = basename(dirname(__DIR__));
+/** @var Tag\Helper $helper */
+$helper = Tag\Helper::getInstance();
+
+/** @var Xmf\Module\Admin $adminObject */
+$adminObject = \Xmf\Module\Admin::getInstance();
+
 // Load language files
-xoops_loadLanguage('admin', $thisModuleDir);
-xoops_loadLanguage('modinfo', $thisModuleDir);
-xoops_loadLanguage('main', $thisModuleDir);
-
-$pathIcon16      = $GLOBALS['xoops']->url('www/' . $GLOBALS['xoopsModule']->getInfo('icons16'));
-$pathIcon32      = $GLOBALS['xoops']->url('www/' . $GLOBALS['xoopsModule']->getInfo('icons32'));
-$pathModuleAdmin = $GLOBALS['xoops']->path('www/' . $GLOBALS['xoopsModule']->getInfo('dirmoduleadmin'));
-
-include_once "{$pathModuleAdmin}/moduleadmin/moduleadmin.php";
-
-include_once $GLOBALS['xoops']->path('/Frameworks/art/functions.admin.php');
+$helper->loadLanguage('admin');
+$helper->loadLanguage('modinfo');
+$helper->loadLanguage('main');

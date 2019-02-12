@@ -15,39 +15,11 @@
  * @package         tag
  * @copyright       {@link http://sourceforge.net/projects/xoops/ The XOOPS Project}
  * @license         {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
- * @author          Mamba {@link http://www.xoops.org}
+ * @author          Mamba {@link https://xoops.org}
  * @since           2.31
  */
-/*
-echo "<div class='adminfooter'>\n"
-    ."  <div class='txtcenter'>\n"
-    ."    <a href='http://www.xoops.org' rel='external'><img src='{$pathIcon32}/xoopsmicrobutton.gif' alt='XOOPS' title='XOOPS'></a>\n"
-    ."  </div>\n"
-    ."  " . _AM_TAG_FOOTER . "\n"
-    ."</div>";
-    */
-echo "<div class='adminfooter'>\n"
-     . "  <div class='center'>\n"
-     . "    <a href='"
-     . $GLOBALS['xoopsModule']->getInfo('author_website_url')
-     . "' target='_blank'><img src='{$pathIcon32}/xoopsmicrobutton.gif' alt='"
-     . $GLOBALS['xoopsModule']->getInfo('author_website_name')
-     . "' title='"
-     . $GLOBALS['xoopsModule']->getInfo('author_website_name')
-     . "' /></a>\n"
-     . "  </div>\n"
-     . "  <div class='center smallsmall italic pad5'>\n"
-     . '    '
-     . _AM_TAG_MAINTAINED_BY
-     . " <a class='tooltip' rel='external' href='http://"
-     . $GLOBALS['xoopsModule']->getInfo('module_website_url')
-     . "' "
-     . "title='"
-     . _AM_TAG_MAINTAINED_TITLE
-     . "'>"
-     . _AM_TAG_MAINTAINED_TEXT
-     . "</a>\n"
-     . "  </div>\n"
-     . '</div>';
+$pathIcon32 = Xmf\Module\Admin::iconUrl('', 32);
+
+echo "<div class='adminfooter'>\n" . "  <div style='text-align: center;'>\n" . "    <a href='https://xoops.org' rel='external'><img src='{$pathIcon32}/xoopsmicrobutton.gif' alt='XOOPS' title='XOOPS'></a>\n" . "  </div>\n" . '  ' . _AM_MODULEADMIN_ADMIN_FOOTER . "\n" . '</div>';
 
 xoops_cp_footer();

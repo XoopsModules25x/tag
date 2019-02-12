@@ -19,39 +19,42 @@
  * @since           1.00
  */
 
-defined('XOOPS_ROOT_PATH') || exit('Restricted access');
+use XoopsModules\Tag;
 
-$moduleHandler = xoops_getHandler('module');
-$module        = XoopsModule::getByDirname('tag');
-$moduleInfo    = $moduleHandler->get($module->getVar('mid'));
-$pathIcon32    = '../../' . $module->getInfo('icons32');
+/** @var Tag\Helper $helper */
+$helper = Tag\Helper::getInstance();
 
-$adminmenu = array(
-    array(
+$pathIcon32 = \Xmf\Module\Admin::menuIconPath('');
+if (is_object($helper->getModule())) {
+    $pathModIcon32 = $helper->getModule()->getInfo('modicons32');
+}
+
+$adminmenu = [
+    [
         'title' => _MI_TAG_ADMENU_INDEX,
         'link'  => 'admin/index.php',
         'desc'  => _MI_TAG_ADMIN_HOME_DESC,
-        'icon'  => "{$pathIcon32}/home.png"
-    ),
+        'icon'  => "{$pathIcon32}/home.png",
+    ],
 
-    array(
+    [
         'title' => _MI_TAG_ADMENU_EDIT,
         'link'  => 'admin/admin.tag.php',
         'desc'  => _MI_TAG_ADMENU_EDIT_DESC,
-        'icon'  => "{$pathIcon32}/administration.png"
-    ),
+        'icon'  => "{$pathIcon32}/administration.png",
+    ],
 
-    array(
+    [
         'title' => _MI_TAG_ADMENU_SYNCHRONIZATION,
         'link'  => 'admin/syn.tag.php',
         'desc'  => _MI_TAG_HELP_DESC,
-        'icon'  => "{$pathIcon32}/synchronized.png"
-    ),
+        'icon'  => "{$pathIcon32}/synchronized.png",
+    ],
 
-    array(
+    [
         'title' => _MI_TAG_ADMIN_ABOUT,
         'link'  => 'admin/about.php',
         'desc'  => _MI_TAG_ADMIN_HELP_DESC,
-        'icon'  => "{$pathIcon32}/about.png"
-    )
-);
+        'icon'  => "{$pathIcon32}/about.png",
+    ],
+];

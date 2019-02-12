@@ -18,16 +18,15 @@
  * @author         Taiwen Jiang <phppp@users.sourceforge.net>
  * @since          1.00
  */
-
-(defined('XOOPS_ROOT_PATH') && ($GLOBALS['xoopsModule'] instanceof XoopsModule)) || exit('Restricted access');
+(defined('XOOPS_ROOT_PATH') && ($GLOBALS['xoopsModule'] instanceof XoopsModule)) || die('Restricted access');
 
 /**
  * Display tag list
  *
- * @param  array $tags  array of tag string
- *                      OR
- * @param  int   $catid
- * @param  int   $modid
+ * @param  int|array $tags array of tag string
+ *                         OR
+ * @param  int       $catid
+ * @param  int       $modid
  * @return array
  * @internal param int $itemid
  */
@@ -36,20 +35,21 @@ function tagBar($tags, $catid = 0, $modid = 0)
     static $loaded, $delimiter;
 
     if (empty($tags)) {
-        return array();
+        return [];
     }
 
-    if (!isset($loaded)) {
-        include $GLOBALS['xoops']->path('/modules/tag/include/vars.php');
-        include_once $GLOBALS['xoops']->path('/modules/tag/include/functions.php');
+    if (null === $loaded) {
+        require_once $GLOBALS['xoops']->path('/modules/tag/include/vars.php');
+        require_once $GLOBALS['xoops']->path('/modules/tag/include/functions.php');
         tag_define_url_delimiter();
-        if (!($GLOBALS['xoopsModule'] instanceof XoopsModule) || ('tag' !== $GLOBALS['xoopsModule']->getVar('dirname'))) {
+        if (!($GLOBALS['xoopsModule'] instanceof XoopsModule)
+            || ('tag' !== $GLOBALS['xoopsModule']->getVar('dirname'))) {
             xoops_loadLanguage('main', 'tag');
         }
         if (file_exists($GLOBALS['xoops']->path('/modules/tag/assets/images/delimiter.gif'))) {
-            $delimiter = "<img src='" . $GLOBALS['xoops']->url('www/modules/tag/assets/images/delimiter.gif') . "' alt='' />";
+            $delimiter = "<img src='" . $GLOBALS['xoops']->url('www/modules/tag/assets/images/delimiter.gif') . "' alt=''>";
         } else {
-            $delimiter = "<img src='" . $GLOBALS['xoops']->url('www/assets/images/pointer.gif') . "' alt='' />";
+            $delimiter = "<img src='" . $GLOBALS['xoops']->url('www/assets/images/pointer.gif') . "' alt=''>";
         }
         $loaded = 1;
     }
@@ -59,32 +59,32 @@ function tagBar($tags, $catid = 0, $modid = 0)
         if (empty($modid) && ($GLOBALS['xoopsModule'] instanceof XoopsModule)) {
             $modid = $GLOBALS['xoopsModule']->getVar('mid');
         }
-        $tag_handler = xoops_getModuleHandler('tag', 'tag');
-        if (!$tags = $tag_handler->getByItem($tags, $modid, $catid)) {
-            return array();
+        /** @var \XoopsModules\Tag\TagHandler $tagHandler */
+        $tagHandler = \XoopsModules\Tag\Helper::getInstance()->getHandler('Tag'); // xoops_getModuleHandler('tag', 'tag');
+        if (!$tags = $tagHandler->getByItem($tags, $modid, $catid)) {
+            return [];
         }
 
         // if ready, do nothing
     } elseif (is_array($tags)) {
-
         // parse
     } elseif (!$tags = tag_parse_tag($tags)) {
-        return array();
+        return [];
     }
-    $tags_data = array();
+    $tags_data = [];
     foreach ($tags as $tag) {
         $tags_data[] = "<a href='"
                        . $GLOBALS['xoops']->url('www/modules/' . $GLOBALS['xoopsModule']->getVar('dirname') . '/view.tag.php' . URL_DELIMITER . urlencode($tag))
                        . "' title='"
-                       . htmlspecialchars($tag)
+                       . htmlspecialchars($tag, ENT_QUOTES | ENT_HTML5)
                        . "'>"
-                       . htmlspecialchars($tag)
+                       . htmlspecialchars($tag, ENT_QUOTES | ENT_HTML5)
                        . '</a>';
     }
 
-    return array(
+    return [
         'title'     => _MD_TAG_TAGS,
         'delimiter' => $delimiter,
-        'tags'      => $tags_data
-    );
+        'tags'      => $tags_data,
+    ];
 }

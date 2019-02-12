@@ -20,14 +20,19 @@
  * @since          1.00
  */
 
+use XoopsModules\Tag;
+
 require_once __DIR__ . '/admin_header.php';
 xoops_cp_header();
-include $GLOBALS['xoops']->path('/modules/tag/include/vars.php');
+require_once $GLOBALS['xoops']->path('/modules/tag/include/vars.php');
 
-$indexAdmin = new ModuleAdmin();
+$adminObject = \Xmf\Module\Admin::getInstance();
+///** @var \XoopsModules\Tag\TagHandler $tagHandler */
+//$tagHandler = xoops_getModuleHandler('tag', $moduleDirName);
+/** @var Tag\TagHandler $tagHandler */
+$tagHandler = Tag\Helper::getInstance()->getHandler('Tag');
 
-$tag_handler = xoops_getModuleHandler('tag', $thisModuleDir);
-$count_tag   = $tag_handler->getCount();
+$count_tag = $tagHandler->getCount();
 
 $count_item = 0;
 $sql        = 'SELECT COUNT(DISTINCT tl_id) FROM ' . $GLOBALS['xoopsDB']->prefix('tag_link');
@@ -37,27 +42,30 @@ if (false === ($result = $GLOBALS['xoopsDB']->query($sql))) {
     list($count_item) = $GLOBALS['xoopsDB']->fetchRow($result);
 }
 
-$sql = 'SELECT tag_modid, SUM(tag_count) AS count_item, COUNT(DISTINCT tag_id) AS count_tag';
-$sql .= ' FROM ' . $GLOBALS['xoopsDB']->prefix('tag_stats');
-$sql .= ' GROUP BY tag_modid';
-$counts_module = array();
+$sql           = 'SELECT tag_modid, SUM(tag_count) AS count_item, COUNT(DISTINCT tag_id) AS count_tag';
+$sql           .= ' FROM ' . $GLOBALS['xoopsDB']->prefix('tag_stats');
+$sql           .= ' GROUP BY tag_modid';
+$counts_module = [];
 if (false === ($result = $GLOBALS['xoopsDB']->query($sql))) {
     xoops_error($GLOBALS['xoopsDB']->error());
 } else {
-    while ($myrow = $GLOBALS['xoopsDB']->fetchArray($result)) {
-        $counts_module[$myrow['tag_modid']] = array('count_item' => $myrow['count_item'], 'count_tag' => $myrow['count_tag']);
+    while (false !== ($myrow = $GLOBALS['xoopsDB']->fetchArray($result))) {
+        $counts_module[$myrow['tag_modid']] = [
+            'count_item' => $myrow['count_item'],
+            'count_tag'  => $myrow['count_tag'],
+        ];
     }
     if (!empty($counts_module)) {
+        /** @var \XoopsModuleHandler $moduleHandler */
         $moduleHandler = xoops_getHandler('module');
-        $module_list   = $moduleHandler->getList(new Criteria('mid', '(' . implode(', ', array_keys($counts_module)) . ')', 'IN'));
-    } else {
+        $module_list   = $moduleHandler->getList(new \Criteria('mid', '(' . implode(', ', array_keys($counts_module)) . ')', 'IN'));
     }
 }
 
-$indexAdmin->addInfoBox(_AM_TAG_STATS);
-$indexAdmin->addInfoBoxLine(_AM_TAG_STATS, '<infolabel>' . _AM_TAG_COUNT_TAG . '</infolabel>', $count_tag);
-$indexAdmin->addInfoBoxLine(_AM_TAG_STATS, '<infolabel>' . _AM_TAG_COUNT_ITEM . '</infolabel>', $count_item . '<br><br>');
-$indexAdmin->addInfoBoxLine(_AM_TAG_STATS, '<infolabel>' . _AM_TAG_COUNT_MODULE . '</infolabel>' . '<infotext>' . _AM_TAG_COUNT_MODULE_TITLE . '</infotext>');
+$adminObject->addInfoBox(_AM_TAG_STATS);
+$adminObject->addInfoBoxLine(sprintf('<infolabel>' . _AM_TAG_COUNT_TAG . '</infolabel>', $count_tag));
+$adminObject->addInfoBoxLine(sprintf('<infolabel>' . _AM_TAG_COUNT_ITEM . '</infolabel>', $count_item . '<br><br>'));
+$adminObject->addInfoBoxLine(sprintf('<infolabel>' . _AM_TAG_COUNT_MODULE . '</infolabel>' . '<infotext>' . _AM_TAG_COUNT_MODULE_TITLE . '</infotext>'));
 
 foreach ($counts_module as $module => $count) {
     $moduleStat = '<infolabel>'
@@ -79,17 +87,18 @@ foreach ($counts_module as $module => $count) {
                   . _AM_TAG_SYNCHRONIZATION
                   . "</a>]\n"
                   . "</infotext> \n";
-    $indexAdmin->addInfoBoxLine(_AM_TAG_STATS, $moduleStat);
+    $adminObject->addInfoBoxLine(sprintf($moduleStat));
 }
 
 if (empty($counts_module)) {  // there aren't any so just display "none"
     $moduleStat = "<infolabel>%s</infolabel><infotext>0 / 0</infotext> \n";
-    $indexAdmin->addInfoBoxLine(_AM_TAG_STATS, $moduleStat, _NONE);
+    $adminObject->addInfoBoxLine(sprintf($moduleStat, _NONE));
 }
 
-echo $indexAdmin->addNavigation(basename(__FILE__));
-echo $indexAdmin->renderIndex();
+$adminObject->displayNavigation(basename(__FILE__));
+$adminObject->displayIndex();
 
-include __DIR__ . '/admin_footer.php';
+echo $utility::getServerStats();
+
+require_once __DIR__ . '/admin_footer.php';
 //xoops_cp_footer();
-

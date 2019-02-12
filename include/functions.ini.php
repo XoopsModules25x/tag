@@ -24,9 +24,9 @@
 The functions loaded on initializtion
 */
 
-defined('XOOPS_ROOT_PATH') || exit('Restricted access');
-defined('TAG_INI') || exit();
-(!defined('TAG_FUNCTIONS_INI')) || exit();
+//defined('XOOPS_ROOT_PATH') || die('Restricted access');
+defined('TAG_INI') || die();
+(!defined('TAG_FUNCTIONS_INI')) || die();
 
 define('TAG_FUNCTIONS_INI', 1);
 
@@ -37,7 +37,7 @@ function tag_load_config()
 {
     static $moduleConfig;
 
-    if (!isset($moduleConfig)) {
+    if (null === $moduleConfig) {
         if (isset($GLOBALS['xoopsModule']) && ($GLOBALS['xoopsModule'] instanceof XoopsModule) && ('tag' === $GLOBALS['xoopsModule']->getVar('dirname', 'n'))) {
             if (!empty($GLOBALS['xoopsModuleConfig'])) {
                 $moduleConfig = $GLOBALS['xoopsModuleConfig'];
@@ -45,19 +45,21 @@ function tag_load_config()
                 $moduleConfig = null;
             }
         } else {
+            /** @var \XoopsModuleHandler $moduleHandler */
             $moduleHandler = xoops_getHandler('module');
             $module        = $moduleHandler->getByDirname('tag');
 
-            $config_handler = xoops_getHandler('config');
-            $criteria       = new CriteriaCompo(new Criteria('conf_modid', $module->getVar('mid')));
-            $configs        = $config_handler->getConfigs($criteria);
+            /** @var \XoopsConfigHandler $configHandler */
+            $configHandler = xoops_getHandler('config');
+            $criteria      = new \CriteriaCompo(new \Criteria('conf_modid', $module->getVar('mid')));
+            $configs       = $configHandler->getConfigs($criteria);
             foreach (array_keys($configs) as $i) {
                 $moduleConfig[$configs[$i]->getVar('conf_name')] = $configs[$i]->getConfValueForOutput();
             }
             unset($configs);
         }
         if (file_exists($GLOBALS['xoops']->path('/modules/tag/include/plugin.php'))) {
-            $customConfig = include $GLOBALS['xoops']->path('/modules/tag/include/plugin.php');
+            $customConfig = require_once $GLOBALS['xoops']->path('/modules/tag/include/plugin.php');
             $moduleConfig = array_merge($moduleConfig, $customConfig);
         }
     }
@@ -68,7 +70,7 @@ function tag_load_config()
 function tag_define_url_delimiter()
 {
     if (defined('URL_DELIMITER')) {
-        if (!in_array(URL_DELIMITER, array('?', '/'))) {
+        if (!in_array(URL_DELIMITER, ['?', '/'], true)) {
             exit('Security Violation');
         }
     } else {
@@ -87,7 +89,7 @@ function tag_define_url_delimiter()
 function tag_get_delimiter()
 {
     xoops_loadLanguage('config', 'tag');
-    $retVal = array(',', ' ', '|', ';');
+    $retVal = [',', ' ', '|', ';'];
 
     if (!empty($GLOBALS['tag_delimiter'])) {
         $retVal = $GLOBALS['tag_delimiter'];
