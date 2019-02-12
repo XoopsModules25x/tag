@@ -34,10 +34,8 @@ if (!defined('XOOPS_ROOT_PATH')) {
  * uname
  * tags
  *
- * @var        array $items associative array of items: [modid][catid][itemid]
  *
- *
- * @param mixed      $items
+ * @param mixed $items associative array of items: [modid][catid][itemid]
  * @return    bool
  */
 function smartsection_tag_iteminfo(&$items)
