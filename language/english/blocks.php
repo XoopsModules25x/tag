@@ -37,5 +37,5 @@ define('_MB_TAG_FLASH_BACKGROUND', 'flash background');
 define('_MB_TAG_FLASH_TRANSPARENT', 'transparent');
 define('_MB_TAG_FLASH_MINFONTCOLOR', 'min font color');
 define('_MB_TAG_FLASH_MAXFONTCOLOR', 'max font color');
-define('_MB_TAG_FLASH_HILIGHTFONTCOLOR', 'font hilight color');
+define('_MB_TAG_FLASH_HILIGHTFONTCOLOR', 'font highlight color');
 define('_MB_TAG_FLASH_SPEED', 'flash speed');
