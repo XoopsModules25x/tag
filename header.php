@@ -12,7 +12,7 @@
 /**
  * XOOPS tag management module
  *
- * @package         tag
+ * @package         XoopsModules\Tag
  * @copyright       {@link http://sourceforge.net/projects/xoops/ The XOOPS Project}
  * @license         {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
@@ -22,18 +22,16 @@
 use XoopsModules\Tag;
 
 require_once dirname(dirname(__DIR__)) . '/mainfile.php';
-require_once __DIR__ . '/include/vars.php';
-require_once __DIR__ . '/include/functions.php';
 
-require_once __DIR__ . '/include/common.php';
-
-/** @var Tag\Helper $helper */
+/** @var XoopsModules\Tag\Helper $helper */
 $helper = Tag\Helper::getInstance();
+
+require_once $helper->path('include/vars.php');
+require_once $helper->path('include/functions.php');
+require_once $helper->path('include/common.php');
 
 // Load language files
 $helper->loadLanguage('main');
 
-//xoops_load('constants', 'tag');
-
-$xoopsOption['xoops_module_header'] = "<link rel='stylesheet' type='text/css' href='" . $GLOBALS['xoops']->url('www/modules/tag/assets/css/style.css') . "' >";
-$myts                               = \MyTextSanitizer::getInstance();
+$xoopsOption['xoops_module_header'] = "<link rel='stylesheet' type='text/css' href='" . $helper->url('assets/css/style.css') . "' >";
+$myts = \MyTextSanitizer::getInstance();
