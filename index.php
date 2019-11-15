@@ -35,7 +35,7 @@ $criteria = new \CriteriaCompo();
 $criteria->setSort('count');
 $criteria->setOrder('DESC');
 $criteria->setLimit($limit);
-$tags = &$tagHandler->getByLimit(0, 0, $criteria);
+$tags = $tagHandler->getByLimit(0, 0, $criteria);
 
 $count_max = 0;
 $count_min = 0;

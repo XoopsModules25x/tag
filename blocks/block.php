@@ -117,7 +117,7 @@ function tag_block_cloud_show($options, $dirname = '', $catid = 0)
             $criteria->add(new \Criteria('l.tag_catid', $catid));
         }
     }
-    if (!$tags = &$tagHandler->getByLimit(0, 0, $criteria, null, empty($options[1]))) {
+    if (!$tags = $tagHandler->getByLimit(0, 0, $criteria, null, empty($options[1]))) {
         return $block;
     }
 
@@ -268,7 +268,7 @@ function tag_block_top_show($options, $dirname = '', $catid = 0)
             $criteria->add(new \Criteria('l.tag_catid', $catid));
         }
     }
-    if (!$tags = &$tagHandler->getByLimit(0, 0, $criteria, null, empty($options[1]))) {
+    if (!$tags = $tagHandler->getByLimit(0, 0, $criteria, null, empty($options[1]))) {
         return $block;
     }
 

@@ -42,7 +42,7 @@ function xfaq_tag_iteminfo(&$items)
     /** @var \XoopsModules\Xfaq\XfaqHandler $itemHandler */
     $itemHandler = new \XoopsModules\Xfaq\XfaqHandler($db);
 
-    $items_obj = &$itemHandler->getObjects(new \Criteria('faq_id', '(' . implode(', ', $items_id) . ')', 'IN'), true);
+    $items_obj = $itemHandler->getObjects(new \Criteria('faq_id', '(' . implode(', ', $items_id) . ')', 'IN'), true);
 
     foreach (array_keys($items) as $cat_id) {
         foreach (array_keys($items[$cat_id]) as $item_id) {

@@ -89,7 +89,7 @@ if (!empty($modid)) {
         $criteria->add(new \Criteria('l.tag_catid', $catid));
     }
 }
-$tags = &$tagHandler->getByLimit(0, 0, $criteria);
+$tags = $tagHandler->getByLimit(0, 0, $criteria);
 
 $count_max = 0;
 $count_min = 0;

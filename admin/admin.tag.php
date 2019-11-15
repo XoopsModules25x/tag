@@ -112,7 +112,7 @@ if ($status >= Constants::STATUS_ACTIVE) {
 if (!empty($modid)) {
     $criteria->add(new \Criteria('l.tag_modid', $modid));
 }
-$tags = &$tagHandler->getByLimit(0, 0, $criteria, null, false);
+$tags = $tagHandler->getByLimit(0, 0, $criteria, null, false);
 
 $form_tags = "<form name='tags' method='post' action='"
              . xoops_getenv('PHP_SELF')

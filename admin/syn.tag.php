@@ -91,7 +91,7 @@ if (\Xmf\Request::hasVar('start', 'GET')) {
     if ($modid > Constants::DEFAULT_ID) {
         $criteria->add(new \Criteria('l.tag_modid', $modid));
     }
-    $tags = &$tagHandler->getByLimit(0, 0, $criteria, null, false);
+    $tags = $tagHandler->getByLimit(0, 0, $criteria, null, false);
     if ($tags && is_array($tags)) {
         foreach (array_keys($tags) as $tag_id) {
             $tagHandler->update_stats($tag_id, (-1 == $modid) ? Constants::DEFAULT_ID : $tags[$tag_id]['modid']);

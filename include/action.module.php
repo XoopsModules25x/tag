@@ -59,7 +59,7 @@ function xoops_module_pre_install_tag(\XoopsModule $module)
     $phpLen   = mb_strlen(PHP_VERSION);
     $extraLen = mb_strlen(PHP_EXTRA_VERSION);
     $verNum   = mb_substr(PHP_VERSION, 0, $phpLen - $extraLen);
-    $reqVer   = &$module->getInfo('min_php');
+    $reqVer   = $module->getInfo('min_php');
     if ($verNum < $reqVer) {
         $module->setErrors("The module requires PHP {$reqVer}+ ({$verNum} installed)");
 
@@ -74,7 +74,7 @@ function xoops_module_pre_install_tag(\XoopsModule $module)
     }
     */
 
-    $mod_tables = &$module->getInfo('tables');
+    $mod_tables = $module->getInfo('tables');
     foreach ($mod_tables as $table) {
         $GLOBALS['xoopsDB']->queryF('DROP TABLE IF EXISTS ' . $GLOBALS['xoopsDB']->prefix($table) . ';');
     }

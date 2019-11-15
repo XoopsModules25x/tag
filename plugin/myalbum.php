@@ -53,7 +53,7 @@ function myalbum_tag_iteminfo(&$items)
     $itemHandler = new \XoopsModules\Myalbum\PhotosHandler();
     /** @var \XoopsModules\Myalbum\TextHandler $itemHandler */
     $textHandler = new \XoopsModules\Myalbum\TextHandler();
-    $items_obj   = &$itemHandler->getObjects(new \Criteria('lid', '(' . implode(', ', $items_id) . ')', 'IN'), true);
+    $items_obj   = $itemHandler->getObjects(new \Criteria('lid', '(' . implode(', ', $items_id) . ')', 'IN'), true);
 
     foreach (array_keys($items) as $cat_id) {
         foreach (array_keys($items[$cat_id]) as $item_id) {

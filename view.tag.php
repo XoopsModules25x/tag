@@ -60,7 +60,7 @@ if (!empty($tag_id)) {
     }
     $tag_term = $tag_obj->getVar('tag_term', 'n');
 } else {
-    if (!$tags_obj = &$tagHandler->getObjects(new \Criteria('tag_term', $myts->addSlashes(trim($tag_term))))) {
+    if (!$tags_obj = $tagHandler->getObjects(new \Criteria('tag_term', $myts->addSlashes(trim($tag_term))))) {
         redirect_header($GLOBALS['xoops']->url('www/modules/' . $GLOBALS['xoopsModule']->getVar('dirname') . '/index.php'), 2, _MD_TAG_INVALID);
     }
     $tag_obj = $tags_obj[0];

@@ -40,7 +40,7 @@ function xoops_module_pre_install_tag(\XoopsModule $module)
         return false;
     }
 
-    $mod_tables = &$module->getInfo('tables');
+    $mod_tables = $module->getInfo('tables');
     foreach ($mod_tables as $table) {
         $GLOBALS['xoopsDB']->queryF('DROP TABLE IF EXISTS ' . $GLOBALS['xoopsDB']->prefix($table) . ';');
     }

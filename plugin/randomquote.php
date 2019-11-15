@@ -54,7 +54,7 @@ function randomquote_tag_iteminfo(&$items)
     /** @var \XoopsModules\Randomquote\QuotesHandler $itemHandler */
     $itemHandler = new \XoopsModules\Randomquote\QuotesHandler();
 
-    $quoteObjs = &$itemHandler->getObjects($criteria, true);
+    $quoteObjs = $itemHandler->getObjects($criteria, true);
 
     foreach ($cats_id as $cat_id) {
         foreach ($items_id as $item_id) {
