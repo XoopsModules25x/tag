@@ -265,9 +265,9 @@ class TagHandler extends \XoopsPersistableObjectHandler
     {
         $ret = [];
         if ($fromStats) {
-            $sql = "SELECT DISTINCT(o.{$this->keyName}), o.tag_term, o.tag_status, SUM(l.tag_count) AS count, l.tag_modid" . " FROM {$this->table} AS o LEFT JOIN {$this->table_stats} AS l ON l.{$this->keyName} = o.{$this->keyName}";
+            $sql = "SELECT DISTINCT(o.{$this->keyName}), o.tag_term, o.tag_status, SUM(l.tag_count) AS count" . " FROM {$this->table} AS o LEFT JOIN {$this->table_stats} AS l ON l.{$this->keyName} = o.{$this->keyName}";
         } else {
-            $sql = "SELECT DISTINCT(o.{$this->keyName}), o.tag_term, o.tag_status, COUNT(l.tl_id) AS count, l.tag_modid" . " FROM {$this->table} AS o LEFT JOIN {$this->table_link} AS l ON l.{$this->keyName} = o.{$this->keyName}";
+            $sql = "SELECT DISTINCT(o.{$this->keyName}), o.tag_term, o.tag_status, COUNT(l.tl_id) AS count" . " FROM {$this->table} AS o LEFT JOIN {$this->table_link} AS l ON l.{$this->keyName} = o.{$this->keyName}";
         }
 
         $limit = null;
@@ -313,7 +313,6 @@ class TagHandler extends \XoopsPersistableObjectHandler
                     'id'     => $myrow[$this->keyName],
                     'term'   => htmlspecialchars($myrow['tag_term'], ENT_QUOTES | ENT_HTML5),
                     'status' => $myrow['tag_status'],
-                    'modid'  => $myrow['tag_modid'],
                     'count'  => (int)$myrow['count'],
                 ];
             }
