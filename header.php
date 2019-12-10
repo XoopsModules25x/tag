@@ -22,16 +22,16 @@
 use XoopsModules\Tag;
 
 require_once dirname(dirname(__DIR__)) . '/mainfile.php';
+require_once __DIR__ . '/include/vars.php';
+require_once __DIR__ . '/include/common.php';
+//require_once __DIR__ . '/include/functions.php';
 
-/** @var XoopsModules\Tag\Helper $helper */
-$helper = Tag\Helper::getInstance();
-
-require_once $helper->path('include/vars.php');
-require_once $helper->path('include/functions.php');
-require_once $helper->path('include/common.php');
-
+/**
+ * {@internal defined in ./include/common.php }}
+ * @var XoopsModules\Tag\Helper $helper
+ */
 // Load language files
 $helper->loadLanguage('main');
 
-$xoopsOption['xoops_module_header'] = "<link rel='stylesheet' type='text/css' href='" . $helper->url('assets/css/style.css') . "' >";
+$GLOBALS['xoopsOption']['xoops_module_header'] = "<link rel='stylesheet' type='text/css' href='" . $helper->url('assets/css/style.css') . "' >";
 $myts = \MyTextSanitizer::getInstance();

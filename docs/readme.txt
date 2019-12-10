@@ -12,4 +12,3 @@ display and stats for each module that enables tag plugin. This module provides
 
 - PHP version >= 5.3.7
 - XOOPS version >= 2.5.10
-- ModuleClasses in /Frameworks (download it from here: http://goo.gl/Bmknt)

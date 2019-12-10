@@ -21,12 +21,11 @@ namespace XoopsModules\Tag;
  * the value(s) before module installation. Additionally the module may not
  * work correctly if trying to upgrade if these values have been changed.
  *
- * @category     Module
- * @package      tag
- * @copyright    ::  {@link http://sourceforge.net/projects/xoops/ The XOOPS Project}
- * @license      ::    {@link http://www.gnu.org/licenses/gpl-2.0.html GNU Public License}
- * @author       ::     ZySpec <owners@zyspec.com>
- * @since        ::      2.33
+ * @package      XoopsModules\Tag
+ * @copyright    {@link http://sourceforge.net/projects/xoops/ The XOOPS Project}
+ * @license      {@link http://www.gnu.org/licenses/gpl-2.0.html GNU Public License}
+ * @author       ZySpec <zyspec@yahoo.com>
+ * @since        2.33
  **/
 defined('XOOPS_ROOT_PATH') || die('Restricted access');
 
@@ -62,6 +61,10 @@ class Constants
      *  indicates default display limit to show
      */
     const DEFAULT_LIMIT = 10;
+    /**
+     *  indicates unlimitted number
+     */
+    const UNLIMITED = 0;
     /**
      *  indicates starting point for searches, etc.
      */

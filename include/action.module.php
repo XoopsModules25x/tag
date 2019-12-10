@@ -12,6 +12,7 @@
 /**
  * XOOPS tag management module
  *
+ * @package         XoopsModules\Tag
  * @copyright       XOOPS Project (https://xoops.org)
  * @license         http://www.fsf.org/copyleft/gpl.html GNU public license
  * @since           1.00
@@ -24,6 +25,7 @@ defined('XOOPS_ROOT_PATH') || die('Restricted access');
 defined('TAG_INI') || require_once __DIR__ . '/vars.php';
 
 /**
+ * @deprecated
  * @param  XoopsModule $module
  * @return bool
  */
@@ -33,6 +35,7 @@ function xoops_module_install_tag(\XoopsModule $module)
 }
 
 /**
+ * @deprecated
  * @param  XoopsModule $module
  * @return bool
  */
@@ -83,6 +86,7 @@ function xoops_module_pre_install_tag(\XoopsModule $module)
 }
 
 /**
+ * @deprecated
  * @param  XoopsModule $module
  * @return bool
  */
@@ -99,6 +103,7 @@ function xoops_module_pre_update_tag(\XoopsModule $module)
 }
 
 /**
+ * @deprecated
  * @param  XoopsModule $module
  * @return bool
  */
@@ -108,6 +113,7 @@ function xoops_module_pre_uninstall_tag(\XoopsModule $module)
 }
 
 /**
+ * @deprecated
  * @param  XoopsModule $module
  * @param  null        $prev_version
  * @return bool

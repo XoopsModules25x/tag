@@ -25,6 +25,7 @@ if ((!defined('XOOPS_ROOT_PATH')) || !($GLOBALS['xoopsUser'] instanceof \XoopsUs
 }
 
 /**
+ * @deprecated - not used, use Xmf\Database\Tables method(s) instead
  * @param string $tablename
  *
  * @return bool

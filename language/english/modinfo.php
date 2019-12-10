@@ -53,8 +53,8 @@ define('_MI_TAG_INDEX_TPL_DESC', 'Index page of tag module');
 define('_MI_TAG_INDEX_TPL_LIST_DESC', 'List of tags');
 define('_MI_TAG_INDEX_TPL_VIEW_DESC', 'Links of a tag');
 define('_MI_TAG_INDEX_TPL_BAR_DESC', 'Tag list in an item');
-define('_MI_TAG_INDEX_ADMINTPL_ABOUT_DESC', '');
-define('_MI_TAG_INDEX_ADMINTPL_HELP_DESC', '');
+//define('_MI_TAG_INDEX_ADMINTPL_ABOUT_DESC', '');
+//define('_MI_TAG_INDEX_ADMINTPL_HELP_DESC', '');
 
 //2.33
 define('_MI_TAG_BLOCK_CUMULUS', 'Cumulus Tag Cloud');
@@ -69,3 +69,9 @@ define('_MI_TAG_VIEW_SEARCH', 'Search');
 define('_MI_TAG_INDEX_TPL_DESK_DESC', 'Links of a custom tags ');
 
 define('_MI_TAG_ADMENU_MIGRATE', 'Migrate');
+define('_MI_TAG_HELP_OVERVIEW', 'Overview');
+define('_MI_TAG_HELP_PLUGIN_DEV', 'Plugin Development');
+define('_MI_TAG_HELP_ISSUES', 'Issues');
+
+define('_MI_TAG_HELP_HEADER', __DIR__ . '/help/helpheader.tpl');
+define('_MI_TAG_BACK_2_ADMIN', 'Back to Administration of ');

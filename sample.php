@@ -10,7 +10,7 @@
 */
 
 /** {@internal - DO NOT INCLUDE THE FOLLOWING LINE IN YOUR PLUGIN, IT IS INCLUDED
- *               HERE TO PREVENT THIS INSTRUCTIONAL FILE FROM BEING EXECUTED
+ *               HERE TO PREVENT THIS INSTRUCTIONAL FILE FROM BEING EXECUTED }}
  */
 redirect_header('../../index.php', 0);
 
@@ -25,7 +25,7 @@ redirect_header('../../index.php', 0);
 
 /*
 This module provides a centralized toolkit including input, display, stats and
-substantial more comprehensive applications, so that each module does not need
+substantially more for applications, so that each module does not need
 to develop its own tag handling scripts.
 
 Check http://en.wikipedia.org/wiki/Tags for more info about "tag"
@@ -39,7 +39,7 @@ catid:          extra parameter to identify an object. Only useful when you have
 */
 
 /*
-To enable tag for a module ("mymodule"), following steps are need:
+The following steps are needed to enable tag for a module ("mymodule"):
 1. add tag input box to your item edit form (required)
 2. add tag storage to your item submission page (required)
 3. define functions to build info of tagged items (required)
@@ -87,7 +87,7 @@ function mymodule_tag_iteminfo($items)
                 'uid'     => $item_obj->getVar('uid'),
                 'link'    => "view.item.php?itemid={$item_id}",
                 'time'    => $item_obj->getVar('item_time'),
-                'tags'    => tag_parse_tag($item_obj->getVar('item_tags', 'n')), // optional
+                'tags'    => \XoopsModules\Tag\Utility::tag_parse_tag($item_obj->getVar('item_tags', 'n')), // optional
                 'content' => '',
             ];
         }
@@ -199,7 +199,7 @@ function mymodule_tag_block_top_edit($options)
 // File: mymodule_tag_block_cloud.tpl
 //<{include file = 'db:tag_block_cloud.tpl'}>
 $GLOBALS['xoopsTpl']->display('db:tag_block_cloud.tpl');
-// File: mymodule_tag_block_top.html
+// File: mymodule_tag_block_top.tpl
 //<{include file = 'db:tag_block_top.tpl'}>
 $GLOBALS['xoopsTpl']->display('db:tag_block_top.tpl');
 

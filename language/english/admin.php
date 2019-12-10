@@ -93,3 +93,16 @@ define('_AM_TAG_ERROR_COLUMN', 'Could not create column in database : %s');
 define('_AM_TAG_ERROR_BAD_XOOPS', 'This module requires XOOPS %s+ (%s installed)');
 define('_AM_TAG_ERROR_BAD_PHP', 'This module requires PHP version %s+ (%s installed)');
 define('_AM_TAG_ERROR_TAG_REMOVAL', 'Could not remove tags from Tag Module');
+
+//2.34
+// Help Issues page defines
+define('_AM_TAG_ISSUES_ERR_UNKNOWN', 'Unknown Error');
+define('_AM_TAG_ISSUES_ERR_STATUS', 'Unknown Status');
+define('_AM_TAG_ISSUES_NONE', 'There are currently no open issues.');
+define('_AM_TAG_ISSUES_NOTE', 'Note: * indicates issue is a GitHub pull request');
+define('_AM_TAG_ISSUES_OPEN', 'Open Issues');
+define('_AM_TAG_HELP_ISSUE', 'Issue #');
+define('_AM_TAG_HELP_DATE', 'Date');
+define('_AM_TAG_HELP_TITLE', 'Title');
+define('_AM_TAG_HELP_SUBMITTER', 'Submitter');
+
