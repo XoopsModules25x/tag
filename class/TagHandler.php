@@ -321,7 +321,7 @@ class TagHandler extends \XoopsPersistableObjectHandler
         }
 
         $limit = is_integer($limit) && ($limit >= 0) ? $limit : Constants::UNLIMITED;
-        $start = is(integer($start) && $start >= 0) ? $start : Constants::BEGINNING;
+        $start = is_integer($start) && ($start >= 0) ? $start : Constants::BEGINNING;
         $sort  = '';
         $order = '';
         if (null !== $criteria && $criteria instanceof \CriteriaCompo) {
