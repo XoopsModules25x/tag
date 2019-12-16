@@ -12,7 +12,7 @@
 /**
  * XOOPS tag management module
  *
- * @package         tag
+ * @package         XoopsModules\Tag
  * @copyright       {@link http://sourceforge.net/projects/xoops/ The XOOPS Project}
  * @license         {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
@@ -21,11 +21,11 @@
 defined('XOOPS_ROOT_PATH') || die('Restricted access');
 
 /**
- * @param         $queryarray
- * @param         $andor
- * @param         $limit
- * @param         $offset
- * @param         $userid
+ * @param  array  $queryarray
+ * @param  string $andor
+ * @param  int    $limit
+ * @param  int    $offset
+ * @param  int    $userid
  * @param  string $sortby
  * @return array
  */
@@ -33,6 +33,43 @@ function &tag_search($queryarray, $andor, $limit, $offset, $userid, $sortby = 't
 {
     $ret   = [];
     $count = is_array($queryarray) ? count($queryarray) : 0;
+    if (0 >= $count) {
+        return $ret;
+    }
+    $fields = ['tag_id', 'tag_term'];
+    $tagHandler = \XoopsModules\Tag\Helper::getInstance()->getHandler('Tag');
+    $criteria = new \CriteriaCompo();
+    if ('exact' === $andor) {
+        $criteria->add(new \Criteria('tag_term', $queryarray[0]));
+        for ($i = 1; $i < $count; ++$i) {
+            $criteria->add(new \Criteria('tag_term', $queryarray[$i]), $andor);
+        }
+    } else {
+        $criteria->add(new \Criteria('tag_term', "%{$queryarray[0]}%", 'LIKE'));
+        for ($i = 1; $i < $count; ++$i) {
+            $criteria->add(new \Criteria('tag_term', "%{$queryarray[$i]}%", 'LIKE'), $andor);
+        }
+    }
+    if ($sortby) {
+        $sbArray = explode(' ', $sortby);
+        if (0 < count($sbArray)) {
+            $criteria->setSort($sbArray[0]);
+            if (isset($sbArray[1])) {
+                $criteria->order = $sbArray[1];
+            }
+        }
+    }
+    $tagObjArray = $tagHandler->getAll($criteria, $fields);
+    foreach ($tagObjArray as $tagId => $tagObj) {
+        $ret[] = [
+            'link' => 'view.tag.php?tag=' . $tagId,
+            'title' => $tagObj->getVar('tag_term')
+        ];
+    }
+
+    return $ret;
+
+    /*
     $sql   = 'SELECT tag_id, tag_term FROM ' . $GLOBALS['xoopsDB']->prefix('tag_tag');
     if ($count > 0) {
         if ('exact' === $andor) {
@@ -62,4 +99,5 @@ function &tag_search($queryarray, $andor, $limit, $offset, $userid, $sortby = 't
     }
 
     return $ret;
+    */
 }
