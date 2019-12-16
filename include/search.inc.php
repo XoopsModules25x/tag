@@ -55,7 +55,7 @@ function &tag_search($queryarray, $andor, $limit, $offset, $userid, $sortby = 't
         if (0 < count($sbArray)) {
             $criteria->setSort($sbArray[0]);
             if (isset($sbArray[1])) {
-                $criteria->order = $sbArray[1];
+                $criteria->order = $sbArray[1]; // patch for XOOPS <= 2.5.10, does not set order correctly using setOrder() method
             }
         }
     }

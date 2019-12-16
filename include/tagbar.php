@@ -25,6 +25,7 @@ use XoopsModules\Tag\Utility;
 /**
  * Display tag list
  *
+ * @todo move this to a namespaced class
  * @param  int|array $tags array of tag string
  *                         OR
  * @param  int       $catid
