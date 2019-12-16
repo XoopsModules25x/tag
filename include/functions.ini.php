@@ -12,7 +12,7 @@
 /**
  * XOOPS tag management module
  *
- * @package         tag
+ * @package         XoopsModules\Tag
  * @copyright       {@link http://sourceforge.net/projects/xoops/ The XOOPS Project}
  * @license         {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
@@ -31,35 +31,38 @@ defined('TAG_INI') || die();
 define('TAG_FUNCTIONS_INI', 1);
 
 /**
+ * @deprecated - use {@see Utility::tag_load_config()} method instead
  * @return array|mixed|null
  */
 function tag_load_config()
 {
+    $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1);
+    trigger_error(__FUNCTION__ . " is deprecated, called from {$trace[0]['file']} line {$trace[0]['line']}");
+    $GLOBALS['xoopsLogger']->addDeprecated("Tag Module: " . __FUNCTION__ . " function is deprecated since Tag 2.3.4, please use 'Tag\Utility::" . __FUNCTION__ . " method instead."
+        . " Called from {$trace[0]['file']}line {$trace[0]['line']}");
+
     static $moduleConfig;
 
     if (null === $moduleConfig) {
-        if (isset($GLOBALS['xoopsModule']) && ($GLOBALS['xoopsModule'] instanceof XoopsModule) && ('tag' === $GLOBALS['xoopsModule']->getVar('dirname', 'n'))) {
-            if (!empty($GLOBALS['xoopsModuleConfig'])) {
-                $moduleConfig = $GLOBALS['xoopsModuleConfig'];
-            } else {
-                $moduleConfig = null;
-            }
+        if (isset($GLOBALS['xoopsModule']) && ($GLOBALS['xoopsModule'] instanceof \XoopsModule) && ('tag' === $GLOBALS['xoopsModule']->getVar('dirname', 'n'))) {
+            $moduleConfig = empty($GLOBALS['xoopsModuleConfig']) ? [] : $GLOBALS['xoopsModuleConfig'];
         } else {
             /** @var \XoopsModuleHandler $moduleHandler */
             $moduleHandler = xoops_getHandler('module');
-            $module        = $moduleHandler->getByDirname('tag');
+            $module = $moduleHandler->getByDirname('tag');
 
             /** @var \XoopsConfigHandler $configHandler */
             $configHandler = xoops_getHandler('config');
-            $criteria      = new \CriteriaCompo(new \Criteria('conf_modid', $module->getVar('mid')));
-            $configs       = $configHandler->getConfigs($criteria);
-            foreach (array_keys($configs) as $i) {
-                $moduleConfig[$configs[$i]->getVar('conf_name')] = $configs[$i]->getConfValueForOutput();
+            $criteria = new \Criteria('conf_modid', $module->getVar('mid'));
+            $configs = $configHandler->getConfigs($criteria);
+            /** @var XoopsConfigItem $obj */
+            foreach ($configs as $obj) {
+                $moduleConfig[$obj->getVar('conf_name')] = $obj->getConfValueForOutput();
             }
             unset($configs);
         }
         if (file_exists($GLOBALS['xoops']->path('/modules/tag/include/plugin.php'))) {
-            $customConfig = require_once $GLOBALS['xoops']->path('/modules/tag/include/plugin.php');
+            $customConfig = require $GLOBALS['xoops']->path('/modules/tag/include/plugin.php');
             $moduleConfig = array_merge($moduleConfig, $customConfig);
         }
     }
@@ -67,8 +70,17 @@ function tag_load_config()
     return $moduleConfig;
 }
 
+/**
+ * @deprecated - use {@see Utility::tag_define_url_delimiter()} method instead
+ * return void
+ */
 function tag_define_url_delimiter()
 {
+    $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1);
+    trigger_error(__FUNCTION__ . " is deprecated, called from {$trace[0]['file']} line {$trace[0]['line']}");
+    $GLOBALS['xoopsLogger']->addDeprecated("Tag Module: " . __FUNCTION__ . " function is deprecated since Tag 2.3.4, please use 'Tag\Utility::" . __FUNCTION__ . " method instead."
+        . " Called from {$trace[0]['file']}line {$trace[0]['line']}");
+
     if (defined('URL_DELIMITER')) {
         if (!in_array(URL_DELIMITER, ['?', '/'], true)) {
             exit('Security Violation');
@@ -84,10 +96,16 @@ function tag_define_url_delimiter()
 }
 
 /**
+ * @deprecated - use {@see Utility::tag_get_delimiter()} method instead
  * @return array|mixed
  */
 function tag_get_delimiter()
 {
+    $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1);
+    trigger_error(__FUNCTION__ . " is deprecated, called from {$trace[0]['file']} line {$trace[0]['line']}");
+    $GLOBALS['xoopsLogger']->addDeprecated("Tag Module: " . __FUNCTION__ . " function is deprecated since Tag 2.3.4, please use 'Tag\Utility::" . __FUNCTION__ . " method instead."
+        . " Called from {$trace[0]['file']}line {$trace[0]['line']}");
+
     xoops_loadLanguage('config', 'tag');
     $retVal = [',', ' ', '|', ';'];
 

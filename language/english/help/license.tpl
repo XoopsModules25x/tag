@@ -1,3 +1,8 @@
+<div id="help-template" class="outer">
+    <{include file=$smarty.const._MI_TAG_HELP_HEADER}>
+
+    <h4 class="odd">LICENSE</h4>
+    <pre>
             GNU GENERAL PUBLIC LICENSE
                Version 2, June 1991
 
@@ -337,3 +342,5 @@ proprietary programs.  If your program is a subroutine library, you may
 consider it more useful to permit linking proprietary applications with the
 library.  If this is what you want to do, use the GNU Lesser General
 Public License instead of this License.
+</pre>
+</div>

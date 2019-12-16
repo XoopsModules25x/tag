@@ -46,7 +46,7 @@ $GLOBALS['_MD_TAG_ADDONS'] = [
     ],
     'techno' => [
         'title' => 'Technorati',
-        'link'  => 'https://technorati.com/tag/%s/',
+        'link'  => 'https://technorati.com/search/index.php?q=%s&context=search',
     ],
     'flickr' => [
         'title'    => 'Flickr',

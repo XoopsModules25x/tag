@@ -15,7 +15,7 @@ namespace XoopsModules\Tag;
 /**
  * XOOPS tag management module
  *
- * @package         tag
+ * @package         XoopsModules\Tag
  * @copyright       {@link http://sourceforge.net/projects/xoops/ The XOOPS Project}
  * @license         {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
@@ -41,26 +41,24 @@ class FormTag extends \XoopsFormText
      * @param string|int $value     Initial text or itemid
      * @param int        $catid     category id (applicable if $value is itemid)
      */
-    public function __construct($name, $size, $maxlength, $value = null, $catid = 0)
+    public function __construct($name, int $size, $maxlength, $value = null, $catid = 0)
     {
-        require_once $GLOBALS['xoops']->path('/modules/tag/include/vars.php');
-        if (!($GLOBALS['xoopsModule'] instanceof \XoopsModule) || 'tag' !== $GLOBALS['xoopsModule']->getVar('dirname')) {
-            xoops_loadLanguage('main', 'tag');
-        }
+        require_once $helper->path('include/vars.php');
+        /** @var \XoopsModules\Tag\Helper $helper */
+        $helper = \XoopsModules\Tag\Helper::getInstance();
+        $helper->loadLanguage('main');
+
         $value = empty($value) ? '' : $value;
-        // itemid
+
         if (!empty($value) && is_numeric($value) && ($GLOBALS['xoopsModule'] instanceof \XoopsModule)) {
             $modid = $GLOBALS['xoopsModule']->getVar('mid');
             /** @var \XoopsModules\Tag\TagHandler $tagHandler */
-            $tagHandler = Tag\Helper::getInstance()->getHandler('Tag'); // xoops_getModuleHandler('tag', 'tag');
+            $tagHandler = $helper->getHandler('Tag');
             if ($tags = $tagHandler->getByItem($value, $modid, $catid)) {
                 $value = htmlspecialchars(implode(', ', $tags), ENT_QUOTES | ENT_HTML5);
-            } else {
-                $value = '';
             }
         }
-        $caption = _MD_TAG_TAGS;
-        parent::__construct($caption, $name, $size, $maxlength, $value);
+        parent::__construct(_MD_TAG_TAGS, $name, $size, $maxlength, $value);
     }
 
     /**

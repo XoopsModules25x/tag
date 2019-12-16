@@ -12,7 +12,7 @@
 /**
  * XOOPS tag management module
  *
- * @package        tag
+ * @package        XoopsModules\Tag
  * @copyright      {@link http://sourceforge.net/projects/xoops/ The XOOPS Project}
  * @license        {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
  * @author         Taiwen Jiang <phppp@users.sourceforge.net>
@@ -26,9 +26,9 @@ $moduleDirName = basename(__DIR__);
 
 // ------------------- Informations ------------------- //
 $modversion = [
-    'version'             => 2.34,
-    'module_status'       => 'RC-2',
-    'release_date'        => '2019/12/09',
+    'version'             => 2.35,
+    'module_status'       => 'Beta 1',
+    'release_date'        => '2019/12/12',
     'name'                => _MI_TAG_NAME,
     'description'         => _MI_TAG_DESC,
     'official'            => 0,
@@ -57,8 +57,11 @@ $modversion = [
     'manual_file'         => XOOPS_URL . "/modules/$moduleDirName/docs/install.txt",
     // images
     'image'               => 'assets/images/logoModule.png',
-    'iconsmall'           => 'assets/images/iconsmall.png',
-    'iconbig'             => 'assets/images/iconbig.png',
+    /* @todo determine if the following icons are needed, they currently don't exist
+     *       so they've been commented out in v2.35
+     */
+    //'iconsmall'           => 'assets/images/iconsmall.png',
+    //'iconbig'             => 'assets/images/iconbig.png',
     'dirname'             => $moduleDirName,
     //Frameworks
     // Local path icons

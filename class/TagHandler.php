@@ -15,8 +15,7 @@ namespace XoopsModules\Tag;
 /**
  * XOOPS tag management module
  *
- * @package         tag
- * @subpackage      class
+ * @package         XoopsModules\Tag
  * @copyright       {@link http://sourceforge.net/projects/xoops/ The XOOPS Project}
  * @license         {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
@@ -37,8 +36,7 @@ class TagHandler extends \XoopsPersistableObjectHandler
     /**
      * Constructor
      *
-     * @param \XoopsDatabase|null $db reference to the {@link XoopsDatabase}
-     *                                object
+     * @param \XoopsDatabase|null $db reference to the object {@link XoopsDatabase}
      */
     public function __construct(\XoopsDatabase $db = null)
     {
@@ -86,7 +84,7 @@ class TagHandler extends \XoopsPersistableObjectHandler
     /**
      * Update tags linked to an item
      *
-     * @access   public
+     * @access public
      * @param  array|string $tags   array of $tags or a single tag
      * @param  int          $itemid item ID
      * @param  int|string   $modid  module ID or module dirname, optional
@@ -205,7 +203,7 @@ class TagHandler extends \XoopsPersistableObjectHandler
         $catid = (0 === $modid) ? -1 : (int)$catid;
 
         /** @var \XoopsModules\Tag\LinkHandler $linkHandler */
-        $linkHandler = \XoopsModules\Tag\LinkHandler::getInstance();
+        $linkHandler = \XoopsModules\Tag\Helper::getInstance()->getHandler('Link');
         $criteria = new \CriteriaCompo(new \Criteria('tag_id', $tag_id));
         if (0 !== $modid) {
             $criteria->add(new \Criteria('tag_modid', $modid), 'ADD');
@@ -239,7 +237,7 @@ class TagHandler extends \XoopsPersistableObjectHandler
                 $criteria->add(new \Criteria('tag_catid', $catid), 'AND');
                 $status = $statsHandler->deleteAll($criteria);
                 if (!$status) {
-                    //@todo determin what should happen here on failure.
+                    //@todo determine what should happen here on failure.
                 }
                 /*
                 $sql = "DELETE FROM {$this->table_stats}" . ' WHERE ' . " {$this->keyName} = {$tag_id}" . " AND tag_modid = {$modid}" . " AND tag_catid = {$catid}";
@@ -298,12 +296,12 @@ class TagHandler extends \XoopsPersistableObjectHandler
     /**
      * Get tags with item count
      *
-     * @access         public
-     * @param int                                  $limit
-     * @param int                                  $start
-     * @param null|\CriteriaElement|\CriteriaCompo $criteria  {@link Criteria}
-     * @param null                                 $fields
-     * @param bool                                 $fromStats fetch from tag-stats table
+     * @access public
+     * @param  int                                  $limit
+     * @param  int                                  $start
+     * @param  null|\CriteriaElement|\CriteriaCompo $criteria  {@link Criteria}
+     * @param  null                                 $fields
+     * @param  bool                                 $fromStats fetch from tag-stats table
      * @return array associative array of tags (id, term, status, count)
      */
     public function &getByLimit(
@@ -373,7 +371,6 @@ class TagHandler extends \XoopsPersistableObjectHandler
      *
      * @access public
      * @param null|\CriteriaElement|\CriteriaCompo $criteria {@link Criteria)
-     *
      * @return int count
      */
     public function getCount(\CriteriaElement $criteria = null)
@@ -410,9 +407,9 @@ class TagHandler extends \XoopsPersistableObjectHandler
     /**
      * Get items linked with a tag
      *
+     * @access public
      * @param \CriteriaElement $criteria {@link Criteria}
-     *
-     * @return array associative array of items [] => (id, modid, catid, time)
+     * @return array associative array of items[] => (id, modid, catid, time)
      */
     public function getItems(\CriteriaElement $criteria = null)
     {
@@ -507,7 +504,51 @@ class TagHandler extends \XoopsPersistableObjectHandler
     }
 
     /**
-     * delete an object as well as links relying on it
+     * Get detailed data (and font) for a tag
+     *
+     * @access public
+     * @param array $tags_array associative array of tags (id, term, status, count)
+     * @return array tag data values for display
+     */
+    public function getTagData($tags_array, $font_max = 0, $font_min = 0)
+    {
+        $tags_data_array = [];
+        if (is_array($tags_array) && !empty($tags_array)) {
+            // set min and max tag count
+            $count_array = array_column($tags_array, 'count', 'id');
+            $count_min = count($count_array) > 0 ? min($count_array) : 0;
+            $count_min = $count_min > 0 ? $count_min : 0;
+            $count_max = count($count_array) > 0 ? max($count_array) : 0;
+            $count_max = $count_max > 0 ? $count_max : 0;
+
+            $term_array = array_column($tags_array, 'term', 'id');
+            $tags_term_array  = array_map('mb_strtolower', $term_array);
+            array_multisort($tags_term_array, SORT_ASC, $tags_array);
+            $count_interval = $count_max - $count_min;
+            $level_limit = 5;
+
+            $font_ratio = $count_interval ? ($font_max - $font_min) / $count_interval : 1;
+
+            foreach ($tags_array as $tag) {
+                /*
+                 * Font-size = ((tag.count - count.min) * (font.max - font.min) / (count.max - count.min) ) * 100%
+                 */
+                $tags_data_array[] = [
+                    'id'    => $tag['id'],
+                    'font'  => empty($count_interval) ? 100 : floor(($tag['count'] - $count_min) * $font_ratio) + $font_min,
+                    'level' => empty($count_max) ? 0 : floor(($tag['count'] - $count_min) * $level_limit / $count_max),
+                    'term'  => urlencode($tag['term']),
+                    'title' => htmlspecialchars($tag['term'], ENT_QUOTES | ENT_HTML5),
+                    'count' => $tag['count'],
+                ];
+            }
+        }
+        return $tags_data_array;
+    }
+
+
+    /**
+     * Delete an object as well as links relying on it
      *
      * @access public
      * @param \XoopsObject $object $object {@link Tag}

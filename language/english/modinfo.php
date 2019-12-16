@@ -73,5 +73,6 @@ define('_MI_TAG_HELP_OVERVIEW', 'Overview');
 define('_MI_TAG_HELP_PLUGIN_DEV', 'Plugin Development');
 define('_MI_TAG_HELP_ISSUES', 'Issues');
 
+define('_MI_TAG_LICENSE', 'License');
 define('_MI_TAG_HELP_HEADER', __DIR__ . '/help/helpheader.tpl');
 define('_MI_TAG_BACK_2_ADMIN', 'Back to Administration of ');

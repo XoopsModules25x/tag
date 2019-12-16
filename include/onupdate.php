@@ -10,10 +10,9 @@
  */
 
 /**
+ * @package      XoopsModules\Tag
  * @copyright    XOOPS Project https://xoops.org/
  * @license      GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package
- * @since
  * @author       XOOPS Development Team
  */
 
@@ -32,6 +31,11 @@ if ((!defined('XOOPS_ROOT_PATH')) || !($GLOBALS['xoopsUser'] instanceof \XoopsUs
  */
 function tableExists($tablename)
 {
+    $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1);
+    trigger_error(__FUNCTION__ . " is deprecated, called from {$trace[0]['file']} line {$trace[0]['line']}");
+    $GLOBALS['xoopsLogger']->addDeprecated("Tag Module: " . __FUNCTION__ . " function is deprecated since Tag 2.3.4, please use Xmf\Database\Tables method(s) instead."
+        . " Called from {$trace[0]['file']}line {$trace[0]['line']}");
+
     $result = $GLOBALS['xoopsDB']->queryF("SHOW TABLES LIKE '$tablename'");
 
     return $GLOBALS['xoopsDB']->getRowsNum($result) > 0;
@@ -39,8 +43,8 @@ function tableExists($tablename)
 
 /**
  * Prepares system prior to attempting to install module
- * @param XoopsModule $module {@link XoopsModule}
  *
+ * @param XoopsModule $module {@link XoopsModule}
  * @return bool true if ready to install, false if not
  */
 function xoops_module_pre_update_tag(\XoopsModule $module)
@@ -59,9 +63,9 @@ function xoops_module_pre_update_tag(\XoopsModule $module)
 
 /**
  * Performs tasks required during update of the module
- * @param XoopsModule $module {@link XoopsModule}
- * @param null        $previousVersion
  *
+ * @param XoopsModule $module {@link \XoopsModule}
+ * @param int   $previousVersion
  * @return bool true if update successful, false if not
  */
 function xoops_module_update_tag(\XoopsModule $module, $previousVersion = null)

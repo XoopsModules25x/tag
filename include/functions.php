@@ -12,7 +12,7 @@
 /**
  * XOOPS tag management module
  *
- * @package         tag
+ * @package         XoopsModules\Tag
  * @copyright       {@link http://sourceforge.net/projects/xoops/ The XOOPS Project}
  * @license         {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
@@ -23,53 +23,67 @@ use XoopsModules\Tag;
 
 defined('XOOPS_ROOT_PATH') || die('Restricted access');
 
-if (!defined('TAG_FUNCTIONS')):
+if (!defined('TAG_FUNCTIONS')) {
     define('TAG_FUNCTIONS', 1);
 
     require_once $GLOBALS['xoops']->path('modules/tag/include/vars.php');
 
     /**
-     * @return bool|null
+     * @todo Figure out what, if anything, calls this
+     * @deprecated - use Tag\Helper::getInstance()->getHandler('Tag') instead
+     * @return XoopsModules\Tag\TagHandler
      */
     function tag_getTagHandler()
     {
+        $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1);
+        trigger_error(__FUNCTION__ . " is deprecated, called from {$trace[0]['file']} line {$trace[0]['line']}");
+        $GLOBALS['xoopsLogger']->addDeprecated("Tag Module: " . __FUNCTION__ . " function is deprecated since Tag 2.3.4, please use 'Tag\Helper::getInstance()->getHandler('Tag')' method instead."
+            . " Called from {$trace[0]['file']}line {$trace[0]['line']}");
+
+        $tagHandler = \XoopsModules\Tag\Helper::getInstance()->getHandler('Tag');
+        /*
         static $tagHandler;
 
         if (isset($tagHandler)) {
             return $tagHandler;
         }
-
         $tagHandler = null;
         if (!($GLOBALS['xoopsModule'] instanceof XoopsModule)
             || ('tag' !== $GLOBALS['xoopsModule']->getVar('dirname'))) {
-            /** @var \XoopsModuleHandler $moduleHandler */
+            // @var \XoopsModuleHandler $moduleHandler
             $moduleHandler = xoops_getHandler('module');
             $module        = $moduleHandler->getByDirname('tag');
             if (!$module || !$module->isactive()) {
                 return $tagHandler;
             }
         }
-        $tagHandler = \XoopsModules\Tag\Helper::getInstance()->getHandler('Tag'); //@xoops_getModuleHandler('tag', 'tag', true);
-
+        */
         return $tagHandler;
     }
 
     /**
      * Function to parse arguments for a page according to $_SERVER['REQUEST_URI']
      *
+     *@deprecated - use {@see Utility::tag_parse_arg()} method instead
      *
-     * @param mixed $args_numeric array of numeric variable values
-     * @param mixed $args         array of indexed variables: name and value
-     * @param mixed $args_string  array of string variable values
-     * @return bool    true on args parsed
+     * @param mixed $args array of indexed variables: name and value pass-by-reference
+     * @param mixed $args_string  array of string variable values pass-by-reference
+     * @return bool true on args parsed
      */
 
     /* known issues:
      * - "/" in a string
      * - "&" in a string
     */
-    function tag_parse_args(&$args_numeric, &$args, &$args_string)
+    function tag_parse_args(&$args, &$args_string)
     {
+        $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1);
+        trigger_error(__FUNCTION__ . " is deprecated, called from {$trace[0]['file']} line {$trace[0]['line']}");
+        $GLOBALS['xoopsLogger']->addDeprecated("Tag Module: " . __FUNCTION__ . " function is deprecated since Tag 2.3.4, please use 'Tag\Utility::tag_parse_tag()' method instead."
+            . " Called from {$trace[0]['file']}line {$trace[0]['line']}");
+
+        return \XoopsModules\Tag\Utility::tag_parse_args($args, $args_string);
+        /*
         $args_abb     = [
             'c' => 'catid',
             'm' => 'modid',
@@ -77,41 +91,47 @@ if (!defined('TAG_FUNCTIONS')):
             't' => 'tag',
         ];
         $args         = [];
-        $args_numeric = [];
         $args_string  = [];
         if (preg_match("/[^\?]*\.php[\/|\?]([^\?]*)/i", $_SERVER['REQUEST_URI'], $matches)) {
             $vars = preg_split("/[\/|&]/", $matches[1]);
             $vars = array_map('trim', $vars);
-            if (count($vars) > 0) {
-                foreach ($vars as $var) {
-                    if (is_numeric($var)) {
-                        //$args_numeric[] = $var;
-                        $args_string[] = $var;
-                    } elseif (false === mb_strpos($var, '=')) {
-                        if (is_numeric(mb_substr($var, 1))) {
-                            $args[$args_abb[mb_strtolower($var[0])]] = (int)mb_substr($var, 1);
-                        } else {
-                            $args_string[] = urldecode($var);
-                        }
+            foreach ($vars as $var) {
+                if (is_numeric($var)) {
+                    $args_string[] = $var;
+                } elseif (false === mb_strpos($var, '=')) {
+                    if (is_numeric(mb_substr($var, 1))) {
+                        $args[$args_abb[mb_strtolower($var[0])]] = (int)mb_substr($var, 1);
                     } else {
-                        parse_str($var, $args);
+                        $args_string[] = urldecode($var);
                     }
+                } else {
+                    parse_str($var, $args);
                 }
             }
         }
 
-        return (0 == count($args) + count($args_numeric) + count($args_string)) ? null : true;
+        return (0 == count($args) + count($args_string)) ? false : true;
+        */
     }
 
     /**
      * Function to parse tags(keywords) upon defined delimiters
      *
+     * @deprecated - use {@see Utility::tag_parse_tag()} method instead
+     * {@internal keep this file/function since it is called by 'unknown' plugins }}
      * @param string $text_tag text to be parsed
      *
      * @return array containing parsed tags
      */
     function tag_parse_tag($text_tag)
     {
+        $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1);
+        trigger_error(__FUNCTION__ . " is deprecated, called from {$trace[0]['file']} line {$trace[0]['line']}");
+        $GLOBALS['xoopsLogger']->addDeprecated("Tag Module: " . __FUNCTION__ . " function is deprecated since Tag 2.3.4, please use 'Tag\Utility::tag_parse_tag()' method instead."
+                                             . " Called from {$trace[0]['file']}line {$trace[0]['line']}");
+
+        return \XoopsModules\Tag\Utility::tag_parse_tag($text_tag);
+        /*
         $tags = [];
         if (empty($text_tag)) {
             return $tags;
@@ -122,6 +142,6 @@ if (!defined('TAG_FUNCTIONS')):
         $tags       = array_filter(array_map('trim', $tags_raw));
 
         return $tags;
+        */
     }
-
-endif;
+}

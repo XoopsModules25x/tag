@@ -8,16 +8,18 @@
  but WITHOUT ANY WARRANTY; without even the implied warranty of
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 */
-
 /**
  * XOOPS tag management module
  *
- * @package         tag
+ * @package         \XoopsModules\Tag
  * @copyright       {@link http://sourceforge.net/projects/xoops/ The XOOPS Project}
  * @license         {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
  * @since           1.00
  */
+
+use Xmf\Request;
+
 defined('XOOPS_ROOT_PATH') || die('Restricted access');
 
 /**
@@ -62,7 +64,7 @@ function article_tag_iteminfo(&$items)
                 'uid'     => $item_obj->getVar('uid'),
                 'link'    => "view.article.php?article={$item_id}",
                 'time'    => $item_obj->getVar('art_time_publish'),
-                'tags'    => tag_parse_tag($item_obj->getVar('art_keywords', 'n')),
+                'tags'    => \XoopsModules\Tag\Utility::tag_parse_tag($item_obj->getVar('art_keywords', 'n')),
                 'content' => '',
             ];
         }
@@ -89,11 +91,11 @@ function article_tag_synchronization($mid)
     $linkHandler = \XoopsModules\Tag\Helper::getInstance()->getHandler('Link');
 
     //    $mid = XoopsFilterInput::clean($mid, 'INT');
-    $mid = \Xmf\Request::getInt('mid');
+    $mid = Request::getInt('mid');
     /* clear tag-item links */
     /** {@internal the following statement isn't really needed any more (MySQL is really old)
      *   and some hosting companies block the $GLOBALS['xoopsDB']->getServerVersion() function for security
-     *   reasons.}
+     *   reasons. }}
      */
     //    if (version_compare( $GLOBALS['xoopsDB']->getServerVersion(), "4.1.0", "ge" )) {
     $sql = "DELETE FROM {$linkHandler->table}"

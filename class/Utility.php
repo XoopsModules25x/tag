@@ -25,6 +25,8 @@ class Utility
 
         if (null === $moduleConfig) {
             $moduleConfig = [];
+            /** @var \XoopsModules\Tag\Helper $helper */
+            $helper = \XoopsModules\Tag\Helper::getInstance();
             if (isset($GLOBALS['xoopsModule'])
                 && ($GLOBALS['xoopsModule'] instanceof \XoopsModule)
                 && ('tag' === $GLOBALS['xoopsModule']->getVar('dirname', 'n'))
@@ -36,11 +38,9 @@ class Utility
                 //$moduleHandler = xoops_getHandler('module');
                 //$module = $moduleHandler->getByDirname('tag');
                 /**
-                 * @var \XoopsModules\Tag\Helper $helper
                  * @var \XoopsModule $module
                  * @var \XoopsConfigHandler $configHandler
                  */
-                $helper = \XoopsModules\Tag\Helper::getInstance();
                 $mid = $helper->getModule()->getVar('mid');
                 $configHandler = xoops_getHandler('config');
 
@@ -53,7 +53,7 @@ class Utility
                 unset($configs, $criteria);
             }
             if (file_exists($helper->path('include/plugin.php'))) {
-                $customConfig = require_once $helper->path('include/plugin.php');
+                $customConfig = require $helper->path('include/plugin.php');
                 $moduleConfig = array_merge($moduleConfig, $customConfig);
             }
         }
@@ -73,7 +73,7 @@ class Utility
                 exit('Security Violation');
             }
         } else {
-            $moduleConfig = $this::tag_load_config();
+            $moduleConfig = self::tag_load_config();
             if (empty($moduleConfig['do_urw'])) {
                 define('URL_DELIMITER', '?');
             } else {
@@ -154,11 +154,11 @@ class Utility
      *
      * @return array containing parsed tags
      */
-    function tag_parse_tag($text_tag)
+    public static function tag_parse_tag($text_tag)
     {
         $tags = [];
         if (!empty($text_tag)) {
-            $delimiters = $this::tag_get_delimiter();
+            $delimiters = self::tag_get_delimiter();
             $tags_raw = explode(',', str_replace($delimiters, ',', $text_tag));
             $tags = array_filter(array_map('trim', $tags_raw)); // removes all array elements == false
         }

@@ -5,11 +5,7 @@
     });
 </script>
 <div id="help-template" class="outer">
-    <h1 class="head">Help:
-        <a class="ui-corner-all tooltip" href="<{$xoops_url}>/modules/tag/admin/index.php"
-           title="Back to the administration of Tag"> xForms <img src="<{xoAdminIcons home.png}>"
-                                                                     alt="Back to the Administration of Tag">
-        </a></h1>
+    <{include file=$smarty.const._MI_TAG_HELP_HEADER}>
     <!-- -----Help Content ---------- -->
     <h4 class="odd">Report Issues</h4>
     <p class="even">

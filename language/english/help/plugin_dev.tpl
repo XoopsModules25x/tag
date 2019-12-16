@@ -13,7 +13,7 @@
     <h3 class="odd" id="checkbox_element">Tag Background</h3>
     <div class="even marg10 boxshadow1">
     <p>For more information on tags check <a href="https://en.wikipedia.org/wiki/Tag_(metadata)" target="_blank" rel="external">https://en.wikipedia.org/wiki/Tag_(metadata)</a></p>
-
+    </div>
     <h3 class="odd" id="checkbox_element">Develop a Plugin</h3>
     <div class="even marg10 boxshadow1">
     <p>The following steps are needed to enable tag for a module ("mymodule"):</p>
@@ -34,12 +34,13 @@
     <tr><td>File:</td><td>edit.item.php</td></tr>
     <tr><td>Code:</td>
     <td><{literal}>
-$itemid = $item_obj->isNew() ? 0 : $item_obj->getVar('itemid');
+<code>$itemid = $item_obj->isNew() ? 0 : $item_obj->getVar('itemid');
 XoopsLoad::load('formtag', 'tag');  // get the TagFormTag class
 $form_item->addElement(new \XoopsModules\Tag\FormTag('item_tag', 60, 255, $itemid, $catid = 0));
-    <{/literal}></td></tr>
+    <{/literal}></code></td></tr>
     </tbody>
     </table>
+    </div>
 
     <h3 class="odd" id="tag_input_box">Step 2: Add tag storage after item storage</h3>
     <div class="even marg10 boxshadow1">
@@ -48,12 +49,13 @@ $form_item->addElement(new \XoopsModules\Tag\FormTag('item_tag', 60, 255, $itemi
     <tr><td>File:</td><td>submit.item.php</td></tr>
     <tr><td>Code:</td>
     <td><{literal}>
-/** @var \XoopsModules\Tag\TagHandler $tagHandler */
+<code>/** @var \XoopsModules\Tag\TagHandler $tagHandler */
 $tagHandler = \XoopsModules\Tag\Helper::getInstance()->getHandler('Tag'); // xoops_getModuleHandler('tag', 'tag');
 $tagHandler->updateByItem($_POST['item_tag'], $itemid, $GLOBALS['xoopsModule']->getVar('dirname'), $catid = 0);
-    <{/literal}></td></tr>
+    </code><{/literal}></td></tr>
     </tbody>
     </table>
+    </div>
 
     <h3 class="odd" id="tag_input_box">Step 3: Define functions to build info of tagged itemse</h3>
     <div class="even marg10 boxshadow1">
@@ -62,7 +64,7 @@ $tagHandler->updateByItem($_POST['item_tag'], $itemid, $GLOBALS['xoopsModule']->
     <tr><td>File:</td><td>/modules/tag/plugin/mymodule.php<br>OR<br>/modules/mymodule/include/plugin.tag.php</td></tr>
     <tr><td>Code:</td>
     <td><{literal}>
-/** Get item fields: title, content, time, link, uid, uname, tags *
+<code>/** Get item fields: title, content, time, link, uid, uname, tags *
  * @param $items
  */
 function mymodule_tag_iteminfo($items)
@@ -102,9 +104,10 @@ function mymodule_tag_synchronization($mid)
 {
     // Optional
 }
-    <{/literal}></td></tr>
+    <{/literal}></code></td></tr>
     </tbody>
     </table>
+    </div>
 
     <h3 class="odd" id="tag_input_box">Step 4: Display tags on the item page</h3>
     <div class="even marg10 boxshadow1">
@@ -113,13 +116,14 @@ function mymodule_tag_synchronization($mid)
     <tr><td>File:</td><td>view.item.php</td></tr>
     <tr><td>Code:</td>
     <td><{literal}>
-require_once $GLOBALS['xoops']->path('/modules/tag/include/tagbar.php');
+<code>require_once $GLOBALS['xoops']->path('/modules/tag/include/tagbar.php');
 $GLOBALS['xoopsTpl']->assign('tagbar', tagBar($itemid, $catid = 0));
 // File: mymodule_item_template.tpl
 $GLOBALS['xoopsTpl']->display('db:tag_bar.tpl');
-    <{/literal}></td></tr>
+    <{/literal}></code></td></tr>
     </tbody>
     </table>
+    </div>
 
     <h3 class="odd" id="tag_input_box">Step 5: Create tag list page and tag view page</h3>
     <div class="even marg10 boxshadow1">
@@ -128,17 +132,18 @@ $GLOBALS['xoopsTpl']->display('db:tag_bar.tpl');
     <tr><td>File:</td><td>view.item.php</td></tr>
     <tr><td>Code:</td>
     <td><{literal}>
-require_once __DIR__ . '/header.php';
+<code>require_once __DIR__ . '/header.php';
 require_once $GLOBALS['xoops']->path('/modules/tag/list.tag.php');
-    <{/literal}></td></tr>
+    <{/literal}></code></td></tr>
     <tr><td>File:</td><td>view.tag.php</td></tr>
     <tr><td>Code:</td>
     <td><{literal}>
-require_once __DIR__ . '/header.php';
+<code>require_once __DIR__ . '/header.php';
 require_once $GLOBALS['xoops']->path('/modules/tag/view.tag.php');
-    <{/literal}></td></tr>
+    <{/literal}></code></td></tr>
     </tbody>
     </table>
+    </div>
 
     <h3 class="odd" id="tag_input_box">Step 6: Create tag blocks</h3>
     <div class="even marg10 boxshadow1">
@@ -147,7 +152,7 @@ require_once $GLOBALS['xoops']->path('/modules/tag/view.tag.php');
     <tr><td>File:</td><td>xoopsversion.php</td></tr>
     <tr><td>Code:</td>
     <td><{literal}>
-/*
+<code>/*
  * $options:
  *                    $options[0] - number of tags to display
  *                    $options[1] - time duration, in days, 0 for all the time
@@ -178,11 +183,11 @@ $modversion['blocks'][] = [
     'options'     => '50|30|c',
     'template'    => 'mymodule_tag_block_top.tpl',
 ];
-<{/literal}></td></tr>
+<{/literal}></code></td></tr>
     <tr><td>File:</td><td>./blocks/module_block_tag.php</td></tr>
     <tr><td>Code:</td>
     <td><{literal}>
-/**
+<code>/**
  * @param $options
  * @return array
  */
@@ -225,17 +230,17 @@ function mymodule_tag_block_top_edit($options)
 
     return tag_block_top_edit($options);
 }
-<{/literal}></td></tr>
+<{/literal}></code></td></tr>
     <tr><td>File:</td><td>./templates/mymodule_tag_block_cloud.tpl</td></tr>
     <tr><td>Code:</td>
     <td><{literal}>
-<{include file = 'db:tag_block_cloud.tpl'}>
-    <{/literal}></td></tr>
+<code><{include file = 'db:tag_block_cloud.tpl'}>
+    <{/literal}></code></td></tr>
     <tr><td>File:</td><td>./templates/mymodule_tag_block_top.php</td></tr>
     <tr><td>Code:</td>
     <td><{literal}>
-<{include file = 'db:tag_block_top.tpl'}>
-    <{/literal}></td></tr>
+<code><{include file = 'db:tag_block_top.tpl'}>
+    <{/literal}></code></td></tr>
     </tbody>
     </table>
     </div>

@@ -12,7 +12,7 @@
 /**
  * XOOPS tag management module
  *
- * @package         tag
+ * @package         XoopsModules\Tag
  * @copyright       {@link http://sourceforge.net/projects/xoops/ The XOOPS Project}
  * @license         {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
@@ -22,13 +22,15 @@ if (!defined('TAG_INI')) {
     define('TAG_INI', 1);
 }
 
+use XoopsModules\Tag\Utility;
+
 //require_once $GLOBALS['xoops']->path("/Frameworks/art/functions.ini.php");
 require_once $GLOBALS['xoops']->path('/modules/tag/include/functions.ini.php');
 
 // include customized variables
 if (($GLOBALS['xoopsModule'] instanceof XoopsModule) && ('tag' === $GLOBALS['xoopsModule']->getVar('dirname', 'n'))
     && $GLOBALS['xoopsModule']->isactive()) {
-    $GLOBALS['xoopsModuleConfig'] = tag_load_config();
+    $GLOBALS['xoopsModuleConfig'] = Utility::tag_load_config();
 }
 
 //load_object();
