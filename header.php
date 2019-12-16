@@ -33,5 +33,5 @@ require_once __DIR__ . '/include/common.php';
 // Load language files
 $helper->loadLanguage('main');
 
-$GLOBALS['xoopsOption']['xoops_module_header'] = "<link rel='stylesheet' type='text/css' href='" . $helper->url('assets/css/style.css') . "' >";
+//$GLOBALS['xoopsOption']['xoops_module_header'] = "<link rel='stylesheet' type='text/css' href='" . $helper->url('assets/css/style.css') . "' >";
 $myts = \MyTextSanitizer::getInstance();
