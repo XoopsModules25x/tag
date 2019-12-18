@@ -18,6 +18,9 @@
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
  * @since           1.00
  */
+
+use XoopsModules\Tag\Constants;
+
 defined('XOOPS_ROOT_PATH') || die('Restricted access');
 
 /**
@@ -36,9 +39,13 @@ function &tag_search($queryarray, $andor, $limit, $offset, $userid, $sortby = 't
     if (0 >= $count) {
         return $ret;
     }
+
     $fields = ['tag_id', 'tag_term'];
     $tagHandler = \XoopsModules\Tag\Helper::getInstance()->getHandler('Tag');
     $criteria = new \CriteriaCompo();
+    $criteria->setLimit($limit);
+    $criteria->setStart($offset);
+    $criteria->add(new \Criteria('tag_status', Constants::STATUS_ACTIVE));
     if ('exact' === $andor) {
         $criteria->add(new \Criteria('tag_term', $queryarray[0]));
         for ($i = 1; $i < $count; ++$i) {
@@ -60,44 +67,14 @@ function &tag_search($queryarray, $andor, $limit, $offset, $userid, $sortby = 't
         }
     }
     $tagObjArray = $tagHandler->getAll($criteria, $fields);
+
     foreach ($tagObjArray as $tagId => $tagObj) {
         $ret[] = [
-            'link' => 'view.tag.php?tag=' . $tagId,
-            'title' => $tagObj->getVar('tag_term')
+            'image' => 'assets/images/tag_search.gif',
+            'link' => "view.tag.php?tag={$tagId}",
+            'title' => $tagObj->getVar('tag_term'),
         ];
     }
 
     return $ret;
-
-    /*
-    $sql   = 'SELECT tag_id, tag_term FROM ' . $GLOBALS['xoopsDB']->prefix('tag_tag');
-    if ($count > 0) {
-        if ('exact' === $andor) {
-            $sql .= " WHERE tag_term = '{$queryarray[0]}'";
-            for ($i = 1; $i < $count; ++$i) {
-                $sql .= " {$andor} tag_term = '{$queryarray[$i]}'";
-            }
-        } else {
-            $sql .= " WHERE tag_term LIKE '%{$queryarray[0]}%'";
-            for ($i = 1; $i < $count; ++$i) {
-                $sql .= " {$andor} tag_term LIKE '%{$queryarray[$i]}%'";
-            }
-        }
-    } else {
-        return $ret;
-    }
-
-    if ($sortby) {
-        $sql .= " ORDER BY {$sortby}";
-    }
-    $result = $GLOBALS['xoopsDB']->query($sql, $limit, $offset);
-    $i      = 0;
-    while (false !== ($myrow = $GLOBALS['xoopsDB']->fetchArray($result))) {
-        $ret[$i]['link']  = 'view.tag.php?tag=' . $myrow['tag_id'];
-        $ret[$i]['title'] = $myrow['tag_term'];
-        ++$i;
-    }
-
-    return $ret;
-    */
 }
