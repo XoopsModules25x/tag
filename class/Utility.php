@@ -27,8 +27,7 @@ class Utility
             $moduleConfig = [];
             /** @var \XoopsModules\Tag\Helper $helper */
             $helper = \XoopsModules\Tag\Helper::getInstance();
-            if (isset($GLOBALS['xoopsModule'])
-                && ($GLOBALS['xoopsModule'] instanceof \XoopsModule)
+            if ($GLOBALS['xoopsModule'] instanceof \XoopsModule
                 && ('tag' === $GLOBALS['xoopsModule']->getVar('dirname', 'n'))
                 && !empty($GLOBALS['xoopsModuleConfig']))
             {
