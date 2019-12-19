@@ -23,6 +23,7 @@ namespace XoopsModules\Tag;
  */
 
 use XoopsModules\Tag;
+use XoopsModules\Tag\Utility;
 
 defined('XOOPS_ROOT_PATH') || die('Restricted access');
 
@@ -43,9 +44,9 @@ class FormTag extends \XoopsFormText
      */
     public function __construct($name, int $size, $maxlength, $value = null, $catid = 0)
     {
-        require_once $helper->path('include/vars.php');
         /** @var \XoopsModules\Tag\Helper $helper */
         $helper = \XoopsModules\Tag\Helper::getInstance();
+        require_once $helper->path('include/vars.php');
         $helper->loadLanguage('main');
 
         $value = empty($value) ? '' : $value;
@@ -68,12 +69,13 @@ class FormTag extends \XoopsFormText
      */
     public function render()
     {
-        $delimiters = tag_get_delimiter();
+        $delimiters = Utility::tag_get_delimiter();
         foreach (array_keys($delimiters) as $key) {
             $delimiters[$key] = "<em style='font-weight: bold; color: #ff0000; font-style: normal;'>" . htmlspecialchars($delimiters[$key], ENT_QUOTES | ENT_HTML5) . '</em>';
         }
-        $render = "<input type='text' name='" . $this->getName() . "' id='" . $this->getName() . "' size='" . $this->getSize() . "' maxlength='" . $this->getMaxlength() . "' value='" . $this->getValue() . "' " . $this->getExtra() . '>';
-        $render .= '<br>' . _MD_TAG_TAG_DELIMITER . ': [' . implode('], [', $delimiters) . ']';
+        $class = (false !== $this->getClass()) ? "class='" . $this->getClass() . "' " : '';
+        $render = "<input type='text' name='" . $this->getName() . "' id='" . $this->getName() . "' size='" . $this->getSize() . "' maxlength='" . $this->getMaxlength() . "' value='" . $this->getValue() . "' " . $class . $this->getExtra() . '>'
+                . _MD_TAG_TAG_DELIMITER . ': [' . implode('], [', $delimiters) . ']';
 
         return $render;
     }

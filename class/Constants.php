@@ -38,11 +38,11 @@ class Constants
      * Constant definition
      */
     /**
-     *  indicates a quote is active
+     *  indicates a tag is active
      */
     const STATUS_ACTIVE = 0;
     /**
-     *  indicates a quote is inactive
+     *  indicates a tag is inactive
      */
     const STATUS_INACTIVE = 1;
     /**
