@@ -49,7 +49,8 @@ $linkHandler = Tag\Helper::getInstance()->getHandler('Link');
 $post_tags = Request::getArray('tags', [], 'POST');
 if (!empty($post_tags)) {
     $msg_db_updated = '';
-    /* {@internal use following code to reduce dB accesses }}
+    /** {@internal - Test using following code to reduce dB accesses }} */
+    /*
     $postTagIdArray = array_keys($post_tags);
     $postTagIdArray = array_map('intval', $postTagIdArray);
     $postTagIdArray = array_unique($postTagIdArray);
@@ -87,31 +88,12 @@ if (!empty($post_tags)) {
 $counts_module = [];
 $module_list   = [];
 
-$link_count_array = $linkHandler->getAll(null, ['tag_modid', 'tag_id'], false, true);
-if (0 < count($link_count_array)) {
-    $link_tag_modid = array_column($link_count_array, 'tag_modid');
-    $link_tagid = array_column($link_count_array, 'tag_id');
-    $counts_module = array_combine($link_tag_modid, $link_tagid);
-/*
-    foreach ($link_count_array as $linkCount) {
-        $counts_module[$linkCount['tag_modid']] = $linkCount['tag_id'];
-    }
-*/
-    if (!empty($counts_module)) {
-        /** @var \XoopsModuleHandler $moduleHandler */
-        $moduleHandler = xoops_getHandler('module');
-        $module_list   = $moduleHandler->getList(new \Criteria('mid', '(' . implode(', ', array_unique($link_tag_modid)) . ')', 'IN'));
-        //$module_list   = $moduleHandler->getList(new \Criteria('mid', '(' . implode(', ', array_keys($counts_module)) . ')', 'IN'));
-    }
-}
-unset($link_count_array);
-/*
-$sql           = 'SELECT tag_modid, COUNT(DISTINCT tag_id) AS count_tag';
-$sql           .= ' FROM ' . $GLOBALS['xoopsDB']->prefix('tag_link');
-$sql           .= ' GROUP BY tag_modid';
-$counts_module = [];
-$module_list   = [];
+/** {#internal use direct SQL instead of Tag\TagHandler CRUD operations because XOOPS can't handle COUNT(DISTINCT xx) }} */
+$sql           = 'SELECT tag_modid, COUNT(DISTINCT tag_id) AS count_tag'
+               . ' FROM ' . $GLOBALS['xoopsDB']->prefix('tag_link')
+               . ' GROUP BY tag_modid';
 $result        = $GLOBALS['xoopsDB']->query($sql);
+
 if (false === $result) {
     xoops_error($GLOBALS['xoopsDB']->error());
 } else {
@@ -119,13 +101,14 @@ if (false === $result) {
         $counts_module[$myrow['tag_modid']] = $myrow['count_tag'];
     }
     if (!empty($counts_module)) {
-        // @var \XoopsModuleHandler $moduleHandler
+        /** @var \XoopsModuleHandler $moduleHandler */
         $moduleHandler = xoops_getHandler('module');
         $module_list   = $moduleHandler->getList(new \Criteria('mid', '(' . implode(', ', array_keys($counts_module)) . ')', 'IN'));
     }
 }
-*/
-$opform = new \XoopsSimpleForm('', 'moduleform', xoops_getenv('SCRIPT_NAME'), 'get', true);
+//
+$opform = new \XoopsSimpleForm('', 'moduleform', $_SERVER['SCRIPT_NAME'], 'get', true);
+//$opform = new \XoopsSimpleForm('', 'moduleform', xoops_getenv('SCRIPT_NAME'), 'post', true);
 $tray = new \XoopsFormElementTray('');
 $mod_select = new \XoopsFormSelect(_SELECT, 'modid', $modid);
 $mod_select->addOption(0, _ALL);
@@ -155,7 +138,7 @@ if (!empty($modid)) {
 }
 $tags = $tagHandler->getByLimit(0, 0, $criteria, null, false);
 
-$form_tags = "<form name='tags' method='post' action='" . xoops_getenv('SCRIPT_NAME') . "'>\n"
+$form_tags = "<form name='tags' method='post' action='" . $_SERVER['SCRIPT_NAME'] . "'>\n"
            . "<table style='margin: 1px; padding: 4px;' class='outer width100 bnone bspacing1'>\n"
            . "  <thead>\n"
            . "  <tr class='txtcenter'>\n"
@@ -170,21 +153,16 @@ if (empty($tags)) {
     $form_tags .= "  <tr><td colspan='4'>" . _NONE . "</td></tr>\n";
 } else {
     $class_tr = 'odd';
-    foreach ($tags as $key => $tag) {
+    foreach (array_keys($tags) as $key) {
         $form_tags .= "  <tr class='{$class_tr}'>\n"
-                    . "    <td>{$tag['term']}</td>\n"
-                    . "    <td  class='txtcenter'>\n"
-                    . "      <input type='radio' name='tags[{$key}]" . "value='" . Constants::STATUS_INACTIVE . "'" . ($tag['status'] ? ' checked' : " '' ") . ">\n"
-                    . "    </td>\n"
-                    . "    <td  class='txtcenter'>\n"
-                    . "      <input type='radio' name='tags[{$key}]' value='" . Constants::STATUS_ACTIVE . "'" . ($tag['status'] ? " '' " : ' checked') . ">\n"
-                    . "    </td>\n"
-                    . "    <td  class='txtcenter'>\n"
-                    . "      <input type='radio' name='tags[{$key}]' value='" . Constants::STATUS_DELETE . "'>\n"
-                    . "    </td>\n"
+                    . '    <td>' . $tags[$key]['term'] . "</td>\n"
+                    . "    <td  class='txtcenter'><input type='radio' name='tags[{$key}]' value='" . Constants::STATUS_INACTIVE . "'" . ($tags[$key]['status'] ? ' checked' : " '' ") . "></td>\n"
+                    . "    <td  class='txtcenter'><input type='radio' name='tags[{$key}]' value='" . Constants::STATUS_ACTIVE . "'" . ($tags[$key]['status'] ? " '' " : ' checked') . "></td>\n"
+                    . "    <td  class='txtcenter'><input type='radio' name='tags[{$key}]' value='" . Constants::STATUS_DELETE . "'></td>\n"
                     . "  </tr>\n";
         $class_tr  = ('even' === $class_tr) ? 'odd' : 'even';
     }
+
     if (!empty($start) || (count($tags) >= $limit)) {
         $count_tag = $tagHandler->getCount($criteria);
 
