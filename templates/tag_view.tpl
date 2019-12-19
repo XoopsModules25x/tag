@@ -1,9 +1,10 @@
 <div class="tag-page-title">
     <h3>
-        <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/" title="<{$module_name}>"><{$module_name}></a> &raquo;
+    <{$tag_breadcrumb}>
+<{*        <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/" title="<{$module_name}>"><{$module_name}></a> &raquo;
         <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/list.tag.php" title="<{$smarty.const._MD_TAG_TAGS}>"><{$smarty.const._MD_TAG_TAGS}></a> &raquo;
         <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/view.tag.php<{$smarty.const.URL_DELIMITER}><{$tag_term}>" title="<{$tag_title}>" rel="tag"><{$tag_title}></a>
-    </h3>
+*}>    </h3>
 </div>
 
 

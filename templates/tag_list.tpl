@@ -1,8 +1,9 @@
 <!-- phppp (D.J.): http://xoopsforge.com; https://xoops.org.cn -->
 
 <div class="tag-page-title">
-    <h3><a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/list.tag.php"
-           title="<{$tag_page_title}>"><{$tag_page_title}></a></h3>
+    <h3><{$tag_breadcrumb}></h3>
+<{*    <h3><a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/list.tag.php"
+           title="<{$tag_page_title}>"><{$tag_page_title}></a></h3> *}>
 </div>
 
 <div class="tag-jumpto" style="padding-top: 10px;">

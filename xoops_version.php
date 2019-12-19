@@ -28,7 +28,7 @@ $moduleDirName = basename(__DIR__);
 $modversion = [
     'version'             => 2.35,
     'module_status'       => 'Beta 1',
-    'release_date'        => '2019/12/12',
+    'release_date'        => '2019/12/18',
     'name'                => _MI_TAG_NAME,
     'description'         => _MI_TAG_DESC,
     'official'            => 0,
@@ -135,6 +135,7 @@ $modversion['templates'] = [
     ['file' => 'tag_list.tpl', 'description' => _MI_TAG_INDEX_TPL_LIST_DESC],
     ['file' => 'tag_view.tpl', 'description' => _MI_TAG_INDEX_TPL_VIEW_DESC],
     ['file' => 'tag_bar.tpl', 'description' => _MI_TAG_INDEX_TPL_BAR_DESC],
+    ['file' => 'tag_common_breadcrumb.tpl', 'description' => _MI_TAG_BREADCRUMB_TPL_DESC],
     //['file' => "admin/{$moduleDirName}_admin_about.tpl", 'description' => _MI_TAG_INDEX_ADMINTPL_ABOUT_DESC],
     //['file' => "admin/{$moduleDirName}_admin_help.tpl", 'description' => _MI_TAG_INDEX_ADMINTPL_HELP_DESC],
 ];

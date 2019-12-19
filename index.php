@@ -20,6 +20,7 @@
  */
 
 use XoopsModules\Tag\Utility;
+use XoopsModules\Tag\Common;
 
 require_once __DIR__ . '/header.php';
 
@@ -82,13 +83,18 @@ foreach ($tags_array as $tag) {
 
 unset($tags_array, $tag, $count_array, $term_array, $tags_term_array);
 
+// Breadcrumb
+$breadcrumb = new Common\Breadcrumb();
+$breadcrumb->addLink($helper->getModule()->getVar('name'));
+
 $GLOBALS['xoopsTpl']->assign([
     'lang_jumpto' => _MD_TAG_JUMPTO,
     'pagenav' => "<a href=\"" . $helper->url('list.tag.php') . "\">" . _MORE . "</a>\n",
     'tag_page_title' => $page_title,
+    'tag_breadcrumb' => $breadcrumb->render(),
     // Loading module meta data, NOT THE RIGHT WAY DOING IT
     'xoops_pagetitle' => $GLOBALS['xoopsOption']['xoops_pagetitle'],
-    'xoops_module_header' => $GLOBALS['xoopsOption']['xoops_module_header'],
+    //'xoops_module_header' => $GLOBALS['xoopsOption']['xoops_module_header'],
     'xoops_meta_description' => $GLOBALS['xoopsOption']['xoops_pagetitle'],
 ]);
 //@todo figure out why $tags_data_array is using assign_by_ref

@@ -25,7 +25,7 @@ if (!defined('TAG_INI')) {
 use XoopsModules\Tag\Utility;
 
 //require_once $GLOBALS['xoops']->path("/Frameworks/art/functions.ini.php");
-require_once $GLOBALS['xoops']->path('/modules/tag/include/functions.ini.php');
+//require_once $GLOBALS['xoops']->path('/modules/tag/include/functions.ini.php');
 
 // include customized variables
 if (($GLOBALS['xoopsModule'] instanceof XoopsModule) && ('tag' === $GLOBALS['xoopsModule']->getVar('dirname', 'n'))

@@ -76,3 +76,6 @@ define('_MI_TAG_HELP_ISSUES', 'Issues');
 define('_MI_TAG_LICENSE', 'License');
 define('_MI_TAG_HELP_HEADER', __DIR__ . '/help/helpheader.tpl');
 define('_MI_TAG_BACK_2_ADMIN', 'Back to Administration of ');
+
+//2.35
+define('_MI_TAG_BREADCRUMB_TPL_DESC', 'Breadcrumb display');

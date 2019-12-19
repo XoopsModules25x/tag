@@ -14,13 +14,13 @@ namespace XoopsModules\Tag\Common;
 /**
  * Breadcrumb Class
  *
+ * @package     XoopsModules\Tag
  * @copyright   XOOPS Project (https://xoops.org)
- * @license     http://www.fsf.org/copyleft/gpl.html GNU public license
+ * @license     https://www.fsf.org/copyleft/gpl.html GNU public license
  * @author      lucio <lucio.rota@gmail.com>
- * @package     tag
  *
  * Example:
- * $breadcrumb = new PedigreeBreadcrumb();
+ * $breadcrumb = new \XoopsModules\Tag\Breadcrumb();
  * $breadcrumb->addLink( 'bread 1', 'index1.php' );
  * $breadcrumb->addLink( 'bread 2', '' );
  * $breadcrumb->addLink( 'bread 3', 'index3.php' );

@@ -22,6 +22,7 @@
 use Xmf\Request;
 use XoopsModules\Tag\Constants;
 use XoopsModules\Tag\Utility;
+use XoopsModules\Tag\Common;
 
 require_once __DIR__ . '/header.php';
 
@@ -55,11 +56,19 @@ if (!empty($tag_desc)) {
     $page_title = $tag_desc;
 } else {
     $module_name = ('tag' === $GLOBALS['xoopsModule']->getVar('dirname')) ? $GLOBALS['xoopsConfig']['sitename'] : $GLOBALS['xoopsModule']->getVar('name');
-    $page_title  = sprintf(_MD_TAG_TAGLIST, $module_name);
+    $page_title  = sprintf(_MD_TAG_TAGLIST, mb_convert_case($module_name, MB_CASE_TITLE, 'UTF-8'));
 }
+
+$module_name = $helper->getModule()->getVar('name');
+$page_title = Xmf\FilterInput::clean($page_title, 'string'); // clean unwanted tags, etc.
+$breadcrumb = new Common\Breadcrumb();
+$breadcrumb->addLink(mb_convert_case($module_name, MB_CASE_TITLE, 'UTF-8'), $helper->url());
+$breadcrumb->addLink($page_title);
+
 $GLOBALS['xoopsOption']['template_main'] = 'tag_list.tpl';
 require_once $GLOBALS['xoops']->path('header.php');
 $GLOBALS['xoTheme']->addStylesheet('browse.php?modules/' . $moduleDirName . '/assets/css/style.css');
+$GLOBALS['xoopsOption']['xoops_pagetitle'] = $page_title;
 
 $mode_display = empty($mode_display) ? Request::getCmd('mode', null, 'GET') : $mode_display;
 switch (mb_strtolower($mode_display)) {
@@ -105,11 +114,12 @@ if (!empty($start) || count($tags_data_array) >= $limit) {
 $xoopsTpl->assign([
     'lang_jumpto' => _MD_TAG_JUMPTO,
     'tag_page_title' => $page_title,
+    'tag_breadcrumb' =>$breadcrumb->render(),
     'pagenav' => $page_nav,
     // Loading module meta data, NOT THE RIGHT WAY DOING IT
-    'xoops_pagetitle' => $GLOBALS['xoopsOption']['xoops_pagetitle'],
-    'xoops_module_header' => $GLOBALS['xoopsOption']['xoops_module_header'],
-    'xoops_meta_description' => $GLOBALS['xoopsOption']['xoops_pagetitle']
+    //'xoops_pagetitle' => $GLOBALS['xoopsOption']['xoops_pagetitle'],
+    //'xoops_module_header' => $GLOBALS['xoopsOption']['xoops_module_header'],
+    //'xoops_meta_description' => $GLOBALS['xoopsOption']['xoops_pagetitle']
 ]);
 //@todo determine why using assign_by_ref here?
 $xoopsTpl->assign_by_ref('tags', $tags_data_array);
