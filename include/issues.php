@@ -31,13 +31,10 @@ if (isset($GLOBALS['xoopsConfig']['language']) && file_exists(dirname(__DIR__) .
 } else {
     include_once dirname(__DIR__) . '/language/english/admin.php'; // messages will be in english
 }
+
 //session_start();
 
 $issuesClass = '\XoopsModules\\' . ucfirst(mb_strtolower($moduleDirName)) . '\Issues';
-if (!class_exists($issuesClass)) {
-    xoops_load('Issues', $moduleDirName);
-}
-
 $modIssues = new $issuesClass;
 if ($modIssues->getCachedEtag()) {
     // Found the session var so check to see if anything's changed since last time we checked
@@ -83,7 +80,6 @@ if ($modIssues->getCachedEtag()) {
     // Nothing in session so request new info
     $hdrSize       = $modIssues->execCurl();
     $curl_response = $modIssues->getCurlResponse();
-
 }
 
 $hdr        = substr($curl_response, 0, $hdrSize);

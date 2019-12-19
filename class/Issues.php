@@ -68,7 +68,8 @@ namespace XoopsModules\Tag;
         $this->hdrSize       = 0;
         $this->dirname       = basename(dirname(__DIR__));
         //$this->serviceUrl    = 'https://api.github.com/repos/xoops/xoopscore25/issues?state=open';
-        $this->serviceUrl    = 'https://github.com/XoopsModules25x/' . $this->dirname . '/issues?state=open';
+        //$this->serviceUrl    = 'https://github.com/zyspec/' . $this->dirname . '/issues?state=open';
+        $this->serviceUrl    = 'https://api.github.com/repos/XoopsModules25x/' . $this->dirname . '/issues?state=open';
         $this->setSessPrefix($this->dirname);
         $this->err           = '';
     }
