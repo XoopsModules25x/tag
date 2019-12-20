@@ -46,7 +46,7 @@ $criteria->setSort('count');
 $criteria->order = 'DESC'; // patch for XOOPS <= 2.5.10, does not set order correctly using setOrder() method
 
 /** @todo determine if the following call should use $limit as first param to reduce # of returned tags */
-$tags_array = $tagHandler->getByLimit($limit, 0, $criteria);
+$tags_array = $tagHandler->getByLimit($limit, 0, $criteria, null, false);
 $tags_term_array = [];
 
 // set min and max tag count

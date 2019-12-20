@@ -96,7 +96,7 @@ if (!empty($modid)) {
         $criteria->add(new \Criteria('l.tag_catid', $catid));
     }
 }
-$tags_array = $tagHandler->getByLimit($limit, $start, $criteria);
+$tags_array = $tagHandler->getByLimit($limit, $start, $criteria, null, false);
 $tags_data_array = $tagHandler->getTagData($tags_array, $tag_config['font_max'], $tag_config['font_min']);
 
 $page_nav = '';

@@ -38,7 +38,7 @@ $modversion = [
     'author_website_name' => 'XOOPS',
     'credits'             => 'XOOPS Development Team, Trabis, Mamba, Aerograf, Mage, Alfredx, ZySpec',
     'license'             => 'GPL 2.0 or later',
-    'license_url'         => 'www.gnu.org/licenses/gpl-2.0.html/',
+    'license_url'         => 'https://www.gnu.org/licenses/old-licenses/gpl-2.0.html',
     'help'                => 'page=help',
     'helpsection'         => [['name' => _MI_TAG_HELP_OVERVIEW,
                                'link' => 'page=help'],
@@ -120,9 +120,9 @@ $modversion = [
     'sqlfile'             => ['mysql' => 'sql/mysql.sql'],
     // ------------------- Tables ----------------------------
     'tables'              => [
-        $moduleDirName . '_' . 'tag',
-        $moduleDirName . '_' . 'link',
-        $moduleDirName . '_' . 'stats',
+        'tag_tag',
+        'tag_link',
+        'tag_stats',
     ],
 ];
 

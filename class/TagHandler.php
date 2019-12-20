@@ -533,10 +533,12 @@ class TagHandler extends \XoopsPersistableObjectHandler
                 /*
                  * Font-size = ((tag.count - count.min) * (font.max - font.min) / (count.max - count.min) ) * 100%
                  */
+                $font_sz = floor(($tag['count'] - $count_min) * $font_ratio) + $font_min;
+                $level_sz = floor(($tag['count'] - $count_min) * $level_limit / $count_max);
                 $tags_data_array[] = [
                     'id'    => $tag['id'],
-                    'font'  => empty($count_interval) ? 100 : floor(($tag['count'] - $count_min) * $font_ratio) + $font_min,
-                    'level' => empty($count_max) ? 0 : floor(($tag['count'] - $count_min) * $level_limit / $count_max),
+                    'font'  => empty($count_interval) ? 100 : (int)$font_sz,
+                    'level' => empty($count_max) ? 0 : (int)$level_sz,
                     'term'  => urlencode($tag['term']),
                     'title' => htmlspecialchars($tag['term'], ENT_QUOTES | ENT_HTML5),
                     'count' => $tag['count'],

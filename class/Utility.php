@@ -28,18 +28,12 @@ class Utility
             /** @var \XoopsModules\Tag\Helper $helper */
             $helper = \XoopsModules\Tag\Helper::getInstance();
             if ($GLOBALS['xoopsModule'] instanceof \XoopsModule
-                && ('tag' === $GLOBALS['xoopsModule']->getVar('dirname', 'n'))
+                && ($helper->getDirname() === $GLOBALS['xoopsModule']->getVar('dirname', 'n'))
                 && !empty($GLOBALS['xoopsModuleConfig']))
             {
                 $moduleConfig = $GLOBALS['xoopsModuleConfig'];
             } else {
-                /** @var \XoopsModuleHandler $moduleHandler */
-                //$moduleHandler = xoops_getHandler('module');
-                //$module = $moduleHandler->getByDirname('tag');
-                /**
-                 * @var \XoopsModule $module
-                 * @var \XoopsConfigHandler $configHandler
-                 */
+                /** @var \XoopsConfigHandler $configHandler */
                 $mid = $helper->getModule()->getVar('mid');
                 $configHandler = xoops_getHandler('config');
 
