@@ -27,6 +27,9 @@ require_once __DIR__ . '/include/functions.php';
 
 require_once __DIR__ . '/include/common.php';
 
+/* temporary fix for some ugly queries on MySQL 5.7+ */
+\XoopsDatabaseFactory::getDatabaseConnection()->queryf("SET SESSION sql_mode = 'TRADITIONAL';");
+
 /** @var Tag\Helper $helper */
 $helper = Tag\Helper::getInstance();
 
