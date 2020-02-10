@@ -285,7 +285,7 @@ class TagHandler extends \XoopsPersistableObjectHandler
             $limit = $criteria->getLimit();
             $start = $criteria->getStart();
         }
-        $sql .= " GROUP BY o.{$this->keyName}";
+        $sql .= " GROUP BY o.{$this->keyName}, o.tag_term, o.tag_status, l.tag_modid";
 
         $order = mb_strtoupper($order);
         $sort  = mb_strtolower($sort);
