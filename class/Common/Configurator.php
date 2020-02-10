@@ -21,8 +21,6 @@ namespace XoopsModules\Tag\Common;
  * @since       1.05
  */
 
-
-
 /**
  * Class Configurator
  */
@@ -47,7 +45,7 @@ class Configurator
         $moduleDirName      = basename(dirname(dirname(__DIR__)));
         $moduleDirNameUpper = mb_strtoupper($moduleDirName);
 
-$config = include dirname(dirname(__DIR__)) . '/config/config.php';
+        $config = include dirname(dirname(__DIR__)) . '/config/config.php';
 
         $this->name            = $config->name;
         $this->paths           = $config->paths;
