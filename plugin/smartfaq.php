@@ -18,7 +18,7 @@
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
  * @since           1.00
  */
-defined('XOOPS_ROOT_PATH') || die('Restricted access');
+defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
 /**
  * Get item fields:
@@ -58,7 +58,7 @@ function smartfaq_tag_iteminfo(&$items)
     /** @var \XoopsDatabase $db */
     $db = \XoopsDatabaseFactory::getDatabase();
     /** @var \XoopsModules\Smartfaq\FaqHandler $itemHandler */
-    $itemHandler = new \XoopsModules\Smartfaq\FaqHandler($db);
+    $itemHandler = \XoopsModules\Smartfaq\Helper::getInstance()->getHandler('Faq');
 
     $items_obj = $itemHandler->getObjects(new \Criteria('faqid', '(' . implode(', ', $items_id) . ')', 'IN'), true);
     $myts      = \MyTextSanitizer::getInstance();
@@ -94,7 +94,7 @@ function smartfaq_tag_synchronization($mid)
     $db = \XoopsDatabaseFactory::getDatabase();
 
     /** @var \XoopsModules\Smartfaq\FaqHandler $itemHandler */
-    $itemHandler = new \XoopsModules\Smartfaq\FaqHandler($db);
+    $itemHandler = \XoopsModules\Smartfaq\Helper::getInstance()->getHandler('Faq');
 
     /** @var \XoopsModules\Tag\LinkHandler $itemHandler */
     $linkHandler = \XoopsModules\Tag\Helper::getInstance()->getHandler('Link');

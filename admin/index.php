@@ -66,13 +66,9 @@ $adminObject->addInfoBox(_AM_TAG_STATS);
 $adminObject->addInfoBoxLine(sprintf('<infolabel>' . _AM_TAG_COUNT_TAG . '</infolabel>', $count_tag));
 $adminObject->addInfoBoxLine(sprintf('<infolabel>' . _AM_TAG_COUNT_ITEM . '</infolabel>', $count_item . '<br><br>'));
 $adminObject->addInfoBoxLine(sprintf('<infolabel>' . _AM_TAG_COUNT_MODULE . '</infolabel>' . '<infotext>' . _AM_TAG_COUNT_MODULE_TITLE . '</infotext>'));
-
+echo $counts_module;
 foreach ($counts_module as $module => $count) {
-    $moduleStat = '<infolabel>'
-                  . $module_list[$module]
-                  . ":</infolabel>\n"
-                  . '<infotext>'
-                  . $count['count_tag']
+    $moduleStat = '<infolabel>' . $module_list[$module]  . ":</infolabel>\n" . '<infotext>' . $count['count_tag']
                   . ' / '
                   . $count['count_item']
                   . "\n"

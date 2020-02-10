@@ -18,7 +18,7 @@
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
  * @since           1.00
  */
-defined('XOOPS_ROOT_PATH') || die('Restricted access');
+defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
 /**
  * Get item fields:
@@ -50,7 +50,7 @@ function xforum_tag_iteminfo(&$items)
         }
     }
     /** @var \XoopsModules\Xforum\PostHandler $itemHandler */
-    $itemHandler = new \XoopsModules\Xforum\PostHandler();
+    $itemHandler = \XoopsModules\Xforum\Helper::getInstance()->getHandler('Post');
     $items_obj   = $itemHandler->getObjects(new \Criteria('post_id', '(' . implode(', ', $items_id) . ')', 'IN'), true);
     $myts        = \MyTextSanitizer::getInstance();
     foreach (array_keys($items) as $cat_id) {
@@ -83,7 +83,7 @@ function xforum_tag_iteminfo(&$items)
 function xforum_tag_synchronization($mid)
 {
     /** @var \XoopsModules\Xforum\PostHandler $itemHandler */
-    $itemHandler = new \XoopsModules\Xforum\PostHandler();
+    $itemHandler = \XoopsModules\Xforum\Helper::getInstance()->getHandler('Post');
     /** @var \XoopsModules\Tag\LinkHandler $linkHandler */
     $linkHandler = \XoopsModules\Tag\Helper::getInstance()->getHandler('Link'); //@var \XoopsModules\Tag\Handler $tagHandler
 

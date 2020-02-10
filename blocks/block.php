@@ -22,10 +22,14 @@
 use XoopsModules\Tag;
 use XoopsModules\Tag\Constants;
 
-defined('XOOPS_ROOT_PATH') || die('Restricted access');
+defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
 require_once $GLOBALS['xoops']->path('/modules/tag/include/vars.php');
 //require_once $GLOBALS['xoops']->path('/modules/tag/include/functions.php');
+
+if (!xoops_isActiveModule('tag')) {
+    return false;
+}
 
 /** @var Tag\Helper $helper */
 $helper = Tag\Helper::getInstance();
@@ -85,6 +89,10 @@ xoops_load('constants', 'tag');
  */
 function tag_block_cloud_show($options, $dirname = '', $catid = 0)
 {
+    if (!xoops_isActiveModule('tag')) {
+        return false;
+    }
+
     global $xoTheme;
     /** @var xos_opal_Theme $xoTheme */
     $xoTheme->addStylesheet($GLOBALS['xoops']->url('www/modules/tag/assets/css/style.css'));
@@ -230,6 +238,10 @@ function tag_block_cloud_edit($options)
  */
 function tag_block_top_show($options, $dirname = '', $catid = 0)
 {
+    if (!xoops_isActiveModule('tag')) {
+        return false;
+    }
+
     if (empty($dirname)) {
         $modid = 0;
     } elseif (isset($GLOBALS['xoopsModule']) && ($GLOBALS['xoopsModule'] instanceof XoopsModule)
@@ -323,6 +335,10 @@ function tag_block_top_show($options, $dirname = '', $catid = 0)
  */
 function tag_block_top_edit($options)
 {
+    if (!xoops_isActiveModule('tag')) {
+        return false;
+    }
+
     $form = _MB_TAG_ITEMS . ":&nbsp;&nbsp;<input type='number' name='options[0]' value='{$options[0]}' min='0' ><br>\n";
     $form .= _MB_TAG_TIME_DURATION . ":&nbsp;&nbsp;<input type='number' name='options[1]' value='{$options[1]}' min='0' ><br>\n";
     $form .= _MB_TAG_SORT . ":&nbsp;&nbsp;<select name='options[2]'>\n";
@@ -374,6 +390,10 @@ function tag_block_top_edit($options)
  */
 function tag_block_cumulus_show(array $options, $dirname = '', $catid = 0)
 {
+    if (!xoops_isActiveModule('tag')) {
+        return false;
+    }
+
     if (null === $dirname) {
         $modid = 0;
     } elseif (isset($GLOBALS['xoopsModule']) && ($GLOBALS['xoopsModule'] instanceof XoopsModule)
@@ -455,19 +475,19 @@ function tag_block_cumulus_show(array $options, $dirname = '', $catid = 0)
         'flash_url'  => $GLOBALS['xoops']->url('www/modules/tag/assets/cumulus.swf'),
         'width'      => (int)$options[4],
         'height'     => (int)$options[5],
-        'background' => preg_replace_callback('/(#)/i', function ($m) {
+        'background' => preg_replace_callback('/(#)/i', static function ($m) {
             return '';
         }, $options[6]),
-        'color'      => '0x' . preg_replace_callback('/(#)/i', function ($m) {
+        'color'      => '0x' . preg_replace_callback('/(#)/i', static function ($m) {
                 return '';
             }, $options[8]),
-        'hicolor'    => '0x' . preg_replace_callback('/(#)/i', function ($m) {
+        'hicolor'    => '0x' . preg_replace_callback('/(#)/i', static function ($m) {
                 return '';
             }, $options[9]),
-        'tcolor'     => '0x' . preg_replace_callback('/(#)/i', function ($m) {
+        'tcolor'     => '0x' . preg_replace_callback('/(#)/i', static function ($m) {
                 return '';
             }, $options[8]),
-        'tcolor2'    => '0x' . preg_replace_callback('/(#)/i', function ($m) {
+        'tcolor2'    => '0x' . preg_replace_callback('/(#)/i', static function ($m) {
                 return '';
             }, $options[10]),
         'speed'      => (int)$options[11],
@@ -500,6 +520,10 @@ EOT;
  */
 function tag_block_cumulus_edit($options)
 {
+    if (!xoops_isActiveModule('tag')) {
+        return false;
+    }
+
     require_once $GLOBALS['xoops']->path('/class/xoopsformloader.php');
     //    xoops_load('blockform', 'tag');
     //    xoops_load('formvalidatedinput', 'tag');

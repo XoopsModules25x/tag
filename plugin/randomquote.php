@@ -22,7 +22,7 @@
 
 use XoopsModules\Randomquote\Constants;
 
-defined('XOOPS_ROOT_PATH') || die('Restricted access');
+defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
 XoopsLoad::load('XoopsFilterInput');
 
@@ -52,7 +52,7 @@ function randomquote_tag_iteminfo(&$items)
     $criteria->add(new \Criteria('quote_status', Constants::STATUS_ONLINE));
 
     /** @var \XoopsModules\Randomquote\QuotesHandler $itemHandler */
-    $itemHandler = new \XoopsModules\Randomquote\QuotesHandler();
+    $itemHandler = \XoopsModules\Randomquote\Helper::getInstance()->getHandler('Quotes');
 
     $quoteObjs = &$itemHandler->getObjects($criteria, true);
 
@@ -84,7 +84,7 @@ function randomquote_tag_iteminfo(&$items)
 function randomquote_tag_synchronization($mid)
 {
     /** @var \XoopsModules\Randomquote\QuotesHandler $itemHandler */
-    $itemHandler = new \XoopsModules\Randomquote\QuotesHandler();
+    $itemHandler = \XoopsModules\Randomquote\Helper::getInstance()->getHandler('Quotes');
     /** @var \XoopsModules\Tag\LinkHandler $itemHandler */
     $linkHandler = \XoopsModules\Tag\Helper::getInstance()->getHandler('Link');
 

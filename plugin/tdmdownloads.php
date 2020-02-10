@@ -10,7 +10,7 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright   Gregory Mage (Aka Mage)
- * @license     GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @license     GNU GPL 2 (https://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
  * @author      Gregory Mage (Aka Mage)
  * @param $items
  * @return bool
@@ -31,7 +31,7 @@ function tdmdownloads_tag_iteminfo($items)
     //    $itemHandler = $helper->getHandler('Tdmdownloads_downloads', 'tdmdownloads');
 
     /** @var \XoopsModules\Tdmdownloads\DownloadsHandler $itemHandler */
-    $itemHandler = new \XoopsModules\Tdmdownloads\DownloadsHandler();
+    $itemHandler = \XoopsModules\Tdmdownloads\Helper::getInstance()->getHandler('Downloads');
 
     $items_obj = $itemHandler->getObjects(new \Criteria('lid', '(' . implode(', ', $items_id) . ')', 'IN'), true);
 
@@ -63,7 +63,7 @@ function tdmdownloads_tag_synchronization($mid)
     //    $itemHandler = $helper->getHandler('Downloads', 'tdmdownloads');
 
     /** @var \XoopsModules\Tdmdownloads\DownloadsHandler $itemHandler */
-    $itemHandler = new \XoopsModules\Tdmdownloads\DownloadsHandler();
+    $itemHandler = \XoopsModules\Tdmdownloads\Helper::getInstance()->getHandler('Downloads');
 
     /** @var \XoopsModules\Tag\LinkHandler $linkHandler */
     $linkHandler = \XoopsModules\Tag\Helper::getInstance()->getHandler('Link'); //@var \XoopsModules\Tag\Handler $tagHandler

@@ -45,7 +45,8 @@ $sql           .= ' GROUP BY tag_modid';
 $counts_module = [];
 $module_list   = [];
 
-if ($result = $GLOBALS['xoopsDB']->query($sql)) {
+$result = $GLOBALS['xoopsDB']->query($sql);
+if ($result) {
     while (false !== ($myrow = $GLOBALS['xoopsDB']->fetchArray($result))) {
         $counts_module[$myrow['tag_modid']] = $myrow['count_tag'];
     }
@@ -56,7 +57,7 @@ if ($result = $GLOBALS['xoopsDB']->query($sql)) {
     }
 }
 
-$opform     = new \XoopsSimpleForm('', 'moduleform', xoops_getenv('PHP_SELF'), 'get', true);
+$opform     = new \XoopsSimpleForm('', 'moduleform', xoops_getenv('SCRIPT_NAME'), 'get', true);
 $tray       = new \XoopsFormElementTray('');
 $mod_select = new \XoopsFormSelect(_SELECT, 'modid', $modid);
 $mod_select->addOption(-1, _AM_TAG_GLOBAL);

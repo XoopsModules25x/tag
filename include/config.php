@@ -11,18 +11,17 @@
 
 /**
  * @copyright    XOOPS Project https://xoops.org/
- * @license      GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
+ * @license      GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @package
  * @since
  * @author       XOOPS Development Team
  */
-function getConfig()
-{
+
     $moduleDirName      = basename(dirname(__DIR__));
     $moduleDirNameUpper = mb_strtoupper($moduleDirName);
 
     return (object)[
-        'name'           => mb_strtoupper($moduleDirName) . ' Module Configurator',
+        'name'           => $moduleDirNameUpper . ' Module Configurator',
         'paths'          => [
             'dirname'    => $moduleDirName,
             'admin'      => XOOPS_ROOT_PATH . '/modules/' . $moduleDirName . '/admin',
@@ -74,7 +73,12 @@ function getConfig()
         ],
         'renameTables'    => [//         'XX_archive'     => 'ZZZZ_archive',
         ],
-        'modCopyright'    => "<a href='https://xoops.org' title='XOOPS Project' target='_blank'>
+        'moduleStats'  => [
+            //            'totalcategories' => $helper->getHandler('Category')->getCategoriesCount(-1),
+            //            'totalitems'      => $helper->getHandler('Item')->getItemsCount(),
+            //            'totalsubmitted'  => $helper->getHandler('Item')->getItemsCount(-1, [Constants::PUBLISHER_STATUS_SUBMITTED]),
+        ],
+        'modCopyright'   => "<a href='https://xoops.org' title='XOOPS Project' target='_blank'>
                      <img src='" . constant($moduleDirNameUpper . '_AUTHOR_LOGOIMG') . '\' alt=\'XOOPS Project\'></a>',
     ];
 }

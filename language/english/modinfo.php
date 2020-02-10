@@ -18,7 +18,7 @@
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
  * @since           1.00
  */
-defined('XOOPS_ROOT_PATH') || die('Restricted access');
+defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
 define('_MI_TAG_NAME', 'Tag');
 define('_MI_TAG_DESC', 'For site-wide Tag management');
@@ -68,4 +68,20 @@ define('_MI_TAG_VIEW_SEARCH', 'Search');
 //2.34
 define('_MI_TAG_INDEX_TPL_DESK_DESC', 'Links of a custom tags ');
 
+
 define('_MI_TAG_ADMENU_MIGRATE', 'Migrate');
+
+//Help
+define('_MI_TAG_DIRNAME', basename(dirname(dirname(__DIR__))));
+define('_MI_TAG_HELP_HEADER', __DIR__ . '/help/helpheader.tpl');
+define('_MI_TAG_BACK_2_ADMIN', 'Back to Administration of ');
+define('_MI_TAG_OVERVIEW', 'Overview');
+
+//define('_MI_TAG_HELP_DIR', __DIR__);
+
+//help multi-page
+define('_MI_TAG_DISCLAIMER', 'Disclaimer');
+define('_MI_TAG_LICENSE', 'License');
+define('_MI_TAG_SUPPORT', 'Support');
+define('_MI_TAG_PLUGINS', 'Plugins');
+define('_MI_TAG_ISSUES', 'Issues');

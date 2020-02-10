@@ -21,7 +21,7 @@
 
 use XoopsModules\Tag;
 
-defined('XOOPS_ROOT_PATH') || die('Restricted access');
+defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
 if (!defined('TAG_FUNCTIONS')):
     define('TAG_FUNCTIONS', 1);

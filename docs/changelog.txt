@@ -1,3 +1,23 @@
+<h5>2.35 Beta 1          [NOT RELEASED]</h5>  Dev: XOOPS 2.5.10, PHP 7.2.25 mySQL 5.7.28-log
+<hr>
++ fixed NOT IN GROUP BY error when using MySQL >= v5.7
++ fixed bug in index.php to limit number of tags in cloud (zyspec)
++ fixed font size (interval) calculation bug in list.tag.php (zyspec)
++ removed &$args_numeric (not used) in ./include/functions.php tag_parse_args() function (zyspec)
++ added new Help section (zyspec)
++ added module Issues display in help (zyspec)
++ created class and handler for stats (zyspec)
++ begin conversion to using object CRUD instead of direct SQL calls (zyspec)
++ eliminated multiple global usage instances (zyspec)
++ cleanup/update phpDoc comments (zyspec)
++ moved some functions to classes (zyspec)
++ changed page headers to use Tag\Common\Breadcrumb class (zyspec)
++ marked unused functions as @deprecated - will be removed later (zyspec)
++ added missing module icons folders (zyspec)
++ added tag search graphic (zyspec)
++ added check to make sure tag is active before showing results in search (zyspec)
++ created Tag\TagHandler::getTagData() to simplify/standardize code (zyspec)
+
 <h5>2.34 RC 2          [2019-02-11]</h5>  Dev: Xoops 2.5.10, PHP 7.3.2
 <hr>
 - bug fixes/updates (mamba)

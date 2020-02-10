@@ -18,7 +18,7 @@
  * @author         Taiwen Jiang <phppp@users.sourceforge.net>
  * @since          1.00
  */
-defined('XOOPS_ROOT_PATH') || die('Restricted access');
+defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
 require_once __DIR__ . '/preloads/autoloader.php';
 
@@ -64,7 +64,7 @@ $modversion = [
     'module_website_name' => 'XOOPS Project',
     // ------------------- Min Requirements -------------
     'min_php'             => '5.5',
-    'min_xoops'           => '2.5.9',
+    'min_xoops'           => '2.5.10',
     'min_admin'           => '1.2',
     'min_db'              => ['mysql' => '5.5'],
     // ------------------- Admin Menu -------------------
@@ -87,7 +87,7 @@ $modversion = [
     'onUninstall'         => 'include/onuninstall.php',
     // -------------------  PayPal ---------------------------
     'paypal'              => [
-        'business'      => 'foundation@xoops.org',
+        'business'      => 'xoopsfoundation@gmail.com',
         'item_name'     => 'Donation : ' . _MI_TAG_NAME,
         'amount'        => 0,
         'currency_code' => 'USD',
@@ -112,6 +112,17 @@ $modversion = [
         $moduleDirName . '_' . 'link',
         $moduleDirName . '_' . 'stats',
     ],
+];
+
+
+// ------------------- Help files ------------------- //
+$modversion['helpsection'] = [
+    ['name' => _MI_TAG_OVERVIEW, 'link' => 'page=help'],
+    ['name' => _MI_TAG_DISCLAIMER, 'link' => 'page=disclaimer'],
+    ['name' => _MI_TAG_LICENSE, 'link' => 'page=license'],
+    ['name' => _MI_TAG_SUPPORT, 'link' => 'page=support'],
+    ['name' => _MI_TAG_PLUGINS, 'link' => 'page=plugin_dev'],
+    ['name' => _MI_TAG_ISSUES, 'link' => 'page=issues'],
 ];
 
 // Use smarty
@@ -195,7 +206,7 @@ $modversion['config'] = [
         'description' => '_MI_TAG_DOURLREWRITE_DESC',
         'formtype'    => 'yesno',
         'valuetype'   => 'int',
-        'default'     => in_array(PHP_SAPI, ['apache', 'apache2handler'], true),
+        'default'     => in_array(PHP_SAPI, ['apache', 'apache2handler']),
     ],
 
     [

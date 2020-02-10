@@ -20,7 +20,7 @@
 
 use XoopsModules\Tag;
 
-defined('XOOPS_ROOT_PATH') || die('Restricted access');
+defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
 defined('TAG_FUNCTIONS_INI') || require_once __DIR__ . '/functions.ini.php';
 define('TAG_FUNCTIONS_RECON_LOADED', true);

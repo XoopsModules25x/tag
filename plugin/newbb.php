@@ -18,7 +18,7 @@
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
  * @since           1.00
  */
-defined('XOOPS_ROOT_PATH') || die('Restricted access');
+defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
 /**
  * Get item fields:
@@ -50,7 +50,7 @@ function newbb_tag_iteminfo(&$items)
         }
     }
     /** @var \XoopsModules\Newbb\TopicHandler $itemHandler */
-    $itemHandler = new \XoopsModules\Newbb\TopicHandler();
+    $itemHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Topic');
     $items_obj   = &$itemHandler->getObjects(new \Criteria('topic_id', '(' . implode(', ', $items_id) . ')', 'IN'), true);
 
     foreach (array_keys($items) as $cat_id) {
@@ -80,7 +80,7 @@ function newbb_tag_iteminfo(&$items)
 function newbb_tag_synchronization($mid)
 {
     /** @var \XoopsModules\Newbb\TopicHandler $itemHandler */
-    $itemHandler = new \XoopsModules\Newbb\TopicHandler();
+    $itemHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Topic');
     /** @var \XoopsModules\Tag\LinkHandler $linkHandler */
     $linkHandler = \XoopsModules\Tag\Helper::getInstance()->getHandler('Link'); //@var \XoopsModules\Tag\Handler $tagHandler
 

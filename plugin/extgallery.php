@@ -17,7 +17,7 @@
  * @license         {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
  * @since           1.00
  */
-defined('XOOPS_ROOT_PATH') || die('Restricted access');
+defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 /**
  * Generate tag item information
  *
@@ -39,7 +39,7 @@ function extgallery_tag_iteminfo(&$items)
     }
 
     /** @var \XoopsModules\Extgallery\PublicPhotoHandler $itemHandler */
-    $itemHandler = new \XoopsModules\Extgallery\PublicPhotoHandler();
+    $itemHandler = \XoopsModules\Extgallery\Helper::getInstance()->getHandler('PublicPhoto');
     $items_obj   = $itemHandler->getObjects(new \Criteria('photo_id', '(' . implode(', ', $items_id) . ')', 'IN'), true);
 
     foreach (array_keys($items) as $cat_id) {
@@ -72,7 +72,7 @@ function extgallery_tag_iteminfo(&$items)
 function extgallery_tag_synchronization($mid)
 {
     /** @var \XoopsModules\Extgallery\PublicPhotoHandler $itemHandler */
-    $itemHandler = new \XoopsModules\Extgallery\PublicPhotoHandler();
+    $itemHandler =  \XoopsModules\Extgallery\Helper::getInstance()->getHandler('PublicPhoto');
     /** @var \XoopsModules\Tag\LinkHandler $linkHandler */
     $linkHandler = \XoopsModules\Tag\Helper::getInstance()->getHandler('Link'); //@var \XoopsModules\Tag\Handler $tagHandler
 

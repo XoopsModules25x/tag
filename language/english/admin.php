@@ -18,7 +18,7 @@
  * @author         Taiwen Jiang (phppp or D.J.) <php_pp@hotmail.com>
  * @since          1.00
  */
-defined('XOOPS_ROOT_PATH') || die('Restricted access');
+defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 define('_AM_TAG_TERM', 'Tag');
 
 define('_AM_TAG_STATS', 'Statistic Infomation');

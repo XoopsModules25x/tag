@@ -13,7 +13,7 @@
 /**
  * XOOPS tag management module
  *
- * @copyright       The XOOPS project http://sourceforge.net/projects/xoops/
+ * @copyright       XOOPS Project (https://xoops.org)
  * @license         http://www.fsf.org/copyleft/gpl.html GNU public license
  * @since           1.0.0
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
@@ -55,7 +55,7 @@ function smartsection_tag_iteminfo(&$items)
     }
 
     /** @var \XoopsModules\Smartsection\ItemHandler $itemHandler */
-    $itemHandler = new \XoopsModules\Smartsection\ItemHandler();
+    $itemHandler = \XoopsModules\Smartsection\Helper::getInstance()->getHandler('Item');
 
     $items_obj = $itemHandler->getObjects(new Criteria('itemid', '(' . implode(', ', $items_id) . ')', 'IN'), true);
 
@@ -83,7 +83,7 @@ function smartsection_tag_iteminfo(&$items)
 function article_tag_synchronization($mid)
 {
     /** @var \XoopsModules\Smartsection\ItemHandler $itemHandler */
-    $itemHandler = new \XoopsModules\Smartsection\ItemHandler();
+    $itemHandler = \XoopsModules\Smartsection\Helper::getInstance()->getHandler('Item');
 
     /** @var \XoopsModules\Tag\LinkHandler $itemHandler */
     $linkHandler = \XoopsModules\Tag\Helper::getInstance()->getHandler('Link');

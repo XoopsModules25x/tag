@@ -22,7 +22,7 @@ namespace XoopsModules\Tag;
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
  * @since           1.00
  */
-defined('XOOPS_ROOT_PATH') || die('Restricted access');
+defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
 /**
  * Class TagHandler
@@ -127,7 +127,8 @@ class TagHandler extends \XoopsPersistableObjectHandler
 
         if (!empty($tags_delete)) {
             $tags_delete = array_map([$this->db, 'quoteString'], $tags_delete);
-            if ($tags_id = &$this->getIds(new \Criteria('tag_term', '(' . implode(', ', $tags_delete) . ')', 'IN'))) {
+            $tags_id     = &$this->getIds(new \Criteria('tag_term', '(' . implode(', ', $tags_delete) . ')', 'IN'));
+            if ($tags_id) {
                 $sql = "DELETE FROM {$this->table_link}" . ' WHERE ' . "     {$this->keyName} IN (" . implode(', ', $tags_id) . ')' . "     AND tag_modid = {$modid} AND tag_catid = {$catid} AND tag_itemid = {$itemid}";
                 if (false === ($result = $this->db->queryF($sql))) {
                     //@todo: decide if we should do something here on failure
@@ -149,7 +150,8 @@ class TagHandler extends \XoopsPersistableObjectHandler
             $tag_link  = [];
             $tag_count = [];
             foreach ($tags_add as $tag) {
-                if ($tags_id = &$this->getIds(new \Criteria('tag_term', $tag))) {
+                $tags_id = &$this->getIds(new \Criteria('tag_term', $tag));
+                if ($tags_id) {
                     $tag_id      = $tags_id[0];
                     $tag_count[] = $tag_id;
                 } else {
@@ -205,7 +207,8 @@ class TagHandler extends \XoopsPersistableObjectHandler
         $count = 0;
         $sql   = 'SELECT COUNT(*) ' . " FROM {$this->table_link}" . " WHERE tag_id = {$tag_id}" . (empty($modid) ? '' : " AND tag_modid = {$modid}") . (($catid < 0) ? '' : " AND tag_catid = {$catid}");
 
-        if ($result = $this->db->query($sql)) {
+        $result = $this->db->query($sql);
+        if ($result) {
             list($count) = $this->db->fetchRow($result);
         }
         if (empty($modid)) {
@@ -226,7 +229,8 @@ class TagHandler extends \XoopsPersistableObjectHandler
             } else {
                 $ts_id = null;
                 $sql   = 'SELECT ts_id, tag_count ' . " FROM {$this->table_stats}" . " WHERE {$this->keyName} = {$tag_id}" . " AND tag_modid = {$modid}" . " AND tag_catid = {$catid}";
-                if ($result = $this->db->query($sql)) {
+                $result = $this->db->query($sql);
+                if ($result) {
                     list($ts_id, $tag_count) = $this->db->fetchRow($result);
                 }
                 $sql = '';

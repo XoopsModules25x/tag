@@ -84,7 +84,7 @@ if (false === $result) {
     }
 }
 
-$opform     = new \XoopsSimpleForm('', 'moduleform', xoops_getenv('PHP_SELF'), 'get', true);
+$opform     = new \XoopsSimpleForm('', 'moduleform', xoops_getenv('SCRIPT_NAME'), 'get', true);
 $tray       = new \XoopsFormElementTray('');
 $mod_select = new \XoopsFormSelect(_SELECT, 'modid', $modid);
 $mod_select->addOption(0, _ALL);
@@ -115,7 +115,7 @@ if (!empty($modid)) {
 $tags = &$tagHandler->getByLimit(0, 0, $criteria, null, false);
 
 $form_tags = "<form name='tags' method='post' action='"
-             . xoops_getenv('PHP_SELF')
+             . xoops_getenv('SCRIPT_NAME')
              . "'>\n"
              . "<table style='border-width: 0px; margin: 1px; padding: 4px;' cellspacing='1' class='outer width100'>\n"
              . "  <thead>\n"

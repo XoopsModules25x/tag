@@ -21,7 +21,7 @@
 
 //use XoopsModules\Publisher\Constants;
 
-defined('XOOPS_ROOT_PATH') || die('Restricted access');
+defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
 /**
  * Get item fields: title, content, time, link, uid, uname, tags
@@ -44,7 +44,7 @@ function publisher_tag_iteminfo(&$items)
         }
     }
     /** @var \XoopsModules\Publisher\ItemHandler $itemHandler */
-    $itemHandler = new \XoopsModules\Publisher\ItemHandler();
+    $itemHandler = \XoopsModules\Publisher\Helper::getInstance()->getHandler('Item');
 
     $criteria  = new \Criteria('itemid', '(' . implode(', ', $items_id) . ')', 'IN');
     $items_obj = $itemHandler->getObjects($criteria, 'itemid');
@@ -75,7 +75,7 @@ function publisher_tag_synchronization($mid)
 {
     /** @var \XoopsModules\Publisher\ItemHandler $itemHandler */
     //    $itemHandler = \XoopsModules\Publisher\Helper::getInstance()->getHandler('Item');
-    $itemHandler = new \XoopsModules\Publisher\ItemHandler();
+    $itemHandler = \XoopsModules\Publisher\Helper::getInstance()->getHandler('Item');
 
     /** @var \XoopsModules\Tag\LinkHandler $itemHandler */
     $linkHandler = \XoopsModules\Tag\Helper::getInstance()->getHandler('Link');

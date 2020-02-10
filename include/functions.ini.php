@@ -24,7 +24,7 @@
 The functions loaded on initializtion
 */
 
-//defined('XOOPS_ROOT_PATH') || die('Restricted access');
+//defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 defined('TAG_INI') || die();
 (!defined('TAG_FUNCTIONS_INI')) || die();
 
@@ -70,7 +70,7 @@ function tag_load_config()
 function tag_define_url_delimiter()
 {
     if (defined('URL_DELIMITER')) {
-        if (!in_array(URL_DELIMITER, ['?', '/'], true)) {
+        if (!in_array(URL_DELIMITER, ['?', '/'])) {
             exit('Security Violation');
         }
     } else {
