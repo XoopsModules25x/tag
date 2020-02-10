@@ -26,11 +26,7 @@ require dirname(__DIR__) . '/preloads/autoloader.php';
 
 $moduleDirName = basename(dirname(__DIR__));
 
-if (isset($GLOBALS['xoopsConfig']['language']) && file_exists(dirname(__DIR__) . '/language/' . $GLOBALS['xoopsConfig']['language'] . '/admin.php')) {
-    include_once dirname(__DIR__) . '/language/' . $GLOBALS['xoopsConfig']['language'] . '/admin.php';
-} else {
-    include_once dirname(__DIR__) . '/language/english/admin.php'; // messages will be in english
-}
+xoops_loadLanguage('admin', $moduleDirName);
 
 //session_start();
 
