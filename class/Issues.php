@@ -63,7 +63,7 @@ namespace XoopsModules\Tag;
      */
     public function __construct()
     {
-        $this->hdrs          = array();
+        $this->hdrs          = [];
         $this->curl_response = '';
         $this->hdrSize       = 0;
         $this->dirname       = basename(dirname(__DIR__));
@@ -103,7 +103,7 @@ namespace XoopsModules\Tag;
                 break;
             }
         }
-        return (bool)$asArray ? array($hdr => trim($val)) : trim($val);
+        return (bool)$asArray ? [$hdr => trim($val)] : trim($val);
     }
     /**
      * Returns response from involking Curl
@@ -189,7 +189,7 @@ namespace XoopsModules\Tag;
      */
     public function getsKeyArray()
     {
-        return array($this->getsKeyEtag(), $this->getsKeyHdrSize(), $this->getsKeyResponse());
+        return [$this->getsKeyEtag(), $this->getsKeyHdrSize(), $this->getsKeyResponse()];
     }
     /**
      * Get the SESSION cached Etag key contents
@@ -230,17 +230,20 @@ namespace XoopsModules\Tag;
     public function execCurl()
     {
         $curl = curl_init($this->getServiceUrl());
-        curl_setopt_array($curl, array(CURLOPT_RETURNTRANSFER => true,
-                                               CURLOPT_HEADER => true,
-                                              CURLOPT_VERBOSE => true,
-                                              CURLOPT_TIMEOUT => 5,
-                                              CURLOPT_HTTPGET => true,
-                                            CURLOPT_USERAGENT => 'XOOPS-' . $this->dirname,
-                                           CURLOPT_HTTPHEADER => array('Content-type:application/json',
-                                                                       'If-None-Match: ' . $this->getCachedEtag()),
-                                          CURLINFO_HEADER_OUT => true,
-                                         CURLOPT_HEADERFUNCTION => array($this, 'handleHeaderLine')
-                                 )
+        curl_setopt_array($curl, [
+                                   CURLOPT_RETURNTRANSFER => true,
+                                   CURLOPT_HEADER         => true,
+                                   CURLOPT_VERBOSE        => true,
+                                   CURLOPT_TIMEOUT        => 5,
+                                   CURLOPT_HTTPGET        => true,
+                                   CURLOPT_USERAGENT      => 'XOOPS-' . $this->dirname,
+                                   CURLOPT_HTTPHEADER     => [
+                                       'Content-type:application/json',
+                                                                       'If-None-Match: ' . $this->getCachedEtag()
+                                   ],
+                                   CURLINFO_HEADER_OUT    => true,
+                                   CURLOPT_HEADERFUNCTION => [$this, 'handleHeaderLine']
+                               ]
         );
         // execute the session
         $this->curl_response = curl_exec($curl);

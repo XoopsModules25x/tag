@@ -44,7 +44,7 @@ if ($modIssues->getCachedEtag()) {
     $status = $modIssues->getHeaderFromArray('Status: ');
     if (preg_match('/^304 Not Modified/', $status)) {
         // Hasn't been modified so get response & header size from session
-        $curl_response = isset($_SESSION[$modIssues->getsKeyResponse()]) ? base64_decode(unserialize($_SESSION[$modIssues->getsKeyResponse()])) : array();
+        $curl_response = isset($_SESSION[$modIssues->getsKeyResponse()]) ? base64_decode(unserialize($_SESSION[$modIssues->getsKeyResponse()])) : [];
         $hdrSize       = isset($_SESSION[$modIssues->getsKeyHdrSize()]) ? unserialize($_SESSION[$modIssues->getsKeyHdrSize()]) : 0;
     } elseif (preg_match('/^200 OK/', $status)) {
         // Ok, request new info
