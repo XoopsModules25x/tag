@@ -116,7 +116,7 @@ if (!empty($issuesObjs)) {
             $pullReqFound = true;
         }
 
-        $dateTimeObj = \DateTime::createFromFormat(\DateTime::ISO8601, $issue->created_at);
+        $dateTimeObj = \DateTime::createFromFormat(\DateTime::ATOM, $issue->created_at);
         $dispDate    = $dateTimeObj->format('Y-m-d');
         ++$i; // issue count
 
