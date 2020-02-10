@@ -18,7 +18,6 @@
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
  * */
 
-use Xmf\Request;
 use XoopsModules\Tag\Constants;
 
 require_once __DIR__ . '/header.php';

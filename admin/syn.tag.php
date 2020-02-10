@@ -19,7 +19,6 @@
  * @since           1.00
  */
 
-use Xmf\Request;
 use XoopsModules\Tag;
 use XoopsModules\Tag\Constants;
 
@@ -35,9 +34,9 @@ xoops_cp_header();
 $adminObject = \Xmf\Module\Admin::getInstance();
 $adminObject->displayNavigation(basename(__FILE__));
 
-$modid = Request::getInt('modid', Constants::DEFAULT_ID);
-$start = Request::getInt('start', Constants::BEGINNING);
-$limit = Request::getInt('limit', Constants::DEFAULT_LIMIT);
+$modid = \Xmf\Request::getInt('modid', Constants::DEFAULT_ID);
+$start = \Xmf\Request::getInt('start', Constants::BEGINNING);
+$limit = \Xmf\Request::getInt('limit', Constants::DEFAULT_LIMIT);
 
 $sql           = 'SELECT tag_modid, COUNT(DISTINCT tag_id) AS count_tag';
 $sql           .= ' FROM ' . $GLOBALS['xoopsDB']->prefix('tag_link');

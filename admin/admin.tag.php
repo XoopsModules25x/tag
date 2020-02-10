@@ -19,7 +19,6 @@
  * @since           1.00
  */
 
-use Xmf\Request;
 use XoopsModules\Tag;
 use XoopsModules\Tag\Constants;
 
@@ -34,9 +33,9 @@ require_once $GLOBALS['xoops']->path('/modules/tag/include/vars.php');
 $adminObject->displayNavigation(basename(__FILE__));
 
 $limit  = $GLOBALS['xoopsModuleConfig']['items_perpage'];
-$modid  = Request::getInt('modid', Constants::DEFAULT_ID);
-$start  = Request::getInt('start', Constants::BEGINNING);
-$status = Request::getInt('status', Constants::STATUS_ALL, 'GET');
+$modid  = \Xmf\Request::getInt('modid', Constants::DEFAULT_ID);
+$start  = \Xmf\Request::getInt('start', Constants::BEGINNING);
+$status = \Xmf\Request::getInt('status', Constants::STATUS_ALL, 'GET');
 ///** @var \XoopsModules\Tag\TagHandler $tagHandler */
 //$tagHandler  = xoops_getModuleHandler('tag', $moduleDirName);
 //$linkHandler = xoops_getModuleHandler('link', $moduleDirName);
@@ -46,7 +45,7 @@ $status = Request::getInt('status', Constants::STATUS_ALL, 'GET');
 $tagHandler  = Tag\Helper::getInstance()->getHandler('Tag');
 $linkHandler = Tag\Helper::getInstance()->getHandler('Link');
 
-$postTags = Request::getArray('tags', [], 'POST');
+$postTags = \Xmf\Request::getArray('tags', [], 'POST');
 if (!empty($postTags)) {
     $msgDBUpdated = '';
     foreach ($postTags as $tag => $tag_status) {
