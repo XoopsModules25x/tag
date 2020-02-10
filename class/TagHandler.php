@@ -512,6 +512,8 @@ class TagHandler extends \XoopsPersistableObjectHandler
      *
      * @access public
      * @param array $tags_array associative array of tags (id, term, status, count)
+     * @param int   $font_max
+     * @param int   $font_min
      * @return array tag data values for display
      */
     public function getTagData($tags_array, $font_max = 0, $font_min = 0)

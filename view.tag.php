@@ -187,7 +187,6 @@ if (!empty($GLOBALS['_MD_TAG_ADDONS'])) {
 }
 
 // Breadcrumb
-/** @var XoopsModules\Tag\Common\Breadcrumb $breadcrumb */
 $breadcrumb = new Common\Breadcrumb();
 $breadcrumb->addLink($helper->getModule()->getVar('name'), $helper->url());
 $breadcrumb->addLink(_MD_TAG_TAGS, $helper->url('list.tag.php'));

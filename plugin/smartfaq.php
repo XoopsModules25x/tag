@@ -56,7 +56,6 @@ function smartfaq_tag_iteminfo(&$items)
     }
     /** @var \XoopsDatabase $db */
     $db = \XoopsDatabaseFactory::getDatabase();
-    /** @var \XoopsModules\Smartfaq\FaqHandler $itemHandler */
     $itemHandler = new \XoopsModules\Smartfaq\FaqHandler($db);
 
     $items_obj = $itemHandler->getObjects(new \Criteria('faqid', '(' . implode(', ', $items_id) . ')', 'IN'), true);
@@ -92,7 +91,6 @@ function smartfaq_tag_synchronization($mid)
     /** @var \XoopsDatabase $db */
     $db = \XoopsDatabaseFactory::getDatabase();
 
-    /** @var \XoopsModules\Smartfaq\FaqHandler $itemHandler */
     $itemHandler = new \XoopsModules\Smartfaq\FaqHandler($db);
 
     /** @var \XoopsModules\Tag\LinkHandler $itemHandler */

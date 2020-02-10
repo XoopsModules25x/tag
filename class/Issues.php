@@ -73,27 +73,29 @@ namespace XoopsModules\Tag;
         $this->setSessPrefix($this->dirname);
         $this->err           = '';
     }
-    /**
-     * Function to put HTTP headers in an array
-     *
-     * @param string $hdrLine
-     *
-     * @return int length of header line put into array
-     */
+
+     /**
+      * Function to put HTTP headers in an array
+      *
+      * @param        $curl
+      * @param string $hdrLine
+      *
+      * @return int length of header line put into array
+      */
     public function handleHeaderLine($curl, $hdrLine)
     {
         $this->hdrs[] = trim($hdrLine);
         return strlen($hdrLine);
     }
-    /**
-     * Function to get a header from the header array
-     *
-     * @param string $hdr
-     * @param array $hdrArray
-     * @param bool $asArray
-     *
-     * @return array|false array($hdr => value) or false if not found
-     */
+
+     /**
+      * Function to get a header from the header array
+      *
+      * @param string $hdr
+      * @param bool   $asArray
+      *
+      * @return array|false array($hdr => value) or false if not found
+      */
     public function getHeaderFromArray($hdr, $asArray = false)
     {
         $val = '';
@@ -182,11 +184,12 @@ namespace XoopsModules\Tag;
     {
         return $this->sessPrefix . 'github_curl_response';
     }
-    /**
-     * Get the SESSION variable name for Array key
-     *
-     * @return string
-     */
+
+     /**
+      * Get the SESSION variable name for Array key
+      *
+      * @return array
+      */
     public function getsKeyArray()
     {
         return [$this->getsKeyEtag(), $this->getsKeyHdrSize(), $this->getsKeyResponse()];

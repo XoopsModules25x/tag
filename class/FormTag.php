@@ -36,11 +36,11 @@ class FormTag extends \XoopsFormText
 {
     /**
      * TagFormTag constructor.
-     * @param string     $name      "name" attribute
-     * @param int        $size      size of input box
-     * @param int        $maxlength Maximum length of text
-     * @param string|int $value     Initial text or itemid
-     * @param int        $catid     category id (applicable if $value is itemid)
+     * @param string                $name      "name" attribute
+     * @param \XoopsModules\Tag\int $size      size of input box
+     * @param int                   $maxlength Maximum length of text
+     * @param string|int            $value     Initial text or itemid
+     * @param int                   $catid     category id (applicable if $value is itemid)
      */
     public function __construct($name, int $size, $maxlength, $value = null, $catid = 0)
     {

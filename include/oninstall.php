@@ -28,7 +28,6 @@ use XoopsModules\Tag;
 function xoops_module_pre_install_tag(\XoopsModule $module)
 {
     $moduleDirName = basename(dirname(__DIR__));
-    /** @var Tag\Utility $utility */
     $utility = new Tag\Utility();
     //check for minimum XOOPS version
     if (!$utility::checkVerXoops($module)) {
