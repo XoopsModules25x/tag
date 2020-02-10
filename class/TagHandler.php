@@ -322,8 +322,8 @@ class TagHandler extends \XoopsPersistableObjectHandler
             $sql = "SELECT DISTINCT(o.{$this->keyName}), o.tag_term, o.tag_status, COUNT(l.tl_id) AS count" . " FROM {$this->table} AS o LEFT JOIN {$this->table_link} AS l ON l.{$this->keyName} = o.{$this->keyName}";
         }
 
-        $limit = is_integer($limit) && ($limit >= 0) ? $limit : Constants::UNLIMITED;
-        $start = is_integer($start) && ($start >= 0) ? $start : Constants::BEGINNING;
+        $limit = is_int($limit) && ($limit >= 0) ? $limit : Constants::UNLIMITED;
+        $start = is_int($start) && ($start >= 0) ? $start : Constants::BEGINNING;
         $sort  = '';
         $order = '';
         if (null !== $criteria && $criteria instanceof \CriteriaCompo) {
