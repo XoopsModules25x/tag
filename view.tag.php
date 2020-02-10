@@ -27,24 +27,24 @@ require_once __DIR__ . '/header.php';
 
 //@todo refactor this code - it "works" but it's not right. Look at previous revs using $args_num to see what it's suppose to do
 if (Utility::tag_parse_args($args, $args_string)) {
-    $args['tag']  = !empty($args['tag']) ? $args['tag'] : !empty($args_string[0]) ? $args_string[0] : Constants::DEFAULT_ID;
-    $args['term'] = !empty($args['term']) ? $args['term'] : !empty($args_string[0]) ? $args_string[0] : null;
+    $args['tag']  = !empty($args['tag']) ? $args['tag'] : (!empty($args_string[0]) ? $args_string[0] : Constants::DEFAULT_ID);
+    $args['term'] = !empty($args['term']) ? $args['term'] : (!empty($args_string[0]) ? $args_string[0] : null);
     $args['modid'] = !empty($args['modid']) ? $args['modid'] : Constants::DEFAULT_ID;
     $args['catid'] = !empty($args['catid']) ? $args['catid'] : Constants::DEFAULT_ID;
     $args['start'] = !empty($args['start']) ? $args['start'] : Constants::BEGINNING;
 }
 /*
 $tagid = (int)(empty($_GET['tag']) ? @$args['tag'] : $_GET['tag']);
-$tag_term = empty($_GET['term']) ? @$args['term'] : Request::getString('term', '', 'GET');
+$tag_term = empty($_GET['term']) ? @$args['term'] : \Xmf\Request::getString('term', '', 'GET');
 $modid = (int)(empty($_GET['modid']) ? @$args['modid'] : $_GET['modid']);
 $catid = (int)(empty($_GET['catid']) ? @$args['catid'] : $_GET['catid']);
 $start = (int)(empty($_GET['start']) ? @$args['start'] : $_GET['start']);
 */
-$tagid = (int)(empty($_GET['tag'])) ? @$args['tag'] : Request::getInt('tag', Constants::DEFAULT_ID, 'GET');
-$tag_term = empty($_GET['term']) ? @$args['term'] : Request::getString('term', null, 'GET');
-$modid = (int)(empty($_GET['modid'])) ? @$args['modid'] : Request::getInt('modid', Constants::DEFAULT_ID, 'GET');
-$catid = (int)(empty($_GET['catid'])) ? @$args['catid'] : Request::getInt('catid', Constants::DEFAULT_ID, 'GET');
-$start = (int)(empty($_GET['start'])) ? @$args['start'] : Request::getInt('start', Constants::BEGINNING, 'GET');
+$tagid = (empty($_GET['tag'])) ? @$args['tag'] : \Xmf\Request::getInt('tag', Constants::DEFAULT_ID, 'GET');
+$tag_term = empty($_GET['term']) ? @$args['term'] : \Xmf\Request::getString('term', null, 'GET');
+$modid = (int)(empty($_GET['modid'])) ? @$args['modid'] : \Xmf\Request::getInt('modid', Constants::DEFAULT_ID, 'GET');
+$catid = (int)(empty($_GET['catid'])) ? @$args['catid'] : \Xmf\Request::getInt('catid', Constants::DEFAULT_ID, 'GET');
+$start = (int)(empty($_GET['start'])) ? @$args['start'] : \Xmf\Request::getInt('start', Constants::BEGINNING, 'GET');
 
 if (empty($modid) && ($GLOBALS['xoopsModule'] instanceof \XoopsModule)
     && 'tag' !== $GLOBALS['xoopsModule']->getVar('dirname', 'n')) {
@@ -54,7 +54,7 @@ if (empty($modid) && ($GLOBALS['xoopsModule'] instanceof \XoopsModule)
 /** @var \XoopsModules\Tag\TagHandler $tagHandler */
 $tagHandler = $helper->getHandler('Tag');
 
-if (!empty($tagid)) { // have a tag_id, so check to see if it yields a valid Tag object
+if ((int)empty($tagid)) { // have a tag_id, so check to see if it yields a valid Tag object
     if (!$tag_obj = $tagHandler->get($tagid)) {
         $helper->redirect('index.php', Constants::REDIRECT_DELAY_MEDIUM, _MD_TAG_INVALID);
     }
