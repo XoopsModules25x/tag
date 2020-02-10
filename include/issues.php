@@ -35,7 +35,7 @@ if (isset($GLOBALS['xoopsConfig']['language']) && file_exists(dirname(__DIR__) .
 //session_start();
 
 $issuesClass = '\XoopsModules\\' . ucfirst(mb_strtolower($moduleDirName)) . '\Issues';
-$modIssues = new $issuesClass;
+$modIssues = new $issuesClass();
 if ($modIssues->getCachedEtag()) {
     // Found the session var so check to see if anything's changed since last time we checked
     $hdrSize       = $modIssues->execCurl();
@@ -49,7 +49,7 @@ if ($modIssues->getCachedEtag()) {
     } elseif (preg_match('/^200 OK/', $status)) {
         // Ok, request new info
         unset($modIssues);
-        $modIssues     = new $issuesClass;
+        $modIssues     = new $issuesClass();
         $hdrSize       = $modIssues->execCurl();
         $curl_response = $modIssues->getCurlResponse();
     } elseif (preg_match('/^403 Forbidden/', $status)) {
