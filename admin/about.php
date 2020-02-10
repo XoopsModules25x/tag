@@ -12,7 +12,7 @@
 /**
  * XOOPS tag management module
  *
- * @package         tag
+ * @package         XoopsModules\Tag
  * @copyright       {@link http://sourceforge.net/projects/xoops/ The XOOPS Project}
  * @license         {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
  * @author          Mage
@@ -22,6 +22,7 @@
 require_once __DIR__ . '/admin_header.php';
 xoops_cp_header();
 
+/** @var \Xmf\Module\Admin $adminObject */
 $adminObject->displayNavigation(basename(__FILE__));
 $adminObject::setPaypal('xoopsfoundation@gmail.com');
 $adminObject->displayAbout(false);

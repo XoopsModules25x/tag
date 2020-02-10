@@ -72,12 +72,12 @@ define('_AM_TAG_ABOUT_MODULE_STATUS', 'Status: ');
 define('_AM_TAG_ABOUT_WEBSITE', 'Website: ');
 define('_AM_TAG_ABOUT_AUTHOR_NAME', 'Author name: ');
 define('_AM_TAG_ABOUT_CHANGELOG', 'Change Log');
-define('_AM_TAG_ABOUT_MODULE_INFO', 'Module Infos');
-define('_AM_TAG_ABOUT_AUTHOR_INFO', 'Author Infos');
+define('_AM_TAG_ABOUT_MODULE_INFO', 'Module Info');
+define('_AM_TAG_ABOUT_AUTHOR_INFO', 'Author Info');
 define('_AM_TAG_ABOUT_DESCRIPTION', 'Description: ');
 
 // text in admin footer
-define('_AM_TAG_ADMIN_FOOTER', "<div class='right smallsmall italic pad5'><b>" . $GLOBALS['xoopsModule']->getVar('name') . "</b> is maintained by the <a class='tooltip' rel='external' href='https://xoops.org/' title='Visit XOOPS Community'>XOOPS Community</a></div>");
+define('_AM_TAG_ADMIN_FOOTER', "<div class='right smallsmall italic pad5'><b>%s</b> is maintained by the <a class='tooltip' rel='external' href='https://xoops.org/' title='Visit XOOPS Community'>XOOPS Community</a></div>");
 
 // Text for Admin footer
 define('_AM_TAG_FOOTER', "<div class='center smallsmall italic pad5'>Tag Module is maintained by the <a class='tooltip' rel='external' href='https://xoops.org/' title='Visit XOOPS Community'>XOOPS Community</a></div>");
@@ -86,10 +86,23 @@ define('_AM_TAG_FOOTER', "<div class='center smallsmall italic pad5'>Tag Module 
 define('_AM_TAG_DB_UPDATED', 'Database Updated Successfully');
 
 //2.33
-define('_AM_TAG_UPGRADEFAILED0', "Update failed - couldn't rename field '%s'");
-define('_AM_TAG_UPGRADEFAILED1', "Update failed - couldn't add new fields");
-define('_AM_TAG_UPGRADEFAILED2', "Update failed - couldn't rename table '%s'");
+define('_AM_TAG_UPGRADEFAILED0', "Update failed - could not rename field '%s'");
+define('_AM_TAG_UPGRADEFAILED1', "Update failed - could not add new fields");
+define('_AM_TAG_UPGRADEFAILED2', "Update failed - could not rename table '%s'");
 define('_AM_TAG_ERROR_COLUMN', 'Could not create column in database : %s');
 define('_AM_TAG_ERROR_BAD_XOOPS', 'This module requires XOOPS %s+ (%s installed)');
 define('_AM_TAG_ERROR_BAD_PHP', 'This module requires PHP version %s+ (%s installed)');
 define('_AM_TAG_ERROR_TAG_REMOVAL', 'Could not remove tags from Tag Module');
+
+//2.34
+// Help Issues page defines
+define('_AM_TAG_ISSUES_ERR_UNKNOWN', 'Unknown Error');
+define('_AM_TAG_ISSUES_ERR_STATUS', 'Unknown Status');
+define('_AM_TAG_ISSUES_NONE', 'There are currently no open issues.');
+define('_AM_TAG_ISSUES_NOTE', 'Note: * indicates issue is a GitHub pull request');
+define('_AM_TAG_ISSUES_OPEN', 'Open Issues');
+define('_AM_TAG_HELP_ISSUE', 'Issue #');
+define('_AM_TAG_HELP_DATE', 'Date');
+define('_AM_TAG_HELP_TITLE', 'Title');
+define('_AM_TAG_HELP_SUBMITTER', 'Submitter');
+

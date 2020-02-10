@@ -12,6 +12,7 @@
 /**
  * XOOPS tag management module
  *
+ * @package         XoopsModules\Tag
  * @copyright       XOOPS Project (https://xoops.org)
  * @license         http://www.fsf.org/copyleft/gpl.html GNU public license
  * @since           1.00
@@ -24,9 +25,10 @@ require_once dirname(dirname(dirname(__DIR__))) . '/include/cp_header.php';
 // require_once  dirname(__DIR__) . '/class/constants.php';
 require_once dirname(__DIR__) . '/include/common.php';
 
-$moduleDirName = basename(dirname(__DIR__));
-/** @var Tag\Helper $helper */
-$helper = Tag\Helper::getInstance();
+/**
+ * {@internal $helper defined in ./include/common.php }}
+ * @var Tag\Helper $helper
+ */
 
 /** @var Xmf\Module\Admin $adminObject */
 $adminObject = \Xmf\Module\Admin::getInstance();

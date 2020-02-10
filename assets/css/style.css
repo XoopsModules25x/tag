@@ -22,3 +22,22 @@
 .tag-level-5 a {
     color: #FF7400;
 }
+
+.tag_headertable {
+    padding: 0;
+    border-bottom: 1px solid;
+    margin: 0 0 10px;
+}
+
+.tag_breadcrumb {
+    font-size: 10px;
+    line-height: 18px;
+}
+
+.bread {
+
+}
+
+.delimiter {
+
+}

@@ -8,11 +8,10 @@
  but WITHOUT ANY WARRANTY; without even the implied warranty of
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 */
-
 /**
  * XOOPS tag management module
  *
- * @package         tag
+ * @package         \XoopsModuels\Tag
  * @copyright       {@link http://sourceforge.net/projects/xoops/ The XOOPS Project}
  * @license         {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
@@ -51,7 +50,7 @@ function newbb_tag_iteminfo(&$items)
     }
     /** @var \XoopsModules\Newbb\TopicHandler $itemHandler */
     $itemHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Topic');
-    $items_obj   = &$itemHandler->getObjects(new \Criteria('topic_id', '(' . implode(', ', $items_id) . ')', 'IN'), true);
+    $items_obj   = $itemHandler->getObjects(new \Criteria('topic_id', '(' . implode(', ', $items_id) . ')', 'IN'), true);
 
     foreach (array_keys($items) as $cat_id) {
         foreach (array_keys($items[$cat_id]) as $item_id) {
@@ -61,7 +60,7 @@ function newbb_tag_iteminfo(&$items)
                 'uid'     => $item_obj->getVar('topic_poster'),
                 'link'    => "viewtopic.php?topic_id={$item_id}",
                 'time'    => $item_obj->getVar('topic_time'),
-                'tags'    => tag_parse_tag($item_obj->getVar('topic_tags', 'n')),
+                'tags'    => \XoopsModules\Tag\Utility::tag_parse_tag($item_obj->getVar('topic_tags', 'n')),
                 'content' => '',
             ];
         }
@@ -90,7 +89,7 @@ function newbb_tag_synchronization($mid)
     /* clear tag-item links */
     /** {@internal the following statement isn't really needed any more (MySQL is really old)
      *   and some hosting companies block the $GLOBALS['xoopsDB']->getServerVersion() function for security
-     *   reasons.}
+     *   reasons. }
      */
     //    if (version_compare( $GLOBALS['xoopsDB']->getServerVersion(), "4.1.0", "ge" )):
     $sql = "DELETE FROM {$linkHandler->table}" . " WHERE tag_modid = {$mid}" . '   AND (tag_itemid NOT IN ' . "         (SELECT DISTINCT {$itemHandler->keyName} " . "          FROM {$itemHandler->table} " . "          WHERE {$itemHandler->table}.approved > 0" . '          )' . '       )';

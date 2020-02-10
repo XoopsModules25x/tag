@@ -1,4 +1,7 @@
 <?php
+
+namespace XoopsModules\Tag;
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -12,20 +15,30 @@
 /**
  * XOOPS tag management module
  *
- * @package         tag
+ * @package         XoopsModules\Tag
  * @copyright       {@link http://sourceforge.net/projects/xoops/ The XOOPS Project}
  * @license         {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
- * @author          Taiwen Jiang (phppp or D.J.) <php_pp@hotmail.com>
- * @since           1.00
+ * @author          Taiwen Jiang <phppp@users.sourceforge.net>
+ * @since           2.34
  */
-defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
-/*
- * Due to the difference of word boundary for different languages, delimiters also depend on languages
- * You need specify all possbile deimiters here, (",", ";", " ", "|") will be taken if no delimiter is set
+use XoopsModules\Tag;
+
+defined('XOOPS_ROOT_PATH') || die('Restricted access');
+
+/**
+ * Tag stats handler class.
  *
- * Tips:
- * For English sites, you can set as array(",", ";", " ", "|")
- * For Chinese sites, set as array(",", ";", " ", "|", "��")
+ * {@link XoopsPersistableObjectHandler}
  */
-$GLOBALS['tag_delimiter'] = [',', ' ', '|', ';'];
+class StatsHandler extends \XoopsPersistableObjectHandler
+{
+    /**
+     * StatsHandler constructor.
+     * @param \XoopsDatabase|null $db
+     */
+    public function __construct(\XoopsDatabase $db = null)
+    {
+        parent::__construct($db, 'tag_stats', Stats::class, 'ts_id');
+    }
+}

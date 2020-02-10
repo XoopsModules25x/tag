@@ -8,24 +8,23 @@
  but WITHOUT ANY WARRANTY; without even the implied warranty of
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  */
-
 /**
+ * @package         XoopsModules\Tag
  * @copyright       The XUUPS Project http://sourceforge.net/projects/xuups/
  * @license         http://www.fsf.org/copyleft/gpl.html GNU public license
- * @package         tag
- * @subpackage      plugin
  * @since           1.0
  * @author          trabis <lusopoemas@gmail.com>
  * @author          The SmartFactory <www.smartfactory.ca>
  */
 
-//use XoopsModules\Publisher\Constants;
+
+use Xmf\Request;
 
 defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
 /**
- * Get item fields: title, content, time, link, uid, uname, tags
- * @param $items
+ * Get item fields: title, content, time, link, uid, tags
+ * @param array $items
  * @return bool
  */
 function publisher_tag_iteminfo(&$items)
@@ -57,7 +56,7 @@ function publisher_tag_iteminfo(&$items)
                 'uid'     => $item_obj->getVar('uid'),
                 'link'    => "item.php?itemid={$item_id}",
                 'time'    => $item_obj->getVar('datesub'),
-                'tags'    => tag_parse_tag($item_obj->getVar('item_tag', 'n')), // optional
+                'tags'    => \XoopsModules\Tag\Utility::tag_parse_tag($item_obj->getVar('item_tag', 'n')), // optional
                 'content' => '',
             ];
         }
@@ -68,7 +67,7 @@ function publisher_tag_iteminfo(&$items)
 }
 
 /** Remove orphan tag-item links *
- * @param $mid
+ * @param int $mid
  * @return bool
  */
 function publisher_tag_synchronization($mid)
@@ -81,7 +80,7 @@ function publisher_tag_synchronization($mid)
     $linkHandler = \XoopsModules\Tag\Helper::getInstance()->getHandler('Link');
 
     //    $mid = XoopsFilterInput::clean($mid, 'INT');
-    $mid = \Xmf\Request::getInt('mid');
+    $mid = Request::getInt('mid');
 
     /* clear tag-item links */
     $sql    = "    DELETE FROM {$linkHandler->table}"

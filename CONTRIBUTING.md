@@ -16,5 +16,3 @@ We accept contributions via Pull Requests on [Github](https://github.com/XoopsMo
 - **Create feature branches** - Don't ask us to pull from your master branch.
 - **One pull request per feature** - If you want to do more than one thing, send multiple pull requests.
 - **Send coherent history** - Make sure each individual commit in your pull request is meaningful. If you had to make multiple intermediate commits while developing, please squash them before submitting.
-
-**Happy coding, and _May the Source be with You_!**

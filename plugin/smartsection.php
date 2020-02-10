@@ -67,7 +67,7 @@ function smartsection_tag_iteminfo(&$items)
                 'uid'     => $item_obj->getVar('uid'),
                 'link'    => "item.php?itemid={$item_id}",
                 'time'    => $item_obj->getVar('datesub'),
-                'tags'    => tag_parse_tag($item_obj->getVar('topic_tags', 'n')),
+                'tags'    => \XoopsModules\Tag\Utility::tag_parse_tag($item_obj->getVar('topic_tags', 'n')),
                 'content' => '',
             ];
         }

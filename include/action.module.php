@@ -12,6 +12,7 @@
 /**
  * XOOPS tag management module
  *
+ * @package         XoopsModules\Tag
  * @copyright       XOOPS Project (https://xoops.org)
  * @license         http://www.fsf.org/copyleft/gpl.html GNU public license
  * @since           1.00
@@ -24,20 +25,31 @@ defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 defined('TAG_INI') || require_once __DIR__ . '/vars.php';
 
 /**
+ * @deprecated
  * @param  XoopsModule $module
  * @return bool
  */
 function xoops_module_install_tag(\XoopsModule $module)
 {
+    $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1);
+    trigger_error(__FUNCTION__ . " is deprecated, called from {$trace[0]['file']} line {$trace[0]['line']}");
+    $GLOBALS['xoopsLogger']->addDeprecated("Tag Module: " . __FUNCTION__ . " function is deprecated since Tag 2.3.4, please use './tag/include/oninstall()' functions instead."
+        . " Called from {$trace[0]['file']}line {$trace[0]['line']}");
+
     return true;
 }
 
 /**
+ * @deprecated
  * @param  XoopsModule $module
  * @return bool
  */
 function xoops_module_pre_install_tag(\XoopsModule $module)
 {
+    $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1);
+    trigger_error(__FUNCTION__ . " is deprecated, called from {$trace[0]['file']} line {$trace[0]['line']}");
+    $GLOBALS['xoopsLogger']->addDeprecated("Tag Module: " . __FUNCTION__ . " function is deprecated since Tag 2.3.4, please use './tag/include/oninstall()' functions instead."
+        . " Called from {$trace[0]['file']}line {$trace[0]['line']}");
     //check for minimum XOOPS version
     $currentVer  = mb_substr(XOOPS_VERSION, 6); // get the numeric part of string
     $currArray   = explode('.', $currentVer);
@@ -59,7 +71,7 @@ function xoops_module_pre_install_tag(\XoopsModule $module)
     $phpLen   = mb_strlen(PHP_VERSION);
     $extraLen = mb_strlen(PHP_EXTRA_VERSION);
     $verNum   = mb_substr(PHP_VERSION, 0, $phpLen - $extraLen);
-    $reqVer   = &$module->getInfo('min_php');
+    $reqVer   = $module->getInfo('min_php');
     if ($verNum < $reqVer) {
         $module->setErrors("The module requires PHP {$reqVer}+ ({$verNum} installed)");
 
@@ -74,7 +86,7 @@ function xoops_module_pre_install_tag(\XoopsModule $module)
     }
     */
 
-    $mod_tables = &$module->getInfo('tables');
+    $mod_tables = $module->getInfo('tables');
     foreach ($mod_tables as $table) {
         $GLOBALS['xoopsDB']->queryF('DROP TABLE IF EXISTS ' . $GLOBALS['xoopsDB']->prefix($table) . ';');
     }
@@ -83,11 +95,16 @@ function xoops_module_pre_install_tag(\XoopsModule $module)
 }
 
 /**
+ * @deprecated
  * @param  XoopsModule $module
  * @return bool
  */
 function xoops_module_pre_update_tag(\XoopsModule $module)
 {
+    $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1);
+    trigger_error(__FUNCTION__ . " is deprecated, called from {$trace[0]['file']} line {$trace[0]['line']}");
+    $GLOBALS['xoopsLogger']->addDeprecated("Tag Module: " . __FUNCTION__ . " function is deprecated since Tag 2.3.4, please use './tag/include/onupdate()' functions instead."
+        . " Called from {$trace[0]['file']}line {$trace[0]['line']}");
     /** @var Tag\Utility $utility */
     $moduleDirName = basename(dirname(__DIR__));
     $utility       = new Tag\Utility();
@@ -99,21 +116,31 @@ function xoops_module_pre_update_tag(\XoopsModule $module)
 }
 
 /**
+ * @deprecated
  * @param  XoopsModule $module
  * @return bool
  */
 function xoops_module_pre_uninstall_tag(\XoopsModule $module)
 {
+    $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1);
+    trigger_error(__FUNCTION__ . " is deprecated, called from {$trace[0]['file']} line {$trace[0]['line']}");
+    $GLOBALS['xoopsLogger']->addDeprecated("Tag Module: " . __FUNCTION__ . " function is deprecated since Tag 2.3.4, please use './tag/include/onuninstall()' functions instead."
+        . " Called from {$trace[0]['file']}line {$trace[0]['line']}");
     return true;
 }
 
 /**
+ * @deprecated
  * @param  XoopsModule $module
  * @param  null        $prev_version
  * @return bool
  */
 function xoops_module_update_tag(\XoopsModule $module, $prev_version = null)
 {
+    $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1);
+    trigger_error(__FUNCTION__ . " is deprecated, called from {$trace[0]['file']} line {$trace[0]['line']}");
+    $GLOBALS['xoopsLogger']->addDeprecated("Tag Module: " . __FUNCTION__ . " function is deprecated since Tag 2.3.4, please use './tag/include/onupdate()' functions instead."
+        . " Called from {$trace[0]['file']}line {$trace[0]['line']}");
     //load_functions("config");
     //mod_clearConfg($module->getVar("dirname", "n"));
 

@@ -12,7 +12,7 @@
 /**
  * XOOPS tag management module
  *
- * @package        tag
+ * @package        XoopsModules\Tag
  * @copyright      {@link http://sourceforge.net/projects/xoops/ The XOOPS Project}
  * @license        {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
  * @author         Taiwen Jiang <phppp@users.sourceforge.net>
@@ -26,9 +26,9 @@ $moduleDirName = basename(__DIR__);
 
 // ------------------- Informations ------------------- //
 $modversion = [
-    'version'             => 2.34,
-    'module_status'       => 'RC-2',
-    'release_date'        => '2019/02/11',
+    'version'             => 2.35,
+    'module_status'       => 'Beta 1',
+    'release_date'        => '2019/12/19',
     'name'                => _MI_TAG_NAME,
     'description'         => _MI_TAG_DESC,
     'official'            => 0,
@@ -36,10 +36,19 @@ $modversion = [
     'author'              => 'Taiwen Jiang <phppp@users.sourceforge.net>',
     'author_website_url'  => 'https://xoops.org',
     'author_website_name' => 'XOOPS',
-    'credits'             => 'XOOPS Development Team, Trabis, Mamba, Aerograf, Mage, Alfredx',
+    'credits'             => 'XOOPS Development Team, Trabis, Mamba, Aerograf, Mage, Alfredx, ZySpec',
     'license'             => 'GPL 2.0 or later',
-    'license_url'         => 'www.gnu.org/licenses/gpl-2.0.html/',
+    'license_url'         => 'https://www.gnu.org/licenses/old-licenses/gpl-2.0.html',
     'help'                => 'page=help',
+    'helpsection'         => [['name' => _MI_TAG_HELP_OVERVIEW,
+                               'link' => 'page=help'],
+                              ['name' => _MI_TAG_HELP_PLUGIN_DEV,
+                               'link' => 'page=plugin_dev'],
+                              ['name' => _MI_TAG_HELP_ISSUES,
+                               'link' => 'page=issues'],
+                              ['name' => _MI_TAG_LICENSE,
+                               'link' => 'page=license']
+    ],
     // ------------------- Folders & Files -------------------
     'release_info'        => 'Changelog',
     'release_file'        => XOOPS_URL . "/modules/$moduleDirName/docs/changelog.txt",
@@ -48,8 +57,11 @@ $modversion = [
     'manual_file'         => XOOPS_URL . "/modules/$moduleDirName/docs/install.txt",
     // images
     'image'               => 'assets/images/logoModule.png',
-    'iconsmall'           => 'assets/images/iconsmall.png',
-    'iconbig'             => 'assets/images/iconbig.png',
+    /* @todo determine if the following icons are needed, they currently don't exist
+     *       so they've been commented out in v2.35
+     */
+    //'iconsmall'           => 'assets/images/iconsmall.png',
+    //'iconbig'             => 'assets/images/iconbig.png',
     'dirname'             => $moduleDirName,
     //Frameworks
     // Local path icons
@@ -108,9 +120,9 @@ $modversion = [
     'sqlfile'             => ['mysql' => 'sql/mysql.sql'],
     // ------------------- Tables ----------------------------
     'tables'              => [
-        $moduleDirName . '_' . 'tag',
-        $moduleDirName . '_' . 'link',
-        $moduleDirName . '_' . 'stats',
+        'tag_tag',
+        'tag_link',
+        'tag_stats',
     ],
 ];
 
@@ -134,8 +146,9 @@ $modversion['templates'] = [
     ['file' => 'tag_list.tpl', 'description' => _MI_TAG_INDEX_TPL_LIST_DESC],
     ['file' => 'tag_view.tpl', 'description' => _MI_TAG_INDEX_TPL_VIEW_DESC],
     ['file' => 'tag_bar.tpl', 'description' => _MI_TAG_INDEX_TPL_BAR_DESC],
-    ['file' => "admin/{$moduleDirName}_admin_about.tpl", 'description' => _MI_TAG_INDEX_ADMINTPL_ABOUT_DESC],
-    ['file' => "admin/{$moduleDirName}_admin_help.tpl", 'description' => _MI_TAG_INDEX_ADMINTPL_HELP_DESC],
+    ['file' => 'tag_common_breadcrumb.tpl', 'description' => _MI_TAG_BREADCRUMB_TPL_DESC],
+    //['file' => "admin/{$moduleDirName}_admin_about.tpl", 'description' => _MI_TAG_INDEX_ADMINTPL_ABOUT_DESC],
+    //['file' => "admin/{$moduleDirName}_admin_help.tpl", 'description' => _MI_TAG_INDEX_ADMINTPL_HELP_DESC],
 ];
 
 // Blocks

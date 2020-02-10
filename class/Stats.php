@@ -1,4 +1,7 @@
 <?php
+
+namespace XoopsModules\Tag;
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -16,6 +19,27 @@
  * @copyright       {@link http://sourceforge.net/projects/xoops/ The XOOPS Project}
  * @license         {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
- * @since           1.00
+ * @since           2.34
  */
-require_once $GLOBALS['xoops']->path('/footer.php');
+
+use XoopsModules\Tag;
+
+defined('XOOPS_ROOT_PATH') || die('Restricted access');
+
+/**
+ * Class Stats
+ */
+class Stats extends \XoopsObject
+{
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->initVar('ts_id', XOBJ_DTYPE_INT, null, false);
+        $this->initVar('tag_id', XOBJ_DTYPE_INT, 0);
+        $this->initVar('tag_modid', XOBJ_DTYPE_INT, 0);
+        $this->initVar('tag_catid', XOBJ_DTYPE_INT, 0);
+        $this->initVar('tag_count', XOBJ_DTYPE_INT, 0);
+    }
+}

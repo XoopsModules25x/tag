@@ -12,7 +12,7 @@
 /**
  * XOOPS tag management module
  *
- * @package         tag
+ * @package         XoopsModules/Tag
  * @copyright       {@link http://sourceforge.net/projects/xoops/ The XOOPS Project}
  * @license         {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
@@ -24,26 +24,22 @@ use XoopsModules\Tag\Constants;
 
 require_once __DIR__ . '/admin_header.php';
 require_once $GLOBALS['xoops']->path('/class/xoopsformloader.php');
-
-//require_once $GLOBALS['xoops']->path("/modules/" . $GLOBALS['xoopsModule']->getVar("dirname") . "/class/admin.php");
-
-require_once $GLOBALS['xoops']->path('/modules/tag/include/vars.php');
+require_once $helper->path('include/vars.php');
 
 xoops_cp_header();
 
-$adminObject = \Xmf\Module\Admin::getInstance();
+/** @var Xmf\Module\Admin $adminObject */
 $adminObject->displayNavigation(basename(__FILE__));
 
 $modid = \Xmf\Request::getInt('modid', Constants::DEFAULT_ID);
 $start = \Xmf\Request::getInt('start', Constants::BEGINNING);
 $limit = \Xmf\Request::getInt('limit', Constants::DEFAULT_LIMIT);
 
-$sql           = 'SELECT tag_modid, COUNT(DISTINCT tag_id) AS count_tag';
-$sql           .= ' FROM ' . $GLOBALS['xoopsDB']->prefix('tag_link');
-$sql           .= ' GROUP BY tag_modid';
+$sql = 'SELECT tag_modid, COUNT(DISTINCT tag_id) AS count_tag'
+     . ' FROM ' . $GLOBALS['xoopsDB']->prefix('tag_link')
+     . ' GROUP BY tag_modid';
 $counts_module = [];
 $module_list   = [];
-
 $result = $GLOBALS['xoopsDB']->query($sql);
 if ($result) {
     while (false !== ($myrow = $GLOBALS['xoopsDB']->fetchArray($result))) {
@@ -79,24 +75,23 @@ $tray->addElement(new \XoopsFormHidden('start', $start));
 $opform->addElement($tray);
 $opform->display();
 
-if (\Xmf\Request::hasVar('start', 'GET')) {
-    //    /** @var \XoopsModules\Tag\TagHandler $tagHandler */
-    //    $tagHandler = xoops_getModuleHandler('tag', $moduleDirName);
-    /** @var Tag\TagHandler $tagHandler */
-    $tagHandler = Tag\Helper::getInstance()->getHandler('Tag');
+if (Request::hasVar('start', 'GET')) {
+    /** @var \XoopsModules\Tag\TagHandler $tagHandler */
+    $tagHandler = $helper->getHandler('Tag');
 
     $criteria = new \CriteriaCompo();
-    $criteria->setStart($start);
-    $criteria->setLimit($limit);
+//    $criteria->setStart($start);
+//    $criteria->setLimit($limit);
     if ($modid > Constants::DEFAULT_ID) {
         $criteria->add(new \Criteria('l.tag_modid', $modid));
     }
-    $tags = &$tagHandler->getByLimit(0, 0, $criteria, null, false);
+    $tags = $tagHandler->getByLimit($limit, $start, $criteria, null, false);
+//    $tags = $tagHandler->getByLimit(0, 0, $criteria, null, false);
     if ($tags && is_array($tags)) {
-        foreach (array_keys($tags) as $tag_id) {
-            $tagHandler->update_stats($tag_id, (-1 == $modid) ? Constants::DEFAULT_ID : $tags[$tag_id]['modid']);
+        foreach ($tags as $tag_id => $tag) {
+            $tagHandler->update_stats($tag_id, (-1 == $modid) ? Constants::DEFAULT_ID : $tag['modid']);
         }
-        redirect_header("syn.tag.php?modid={$modid}&amp;start=" . ($start + $limit) . "&amp;limit={$limit}", Constants::REDIRECT_DELAY_SHORT, _AM_TAG_IN_PROCESS);
+        $helper->redirect("admin/syn.tag.php?modid={$modid}&amp;start=" . ($start + $limit) . "&amp;limit={$limit}", Constants::REDIRECT_DELAY_MEDIUM, _AM_TAG_IN_PROCESS);
     }
     echo '<h2>' . _AM_TAG_FINISHED . "</h2>\n";
 }

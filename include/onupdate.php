@@ -10,10 +10,9 @@
  */
 
 /**
+ * @package      XoopsModules\Tag
  * @copyright    XOOPS Project https://xoops.org/
  * @license      GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
- * @package
- * @since
  * @author       XOOPS Development Team
  */
 
@@ -25,12 +24,18 @@ if ((!defined('XOOPS_ROOT_PATH')) || !($GLOBALS['xoopsUser'] instanceof \XoopsUs
 }
 
 /**
+ * @deprecated - not used, use Xmf\Database\Tables method(s) instead
  * @param string $tablename
  *
  * @return bool
  */
 function tableExists($tablename)
 {
+    $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1);
+    trigger_error(__FUNCTION__ . " is deprecated, called from {$trace[0]['file']} line {$trace[0]['line']}");
+    $GLOBALS['xoopsLogger']->addDeprecated("Tag Module: " . __FUNCTION__ . " function is deprecated since Tag 2.3.4, please use Xmf\Database\Tables method(s) instead."
+        . " Called from {$trace[0]['file']}line {$trace[0]['line']}");
+
     $result = $GLOBALS['xoopsDB']->queryF("SHOW TABLES LIKE '$tablename'");
 
     return $GLOBALS['xoopsDB']->getRowsNum($result) > 0;
