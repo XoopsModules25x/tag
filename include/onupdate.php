@@ -33,7 +33,8 @@ function tableExists($tablename)
 {
     $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1);
     trigger_error(__FUNCTION__ . " is deprecated, called from {$trace[0]['file']} line {$trace[0]['line']}");
-    $GLOBALS['xoopsLogger']->addDeprecated("Tag Module: " . __FUNCTION__ . " function is deprecated since Tag 2.3.4, please use Xmf\Database\Tables method(s) instead."
+    $GLOBALS['xoopsLogger']->addDeprecated(
+        'Tag Module: ' . __FUNCTION__ . " function is deprecated since Tag 2.3.4, please use Xmf\Database\Tables method(s) instead."
         . " Called from {$trace[0]['file']}line {$trace[0]['line']}");
 
     $result = $GLOBALS['xoopsDB']->queryF("SHOW TABLES LIKE '$tablename'");

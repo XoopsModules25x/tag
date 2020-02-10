@@ -105,10 +105,10 @@ function randomquote_tag_synchronization($mid)
             // clear tag-item links
             $sql = "DELETE FROM {$linkHandler->table}"
                  . " WHERE tag_modid = {$mid}"
-                 . " AND (tag_itemid NOT IN"
+                   . ' AND (tag_itemid NOT IN'
                  . " (SELECT DISTINCT {$itemHandler->keyName}"
                  . " FROM {$itemHandler->table} WHERE {$itemHandler->table}.quote_status = "
-                 . Constants::STATUS_ONLINE . "))";
+                 . Constants::STATUS_ONLINE . '))';
             $result = $linkHandler->db->queryF($sql);
         }
     }

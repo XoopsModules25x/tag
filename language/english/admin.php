@@ -87,7 +87,7 @@ define('_AM_TAG_DB_UPDATED', 'Database Updated Successfully');
 
 //2.33
 define('_AM_TAG_UPGRADEFAILED0', "Update failed - could not rename field '%s'");
-define('_AM_TAG_UPGRADEFAILED1', "Update failed - could not add new fields");
+define('_AM_TAG_UPGRADEFAILED1', 'Update failed - could not add new fields');
 define('_AM_TAG_UPGRADEFAILED2', "Update failed - could not rename table '%s'");
 define('_AM_TAG_ERROR_COLUMN', 'Could not create column in database : %s');
 define('_AM_TAG_ERROR_BAD_XOOPS', 'This module requires XOOPS %s+ (%s installed)');

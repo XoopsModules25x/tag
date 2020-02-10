@@ -38,7 +38,8 @@ function tag_load_config()
 {
     $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1);
     trigger_error(__FUNCTION__ . " is deprecated, called from {$trace[0]['file']} line {$trace[0]['line']}");
-    $GLOBALS['xoopsLogger']->addDeprecated("Tag Module: " . __FUNCTION__ . " function is deprecated since Tag 2.3.4, please use 'Tag\Utility::" . __FUNCTION__ . " method instead."
+    $GLOBALS['xoopsLogger']->addDeprecated(
+        'Tag Module: ' . __FUNCTION__ . " function is deprecated since Tag 2.3.4, please use 'Tag\Utility::" . __FUNCTION__ . ' method instead.'
         . " Called from {$trace[0]['file']}line {$trace[0]['line']}");
 
     static $moduleConfig;
@@ -78,7 +79,8 @@ function tag_define_url_delimiter()
 {
     $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1);
     trigger_error(__FUNCTION__ . " is deprecated, called from {$trace[0]['file']} line {$trace[0]['line']}");
-    $GLOBALS['xoopsLogger']->addDeprecated("Tag Module: " . __FUNCTION__ . " function is deprecated since Tag 2.3.4, please use 'Tag\Utility::" . __FUNCTION__ . " method instead."
+    $GLOBALS['xoopsLogger']->addDeprecated(
+        'Tag Module: ' . __FUNCTION__ . " function is deprecated since Tag 2.3.4, please use 'Tag\Utility::" . __FUNCTION__ . ' method instead.'
         . " Called from {$trace[0]['file']}line {$trace[0]['line']}");
 
     if (defined('URL_DELIMITER')) {
@@ -103,7 +105,8 @@ function tag_get_delimiter()
 {
     $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1);
     trigger_error(__FUNCTION__ . " is deprecated, called from {$trace[0]['file']} line {$trace[0]['line']}");
-    $GLOBALS['xoopsLogger']->addDeprecated("Tag Module: " . __FUNCTION__ . " function is deprecated since Tag 2.3.4, please use 'Tag\Utility::" . __FUNCTION__ . " method instead."
+    $GLOBALS['xoopsLogger']->addDeprecated(
+        'Tag Module: ' . __FUNCTION__ . " function is deprecated since Tag 2.3.4, please use 'Tag\Utility::" . __FUNCTION__ . ' method instead.'
         . " Called from {$trace[0]['file']}line {$trace[0]['line']}");
 
     xoops_loadLanguage('config', 'tag');

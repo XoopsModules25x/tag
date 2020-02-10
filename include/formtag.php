@@ -41,7 +41,8 @@ class XoopsFormTag extends Tag\FormTag
     {
         $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1);
         trigger_error(__FUNCTION__ . " is deprecated, called from {$trace[0]['file']} line {$trace[0]['line']}");
-        $GLOBALS['xoopsLogger']->addDeprecated("Tag Module: " . __CLASS_ . " class is deprecated since Tag 2.3.4, please use 'Tag\FormTag' class instead."
+        $GLOBALS['xoopsLogger']->addDeprecated(
+            'Tag Module: ' . __CLASS_ . " class is deprecated since Tag 2.3.4, please use 'Tag\FormTag' class instead."
             . " Called from {$trace[0]['file']}line {$trace[0]['line']}");
         parent::__construct($name, $size, $maxlength, $value, $catid);
     }
