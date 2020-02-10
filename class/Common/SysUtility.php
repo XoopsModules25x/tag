@@ -29,7 +29,7 @@ use XoopsFormTextArea;
 use XoopsModules\Tag;
 
 /**
- * Class Utility
+ * Class SysUtility
  */
 class SysUtility
 {
@@ -184,7 +184,7 @@ class SysUtility
      *
      * @return bool
      */
-    function fieldExists($fieldname, $table)
+    public function fieldExists($fieldname, $table)
     {
         global $xoopsDB;
         $result = $xoopsDB->queryF("SHOW COLUMNS FROM   $table LIKE '$fieldname'");
