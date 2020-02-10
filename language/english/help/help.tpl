@@ -3,11 +3,13 @@
 
     <h4 class="odd">DESCRIPTION</h4><br>
     <p>The tag module is designed for site-wide tag management, handling tag input,
-        display and stats for each module that enables tag plugin.<br><br></p>
+        display and stats for each module that enables tag plugin.<br><br>
+    </p>
 
     <p>This module provides a centralized toolkit including input, display, stats
         and substantially more for applications, so that each module does
-        not need to develop its own tag handling scripts.<br><br></p>
+        not need to develop its own tag handling scripts.<br><br>
+    </p>
 
     <h4 class="odd">OPERATING INSTRUCTIONS</h4><br>
 
@@ -28,10 +30,12 @@
     </p>
 
     <h4 class="odd">Translations</h4>
-    <p class="even">Translations are on <a href="https://www.transifex.com/xoops/" target="_blank">Transifex</a> and in our <a href="https://github.com/XoopsLanguages/" target="_blank">XOOPS Languages Repository on GitHub</a>.</p>
+    <p class="even">Translations are on <a href="https://www.transifex.com/xoops/" target="_blank">Transifex</a> and in our <a href="https://github.com/XoopsLanguages/" target="_blank">XOOPS Languages Repository on GitHub</a>.
+    </p>
 
     <h4 class="odd">Support</h4>
-    <p class="even">If you have questions about this module and need help, you can visit our <a href="https://xoops.org/modules/newbb/viewforum.php?forum=28/" target="_blank">Support Forums on XOOPS Website</a></p>
+    <p class="even">If you have questions about this module and need help, you can visit our <a href="https://xoops.org/modules/newbb/viewforum.php?forum=28/" target="_blank">Support Forums on XOOPS Website</a>
+    </p>
 
     <h4 class="odd">Development</h4>
     <p class="even">This module is Open Source and we would love your help in making it better! You can fork this module on <a href="https://github.com/XoopsModulesArchive/tag" target="_blank">GitHub</a><br><br>

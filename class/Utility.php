@@ -87,7 +87,7 @@ class Utility extends Common\SysUtility
         if (!empty($GLOBALS['tag_delimiter'])) {
             $retVal = $GLOBALS['tag_delimiter'];
         } else {
-            $moduleConfig = $this::tag_load_config();
+            $moduleConfig = self::tag_load_config();
             if (!empty($GLOBALS['moduleConfig']['tag_delimiter'])) {
                 $retVal = $GLOBALS['moduleConfig']['tag_delimiter'];
             }
