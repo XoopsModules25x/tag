@@ -45,7 +45,7 @@ $status = \Xmf\Request::getInt('status', Constants::STATUS_ALL, 'GET');
 $tagHandler  = Tag\Helper::getInstance()->getHandler('Tag');
 $linkHandler = Tag\Helper::getInstance()->getHandler('Link');
 
-$post_tags = Request::getArray('tags', [], 'POST');
+$post_tags = \Xmf\Request::getArray('tags', [], 'POST');
 if (!empty($post_tags)) {
     $msg_db_updated = '';
     /** {@internal - Test using following code to reduce dB accesses }} */

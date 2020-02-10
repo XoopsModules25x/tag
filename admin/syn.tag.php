@@ -28,7 +28,7 @@ require_once $helper->path('include/vars.php');
 
 xoops_cp_header();
 
-/** @var Xmf\Module\Admin $adminObject */
+/** @var \Xmf\Module\Admin $adminObject */
 $adminObject->displayNavigation(basename(__FILE__));
 
 $modid = \Xmf\Request::getInt('modid', Constants::DEFAULT_ID);
@@ -75,7 +75,7 @@ $tray->addElement(new \XoopsFormHidden('start', $start));
 $opform->addElement($tray);
 $opform->display();
 
-if (Request::hasVar('start', 'GET')) {
+if (\Xmf\Request::hasVar('start', 'GET')) {
     /** @var \XoopsModules\Tag\TagHandler $tagHandler */
     $tagHandler = $helper->getHandler('Tag');
 

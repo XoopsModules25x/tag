@@ -80,7 +80,7 @@ function publisher_tag_synchronization($mid)
     $linkHandler = \XoopsModules\Tag\Helper::getInstance()->getHandler('Link');
 
     //    $mid = XoopsFilterInput::clean($mid, 'INT');
-    $mid = Request::getInt('mid');
+    $mid = \Xmf\Request::getInt('mid');
 
     /* clear tag-item links */
     $sql    = "    DELETE FROM {$linkHandler->table}"

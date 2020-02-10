@@ -96,7 +96,7 @@ function randomquote_tag_synchronization($mid)
 
     $result = false;
     if ($itemHandler && $linkHandler) {
-        $mid = Request::getInt('mid', 0);
+        $mid = \Xmf\Request::getInt('mid', 0);
         $moduleHandler = xoops_getHandler('module');
         $rqModule = XoopsModule::getByDirname('randomquote');
 

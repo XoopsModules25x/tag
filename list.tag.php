@@ -40,9 +40,9 @@ $modid = (int)(empty($_GET['modid']) ? @$args['modid'] : $_GET['modid']);
 $catid = (int)(empty($_GET['catid']) ? @$args['catid'] : $_GET['catid']);
 $start = (int)(empty($_GET['start']) ? @$args['start'] : $_GET['start']);
 */
-$modid = Request::getInt('modid', !empty($args['modid']) ? $args['modid'] : Constants::DEFAULT_ID, 'GET');
-$catid = Request::getInt('catid', !empty($args['catid']) ? $args['catid'] : Constants::DEFAULT_ID, 'GET');
-$start = Request::getInt('start', !empty($args['start']) ? $args['start'] : Constants::BEGINNING, 'GET');
+$modid = \Xmf\Request::getInt('modid', !empty($args['modid']) ? $args['modid'] : Constants::DEFAULT_ID, 'GET');
+$catid = \Xmf\Request::getInt('catid', !empty($args['catid']) ? $args['catid'] : Constants::DEFAULT_ID, 'GET');
+$start = \Xmf\Request::getInt('start', !empty($args['start']) ? $args['start'] : Constants::BEGINNING, 'GET');
 
 if (empty($modid) && ($GLOBALS['xoopsModule'] instanceof XoopsModule)
     && ('tag' !== $GLOBALS['xoopsModule']->getVar('dirname'))) {
@@ -70,7 +70,7 @@ require_once $GLOBALS['xoops']->path('header.php');
 $GLOBALS['xoTheme']->addStylesheet('browse.php?modules/' . $moduleDirName . '/assets/css/style.css');
 $GLOBALS['xoopsOption']['xoops_pagetitle'] = $page_title;
 
-$mode_display = empty($mode_display) ? Request::getCmd('mode', null, 'GET') : $mode_display;
+$mode_display = empty($mode_display) ? \Xmf\Request::getCmd('mode', null, 'GET') : $mode_display;
 switch (mb_strtolower($mode_display)) {
     case 'list':
         $mode_display = 'list';

@@ -19,7 +19,7 @@
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
  * */
 
-use XoopsModules\Tag;
+include dirname(__DIR__) . '/preloads/autoloader.php';
 
 require_once dirname(dirname(dirname(__DIR__))) . '/include/cp_header.php';
 // require_once  dirname(__DIR__) . '/class/constants.php';
@@ -27,10 +27,11 @@ require_once dirname(__DIR__) . '/include/common.php';
 
 /**
  * {@internal $helper defined in ./include/common.php }}
- * @var Tag\Helper $helper
+ * @var \XoopsModules\Tag\Helper $helper
  */
+$helper = \XoopsModules\Tag\Helper::getInstance();
 
-/** @var Xmf\Module\Admin $adminObject */
+/** @var \Xmf\Module\Admin $adminObject */
 $adminObject = \Xmf\Module\Admin::getInstance();
 
 // Load language files

@@ -88,7 +88,7 @@ require_once $helper->path('include/vars.php');
  *                          $options[3] - min font size (px or %)
  * @param string   $dirname
  * @param int      $catid
- * @return array
+ * @return array|bool
  */
 function tag_block_cloud_show($options, $dirname = '', $catid = 0)
 {
@@ -242,7 +242,7 @@ function tag_block_cloud_edit($options)
  *                          $options[2] - sort: a - alphabet; c - count; t - time
  * @param string   $dirname
  * @param int      $catid
- * @return array
+ * @return array|bool
  */
 function tag_block_top_show($options, $dirname = '', $catid = 0)
 {
@@ -408,7 +408,7 @@ function tag_block_top_edit($options)
  * @param  array       $options
  * @param  null|string $dirname null for all modules, $dirname for specific module
  * @param  int         $catid   category id (only used if $dirname is set)
- * @return array
+ * @return array|bool
  */
 function tag_block_cumulus_show(array $options, $dirname = null, $catid = 0)
 {

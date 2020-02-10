@@ -97,7 +97,7 @@ function smartfaq_tag_synchronization($mid)
     $linkHandler = \XoopsModules\Tag\Helper::getInstance()->getHandler('Link');
 
     //    $mid = XoopsFilterInput::clean($mid, 'INT');
-    $mid = Request::getInt('mid');
+    $mid = \Xmf\Request::getInt('mid');
 
     /* clear tag-item links */
     /** {@internal the following statement isn't really needed any more (MySQL is really old)

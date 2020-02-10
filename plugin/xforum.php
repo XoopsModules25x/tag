@@ -87,7 +87,7 @@ function xforum_tag_synchronization($mid)
     $linkHandler = \XoopsModules\Tag\Helper::getInstance()->getHandler('Link'); //@var \XoopsModules\Tag\Handler $tagHandler
 
     //    $mid = XoopsFilterInput::clean($mid, 'INT');
-    $mid = Request::getInt('mid');
+    $mid = \Xmf\Request::getInt('mid');
     /* clear tag-item links */
     /** {@internal the following statement isn't really needed any more (MySQL is really old)
      *   and some hosting companies block the $GLOBALS['xoopsDB']->getServerVersion() function for security

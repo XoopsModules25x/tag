@@ -21,8 +21,11 @@
 
 use XoopsModules\Tag;
 
-/** @var Tag\Helper $helper */
-$helper = Tag\Helper::getInstance();
+/** @var \XoopsModules\Tag\Helper $helper */
+$helper = \XoopsModules\Tag\Helper::getInstance();
+$helper->loadLanguage('common');
+$helper->loadLanguage('modinfo');
+
 
 $pathIcon32 = \Xmf\Module\Admin::menuIconPath('');
 if (is_object($helper->getModule())) {
