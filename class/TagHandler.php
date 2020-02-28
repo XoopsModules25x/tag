@@ -257,7 +257,7 @@ class TagHandler extends \XoopsPersistableObjectHandler
                 $criteria->setLimit(1);
                 $tsCountObjs = $statsHandler->getAll($criteria);
                 if (count($tsCountObjs) > 0) {
-                    $tsCountObj = pop_array($tsCountObjs); // get 1st (only) item
+                    $tsCountObj = array_pop($tsCountObjs); // get 1st (only) item
                     $ts_id = $tsCountObj->getVar('ts_id');
                     $tag_count = $tsCountObj->getVar('tag_count');
                 }
