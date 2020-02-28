@@ -55,7 +55,7 @@ if (empty($modid) && ($GLOBALS['xoopsModule'] instanceof \XoopsModule)
 $tagHandler = $helper->getHandler('Tag');
 
 if (!empty($tagid)) { // have a tag_id, so check to see if it yields a valid Tag object
-    if (!$tag_obj = $tagHandler->get((int)$tagid) || $tag_obj->isNew()) {
+    if ((!$tag_obj = $tagHandler->get((int)$tagid)) || $tag_obj->isNew()) {
         $helper->redirect('index.php', Constants::REDIRECT_DELAY_MEDIUM, _MD_TAG_INVALID);
     }
 
