@@ -21,7 +21,6 @@
 
 use XoopsModules\Tag;
 
-/** @var \XoopsModules\Tag\Helper $helper */
 $helper = \XoopsModules\Tag\Helper::getInstance();
 $helper->loadLanguage('common');
 $helper->loadLanguage('modinfo');

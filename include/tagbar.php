@@ -42,7 +42,6 @@ function tagBar($tags, $catid = 0, $modid = 0)
         return [];
     }
 
-    /** @var \XoopsModules\Tag\Helper $helper */
     $helper = \XoopsModules\Tag\Helper::getInstance();
 
     if (null === $loaded) {

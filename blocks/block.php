@@ -33,7 +33,6 @@ if (!xoops_isActiveModule('tag')) {
     return false;
 }
 
-/** @var Tag\Helper $helper */
 $helper = Tag\Helper::getInstance();
 
 $helper->loadLanguage('blocks');
@@ -96,7 +95,6 @@ function tag_block_cloud_show($options, $dirname = '', $catid = 0)
         return false;
     }
 
-    /** @var \XoopsModules\Tag\Helper $helper */
     $helper = \XoopsModules\Tag\Helper::getInstance();
 
     /** @var xos_opal_Theme $GLOBALS['xoTheme'] */

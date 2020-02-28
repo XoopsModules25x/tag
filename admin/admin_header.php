@@ -27,7 +27,7 @@ require_once dirname(__DIR__) . '/include/common.php';
 
 /**
  * {@internal $helper defined in ./include/common.php }}
- * @var \XoopsModules\Tag\Helper $helper
+ *
  */
 $helper = \XoopsModules\Tag\Helper::getInstance();
 

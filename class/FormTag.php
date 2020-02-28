@@ -44,7 +44,6 @@ class FormTag extends \XoopsFormText
      */
     public function __construct($name, int $size, $maxlength, $value = null, $catid = 0)
     {
-        /** @var \XoopsModules\Tag\Helper $helper */
         $helper = \XoopsModules\Tag\Helper::getInstance();
         require_once $helper->path('include/vars.php');
         $helper->loadLanguage('main');

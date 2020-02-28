@@ -575,7 +575,6 @@ class TagHandler extends \XoopsPersistableObjectHandler
         /*
          * Remove item-tag links
          */
-        /** @var \XoopsModules\Tag\Helper $helper */
         $helper = \XoopsModules\Tag\Helper::getInstance();
 
         /** @var \XoopsModules\Tag\LinkHandler $linkHandler */
