@@ -70,7 +70,7 @@ if ($modIssues->getCachedEtag()) {
             $_SESSION[$key] = null;
             unset($_SESSION[$key]);
         }
-        $modIssues->setError(_AM_TAG_ISSUES_STATUS_UNKNOWN);
+        $modIssues->setError(_AM_TAG_ISSUES_ERR_STATUS);
     }
 } else {
     // Nothing in session so request new info
