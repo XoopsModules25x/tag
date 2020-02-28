@@ -54,10 +54,11 @@ if (empty($modid) && ($GLOBALS['xoopsModule'] instanceof \XoopsModule)
 /** @var \XoopsModules\Tag\TagHandler $tagHandler */
 $tagHandler = $helper->getHandler('Tag');
 
-if ((int)empty($tagid)) { // have a tag_id, so check to see if it yields a valid Tag object
-    if (!$tag_obj = $tagHandler->get($tagid)) {
+if (!empty($tagid)) { // have a tag_id, so check to see if it yields a valid Tag object
+    if (!$tag_obj = $tagHandler->get((int)$tagid) || $tag_obj->isNew()) {
         $helper->redirect('index.php', Constants::REDIRECT_DELAY_MEDIUM, _MD_TAG_INVALID);
     }
+
     $tag_term = $tag_obj->getVar('tag_term', 'n');
 } elseif (!empty($tag_term)) {
     if (!$tags_obj = $tagHandler->getObjects(new \Criteria('tag_term', $myts->addSlashes(trim($tag_term))))) {
