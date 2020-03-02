@@ -18,6 +18,7 @@
 + added check to make sure tag is active before showing results in search (zyspec)
 + created Tag\TagHandler::getTagData() to simplify/standardize code (zyspec)
 + fixed GROUP BY error when using MySQL >= v5.7 (Goffy)
++ fix $args['tag'] (Geekwright)
 
 <h5>2.34 RC 2          [2019-02-11]</h5>  Dev: Xoops 2.5.10, PHP 7.3.2
 <hr>
