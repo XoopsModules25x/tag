@@ -23,6 +23,10 @@ if ((!defined('XOOPS_ROOT_PATH')) || !($GLOBALS['xoopsUser'] instanceof \XoopsUs
     exit('Restricted access' . PHP_EOL);
 }
 
+$moduleDirName      = basename(dirname(dirname(__DIR__)));
+$moduleDirNameUpper = mb_strtoupper($moduleDirName);
+xoops_loadLanguage('common', $moduleDirName);
+
 /**
  * @deprecated - not used, use Xmf\Database\Tables method(s) instead
  * @param string $tablename
