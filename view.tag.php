@@ -27,7 +27,7 @@ require_once __DIR__ . '/header.php';
 
 //@todo refactor this code - it "works" but it's not right. Look at previous revs using $args_num to see what it's suppose to do
 if (Utility::tag_parse_args($args, $args_string)) {
-    $args['tag']  = !empty($args['tag']) ? $args['tag'] : (!empty($args_string[0]) ? $args_string[0] : Constants::DEFAULT_ID);
+    $args['tag']  = !empty($args['tag']) ? $args['tag'] : (is_numeric($args_string[0]) ? $args_string[0] : Constants::DEFAULT_ID);
     $args['term'] = !empty($args['term']) ? $args['term'] : (!empty($args_string[0]) ? $args_string[0] : null);
     $args['modid'] = !empty($args['modid']) ? $args['modid'] : Constants::DEFAULT_ID;
     $args['catid'] = !empty($args['catid']) ? $args['catid'] : Constants::DEFAULT_ID;
