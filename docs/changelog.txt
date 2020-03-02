@@ -1,4 +1,4 @@
-<h5>2.35 Beta 1          [NOT RELEASED]</h5>  Dev: XOOPS 2.5.10, PHP 7.2.25 mySQL 5.7.28-log
+<h5>2.35 Beta 1          [NOT RELEASED]</h5>  Dev: XOOPS 2.5.10, PHP 7.4.3 mySQL 5.7.28-log
 <hr>
 + fixed NOT IN GROUP BY error when using MySQL >= v5.7
 + fixed bug in index.php to limit number of tags in cloud (zyspec)
