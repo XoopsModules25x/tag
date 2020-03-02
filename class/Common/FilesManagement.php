@@ -36,8 +36,7 @@ trait FilesManagement
 
                 file_put_contents($folder . '/index.html', '<script>history.go(-1);</script>');
             }
-        }
-        catch (\Exception $e) {
+        } catch (\Exception $e) {
             echo 'Caught exception: ', $e->getMessage(), "\n", '<br>';
         }
     }
@@ -80,10 +79,10 @@ trait FilesManagement
      *
      * @param string $src source directory to delete
      *
-     * @uses \Xmf\Module\Helper::getHelper()
+     * @return bool true on success
      * @uses \Xmf\Module\Helper::isUserAdmin()
      *
-     * @return bool true on success
+     * @uses \Xmf\Module\Helper::getHelper()
      */
     public static function deleteDirectory($src)
     {
@@ -105,11 +104,9 @@ trait FilesManagement
                     if (!$success = self::deleteDirectory($fileInfo->getRealPath())) {
                         break;
                     }
-                } else {
                     // delete the file
-                    if (!($success = unlink($fileInfo->getRealPath()))) {
-                        break;
-                    }
+                } elseif (!($success = unlink($fileInfo->getRealPath()))) {
+                    break;
                 }
             }
             // now delete this (sub)directory if all the files are gone
@@ -211,10 +208,10 @@ trait FilesManagement
      * @param string $src  - Source of files being moved
      * @param string $dest - Destination of files being moved
      *
-     * @uses \Xmf\Module\Helper::getHelper()
+     * @return bool true on success
      * @uses \Xmf\Module\Helper::isUserAdmin()
      *
-     * @return bool true on success
+     * @uses \Xmf\Module\Helper::getHelper()
      */
     public static function rcopy($src, $dest)
     {
