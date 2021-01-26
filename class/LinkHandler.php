@@ -25,8 +25,6 @@ namespace XoopsModules\Tag;
 
 use XoopsModules\Tag;
 
-defined('XOOPS_ROOT_PATH') || exit('Restricted access');
-
 /**
  * Tag link handler class.
  * @package     tag

@@ -22,7 +22,6 @@ namespace XoopsModules\Tag;
  * @author          ZySpec <zyspec@yahoo.com>
  * @since           2.33
  */
-defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
 /**
  * A simple HTML5 type validated input field
@@ -36,7 +35,6 @@ class FormValidatedInput extends \XoopsFormText
      * @access private
      */
     private $_type;
-
     /**
      * Valid HTML Type array
      *
@@ -109,14 +107,17 @@ class FormValidatedInput extends \XoopsFormText
     public function setType($value)
     {
         if (isset($value)) {
-            if (is_array($value)) {
+            if (\is_array($value)) {
                 $value       = isset($value['type']) ? mb_strtolower($value['type']) : 'text';
-                $this->_type = in_array($value, $this->_htmlTypes) ? $value : 'text';
-                if (in_array($value['type'], [
-                    'number',
-                    'date',
-                    'range',
-                ])) {
+                $this->_type = \in_array($value, $this->_htmlTypes) ? $value : 'text';
+                if (\in_array(
+                    $value['type'],
+                    [
+                        'number',
+                        'date',
+                        'range',
+                    ]
+                )) {
                     if (isset($value['min'])) {
                         $this->setExtra('min=' . $value['min']);
                     }
@@ -126,7 +127,7 @@ class FormValidatedInput extends \XoopsFormText
                 }
             } else {
                 $value       = isset($value) ? mb_strtolower($value) : 'text';
-                $this->_type = in_array($value, $this->_htmlTypes) ? $value : 'text';
+                $this->_type = \in_array($value, $this->_htmlTypes) ? $value : 'text';
             }
         } else {
             $this->_type = 'text';

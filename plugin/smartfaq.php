@@ -8,6 +8,7 @@
  but WITHOUT ANY WARRANTY; without even the implied warranty of
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 */
+
 /**
  * XOOPS tag management module
  *
@@ -17,6 +18,12 @@
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
  * @since           1.00
  */
+
+use Xmf\Request;
+use XoopsModules\Smartfaq\FaqHandler;
+use XoopsModules\Tag\Helper;
+use XoopsModules\Tag\Utility;
+
 defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
 /**
@@ -29,9 +36,9 @@ defined('XOOPS_ROOT_PATH') || exit('Restricted access');
  * uname
  * tags
  *
+ * @return bool
  * @var array $items associative array of items: [modid][catid][itemid]
  *
- * @return bool
  */
 //require_once $GLOBALS['xoops']->path('/modules/smartfaq/include/functions.php');
 
@@ -55,8 +62,8 @@ function smartfaq_tag_iteminfo(&$items)
         }
     }
     /** @var \XoopsDatabase $db */
-    $db = \XoopsDatabaseFactory::getDatabase();
-    $itemHandler = new \XoopsModules\Smartfaq\FaqHandler($db);
+    $db          = \XoopsDatabaseFactory::getDatabase();
+    $itemHandler = new FaqHandler($db);
 
     $items_obj = $itemHandler->getObjects(new \Criteria('faqid', '(' . implode(', ', $items_id) . ')', 'IN'), true);
     $myts      = \MyTextSanitizer::getInstance();
@@ -69,7 +76,7 @@ function smartfaq_tag_iteminfo(&$items)
                     'uid'     => $item_obj->getVar('uid'),
                     'link'    => 'faq.php?faqid=' . $item_id,
                     'time'    => strtotime($item_obj->getVar('datesub')),
-                    'tags'    => \XoopsModules\Tag\Utility::tag_parse_tag($item_obj->getVar('tags', 'n')),
+                    'tags'    => Utility::tag_parse_tag($item_obj->getVar('tags', 'n')),
                     'content' => $myts->displayTarea($item_obj->answer(), 1, 1, 1, 1, 1, 1),
                 ];
             }
@@ -91,19 +98,18 @@ function smartfaq_tag_synchronization($mid)
     /** @var \XoopsDatabase $db */
     $db = \XoopsDatabaseFactory::getDatabase();
 
-    $itemHandler = new \XoopsModules\Smartfaq\FaqHandler($db);
+    $itemHandler = new FaqHandler($db);
 
     /** @var \XoopsModules\Tag\LinkHandler $itemHandler */
-    $linkHandler = \XoopsModules\Tag\Helper::getInstance()->getHandler('Link');
+    $linkHandler = Helper::getInstance()->getHandler('Link');
 
     //    $mid = XoopsFilterInput::clean($mid, 'INT');
-    $mid = \Xmf\Request::getInt('mid');
+    $mid = Request::getInt('mid');
 
-    /* clear tag-item links */
-    /** {@internal the following statement isn't really needed any more (MySQL is really old)
-     *   and some hosting companies block the $GLOBALS['xoopsDB']->getServerVersion() function for security
-     *   reasons. }}
-     */
+    /* clear tag-item links */ /** {@internal the following statement isn't really needed any more (MySQL is really old)
+ *   and some hosting companies block the $GLOBALS['xoopsDB']->getServerVersion() function for security
+ *   reasons. }}
+ */
     //    if (version_compare( $GLOBALS['xoopsDB']->getServerVersion(), "4.1.0", "ge" )):
     $sql = "DELETE FROM {$linkHandler->table}" . " WHERE tag_modid = {$mid}" . '    AND ' . '    (tag_itemid NOT IN ' . "        (SELECT DISTINCT {$itemHandler->keyName} " . "           FROM {$itemHandler->table} " . "           WHERE {$itemHandler->table}.approved > 0" . '        )' . '    )';
     /*

@@ -20,6 +20,10 @@
  * @version         $Id: article.php 2292 2008-10-12 04:53:18Z phppp $
  * @package         tag
  */
+
+use XoopsModules\Tag\Helper;
+use XoopsModules\Tag\Utility;
+
 if (!defined('XOOPS_ROOT_PATH')) {
     exit();
 }
@@ -67,7 +71,7 @@ function smartsection_tag_iteminfo(&$items)
                 'uid'     => $item_obj->getVar('uid'),
                 'link'    => "item.php?itemid={$item_id}",
                 'time'    => $item_obj->getVar('datesub'),
-                'tags'    => \XoopsModules\Tag\Utility::tag_parse_tag($item_obj->getVar('topic_tags', 'n')),
+                'tags'    => Utility::tag_parse_tag($item_obj->getVar('topic_tags', 'n')),
                 'content' => '',
             ];
         }
@@ -86,7 +90,7 @@ function article_tag_synchronization($mid)
     $itemHandler = \XoopsModules\Smartsection\Helper::getInstance()->getHandler('Item');
 
     /** @var \XoopsModules\Tag\LinkHandler $itemHandler */
-    $linkHandler = \XoopsModules\Tag\Helper::getInstance()->getHandler('Link');
+    $linkHandler = Helper::getInstance()->getHandler('Link');
 
     /* clear tag-item links */
     if (version_compare($GLOBALS['xoopsDB']->getServerVersion(), '4.1.0', 'ge')):

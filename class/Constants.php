@@ -23,16 +23,15 @@ namespace XoopsModules\Tag;
  *
  * @package      XoopsModules\Tag
  * @copyright    {@link http://sourceforge.net/projects/xoops/ The XOOPS Project}
- * @license      {@link http://www.gnu.org/licenses/gpl-2.0.html GNU Public License}
+ * @license      {@link https://www.gnu.org/licenses/gpl-2.0.html GNU Public License}
  * @author       ZySpec <zyspec@yahoo.com>
  * @since        2.33
  **/
-defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
 /**
- * class Constants
+ * interface Constants
  */
-class Constants
+interface Constants
 {
     /**#@+
      * Constant definition

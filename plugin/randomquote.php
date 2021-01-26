@@ -8,6 +8,7 @@
  but WITHOUT ANY WARRANTY; without even the implied warranty of
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 */
+
 /**
  * XOOPS tag management module
  *
@@ -21,6 +22,7 @@
 
 use Xmf\Request;
 use XoopsModules\Randomquote\Constants;
+use XoopsModules\Tag\Helper;
 
 defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
@@ -65,12 +67,12 @@ function randomquote_tag_iteminfo(&$items)
 
     foreach ($cats_id as $cat_id) {
         foreach ($items_id as $item_id) {
-            $quoteObj = $quoteObjs[$item_id];
+            $quoteObj                 = $quoteObjs[$item_id];
             $items[$cat_id][$item_id] = [
-                'title' => $quoteObj,
+                'title'   => $quoteObj,
                 //'uid' => $quoteObj->getVar("uid"),
-                'link' => "index.php?id={$item_id}",
-                'time' => strtotime($quoteObj->getVar('create_date')),
+                'link'    => "index.php?id={$item_id}",
+                'time'    => strtotime($quoteObj->getVar('create_date')),
                 //'tags' => \XoopsModules\Tag\Utility::tag_parse_tag($quoteObj->getVar("item_tag", "n")), // optional
                 'content' => '',
             ];
@@ -84,7 +86,7 @@ function randomquote_tag_iteminfo(&$items)
 /**
  * Remove orphan tag-item links
  *
- * @param  int $mid module ID
+ * @param int $mid module ID
  * @return bool
  */
 function randomquote_tag_synchronization($mid)
@@ -92,23 +94,19 @@ function randomquote_tag_synchronization($mid)
     /** @var \XoopsModules\Randomquote\QuotesHandler $itemHandler */
     $itemHandler = \XoopsModules\Randomquote\Helper::getInstance()->getHandler('Quotes');
     /** @var \XoopsModules\Tag\LinkHandler $itemHandler */
-    $linkHandler = \XoopsModules\Tag\Helper::getInstance()->getHandler('Link');
+    $linkHandler = Helper::getInstance()->getHandler('Link');
 
     $result = false;
     if ($itemHandler && $linkHandler) {
         $mid = \Xmf\Request::getInt('mid', 0);
+        /** @var \XoopsModuleHandler $moduleHandler */
         $moduleHandler = xoops_getHandler('module');
-        $rqModule = XoopsModule::getByDirname('randomquote');
+        $rqModule      = XoopsModule::getByDirname('randomquote');
 
         // check to make sure module is active and trying to sync randomquote
-        if (($rqModule instanceof XoopsModule) && $rqModule->isactive() && ($rqModule->mid() == $mid)) {
+        if (($rqModule instanceof \XoopsModule) && $rqModule->isactive() && ($rqModule->mid() == $mid)) {
             // clear tag-item links
-            $sql = "DELETE FROM {$linkHandler->table}"
-                 . " WHERE tag_modid = {$mid}"
-                   . ' AND (tag_itemid NOT IN'
-                 . " (SELECT DISTINCT {$itemHandler->keyName}"
-                 . " FROM {$itemHandler->table} WHERE {$itemHandler->table}.quote_status = "
-                 . Constants::STATUS_ONLINE . '))';
+            $sql    = "DELETE FROM {$linkHandler->table}" . " WHERE tag_modid = {$mid}" . ' AND (tag_itemid NOT IN' . " (SELECT DISTINCT {$itemHandler->keyName}" . " FROM {$itemHandler->table} WHERE {$itemHandler->table}.quote_status = " . Constants::STATUS_ONLINE . '))';
             $result = $linkHandler->db->queryF($sql);
         }
     }

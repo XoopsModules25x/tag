@@ -40,14 +40,23 @@ $modversion = [
     'license'             => 'GPL 2.0 or later',
     'license_url'         => 'https://www.gnu.org/licenses/old-licenses/gpl-2.0.html',
     'help'                => 'page=help',
-    'helpsection'         => [['name' => _MI_TAG_HELP_OVERVIEW,
-                               'link' => 'page=help'],
-                              ['name' => _MI_TAG_HELP_PLUGIN_DEV,
-                               'link' => 'page=plugin_dev'],
-                              ['name' => _MI_TAG_HELP_ISSUES,
-                               'link' => 'page=issues'],
-                              ['name' => _MI_TAG_LICENSE,
-                               'link' => 'page=license']
+    'helpsection'         => [
+        [
+            'name' => _MI_TAG_HELP_OVERVIEW,
+            'link' => 'page=help',
+        ],
+        [
+            'name' => _MI_TAG_HELP_PLUGIN_DEV,
+            'link' => 'page=plugin_dev',
+        ],
+        [
+            'name' => _MI_TAG_HELP_ISSUES,
+            'link' => 'page=issues',
+        ],
+        [
+            'name' => _MI_TAG_LICENSE,
+            'link' => 'page=license',
+        ],
     ],
     // ------------------- Folders & Files -------------------
     'release_info'        => 'Changelog',
@@ -75,7 +84,7 @@ $modversion = [
     'module_website_url'  => 'www.xoops.org',
     'module_website_name' => 'XOOPS Project',
     // ------------------- Min Requirements -------------
-    'min_php'             => '5.5',
+    'min_php'             => '7.2',
     'min_xoops'           => '2.5.10',
     'min_admin'           => '1.2',
     'min_db'              => ['mysql' => '5.5'],
@@ -125,7 +134,6 @@ $modversion = [
         'tag_stats',
     ],
 ];
-
 
 // ------------------- Help files ------------------- //
 $modversion['helpsection'] = [

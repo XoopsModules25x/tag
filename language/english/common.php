@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Module: XOOPS Module
  * Author: XOOPS Dev. Team

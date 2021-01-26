@@ -12,6 +12,11 @@
 /** {@internal - DO NOT INCLUDE THE FOLLOWING LINE IN YOUR PLUGIN, IT IS INCLUDED
  *               HERE TO PREVENT THIS INSTRUCTIONAL FILE FROM BEING EXECUTED }}
  */
+
+use XoopsModules\Tag\FormTag;
+use XoopsModules\Tag\Helper;
+use XoopsModules\Tag\Utility;
+
 redirect_header('../../index.php', 0);
 
 /**
@@ -52,12 +57,12 @@ The following steps are needed to enable tag for a module ("mymodule"):
 // File: edit.item.php
 $itemid = $item_obj->isNew() ? 0 : $item_obj->getVar('itemid');
 XoopsLoad::load('formtag', 'tag');  // get the TagFormTag class
-$form_item->addElement(new \XoopsModules\Tag\FormTag('item_tag', 60, 255, $itemid, $catid = 0));
+$form_item->addElement(new FormTag('item_tag', 60, 255, $itemid, $catid = 0));
 
 /* Step 2: add tag storage after item storage */
 // File: submit.item.php
 /** @var \XoopsModules\Tag\TagHandler $tagHandler */
-$tagHandler = \XoopsModules\Tag\Helper::getInstance()->getHandler('Tag'); // xoops_getModuleHandler('tag', 'tag');
+$tagHandler = Helper::getInstance()->getHandler('Tag'); // xoops_getModuleHandler('tag', 'tag');
 $tagHandler->updateByItem($_POST['item_tag'], $itemid, $GLOBALS['xoopsModule']->getVar('dirname'), $catid = 0);
 
 /* Step 3: define functions to build info of tagged items */
@@ -87,7 +92,7 @@ function mymodule_tag_iteminfo($items)
                 'uid'     => $item_obj->getVar('uid'),
                 'link'    => "view.item.php?itemid={$item_id}",
                 'time'    => $item_obj->getVar('item_time'),
-                'tags'    => \XoopsModules\Tag\Utility::tag_parse_tag($item_obj->getVar('item_tags', 'n')), // optional
+                'tags'    => Utility::tag_parse_tag($item_obj->getVar('item_tags', 'n')), // optional
                 'content' => '',
             ];
         }

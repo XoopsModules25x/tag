@@ -21,6 +21,7 @@
 
 use Xmf\Request;
 use XoopsModules\Tag\Constants;
+use XoopsModules\Tag\Helper;
 use XoopsModules\Tag\Utility;
 use XoopsModules\Tag\Common;
 
@@ -44,7 +45,7 @@ $modid = \Xmf\Request::getInt('modid', !empty($args['modid']) ? $args['modid'] :
 $catid = \Xmf\Request::getInt('catid', !empty($args['catid']) ? $args['catid'] : Constants::DEFAULT_ID, 'GET');
 $start = \Xmf\Request::getInt('start', !empty($args['start']) ? $args['start'] : Constants::BEGINNING, 'GET');
 
-if (empty($modid) && ($GLOBALS['xoopsModule'] instanceof XoopsModule)
+if (empty($modid) && ($GLOBALS['xoopsModule'] instanceof \XoopsModule)
     && ('tag' !== $GLOBALS['xoopsModule']->getVar('dirname'))) {
     $modid = $GLOBALS['xoopsModule']->getVar('mid');
 }
@@ -60,8 +61,8 @@ if (!empty($tag_desc)) {
 }
 
 $module_name = $helper->getModule()->getVar('name');
-$page_title = Xmf\FilterInput::clean($page_title, 'string'); // clean unwanted tags, etc.
-$breadcrumb = new Common\Breadcrumb();
+$page_title  = Xmf\FilterInput::clean($page_title, 'string'); // clean unwanted tags, etc.
+$breadcrumb  = new Common\Breadcrumb();
 $breadcrumb->addLink(mb_convert_case($module_name, MB_CASE_TITLE, 'UTF-8'), $helper->url());
 $breadcrumb->addLink($page_title);
 
@@ -74,16 +75,16 @@ $mode_display = empty($mode_display) ? \Xmf\Request::getCmd('mode', null, 'GET')
 switch (mb_strtolower($mode_display)) {
     case 'list':
         $mode_display = 'list';
-        $limit = (0 === (int)$tag_config['limit_tag_list']) ? 10 : (int)$tag_config['limit_tag'];
+        $limit        = (0 === (int)$tag_config['limit_tag_list']) ? 10 : (int)$tag_config['limit_tag'];
         break;
     case 'cloud':
     default:
         $mode_display = 'cloud';
-        $limit = (0 === (int)$tag_config['limit_cloud_list']) ? 100 : (int)$tag_config['limit_cloud_list'];
+        $limit        = (0 === (int)$tag_config['limit_cloud_list']) ? 100 : (int)$tag_config['limit_cloud_list'];
         break;
 }
 /** @var \XoopsModules\Tag\TagHandler $tagHandler */
-$tagHandler = \XoopsModules\Tag\Helper::getInstance()->getHandler('Tag'); // xoops_getModuleHandler('tag', 'tag');
+$tagHandler = Helper::getInstance()->getHandler('Tag'); // xoops_getModuleHandler('tag', 'tag');
 Utility::tag_define_url_delimiter();
 
 $criteria = new \CriteriaCompo();
@@ -96,7 +97,7 @@ if (!empty($modid)) {
         $criteria->add(new \Criteria('l.tag_catid', $catid));
     }
 }
-$tags_array = $tagHandler->getByLimit($limit, $start, $criteria, null, false);
+$tags_array      = $tagHandler->getByLimit($limit, $start, $criteria, null, false);
 $tags_data_array = $tagHandler->getTagData($tags_array, $tag_config['font_max'], $tag_config['font_min']);
 
 $page_nav = '';
@@ -104,23 +105,25 @@ if (!empty($start) || count($tags_data_array) >= $limit) {
     if ('list' === mb_strtolower($mode_display)) {
         require_once $GLOBALS['xoops']->path('class/pagenav.php');
         $count_tag = $tagHandler->getCount($criteria); // modid, catid
-        $nav     = new \XoopsPageNav($count_tag, $limit, $start, 'start', "catid={$catid}&amp;mode={$mode_display}");
-        $page_nav = $nav->renderNav(4);
+        $nav       = new \XoopsPageNav($count_tag, $limit, $start, 'start', "catid={$catid}&amp;mode={$mode_display}");
+        $page_nav  = $nav->renderNav(4);
     } else {
         $page_nav = '<a href="' . xoops_getenv('SCRIPT_NAME') . "?catid={$catid}&amp;mode={$mode_display}\">" . _MORE . "</a>\n";
     }
 }
 
-$xoopsTpl->assign([
-    'lang_jumpto' => _MD_TAG_JUMPTO,
-    'tag_page_title' => $page_title,
-    'tag_breadcrumb' =>$breadcrumb->render(),
-    'pagenav' => $page_nav,
-// Loading module meta data, NOT THE RIGHT WAY DOING IT
-    //'xoops_pagetitle' => $GLOBALS['xoopsOption']['xoops_pagetitle'],
-    //'xoops_module_header' => $GLOBALS['xoopsOption']['xoops_module_header'],
-    //'xoops_meta_description' => $GLOBALS['xoopsOption']['xoops_pagetitle']
-]);
+$xoopsTpl->assign(
+    [
+        'lang_jumpto'    => _MD_TAG_JUMPTO,
+        'tag_page_title' => $page_title,
+        'tag_breadcrumb' => $breadcrumb->render(),
+        'pagenav'        => $page_nav,
+        // Loading module meta data, NOT THE RIGHT WAY DOING IT
+        //'xoops_pagetitle' => $GLOBALS['xoopsOption']['xoops_pagetitle'],
+        //'xoops_module_header' => $GLOBALS['xoopsOption']['xoops_module_header'],
+        //'xoops_meta_description' => $GLOBALS['xoopsOption']['xoops_pagetitle']
+    ]
+);
 //@todo determine why using assign_by_ref here?
 $xoopsTpl->assign_by_ref('tags', $tags_data_array);
 

@@ -12,7 +12,7 @@ namespace XoopsModules\Tag;
  WITHOUT ANY WARRANTY; without even the implied warranty of
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  */
- /**
+/**
  * Module: Tag
  *
  * @package   XoopsModules\Tag
@@ -26,7 +26,8 @@ namespace XoopsModules\Tag;
  * Issues class to collect information from GitHub
  *
  */
- class Issues {
+class Issues
+{
     /**
      * @var array $hdrs
      */
@@ -66,47 +67,48 @@ namespace XoopsModules\Tag;
         $this->hdrs          = [];
         $this->curl_response = '';
         $this->hdrSize       = 0;
-        $this->dirname       = basename(dirname(__DIR__));
+        $this->dirname       = \basename(\dirname(__DIR__));
         //$this->serviceUrl    = 'https://api.github.com/repos/xoops/xoopscore25/issues?state=open';
         //$this->serviceUrl    = 'https://github.com/zyspec/' . $this->dirname . '/issues?state=open';
-        $this->serviceUrl    = 'https://api.github.com/repos/XoopsModules25x/' . $this->dirname . '/issues?state=open';
+        $this->serviceUrl = 'https://api.github.com/repos/XoopsModules25x/' . $this->dirname . '/issues?state=open';
         $this->setSessPrefix($this->dirname);
-        $this->err           = '';
+        $this->err = '';
     }
 
-     /**
-      * Function to put HTTP headers in an array
-      *
-      * @param        $curl
-      * @param string $hdrLine
-      *
-      * @return int length of header line put into array
-      */
+    /**
+     * Function to put HTTP headers in an array
+     *
+     * @param        $curl
+     * @param string $hdrLine
+     *
+     * @return int length of header line put into array
+     */
     public function handleHeaderLine($curl, $hdrLine)
     {
-        $this->hdrs[] = trim($hdrLine);
-        return strlen($hdrLine);
+        $this->hdrs[] = \trim($hdrLine);
+        return \strlen($hdrLine);
     }
 
-     /**
-      * Function to get a header from the header array
-      *
-      * @param string $hdr
-      * @param bool   $asArray
-      *
-      * @return array|false|string array($hdr => value) or false if not found
-      */
+    /**
+     * Function to get a header from the header array
+     *
+     * @param string $hdr
+     * @param bool   $asArray
+     *
+     * @return array|false|string array($hdr => value) or false if not found
+     */
     public function getHeaderFromArray($hdr, $asArray = false)
     {
         $val = '';
         foreach ($this->hdrs as $thisHdr) {
-            if (preg_match("/^{$hdr}/i", $thisHdr)) {
-                $val = substr($thisHdr, strlen($hdr));
+            if (\preg_match("/^{$hdr}/i", $thisHdr)) {
+                $val = \substr($thisHdr, \strlen($hdr));
                 break;
             }
         }
-        return (bool)$asArray ? [$hdr => trim($val)] : trim($val);
+        return (bool)$asArray ? [$hdr => \trim($val)] : \trim($val);
     }
+
     /**
      * Returns response from involking Curl
      *
@@ -116,8 +118,9 @@ namespace XoopsModules\Tag;
      */
     public function getCurlResponse($serialized = false)
     {
-        return (bool)$serialized ? serialize(base64_encode($this->curl_response)) : $this->curl_response;
+        return (bool)$serialized ? \serialize(\base64_encode($this->curl_response)) : $this->curl_response;
     }
+
     /**
      * Get the size of curl response headers
      *
@@ -127,6 +130,7 @@ namespace XoopsModules\Tag;
     {
         return $this->hdrSize;
     }
+
     /**
      * Get the URL for curl
      *
@@ -136,6 +140,7 @@ namespace XoopsModules\Tag;
     {
         return $this->serviceUrl;
     }
+
     /**
      * Get the Prefix for SESSION variable
      *
@@ -145,6 +150,7 @@ namespace XoopsModules\Tag;
     {
         return $this->sessPrefix();
     }
+
     /**
      * Set the Prefix for SESSION variable
      *
@@ -154,9 +160,10 @@ namespace XoopsModules\Tag;
      */
     public function setSessPrefix($prefix)
     {
-        $this->sessPrefix = htmlspecialchars($prefix, ENT_QUOTES | ENT_HTML5) . '_';
+        $this->sessPrefix = \htmlspecialchars($prefix, \ENT_QUOTES | \ENT_HTML5) . '_';
         return $this->sessPrefix;
     }
+
     /**
      * Get the SESSION variable name for Etag key
      *
@@ -166,6 +173,7 @@ namespace XoopsModules\Tag;
     {
         return $this->sessPrefix . 'github_etag';
     }
+
     /**
      * Get the SESSION variable name for Header Size key
      *
@@ -175,6 +183,7 @@ namespace XoopsModules\Tag;
     {
         return $this->sessPrefix . 'github_hdr_size';
     }
+
     /**
      * Get the SESSION variable name for Response key
      *
@@ -185,15 +194,16 @@ namespace XoopsModules\Tag;
         return $this->sessPrefix . 'github_curl_response';
     }
 
-     /**
-      * Get the SESSION variable name for Array key
-      *
-      * @return array
-      */
+    /**
+     * Get the SESSION variable name for Array key
+     *
+     * @return array
+     */
     public function getsKeyArray()
     {
         return [$this->getsKeyEtag(), $this->getsKeyHdrSize(), $this->getsKeyResponse()];
     }
+
     /**
      * Get the SESSION cached Etag key contents
      *
@@ -201,8 +211,9 @@ namespace XoopsModules\Tag;
      */
     public function getCachedEtag()
     {
-        return isset($_SESSION[$this->getsKeyEtag()]) ? base64_decode(unserialize($_SESSION[$this->getsKeyEtag()])) : false;
+        return isset($_SESSION[$this->getsKeyEtag()]) ? \base64_decode(\unserialize($_SESSION[$this->getsKeyEtag()])) : false;
     }
+
     /**
      * Set the error message associated with the latest Curl operation
      *
@@ -214,6 +225,7 @@ namespace XoopsModules\Tag;
     {
         $this->err = $msg;
     }
+
     /**
      * Get the error message associated with the latest Curl operation
      *
@@ -223,6 +235,7 @@ namespace XoopsModules\Tag;
     {
         return $this->err;
     }
+
     /**
      * Execute a curl operation to retrieve data from GitHub server
      *
@@ -232,34 +245,36 @@ namespace XoopsModules\Tag;
      */
     public function execCurl()
     {
-        $curl = curl_init($this->getServiceUrl());
-        curl_setopt_array($curl, [
-                                   CURLOPT_RETURNTRANSFER => true,
-                                   CURLOPT_HEADER         => true,
-                                   CURLOPT_VERBOSE        => true,
-                                   CURLOPT_TIMEOUT        => 5,
-                                   CURLOPT_HTTPGET        => true,
-                                   CURLOPT_USERAGENT      => 'XOOPS-' . $this->dirname,
-                                   CURLOPT_HTTPHEADER     => [
-                                       'Content-type:application/json',
-                                                                       'If-None-Match: ' . $this->getCachedEtag()
-                                   ],
-                                   CURLINFO_HEADER_OUT    => true,
-                                   CURLOPT_HEADERFUNCTION => [$this, 'handleHeaderLine']
-                               ]
+        $curl = \curl_init($this->getServiceUrl());
+        \curl_setopt_array(
+            $curl,
+            [
+                \CURLOPT_RETURNTRANSFER => true,
+                \CURLOPT_HEADER         => true,
+                \CURLOPT_VERBOSE        => true,
+                \CURLOPT_TIMEOUT        => 5,
+                \CURLOPT_HTTPGET        => true,
+                \CURLOPT_USERAGENT      => 'XOOPS-' . $this->dirname,
+                \CURLOPT_HTTPHEADER     => [
+                    'Content-type:application/json',
+                    'If-None-Match: ' . $this->getCachedEtag(),
+                ],
+                \CURLINFO_HEADER_OUT    => true,
+                \CURLOPT_HEADERFUNCTION => [$this, 'handleHeaderLine'],
+            ]
         );
         // execute the session
-        $this->curl_response = curl_exec($curl);
+        $this->curl_response = \curl_exec($curl);
         // get the header size and finish off the session
-        $this->hdrSize = curl_getinfo($curl, CURLINFO_HEADER_SIZE);
+        $this->hdrSize = \curl_getinfo($curl, \CURLINFO_HEADER_SIZE);
         $this->hdrSize = (int)$this->hdrSize;
-        curl_close($curl);
+        \curl_close($curl);
 
         $hdrEtag = $this->getHeaderFromArray('Etag: ');
 
-        $_SESSION[$this->getsKeyEtag()]     = serialize(base64_encode($hdrEtag));
-        $_SESSION[$this->getsKeyHdrSize()]  = serialize($this->hdrSize);
-        $_SESSION[$this->getsKeyResponse()] = serialize(base64_encode($this->curl_response));
+        $_SESSION[$this->getsKeyEtag()]     = \serialize(\base64_encode($hdrEtag));
+        $_SESSION[$this->getsKeyHdrSize()]  = \serialize($this->hdrSize);
+        $_SESSION[$this->getsKeyResponse()] = \serialize(\base64_encode($this->curl_response));
         return $this->hdrSize;
     }
 }

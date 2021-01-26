@@ -40,26 +40,26 @@ define('_MD_TAG_INVALID', 'Invalid query');
  * </ul>
  */
 $GLOBALS['_MD_TAG_ADDONS'] = [
-    'google' => [
+    'google'   => [
         'title' => 'Google',
         'link'  => 'https://www.google.com/search?q=%s',
     ],
-    'techno' => [
+    'techno'   => [
         'title' => 'Technorati',
         'link'  => 'https://technorati.com/search/index.php?q=%s&context=search',
     ],
-    'flickr' => [
+    'flickr'   => [
         'title'    => 'Flickr',
         'link'     => 'https://www.flickr.com/photos/tags/%s/',
         'function' => 'utf8_encode',
     ],
     'unsplash' => [
         'title' => 'Unsplash',
-        'link' => 'https://unsplash.com/s/photos/%s/'
+        'link'  => 'https://unsplash.com/s/photos/%s/',
     ],
-    'pixabay' => [
-        'title' => 'Pixabay',
-        'link' => 'https://pixabay.com/images/search/%s/',
+    'pixabay'  => [
+        'title'    => 'Pixabay',
+        'link'     => 'https://pixabay.com/images/search/%s/',
         'function' => 'urlencode',
-    ]
+    ],
 ];

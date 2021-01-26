@@ -19,6 +19,7 @@
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
  * */
 
+use Xmf\Request;
 use XoopsModules\Tag\Constants;
 use XoopsModules\Tag\Utility;
 use XoopsModules\Tag\Common;
@@ -27,8 +28,8 @@ require_once __DIR__ . '/header.php';
 
 //@todo refactor this code - it "works" but it's not right. Look at previous revs using $args_num to see what it's suppose to do
 if (Utility::tag_parse_args($args, $args_string)) {
-    $args['tag']  = !empty($args['tag']) ? $args['tag'] : (is_numeric($args_string[0]) ? $args_string[0] : Constants::DEFAULT_ID);
-    $args['term'] = !empty($args['term']) ? $args['term'] : (!empty($args_string[0]) ? $args_string[0] : null);
+    $args['tag']   = !empty($args['tag']) ? $args['tag'] : (is_numeric($args_string[0]) ? $args_string[0] : Constants::DEFAULT_ID);
+    $args['term']  = !empty($args['term']) ? $args['term'] : (!empty($args_string[0]) ? $args_string[0] : null);
     $args['modid'] = !empty($args['modid']) ? $args['modid'] : Constants::DEFAULT_ID;
     $args['catid'] = !empty($args['catid']) ? $args['catid'] : Constants::DEFAULT_ID;
     $args['start'] = !empty($args['start']) ? $args['start'] : Constants::BEGINNING;
@@ -40,11 +41,11 @@ $modid = (int)(empty($_GET['modid']) ? @$args['modid'] : $_GET['modid']);
 $catid = (int)(empty($_GET['catid']) ? @$args['catid'] : $_GET['catid']);
 $start = (int)(empty($_GET['start']) ? @$args['start'] : $_GET['start']);
 */
-$tagid = (empty($_GET['tag'])) ? @$args['tag'] : \Xmf\Request::getInt('tag', Constants::DEFAULT_ID, 'GET');
-$tag_term = empty($_GET['term']) ? @$args['term'] : \Xmf\Request::getString('term', null, 'GET');
-$modid = (int)(empty($_GET['modid'])) ? @$args['modid'] : \Xmf\Request::getInt('modid', Constants::DEFAULT_ID, 'GET');
-$catid = (int)(empty($_GET['catid'])) ? @$args['catid'] : \Xmf\Request::getInt('catid', Constants::DEFAULT_ID, 'GET');
-$start = (int)(empty($_GET['start'])) ? @$args['start'] : \Xmf\Request::getInt('start', Constants::BEGINNING, 'GET');
+$tagid    = (empty($_GET['tag'])) ? @$args['tag'] : Request::getInt('tag', Constants::DEFAULT_ID, 'GET');
+$tag_term = empty($_GET['term']) ? @$args['term'] : Request::getString('term', null, 'GET');
+$modid    = (int)(empty($_GET['modid'])) ? @$args['modid'] : Request::getInt('modid', Constants::DEFAULT_ID, 'GET');
+$catid    = (int)(empty($_GET['catid'])) ? @$args['catid'] : Request::getInt('catid', Constants::DEFAULT_ID, 'GET');
+$start    = (int)(empty($_GET['start'])) ? @$args['start'] : Request::getInt('start', Constants::BEGINNING, 'GET');
 
 if (empty($modid) && ($GLOBALS['xoopsModule'] instanceof \XoopsModule)
     && 'tag' !== $GLOBALS['xoopsModule']->getVar('dirname', 'n')) {
@@ -65,7 +66,7 @@ if (!empty($tagid)) { // have a tag_id, so check to see if it yields a valid Tag
         $helper->redirect('index.php', Constants::REDIRECT_DELAY_MEDIUM, _MD_TAG_INVALID);
     }
     $tag_obj = $tags_obj[0];
-    $tagid = $tag_obj->getVar('tag_id');
+    $tagid   = $tag_obj->getVar('tag_id');
 } else {
     $helper->redirect('index.php', Constants::REDIRECT_DELAY_MEDIUM, _MD_TAG_INVALID);
 }
@@ -78,9 +79,9 @@ if (!empty($tag_desc)) {
 } else {
     $module_name = ('tag' === $GLOBALS['xoopsModule']->getVar('dirname', 'n')) ? $GLOBALS['xoopsConfig']['sitename'] : $GLOBALS['xoopsModule']->getVar('name', 'n');
     $module_name = mb_convert_case($module_name, MB_CASE_TITLE, 'UTF-8');
-    $page_title = sprintf(_MD_TAG_TAGVIEW, $myts->htmlSpecialChars($tag_term, ENT_QUOTES | ENT_HTML5), $module_name);
+    $page_title  = sprintf(_MD_TAG_TAGVIEW, htmlspecialchars($tag_term, ENT_QUOTES | ENT_HTML5), $module_name);
 }
-$GLOBALS['xoopsOption']['template_main'] = 'tag_view.tpl';
+$GLOBALS['xoopsOption']['template_main']   = 'tag_view.tpl';
 $GLOBALS['xoopsOption']['xoops_pagetitle'] = strip_tags($page_title);
 
 require_once $GLOBALS['xoops']->path('header.php');
@@ -103,7 +104,7 @@ if (!empty($modid)) {
     }
 }
 
-$items_array = $tagHandler->getItems($criteria);
+$items_array       = $tagHandler->getItems($criteria);
 $module_item_array = [];
 $module_obj_array  = [];
 if (0 < count($items_array)) {
@@ -112,7 +113,7 @@ if (0 < count($items_array)) {
     }
 
     /** @var \XoopsModuleHandler $moduleHandler */
-    $moduleHandler = xoops_getHandler('module');
+    $moduleHandler    = xoops_getHandler('module');
     $module_obj_array = $moduleHandler->getObjects(new \Criteria('mid', '(' . implode(', ', array_keys($module_item_array)) . ')', 'IN'), true);
     foreach ($module_obj_array as $mid => $module_obj) {
         $dirname = $module_obj->getVar('dirname', 'n');
@@ -180,9 +181,7 @@ $tag_addon = [];
 if (!empty($GLOBALS['_MD_TAG_ADDONS'])) {
     $tag_addon['title'] = _MD_TAG_TAG_ON;
     foreach ($GLOBALS['_MD_TAG_ADDONS'] as $key => $_tag) {
-        $_term = (empty($_tag['function']) || !function_exists($_tag['function']))
-            ? $tag_term
-            : $_tag['function']($tag_term);
+        $_term                 = (empty($_tag['function']) || !function_exists($_tag['function'])) ? $tag_term : $_tag['function']($tag_term);
         $tag_addon['addons'][] = "<a href='" . sprintf($_tag['link'], urlencode($_term)) . "' target='{$key}' title='{$_tag['title']}'>{$_tag['title']}</a>";
     }
 }
@@ -192,20 +191,22 @@ $breadcrumb = new Common\Breadcrumb();
 $breadcrumb->addLink($helper->getModule()->getVar('name'), $helper->url());
 $breadcrumb->addLink(_MD_TAG_TAGS, $helper->url('list.tag.php'));
 //$breadcrumb->addLink(htmlspecialchars($tag_term, ENT_QUOTES | ENT_HTML5), $helper->url('view.tag.php' . URL_DELIMITER . urlencode($tag_term)));
-$breadcrumb->addLink($myts->htmlSpecialChars($tag_term, ENT_QUOTES | ENT_HTML5));
+$breadcrumb->addLink(htmlspecialchars($tag_term, ENT_QUOTES | ENT_HTML5));
 
-$GLOBALS['xoopsTpl']->assign([
-    'module_name'            => $GLOBALS['xoopsModule']->getVar('name'),
-    'tag_id'                 => $tagid,
-    'tag_term'               => urlencode($tag_term),
-    'tag_title'              => htmlspecialchars($tag_term, ENT_QUOTES | ENT_HTML5),
-    'tag_page_title'         => $page_title,
-    'tag_breadcrumb'         => $breadcrumb->render(),
-    // Loading module meta data, NOT THE RIGHT WAY DOING IT
-    'xoops_pagetitle'        => $GLOBALS['xoopsOption']['xoops_pagetitle'],
-    //'xoops_module_header'    => $GLOBALS['xoopsOption']['xoops_module_header'],
-    'xoops_meta_description' => $GLOBALS['xoopsOption']['xoops_pagetitle'],
-]);
+$GLOBALS['xoopsTpl']->assign(
+    [
+        'module_name'            => $GLOBALS['xoopsModule']->getVar('name'),
+        'tag_id'                 => $tagid,
+        'tag_term'               => urlencode($tag_term),
+        'tag_title'              => htmlspecialchars($tag_term, ENT_QUOTES | ENT_HTML5),
+        'tag_page_title'         => $page_title,
+        'tag_breadcrumb'         => $breadcrumb->render(),
+        // Loading module meta data, NOT THE RIGHT WAY DOING IT
+        'xoops_pagetitle'        => $GLOBALS['xoopsOption']['xoops_pagetitle'],
+        //'xoops_module_header'    => $GLOBALS['xoopsOption']['xoops_module_header'],
+        'xoops_meta_description' => $GLOBALS['xoopsOption']['xoops_pagetitle'],
+    ]
+);
 //@todo do these need to be assign by ref?
 $xoopsTpl->assign_by_ref('tag_addon', $tag_addon);
 $xoopsTpl->assign_by_ref('tag_articles', $items_data);

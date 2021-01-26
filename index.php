@@ -24,15 +24,15 @@ use XoopsModules\Tag\Common;
 
 require_once __DIR__ . '/header.php';
 
-$page_title = sprintf(_MD_TAG_TAGLIST, $GLOBALS['xoopsConfig']['sitename']);
-$GLOBALS['xoopsOption']['template_main'] = 'tag_index.tpl';
+$page_title                                = sprintf(_MD_TAG_TAGLIST, $GLOBALS['xoopsConfig']['sitename']);
+$GLOBALS['xoopsOption']['template_main']   = 'tag_index.tpl';
 $GLOBALS['xoopsOption']['xoops_pagetitle'] = strip_tags($page_title);
 
 require_once $GLOBALS['xoops']->path('header.php');
 $GLOBALS['xoTheme']->addStylesheet('browse.php?modules/' . $moduleDirName . '/assets/css/style.css');
 
 /**
- * @var \XoopsModules\Tag\Helper $helper
+ * @var \XoopsModules\Tag\Helper     $helper
  * @var \XoopsModules\Tag\TagHandler $tagHandler
  */
 $tagHandler = $helper->getHandler('Tag');
@@ -46,24 +46,24 @@ $criteria->setSort('count');
 $criteria->order = 'DESC'; // patch for XOOPS <= 2.5.10, does not set order correctly using setOrder() method
 
 /** @todo determine if the following call should use $limit as first param to reduce # of returned tags */
-$tags_array = $tagHandler->getByLimit($limit, 0, $criteria, null, false);
+$tags_array      = $tagHandler->getByLimit($limit, 0, $criteria, null, false);
 $tags_term_array = [];
 
 // set min and max tag count
 $count_array = array_column($tags_array, 'count', 'id');
-$count_min = count($count_array) > 0 ? min($count_array) : 0;
-$count_min = $count_min > 0 ? $count_min : 0;
-$count_max = count($count_array) > 0 ? max($count_array) : 0;
-$count_max = $count_max > 0 ? $count_max : 0;
+$count_min   = count($count_array) > 0 ? min($count_array) : 0;
+$count_min   = $count_min > 0 ? $count_min : 0;
+$count_max   = count($count_array) > 0 ? max($count_array) : 0;
+$count_max   = $count_max > 0 ? $count_max : 0;
 
-$term_array = array_column($tags_array, 'term', 'id');
-$tags_term_array  = array_map('mb_strtolower', $term_array);
+$term_array      = array_column($tags_array, 'term', 'id');
+$tags_term_array = array_map('\mb_strtolower', $term_array);
 array_multisort($tags_term_array, SORT_ASC, $tags_array);
 $count_interval = $count_max - $count_min;
 $level_limit    = 5;
 
-$font_max = $tag_config['font_max'];
-$font_min = $tag_config['font_min'];
+$font_max   = $tag_config['font_max'];
+$font_min   = $tag_config['font_min'];
 $font_ratio = $count_interval ? ($font_max - $font_min) / $count_interval : 1;
 
 $tags_data_array = [];
@@ -87,16 +87,18 @@ unset($tags_array, $tag, $count_array, $term_array, $tags_term_array);
 $breadcrumb = new Common\Breadcrumb();
 $breadcrumb->addLink($helper->getModule()->getVar('name'));
 
-$GLOBALS['xoopsTpl']->assign([
-                                 'lang_jumpto' => _MD_TAG_JUMPTO,
-                                 'pagenav' => '<a href="' . $helper->url('list.tag.php') . '">' . _MORE . "</a>\n",
-                                 'tag_page_title' => $page_title,
-                                 'tag_breadcrumb' => $breadcrumb->render(),
-                                 // Loading module meta data, NOT THE RIGHT WAY DOING IT
-                                 'xoops_pagetitle' => $GLOBALS['xoopsOption']['xoops_pagetitle'],
-                                 //'xoops_module_header' => $GLOBALS['xoopsOption']['xoops_module_header'],
-                                 'xoops_meta_description' => $GLOBALS['xoopsOption']['xoops_pagetitle'],
-]);
+$GLOBALS['xoopsTpl']->assign(
+    [
+        'lang_jumpto'            => _MD_TAG_JUMPTO,
+        'pagenav'                => '<a href="' . $helper->url('list.tag.php') . '">' . _MORE . "</a>\n",
+        'tag_page_title'         => $page_title,
+        'tag_breadcrumb'         => $breadcrumb->render(),
+        // Loading module meta data, NOT THE RIGHT WAY DOING IT
+        'xoops_pagetitle'        => $GLOBALS['xoopsOption']['xoops_pagetitle'],
+        //'xoops_module_header' => $GLOBALS['xoopsOption']['xoops_module_header'],
+        'xoops_meta_description' => $GLOBALS['xoopsOption']['xoops_pagetitle'],
+    ]
+);
 //@todo figure out why $tags_data_array is using assign_by_ref
 $GLOBALS['xoopsTpl']->assign_by_ref('tags', $tags_data_array);
 

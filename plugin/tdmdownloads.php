@@ -1,4 +1,7 @@
 <?php
+
+use XoopsModules\Tag\Helper;
+
 /**
  * TDMDownload
  *
@@ -9,11 +12,11 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright   Gregory Mage (Aka Mage)
- * @license     GNU GPL 2 (https://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
- * @author      Gregory Mage (Aka Mage)
  * @param $items
  * @return bool
+ * @author      Gregory Mage (Aka Mage)
+ * @copyright   Gregory Mage (Aka Mage)
+ * @license     GNU GPL 2 (https://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
  */
 function tdmdownloads_tag_iteminfo($items)
 {
@@ -66,7 +69,7 @@ function tdmdownloads_tag_synchronization($mid)
     $itemHandler = \XoopsModules\Tdmdownloads\Helper::getInstance()->getHandler('Downloads');
 
     /** @var \XoopsModules\Tag\LinkHandler $linkHandler */
-    $linkHandler = \XoopsModules\Tag\Helper::getInstance()->getHandler('Link'); //@var \XoopsModules\Tag\Handler $tagHandler
+    $linkHandler = Helper::getInstance()->getHandler('Link'); //@var \XoopsModules\Tag\Handler $tagHandler
 
     /* clear tag-item links */
     if (version_compare($GLOBALS['xoopsDB']->getServerVersion(), '4.1.0', 'ge')):

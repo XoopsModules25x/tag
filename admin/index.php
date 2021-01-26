@@ -19,6 +19,7 @@
  * @since          1.00
  */
 
+use Xmf\Module\Admin;
 use XoopsModules\Tag;
 use XoopsModules\Tag\Utility;
 
@@ -28,13 +29,13 @@ require_once $helper->path('include/vars.php');
 
 xoops_cp_header();
 
-$adminObject = \Xmf\Module\Admin::getInstance();
+$adminObject = Admin::getInstance();
 /** @var XoopsModules\Tag\TagHandler $tagHandler */
 $tagHandler = $helper->getHandler('Tag');
-$count_tag = $tagHandler->getCount();
+$count_tag  = $tagHandler->getCount();
 
 $linkHandler = $helper->getHandler('Link');
-$count_item = $linkHandler->getCount();
+$count_item  = $linkHandler->getCount();
 /*
 $count_item = 0;
 $sql        = 'SELECT COUNT(DISTINCT tl_id) FROM ' . $GLOBALS['xoopsDB']->prefix('tag_link');
@@ -70,11 +71,9 @@ $adminObject->addInfoBoxLine(sprintf('<infolabel>' . _AM_TAG_COUNT_ITEM . '</inf
 $adminObject->addInfoBoxLine(sprintf('<infolabel>' . _AM_TAG_COUNT_MODULE . '</infolabel>' . '<infotext>' . _AM_TAG_COUNT_MODULE_TITLE . '</infotext>'));
 
 foreach ($counts_module as $module => $count) {
-    $moduleStat = "<infolabel>{$module_list[$module]}:</infolabel>\n"
-                . "<infotext>{$count['count_tag']} / {$count['count_item']}\n"
-                . "  [<a href='" . $helper->url("admin/admin.tag.php?modid={$module}") . "'>" . _AM_TAG_EDIT . "</a>]\n"
-                . "  [<a href='" . $helper->url("admin/syn.tag.php?modid={$module}") . "'>" . _AM_TAG_SYNCHRONIZATION . "</a>]\n"
-                  . "</infotext> \n";
+    $moduleStat = "<infolabel>{$module_list[$module]}:</infolabel>\n" . "<infotext>{$count['count_tag']} / {$count['count_item']}\n" . "  [<a href='" . $helper->url("admin/admin.tag.php?modid={$module}") . "'>" . _AM_TAG_EDIT . "</a>]\n" . "  [<a href='" . $helper->url(
+            "admin/syn.tag.php?modid={$module}"
+        ) . "'>" . _AM_TAG_SYNCHRONIZATION . "</a>]\n" . "</infotext> \n";
     $adminObject->addInfoBoxLine(sprintf($moduleStat));
 }
 

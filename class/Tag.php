@@ -22,7 +22,6 @@ namespace XoopsModules\Tag;
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
  * @since           1.00
  */
-defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
 /**
  * Class Tag
@@ -34,9 +33,9 @@ class Tag extends \XoopsObject
      */
     public function __construct()
     {
-        $this->initVar('tag_id', XOBJ_DTYPE_INT, null, false);
-        $this->initVar('tag_term', XOBJ_DTYPE_TXTBOX, '', true);
-        $this->initVar('tag_status', XOBJ_DTYPE_INT, 0);
-        $this->initVar('tag_count', XOBJ_DTYPE_INT, 0);
+        $this->initVar('tag_id', \XOBJ_DTYPE_INT, null, false);
+        $this->initVar('tag_term', \XOBJ_DTYPE_TXTBOX, '', true);
+        $this->initVar('tag_status', \XOBJ_DTYPE_INT, 0);
+        $this->initVar('tag_count', \XOBJ_DTYPE_INT, 0);
     }
 }

@@ -18,18 +18,19 @@
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
  * @since           1.00
  */
- 
+
 use XoopsModules\Tag\Constants;
- 
+use XoopsModules\Tag\Helper;
+
 defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
 /**
- * @param  array  $queryarray
- * @param  string $andor
- * @param  int    $limit
- * @param  int    $offset
- * @param  int    $userid
- * @param  string $sortby
+ * @param array  $queryarray
+ * @param string $andor
+ * @param int    $limit
+ * @param int    $offset
+ * @param int    $userid
+ * @param string $sortby
  * @return array
  */
 function &tag_search($queryarray, $andor, $limit, $offset, $userid, $sortby = 'tag_term ASC')
@@ -40,20 +41,20 @@ function &tag_search($queryarray, $andor, $limit, $offset, $userid, $sortby = 't
         return $ret;
     }
 
-    $fields = ['tag_id', 'tag_term'];
-    $tagHandler = \XoopsModules\Tag\Helper::getInstance()->getHandler('Tag');
-    $criteria = new \CriteriaCompo();
+    $fields     = ['tag_id', 'tag_term'];
+    $tagHandler = Helper::getInstance()->getHandler('Tag');
+    $criteria   = new \CriteriaCompo();
     $criteria->setLimit($limit);
     $criteria->setStart($offset);
     $criteria->add(new \Criteria('tag_status', Constants::STATUS_ACTIVE));
-        if ('exact' === $andor) {
+    if ('exact' === $andor) {
         $criteria->add(new \Criteria('tag_term', $queryarray[0]));
-            for ($i = 1; $i < $count; ++$i) {
+        for ($i = 1; $i < $count; ++$i) {
             $criteria->add(new \Criteria('tag_term', $queryarray[$i]), $andor);
-            }
-        } else {
+        }
+    } else {
         $criteria->add(new \Criteria('tag_term', "%{$queryarray[0]}%", 'LIKE'));
-            for ($i = 1; $i < $count; ++$i) {
+        for ($i = 1; $i < $count; ++$i) {
             $criteria->add(new \Criteria('tag_term', "%{$queryarray[$i]}%", 'LIKE'), $andor);
         }
     }
@@ -63,7 +64,7 @@ function &tag_search($queryarray, $andor, $limit, $offset, $userid, $sortby = 't
             $criteria->setSort($sbArray[0]);
             if (isset($sbArray[1])) {
                 $criteria->order = $sbArray[1]; // patch for XOOPS <= 2.5.10, does not set order correctly using setOrder() method
-    }
+            }
         }
     }
     $tagObjArray = $tagHandler->getAll($criteria, $fields);
@@ -71,7 +72,7 @@ function &tag_search($queryarray, $andor, $limit, $offset, $userid, $sortby = 't
     foreach ($tagObjArray as $tagId => $tagObj) {
         $ret[] = [
             'image' => 'assets/images/tag_search.gif',
-            'link' => "view.tag.php?tag={$tagId}",
+            'link'  => "view.tag.php?tag={$tagId}",
             'title' => $tagObj->getVar('tag_term'),
         ];
     }

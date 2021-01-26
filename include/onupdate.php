@@ -28,18 +28,18 @@ $moduleDirNameUpper = mb_strtoupper($moduleDirName);
 xoops_loadLanguage('common', $moduleDirName);
 
 /**
- * @deprecated - not used, use Xmf\Database\Tables method(s) instead
  * @param string $tablename
  *
  * @return bool
+ * @deprecated - not used, use Xmf\Database\Tables method(s) instead
  */
 function tableExists($tablename)
 {
     $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1);
     trigger_error(__FUNCTION__ . " is deprecated, called from {$trace[0]['file']} line {$trace[0]['line']}");
     $GLOBALS['xoopsLogger']->addDeprecated(
-        'Tag Module: ' . __FUNCTION__ . " function is deprecated since Tag 2.3.4, please use Xmf\Database\Tables method(s) instead."
-        . " Called from {$trace[0]['file']}line {$trace[0]['line']}");
+        'Tag Module: ' . __FUNCTION__ . " function is deprecated since Tag 2.3.4, please use Xmf\Database\Tables method(s) instead." . " Called from {$trace[0]['file']}line {$trace[0]['line']}"
+    );
 
     $result = $GLOBALS['xoopsDB']->queryF("SHOW TABLES LIKE '$tablename'");
 
@@ -69,7 +69,7 @@ function xoops_module_pre_update_tag(\XoopsModule $module)
 /**
  * Performs tasks required during update of the module
  * @param \XoopsModule $module {@link XoopsModule}
- * @param null        $previousVersion
+ * @param null         $previousVersion
  *
  * @return bool true if update successful, false if not
  */
@@ -78,7 +78,7 @@ function xoops_module_update_tag(\XoopsModule $module, $previousVersion = null)
     global $xoopsDB;
     $moduleDirName = basename(dirname(__DIR__));
 
-    /** @var Tag\Helper $helper */
+    /** @var Tag\Helper $helper */ 
     /** @var Tag\Utility $utility */
     /** @var Tag\Common\Configurator $configurator */
     $helper       = Tag\Helper::getInstance();
@@ -95,7 +95,7 @@ function xoops_module_update_tag(\XoopsModule $module, $previousVersion = null)
                     foreach ($templateList as $k => $v) {
                         $fileInfo = new \SplFileInfo($templateFolder . $v);
                         if ('html' === $fileInfo->getExtension() && 'index.html' !== $fileInfo->getFilename()) {
-                            if (file_exists($templateFolder . $v)) {
+                            if (is_file($templateFolder . $v)) {
                                 unlink($templateFolder . $v);
                             }
                         }

@@ -28,7 +28,7 @@ use XoopsModules\Tag;
 function xoops_module_pre_install_tag(\XoopsModule $module)
 {
     $moduleDirName = basename(dirname(__DIR__));
-    $utility = new Tag\Utility();
+    $utility       = new Tag\Utility();
     //check for minimum XOOPS version
     if (!$utility::checkVerXoops($module)) {
         return false;
@@ -41,13 +41,13 @@ function xoops_module_pre_install_tag(\XoopsModule $module)
 
     $mod_tables = $module->getInfo('tables');
     /** @todo replace table operations using Xmf\Tables object methods
-    $tableObj = new \Xmf\Database\Tables;
-    $tableObj->resetQueue();
-    foreach ($mod_tables as $table) {
-        $tableObj->dropTable($table);
-    }
-    return $tableObj->executeQueue();
-    */
+      $tableObj = new \Xmf\Database\Tables;
+      $tableObj->resetQueue();
+      foreach ($mod_tables as $table) {
+      $tableObj->dropTable($table);
+      }
+      return $tableObj->executeQueue();
+     */
     foreach ($mod_tables as $table) {
         $GLOBALS['xoopsDB']->queryF('DROP TABLE IF EXISTS ' . $GLOBALS['xoopsDB']->prefix($table) . ';');
     }

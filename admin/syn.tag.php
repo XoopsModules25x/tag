@@ -19,6 +19,7 @@
  * @since           1.00
  */
 
+use Xmf\Request;
 use XoopsModules\Tag;
 use XoopsModules\Tag\Constants;
 
@@ -31,16 +32,14 @@ xoops_cp_header();
 /** @var \Xmf\Module\Admin $adminObject */
 $adminObject->displayNavigation(basename(__FILE__));
 
-$modid = \Xmf\Request::getInt('modid', Constants::DEFAULT_ID);
-$start = \Xmf\Request::getInt('start', Constants::BEGINNING);
-$limit = \Xmf\Request::getInt('limit', Constants::DEFAULT_LIMIT);
+$modid = Request::getInt('modid', Constants::DEFAULT_ID);
+$start = Request::getInt('start', Constants::BEGINNING);
+$limit = Request::getInt('limit', Constants::DEFAULT_LIMIT);
 
-$sql = 'SELECT tag_modid, COUNT(DISTINCT tag_id) AS count_tag'
-     . ' FROM ' . $GLOBALS['xoopsDB']->prefix('tag_link')
-     . ' GROUP BY tag_modid';
+$sql           = 'SELECT tag_modid, COUNT(DISTINCT tag_id) AS count_tag' . ' FROM ' . $GLOBALS['xoopsDB']->prefix('tag_link') . ' GROUP BY tag_modid';
 $counts_module = [];
 $module_list   = [];
-$result = $GLOBALS['xoopsDB']->query($sql);
+$result        = $GLOBALS['xoopsDB']->query($sql);
 if ($result) {
     while (false !== ($myrow = $GLOBALS['xoopsDB']->fetchArray($result))) {
         $counts_module[$myrow['tag_modid']] = $myrow['count_tag'];
@@ -62,31 +61,33 @@ foreach ($module_list as $module => $module_name) {
 }
 $tray->addElement($mod_select);
 $num_select = new \XoopsFormSelect(_AM_TAG_NUM, 'limit', $limit);
-$num_select->addOptionArray([
-                                0   => _ALL,
-                                10  => 10,
-                                50  => 50,
-                                100 => 100,
-                                500 => 500,
-                            ]);
+$num_select->addOptionArray(
+    [
+        0   => _ALL,
+        10  => 10,
+        50  => 50,
+        100 => 100,
+        500 => 500,
+    ]
+);
 $tray->addElement($num_select);
 $tray->addElement(new \XoopsFormButton('', 'submit', _SUBMIT, 'submit'));
 $tray->addElement(new \XoopsFormHidden('start', $start));
 $opform->addElement($tray);
 $opform->display();
 
-if (\Xmf\Request::hasVar('start', 'GET')) {
+if (Request::hasVar('start', 'GET')) {
     /** @var \XoopsModules\Tag\TagHandler $tagHandler */
     $tagHandler = $helper->getHandler('Tag');
 
     $criteria = new \CriteriaCompo();
-//    $criteria->setStart($start);
-//    $criteria->setLimit($limit);
+    //    $criteria->setStart($start);
+    //    $criteria->setLimit($limit);
     if ($modid > Constants::DEFAULT_ID) {
         $criteria->add(new \Criteria('l.tag_modid', $modid));
     }
     $tags = $tagHandler->getByLimit($limit, $start, $criteria, null, false);
-//    $tags = $tagHandler->getByLimit(0, 0, $criteria, null, false);
+    //    $tags = $tagHandler->getByLimit(0, 0, $criteria, null, false);
     if ($tags && is_array($tags)) {
         foreach ($tags as $tag_id => $tag) {
             $tagHandler->update_stats($tag_id, (-1 == $modid) ? Constants::DEFAULT_ID : $tag['modid']);

@@ -19,6 +19,7 @@
  */
 
 use XoopsModules\Tag;
+use XoopsModules\Tag\Helper;
 
 defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
@@ -40,7 +41,7 @@ if (!defined('TAG_FUNCTIONS_RECON')):
         $modules_obj = $moduleHandler->getObjects($criteria, true);
 
         /** @var Tag\LinkHandler $linkHandler */
-        $linkHandler = \XoopsModules\Tag\Helper::getInstance()->getHandler('Link'); //@var \XoopsModules\Tag\Handler $tagHandler
+        $linkHandler = Helper::getInstance()->getHandler('Link'); //@var \XoopsModules\Tag\Handler $tagHandler
         $linkHandler->deleteAll(new \Criteria('tag_modid', '(' . implode(', ', array_keys($modules_obj)) . ')', 'NOT IN'), true);
 
         foreach (array_keys($modules_obj) as $mid) {
@@ -71,7 +72,7 @@ if (!defined('TAG_FUNCTIONS_RECON')):
     function tag_cleanOrphan()
     {
         /** @var \XoopsModules\Tag\TagHandler $tagHandler */
-        $tagHandler = \XoopsModules\Tag\Helper::getInstance()->getHandler('Tag'); // xoops_getModuleHandler('tag', 'tag');
+        $tagHandler = Helper::getInstance()->getHandler('Tag'); // xoops_getModuleHandler('tag', 'tag');
 
         $success = true;
         /* clear item-tag links */

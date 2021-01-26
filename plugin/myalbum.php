@@ -8,6 +8,7 @@
  but WITHOUT ANY WARRANTY; without even the implied warranty of
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 */
+
 /**
  * XOOPS tag management module
  *
@@ -17,6 +18,11 @@
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
  * @since           1.00
  */
+
+use Xmf\Request;
+use XoopsModules\Tag\Helper;
+use XoopsModules\Tag\Utility;
+
 defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
 /**
@@ -49,7 +55,7 @@ function myalbum_tag_iteminfo(&$items)
         }
     }
     /** @var \XoopsModules\Myalbum\PhotosHandler $itemHandler */
-    $itemHandler =  \XoopsModules\Myalbum\Helper::getInstance()->getHandler('Photos');
+    $itemHandler = \XoopsModules\Myalbum\Helper::getInstance()->getHandler('Photos');
     /** @var \XoopsModules\Myalbum\TextHandler $itemHandler */
     $textHandler = \XoopsModules\Myalbum\Helper::getInstance()->getHandler('Text');
     $items_obj   = $itemHandler->getObjects(new \Criteria('lid', '(' . implode(', ', $items_id) . ')', 'IN'), true);
@@ -63,7 +69,7 @@ function myalbum_tag_iteminfo(&$items)
                 'uid'     => $item_obj->getVar('submitter'),
                 'link'    => "photo.php?lid={$item_id}&cid=" . $item_obj->getVar('cid'),
                 'time'    => $item_obj->getVar('date'),
-                'tags'    => \XoopsModules\Tag\Utility::tag_parse_tag($item_obj->getVar('tags', 'n')),
+                'tags'    => Utility::tag_parse_tag($item_obj->getVar('tags', 'n')),
                 'content' => $GLOBALS['myts']->displayTarea($text->getVar('description'), 1, 1, 1, 1, 1, 1),
             ];
         }
@@ -85,12 +91,12 @@ function myalbum_tag_synchronization($mid)
     /** @var \XoopsModules\Myalbum\PhotosHandler $itemHandler */
     $itemHandler = \XoopsModules\Myalbum\Helper::getInstance()->getHandler('Photos');
     /** @var \XoopsModules\Tag\LinkHandler $linkHandler */
-    $linkHandler = \XoopsModules\Tag\Helper::getInstance()->getHandler('Link'); //@var \XoopsModules\Tag\Handler $tagHandler
+    $linkHandler = Helper::getInstance()->getHandler('Link'); //@var \XoopsModules\Tag\Handler $tagHandler
 
     //    $mid = XoopsFilterInput::clean($mid, 'INT');
-    $mid = \Xmf\Request::getInt('mid', 0, 'POST');
+    $mid = Request::getInt('mid', 0, 'POST');
 
-    /* clear tag-item links */
+    /* clear tag-item links */ 
     /** {@internal the following statement isn't really needed any more (MySQL is really old)
      *   and some hosting companies block the $GLOBALS['xoopsDB']->getServerVersion() function for security
      *   reasons. }

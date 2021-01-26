@@ -18,21 +18,24 @@
  * @author         Taiwen Jiang <phppp@users.sourceforge.net>
  * @since          1.00
  */
- 
- use XoopsModules\Tag\Utility;
- 
-(defined('XOOPS_ROOT_PATH') && ($GLOBALS['xoopsModule'] instanceof XoopsModule)) || exit('Restricted access');
+
+use XoopsModules\Tag\{
+    Helper,
+    Utility
+};
+
+(defined('XOOPS_ROOT_PATH') && ($GLOBALS['xoopsModule'] instanceof \XoopsModule)) || exit('Restricted access');
 
 /**
  * Display tag list
  *
- * @todo move this to a namespaced class
- * @param  int|array $tags array of tag string
+ * @param int|array $tags  array of tag string
  *                         OR
- * @param  int       $catid
- * @param  int       $modid
+ * @param int       $catid
+ * @param int       $modid
  * @return array
- * {@internal param int $itemid }}
+ *                         {@internal param int $itemid }}
+ * @todo move this to a namespaced class
  */
 function tagBar($tags, $catid = 0, $modid = 0)
 {
@@ -42,7 +45,7 @@ function tagBar($tags, $catid = 0, $modid = 0)
         return [];
     }
 
-    $helper = \XoopsModules\Tag\Helper::getInstance();
+    $helper = Helper::getInstance();
 
     if (null === $loaded) {
         require_once $helper->path('include/vars.php');
@@ -65,7 +68,7 @@ function tagBar($tags, $catid = 0, $modid = 0)
 
     // itemid
     if (is_numeric($tags)) {
-        if (empty($modid) && ($GLOBALS['xoopsModule'] instanceof XoopsModule)) {
+        if (empty($modid) && ($GLOBALS['xoopsModule'] instanceof \XoopsModule)) {
             $modid = $GLOBALS['xoopsModule']->getVar('mid');
         }
         /** @var \XoopsModules\Tag\TagHandler $tagHandler */
@@ -73,7 +76,6 @@ function tagBar($tags, $catid = 0, $modid = 0)
         if (!$tags = $tagHandler->getByItem($tags, $modid, $catid)) {
             return [];
         }
-
         // if ready, do nothing
     } elseif (is_array($tags)) {
         // parse
@@ -82,13 +84,7 @@ function tagBar($tags, $catid = 0, $modid = 0)
     }
     $tags_data = [];
     foreach ($tags as $tag) {
-        $tags_data[] = "<a href='"
-                       . $helper->url('view.tag.php' . URL_DELIMITER . urlencode($tag))
-                       . "' title='"
-                       . htmlspecialchars($tag, ENT_QUOTES | ENT_HTML5)
-                       . "'>"
-                       . htmlspecialchars($tag, ENT_QUOTES | ENT_HTML5)
-                       . '</a>';
+        $tags_data[] = "<a href='" . $helper->url('view.tag.php' . URL_DELIMITER . urlencode($tag)) . "' title='" . htmlspecialchars($tag, ENT_QUOTES | ENT_HTML5) . "'>" . htmlspecialchars($tag, ENT_QUOTES | ENT_HTML5) . '</a>';
     }
 
     return [

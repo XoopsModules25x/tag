@@ -9,7 +9,8 @@
  WITHOUT ANY WARRANTY; without even the implied warranty of
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  */
- /**
+
+/**
  * Module: Tag
  *
  * @package   \XoopsModules\Tag
@@ -18,10 +19,11 @@
  * @license   https://www.gnu.org/licenses/gpl-2.0.html GNU Public License
  * @since     2.00
  */
+
 use XoopsModules\Tag;
 
 $GLOBALS['xoopsOption']['nocommon'] = true;
-include_once dirname(dirname(dirname(__DIR__))) . '/mainfile.php';
+require_once dirname(dirname(dirname(__DIR__))) . '/mainfile.php';
 require dirname(__DIR__) . '/preloads/autoloader.php';
 
 $moduleDirName = basename(dirname(__DIR__));
@@ -31,7 +33,7 @@ xoops_loadLanguage('admin', $moduleDirName);
 //session_start();
 
 $issuesClass = '\XoopsModules\\' . ucfirst(mb_strtolower($moduleDirName)) . '\Issues';
-$modIssues = new $issuesClass();
+$modIssues   = new $issuesClass();
 if ($modIssues->getCachedEtag()) {
     // Found the session var so check to see if anything's changed since last time we checked
     $hdrSize       = $modIssues->execCurl();
@@ -80,35 +82,45 @@ if ($modIssues->getCachedEtag()) {
 
 $hdr        = substr($curl_response, 0, $hdrSize);
 $rspSize    = strlen($curl_response) - $hdrSize;
-$response   = substr($curl_response, - $rspSize);
+$response   = substr($curl_response, -$rspSize);
 $issuesObjs = json_decode($response); //get as objects
 
 echo '<br>'
-   . '<h4 class="odd">' . _AM_TAG_ISSUES_OPEN . '</h4>'
-   . '<p class="even">'
-   . '<table>'
-   . '  <thead>'
-   . '  <tr>'
-   . '    <th class="center width10">' . _AM_TAG_HELP_ISSUE . '</th>'
-   . '    <th class="center width10">' . _AM_TAG_HELP_DATE . '</th>'
-   . '    <th class="center">' . _AM_TAG_HELP_TITLE . '</th>'
-   . '    <th class="center width10">' . _AM_TAG_HELP_SUBMITTER . '</th>'
-   . '  </tr>'
-   . '  </thead>'
-   . '  <tbody>';
+     . '<h4 class="odd">'
+     . _AM_TAG_ISSUES_OPEN
+     . '</h4>'
+     . '<p class="even">'
+     . '<table>'
+     . '  <thead>'
+     . '  <tr>'
+     . '    <th class="center width10">'
+     . _AM_TAG_HELP_ISSUE
+     . '</th>'
+     . '    <th class="center width10">'
+     . _AM_TAG_HELP_DATE
+     . '</th>'
+     . '    <th class="center">'
+     . _AM_TAG_HELP_TITLE
+     . '</th>'
+     . '    <th class="center width10">'
+     . _AM_TAG_HELP_SUBMITTER
+     . '</th>'
+     . '  </tr>'
+     . '  </thead>'
+     . '  <tbody>';
 
 $pullReqFound = false;
 $suffix       = '';
 $cssClass     = 'odd';
-$i = 0;
+$i            = 0;
 if (!empty($issuesObjs)) {
     foreach ($issuesObjs as $issue) {
         $suffix = '';
         if (isset($issue->pull_request)) {
             /** {@internal {uncomment the following line if you don't want to see pull requests as issues }} */
-//            continue; // github counts pull requests as open issues so ignore these
+            //            continue; // github counts pull requests as open issues so ignore these
 
-            $suffix = '*';
+            $suffix       = '*';
             $pullReqFound = true;
         }
 
@@ -117,11 +129,32 @@ if (!empty($issuesObjs)) {
         ++$i; // issue count
 
         echo '  <tr>'
-           . '    <td class="' . $cssClass . ' center"><a href="' . $issue->html_url . '" target="_blank">' . (int)$issue->number . $suffix . '</a></td>'
-           . '    <td class="' . $cssClass . ' center">' . $dispDate . '</td>'
-           . '    <td class="' . $cssClass . ' left" style="padding-left: 2em;">' . htmlspecialchars($issue->title, ENT_QUOTES | ENT_HTML5) . '</td>'
-           . '    <td class="' . $cssClass . ' center"><a href="' . htmlspecialchars($issue->user->html_url, ENT_QUOTES | ENT_HTML5) . '" target="_blank">' . htmlspecialchars($issue->user->login, ENT_QUOTES | ENT_HTML5) . '</a></td>'
-           . '  </tr>';
+             . '    <td class="'
+             . $cssClass
+             . ' center"><a href="'
+             . $issue->html_url
+             . '" target="_blank">'
+             . (int)$issue->number
+             . $suffix
+             . '</a></td>'
+             . '    <td class="'
+             . $cssClass
+             . ' center">'
+             . $dispDate
+             . '</td>'
+             . '    <td class="'
+             . $cssClass
+             . ' left" style="padding-left: 2em;">'
+             . htmlspecialchars($issue->title, ENT_QUOTES | ENT_HTML5)
+             . '</td>'
+             . '    <td class="'
+             . $cssClass
+             . ' center"><a href="'
+             . htmlspecialchars($issue->user->html_url, ENT_QUOTES | ENT_HTML5)
+             . '" target="_blank">'
+             . htmlspecialchars($issue->user->login, ENT_QUOTES | ENT_HTML5)
+             . '</a></td>'
+             . '  </tr>';
         $cssClass = ('odd' === $cssClass) ? 'even' : 'odd';
     }
 }
@@ -133,8 +166,6 @@ if (!empty($modIssues->getError())) {
 }
 
 if ($pullReqFound) {
-    echo '    <tfoot>'
-       . '      <tr><td colspan="4" class="left italic marg3 foot">' . _AM_TAG_ISSUES_NOTE . '</td></tr>'
-       . '    </tfoot>';
+    echo '    <tfoot>' . '      <tr><td colspan="4" class="left italic marg3 foot">' . _AM_TAG_ISSUES_NOTE . '</td></tr>' . '    </tfoot>';
 }
 echo '    </tbody></table></p>';

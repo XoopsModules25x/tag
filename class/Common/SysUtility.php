@@ -19,14 +19,16 @@ namespace XoopsModules\Tag\Common;
  *
  * @license      https://www.fsf.org/copyleft/gpl.html GNU public license
  * @copyright    https://xoops.org 2000-2020 &copy; XOOPS Project
- * @author       ZySpec <owners@zyspec.com>
+ * @author       ZySpec <zyspec@yahoo.com>
  * @author       Mamba <mambax7@gmail.com>
  */
 
 use MyTextSanitizer;
 use XoopsFormDhtmlTextArea;
 use XoopsFormTextArea;
-use XoopsModules\Tag;
+use XoopsModules\Tag\Helper;
+
+
 
 /**
  * Class SysUtility
@@ -161,6 +163,10 @@ class SysUtility
             $options['height'] = '400px';
         }
 
+        if (null === $helper) {
+            $helper = Helper::getInstance();
+        }
+
         $isAdmin = $helper->isUserAdmin();
 
         if (class_exists('XoopsFormEditor')) {
@@ -190,5 +196,30 @@ class SysUtility
         $result = $xoopsDB->queryF("SHOW COLUMNS FROM   $table LIKE '$fieldname'");
 
         return ($xoopsDB->getRowsNum($result) > 0);
+    }
+
+    /**
+     * @param array|string $tableName
+     * @param int          $id_field
+     * @param int          $id
+     *
+     * @return mixed
+     */
+    public static function cloneRecord($tableName, $id_field, $id)
+    {
+        $new_id = false;
+        $table  = $GLOBALS['xoopsDB']->prefix($tableName);
+        // copy content of the record you wish to clone
+        $tempTable = $GLOBALS['xoopsDB']->fetchArray($GLOBALS['xoopsDB']->query("SELECT * FROM $table WHERE $id_field='$id' "), MYSQLI_ASSOC) or exit('Could not select record');
+        // set the auto-incremented id's value to blank.
+        unset($tempTable[$id_field]);
+        // insert cloned copy of the original  record
+        $result = $GLOBALS['xoopsDB']->queryF("INSERT INTO $table (" . implode(', ', array_keys($tempTable)) . ") VALUES ('" . implode("', '", array_values($tempTable)) . "')") or exit ($GLOBALS['xoopsDB']->error());
+
+        if ($result) {
+            // Return the new id
+            $new_id = $GLOBALS['xoopsDB']->getInsertId();
+        }
+        return $new_id;
     }
 }

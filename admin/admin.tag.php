@@ -19,6 +19,7 @@
  * @since           1.00
  */
 
+use Xmf\Request;
 use XoopsModules\Tag;
 use XoopsModules\Tag\Constants;
 
@@ -34,18 +35,18 @@ require_once $helper->path('include/vars.php');
 $adminObject->displayNavigation(basename(__FILE__));
 
 $limit  = $GLOBALS['xoopsModuleConfig']['items_perpage'];
-$modid  = \Xmf\Request::getInt('modid', Constants::DEFAULT_ID);
-$start  = \Xmf\Request::getInt('start', Constants::BEGINNING);
-$status = \Xmf\Request::getInt('status', Constants::STATUS_ALL, 'GET');
+$modid  = Request::getInt('modid', Constants::DEFAULT_ID);
+$start  = Request::getInt('start', Constants::BEGINNING);
+$status = Request::getInt('status', Constants::STATUS_ALL, 'GET');
 
 /**
- * @var XoopsModules\Tag\TagHandler $tagHandler
+ * @var XoopsModules\Tag\TagHandler  $tagHandler
  * @var XoopsModules\Tag\LinkHandler $linkHandler
  */
 $tagHandler  = Tag\Helper::getInstance()->getHandler('Tag');
 $linkHandler = Tag\Helper::getInstance()->getHandler('Link');
 
-$post_tags = \Xmf\Request::getArray('tags', [], 'POST');
+$post_tags = Request::getArray('tags', [], 'POST');
 if (!empty($post_tags)) {
     $msg_db_updated = '';
     /** {@internal - Test using following code to reduce dB accesses }} */
@@ -88,10 +89,8 @@ $counts_module = [];
 $module_list   = [];
 
 /** {#internal use direct SQL instead of Tag\TagHandler CRUD operations because XOOPS can't handle COUNT(DISTINCT xx) }} */
-$sql           = 'SELECT tag_modid, COUNT(DISTINCT tag_id) AS count_tag'
-               . ' FROM ' . $GLOBALS['xoopsDB']->prefix('tag_link')
-               . ' GROUP BY tag_modid';
-$result        = $GLOBALS['xoopsDB']->query($sql);
+$sql    = 'SELECT tag_modid, COUNT(DISTINCT tag_id) AS count_tag' . ' FROM ' . $GLOBALS['xoopsDB']->prefix('tag_link') . ' GROUP BY tag_modid';
+$result = $GLOBALS['xoopsDB']->query($sql);
 
 if (false === $result) {
     xoops_error($GLOBALS['xoopsDB']->error());
@@ -137,14 +136,24 @@ if (!empty($modid)) {
 }
 $tags = $tagHandler->getByLimit(0, 0, $criteria, null, false);
 
-$form_tags = "<form name='tags' method='post' action='" . $_SERVER['SCRIPT_NAME'] . "'>\n"
-           . "<table style='margin: 1px; padding: 4px;' class='outer width100 bnone bspacing1'>\n"
+$form_tags = "<form name='tags' method='post' action='"
+             . $_SERVER['SCRIPT_NAME']
+             . "'>\n"
+             . "<table style='margin: 1px; padding: 4px;' class='outer width100 bnone bspacing1'>\n"
              . "  <thead>\n"
              . "  <tr class='txtcenter'>\n"
-           . "    <th class='bg3'>" . _AM_TAG_TERM . "</th>\n"
-           . "    <th class='bg3 width10'>" . _AM_TAG_INACTIVE . "</th>\n"
-           . "    <th class='bg3 width10'>" . _AM_TAG_ACTIVE . "</th>\n"
-           . "    <th class='bg3 width10'>" . _DELETE . "</th>\n"
+             . "    <th class='bg3'>"
+             . _AM_TAG_TERM
+             . "</th>\n"
+             . "    <th class='bg3 width10'>"
+             . _AM_TAG_INACTIVE
+             . "</th>\n"
+             . "    <th class='bg3 width10'>"
+             . _AM_TAG_ACTIVE
+             . "</th>\n"
+             . "    <th class='bg3 width10'>"
+             . _DELETE
+             . "</th>\n"
              . "  </tr>\n"
              . "  </thead>\n"
              . "  <tbody>\n";
@@ -154,10 +163,22 @@ if (empty($tags)) {
     $class_tr = 'odd';
     foreach (array_keys($tags) as $key) {
         $form_tags .= "  <tr class='{$class_tr}'>\n"
-                    . '    <td>' . $tags[$key]['term'] . "</td>\n"
-                    . "    <td  class='txtcenter'><input type='radio' name='tags[{$key}]' value='" . Constants::STATUS_INACTIVE . "'" . ($tags[$key]['status'] ? ' checked' : " '' ") . "></td>\n"
-                    . "    <td  class='txtcenter'><input type='radio' name='tags[{$key}]' value='" . Constants::STATUS_ACTIVE . "'" . ($tags[$key]['status'] ? " '' " : ' checked') . "></td>\n"
-                    . "    <td  class='txtcenter'><input type='radio' name='tags[{$key}]' value='" . Constants::STATUS_DELETE . "'></td>\n"
+                      . '    <td>'
+                      . $tags[$key]['term']
+                      . "</td>\n"
+                      . "    <td  class='txtcenter'><input type='radio' name='tags[{$key}]' value='"
+                      . Constants::STATUS_INACTIVE
+                      . "'"
+                      . ($tags[$key]['status'] ? ' checked' : " '' ")
+                      . "></td>\n"
+                      . "    <td  class='txtcenter'><input type='radio' name='tags[{$key}]' value='"
+                      . Constants::STATUS_ACTIVE
+                      . "'"
+                      . ($tags[$key]['status'] ? " '' " : ' checked')
+                      . "></td>\n"
+                      . "    <td  class='txtcenter'><input type='radio' name='tags[{$key}]' value='"
+                      . Constants::STATUS_DELETE
+                      . "'></td>\n"
                       . "  </tr>\n";
         $class_tr  = ('even' === $class_tr) ? 'odd' : 'even';
     }
@@ -176,8 +197,12 @@ if (empty($tags)) {
                   . "      <input type='hidden' name='status' value='{$status}'> \n"
                   . "      <input type='hidden' name='start' value='{$start}'> \n"
                   . "      <input type='hidden' name='modid' value='{$modid}'> \n"
-                  . "      <input type='submit' name='submit' value='" . _SUBMIT . "'> \n"
-                  . "      <input type='reset' name='submit' value='" . _CANCEL . "'>\n"
+                  . "      <input type='submit' name='submit' value='"
+                  . _SUBMIT
+                  . "'> \n"
+                  . "      <input type='reset' name='submit' value='"
+                  . _CANCEL
+                  . "'>\n"
                   . "    </td>\n"
                   . "  </tr>\n"
                   . "  </tfoot>\n";

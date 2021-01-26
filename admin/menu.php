@@ -19,14 +19,15 @@
  * @since           1.00
  */
 
+use Xmf\Module\Admin;
 use XoopsModules\Tag;
+use XoopsModules\Tag\Helper;
 
-$helper = \XoopsModules\Tag\Helper::getInstance();
+$helper = Helper::getInstance();
 $helper->loadLanguage('common');
 $helper->loadLanguage('modinfo');
 
-
-$pathIcon32 = \Xmf\Module\Admin::menuIconPath('');
+$pathIcon32 = Admin::menuIconPath('');
 if (is_object($helper->getModule())) {
     $pathModIcon32 = $helper->getModule()->getInfo('modicons32');
 }

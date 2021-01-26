@@ -28,7 +28,7 @@ use XoopsModules\Tag\Utility;
 //require_once $GLOBALS['xoops']->path('/modules/tag/include/functions.ini.php');
 
 // include customized variables
-if (($GLOBALS['xoopsModule'] instanceof XoopsModule) && ('tag' === $GLOBALS['xoopsModule']->getVar('dirname', 'n'))
+if (($GLOBALS['xoopsModule'] instanceof \XoopsModule) && ('tag' === $GLOBALS['xoopsModule']->getVar('dirname', 'n'))
     && $GLOBALS['xoopsModule']->isactive()) {
     $GLOBALS['xoopsModuleConfig'] = Utility::tag_load_config();
 }

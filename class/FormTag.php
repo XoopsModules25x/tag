@@ -25,12 +25,10 @@ namespace XoopsModules\Tag;
 use XoopsModules\Tag;
 use XoopsModules\Tag\Utility;
 
-defined('XOOPS_ROOT_PATH') || exit('Restricted access');
-
-xoops_load('xoopsformtext');
+\xoops_load('xoopsformtext');
 
 /**
- * Class TagFormTag
+ * Class FormTag
  */
 class FormTag extends \XoopsFormText
 {
@@ -50,16 +48,16 @@ class FormTag extends \XoopsFormText
 
         $value = empty($value) ? '' : $value;
 
-        if (!empty($value) && is_numeric($value) && ($GLOBALS['xoopsModule'] instanceof \XoopsModule)) {
+        if (!empty($value) && \is_numeric($value) && ($GLOBALS['xoopsModule'] instanceof \XoopsModule)) {
             $modid = $GLOBALS['xoopsModule']->getVar('mid');
             /** @var \XoopsModules\Tag\TagHandler $tagHandler */
             $tagHandler = $helper->getHandler('Tag');
             $tags       = $tagHandler->getByItem($value, $modid, $catid);
             if ($tags) {
-                $value = htmlspecialchars(implode(', ', $tags), ENT_QUOTES | ENT_HTML5);
+                $value = \htmlspecialchars(\implode(', ', $tags), \ENT_QUOTES | \ENT_HTML5);
             }
         }
-        $caption = _MD_TAG_TAGS;
+        $caption = \_MD_TAG_TAGS;
         parent::__construct($caption, $name, $size, $maxlength, $value);
     }
 
@@ -71,15 +69,17 @@ class FormTag extends \XoopsFormText
     public function render()
     {
         $delimiters = Utility::tag_get_delimiter();
-        foreach (array_keys($delimiters) as $key) {
-            $delimiters[$key] = "<em style='font-weight: bold; color: #ff0000; font-style: normal;'>" . htmlspecialchars($delimiters[$key], ENT_QUOTES | ENT_HTML5) . '</em>';
+        foreach (\array_keys($delimiters) as $key) {
+            $delimiters[$key] = "<em style='font-weight: bold; color: #ff0000; font-style: normal;'>" . \htmlspecialchars($delimiters[$key], \ENT_QUOTES | \ENT_HTML5) . '</em>';
         }
-        $class = (false !== $this->getClass()) ? "class='" . $this->getClass() . "' " : '';
-        $render = "<input type='text' name='" . $this->getName() . "' id='" . $this->getName() . "' size='" . $this->getSize() . "' maxlength='" . $this->getMaxlength() . "' value='" . $this->getValue() . "' " . $class . $this->getExtra() . '>'
-                . _MD_TAG_TAG_DELIMITER . ': [' . implode('], [', $delimiters) . ']';
+        $class  = (false !== $this->getClass()) ? "class='" . $this->getClass() . "' " : '';
+        $render = "<input type='text' name='" . $this->getName() . "' id='" . $this->getName() . "' size='" . $this->getSize() . "' maxlength='" . $this->getMaxlength() . "' value='" . $this->getValue() . "' " . $class . $this->getExtra() . '>' . \_MD_TAG_TAG_DELIMITER . ': [' . \implode(
+                '], [',
+                $delimiters
+            ) . ']';
 
         return $render;
     }
 }
 
-class_alias(FormTag::class, 'TagFormTag');
+\class_alias(FormTag::class, 'TagFormTag');

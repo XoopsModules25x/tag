@@ -43,7 +43,7 @@ class BlockForm extends \XoopsForm
         $ret    = "<div>\n";
         $hidden = '';
         foreach ($this->getElements() as $ele) {
-            if (!is_object($ele)) {
+            if (!\is_object($ele)) {
                 $ret .= $ele;
             } elseif (!$ele->isHidden()) {
                 if ('' != $caption = $ele->getCaption()) {

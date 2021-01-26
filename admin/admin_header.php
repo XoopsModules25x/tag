@@ -19,7 +19,10 @@
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
  * */
 
-include dirname(__DIR__) . '/preloads/autoloader.php';
+use Xmf\Module\Admin;
+use XoopsModules\Tag\Helper;
+
+require dirname(__DIR__) . '/preloads/autoloader.php';
 
 require_once dirname(dirname(dirname(__DIR__))) . '/include/cp_header.php';
 // require_once  dirname(__DIR__) . '/class/constants.php';
@@ -29,10 +32,10 @@ require_once dirname(__DIR__) . '/include/common.php';
  * {@internal $helper defined in ./include/common.php }}
  *
  */
-$helper = \XoopsModules\Tag\Helper::getInstance();
+$helper = Helper::getInstance();
 
 /** @var \Xmf\Module\Admin $adminObject */
-$adminObject = \Xmf\Module\Admin::getInstance();
+$adminObject = Admin::getInstance();
 
 // Load language files
 $helper->loadLanguage('admin');

@@ -8,6 +8,7 @@
  but WITHOUT ANY WARRANTY; without even the implied warranty of
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 */
+
 /**
  * XOOPS tag management module - xForum
  *
@@ -17,6 +18,11 @@
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
  * @since           1.00
  */
+
+use Xmf\Request;
+use XoopsModules\Tag\Helper;
+use XoopsModules\Tag\Utility;
+
 defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
 /**
@@ -61,7 +67,7 @@ function xforum_tag_iteminfo(&$items)
                     'uid'     => $item_obj->getVar('uid'),
                     'link'    => "viewpost.php?post_id={$item_id}",
                     'time'    => strtotime(date(_DATESTRING, $item_obj->getVar('post_time'))),
-                    'tags'    => \XoopsModules\Tag\Utility::tag_parse_tag($item_obj->getVar('tags', 'n')),
+                    'tags'    => Utility::tag_parse_tag($item_obj->getVar('tags', 'n')),
                     'content' => $myts->displayTarea($item_obj->getVar('post_text'), true, true, true, true, true, true),
                 ];
             }
@@ -84,15 +90,15 @@ function xforum_tag_synchronization($mid)
     /** @var \XoopsModules\Xforum\PostHandler $itemHandler */
     $itemHandler = \XoopsModules\Xforum\Helper::getInstance()->getHandler('Post');
     /** @var \XoopsModules\Tag\LinkHandler $linkHandler */
-    $linkHandler = \XoopsModules\Tag\Helper::getInstance()->getHandler('Link'); //@var \XoopsModules\Tag\Handler $tagHandler
+    $linkHandler = Helper::getInstance()->getHandler('Link'); //@var \XoopsModules\Tag\Handler $tagHandler
 
     //    $mid = XoopsFilterInput::clean($mid, 'INT');
-    $mid = \Xmf\Request::getInt('mid');
-    /* clear tag-item links */
+    $mid = Request::getInt('mid');
+    /* clear tag-item links */ 
     /** {@internal the following statement isn't really needed any more (MySQL is really old)
-     *   and some hosting companies block the $GLOBALS['xoopsDB']->getServerVersion() function for security
-     *   reasons. }
-     */
+ *   and some hosting companies block the $GLOBALS['xoopsDB']->getServerVersion() function for security
+ *   reasons. }
+ */
     //    if (version_compare( $GLOBALS['xoopsDB']->getServerVersion(), "4.1.0", "ge" )):
     $sql = "    DELETE FROM {$linkHandler->table}"
            . '    WHERE '

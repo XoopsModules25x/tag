@@ -36,7 +36,7 @@ trait ServerStats
         //mb    $wfdownloads = WfdownloadsWfdownloads::getInstance();
         $moduleDirName      = basename(dirname(dirname(__DIR__)));
         $moduleDirNameUpper = mb_strtoupper($moduleDirName);
-        $helper = Tag\Helper::getInstance();
+        $helper             = Tag\Helper::getInstance();
         $helper->loadLanguage('common');
 
         //        xoops_loadLanguage('common', $moduleDirName);

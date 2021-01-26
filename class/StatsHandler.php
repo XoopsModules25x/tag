@@ -23,9 +23,6 @@ namespace XoopsModules\Tag;
  */
 
 use XoopsModules\Tag;
-
-defined('XOOPS_ROOT_PATH') || die('Restricted access');
-
 /**
  * Tag stats handler class.
  *
