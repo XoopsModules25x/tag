@@ -148,7 +148,7 @@ class Issues
      */
     public function getSessPrefix()
     {
-        return $this->sessPrefix();
+        return $this->sessPrefix;
     }
 
     /**

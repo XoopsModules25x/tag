@@ -54,8 +54,9 @@ function newbb_tag_iteminfo(&$items)
             $items_id[] = (int)$item_id;
         }
     }
+    $helper = \XoopsModules\Newbb\Helper::getInstance();
     /** @var \XoopsModules\Newbb\TopicHandler $itemHandler */
-    $itemHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Topic');
+    $itemHandler = $helper->getHandler('Topic');
     $items_obj   = $itemHandler->getObjects(new \Criteria('topic_id', '(' . implode(', ', $items_id) . ')', 'IN'), true);
 
     foreach (array_keys($items) as $cat_id) {

@@ -56,7 +56,7 @@ function article_tag_iteminfo(&$items)
     }
 
     /** @var \XoopsModules\Article\ArticleHandler $itemHandler */
-    $itemHandler = $helper->getHandler('Article', 'article');
+    $itemHandler = \XoopsModules\Article\Helper::getInstance()->getHandler('Article');
     $items_obj   = $itemHandler->getObjects(new \Criteria('art_id', '(' . implode(', ', $items_id) . ')', 'IN'), true);
 
     foreach (array_keys($items) as $cat_id) {
@@ -87,7 +87,7 @@ function article_tag_iteminfo(&$items)
 function article_tag_synchronization($mid)
 {
     /** @var \XoopsModules\Article\ArticleHandler $itemHandler */
-    $itemHandler = $helper->getHandler('Article', 'article');
+    $itemHandler = \XoopsModules\Article\Helper::getInstance()->getHandler('Article', 'article');
     //    /** @var \TagLinkHandler $linkHandler */
     //    $linkHandler = \XoopsModules\Tag\Helper::getInstance()->getHandler('Link'); //@var \XoopsModules\Tag\Handler $tagHandler
     /** @var \XoopsModules\Tag\LinkHandler $itemHandler */

@@ -31,8 +31,8 @@ $moduleDirName      = basename(dirname(__DIR__));
 $moduleDirNameUpper = mb_strtoupper($moduleDirName); //$capsDirName
 
 $db      = \XoopsDatabaseFactory::getDatabaseConnection();
-$helper  = Tag\Helper::getInstance();
-$utility = new Tag\Utility();
+$helper  = Helper::getInstance();
+$utility = new Utility();
 //$configurator = new Tag\Common\Configurator();
 
 $helper->loadLanguage('common');

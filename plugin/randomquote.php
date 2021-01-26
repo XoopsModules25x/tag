@@ -78,7 +78,7 @@ function randomquote_tag_iteminfo(&$items)
             ];
         }
     }
-    unset($items_obj);
+    unset($quoteObjs);
 
     return true;
 }

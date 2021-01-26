@@ -336,6 +336,7 @@ function tag_block_top_show($options, $dirname = '', $catid = 0)
         }
         unset($tags_array, $tag_count_array, $tags_sort);
     */
+
     $block['tags']        = $tags_data_array;
     $block['tag_dirname'] = 'tag';
     if (!empty($modid)) {

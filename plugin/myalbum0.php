@@ -54,6 +54,7 @@ function myalbum0_tag_iteminfo(&$items)
             $items_id[] = (int)$item_id;
         }
     }
+    $helper = \XoopsModules\Myalbum\Helper::getInstance();
     /** @var \Myalbum0PhotosHandler $itemHandler */
     $itemHandler = $helper->getHandler('Photos', 'myalbum0');
     $textHandler = $helper->getHandler('Text', 'myalbum0');
@@ -92,7 +93,7 @@ function myalbum0_tag_iteminfo(&$items)
 function myalbum0_tag_synchronization($mid)
 {
     /** @var \Myalbum0PhotosHandler $itemHandler */
-    $itemHandler = $helper->getHandler('Photos', 'myalbum0');
+    $itemHandler = \XoopsModules\Myalbum\Helper::getInstance()->getHandler('Photos', 'myalbum0');
     /** @var \XoopsModules\Tag\LinkHandler $linkHandler */
     $linkHandler = Helper::getInstance()->getHandler('Link'); //@var \XoopsModules\Tag\Handler $tagHandler
 

@@ -21,6 +21,7 @@
 use Xmf\Request;
 use XoopsModules\Tag\Helper;
 use XoopsModules\Tag\Utility;
+use XoopsModules\Publisher\Helper as PublisherHelper;
 
 defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
@@ -45,7 +46,7 @@ function publisher_tag_iteminfo(&$items)
         }
     }
     /** @var \XoopsModules\Publisher\ItemHandler $itemHandler */
-    $itemHandler = \XoopsModules\Publisher\Helper::getInstance()->getHandler('Item');
+    $itemHandler = PublisherHelper::getInstance()->getHandler('Item');
 
     $criteria  = new \Criteria('itemid', '(' . implode(', ', $items_id) . ')', 'IN');
     $items_obj = $itemHandler->getObjects($criteria, 'itemid');
@@ -75,7 +76,6 @@ function publisher_tag_iteminfo(&$items)
 function publisher_tag_synchronization($mid)
 {
     /** @var \XoopsModules\Publisher\ItemHandler $itemHandler */
-    //    $itemHandler = \XoopsModules\Publisher\Helper::getInstance()->getHandler('Item');
     $itemHandler = \XoopsModules\Publisher\Helper::getInstance()->getHandler('Item');
 
     /** @var \XoopsModules\Tag\LinkHandler $itemHandler */
