@@ -31,7 +31,7 @@ class Utility extends Common\SysUtility
             } else {
                 /** @var \XoopsConfigHandler $configHandler */
                 $mid           = $helper->getModule()->getVar('mid');
-                $configHandler = xoops_getHandler('config');
+                $configHandler = \xoops_getHandler('config');
 
                 $criteria = new \Criteria('conf_modid', $mid);
                 $configs  = $configHandler->getConfigs($criteria);
@@ -41,9 +41,9 @@ class Utility extends Common\SysUtility
                 }
                 unset($configs, $criteria);
             }
-            if (is_file($helper->path('include/plugin.php'))) {
+            if (\is_file($helper->path('include/plugin.php'))) {
                 $customConfig = require $helper->path('include/plugin.php');
-                $moduleConfig = array_merge($moduleConfig, $customConfig);
+                $moduleConfig = \array_merge($moduleConfig, $customConfig);
             }
         }
 
@@ -57,16 +57,16 @@ class Utility extends Common\SysUtility
      */
     public static function tag_define_url_delimiter()
     {
-        if (defined('URL_DELIMITER')) {
-            if (!in_array(URL_DELIMITER, ['?', '/'], true)) {
+        if (\defined('URL_DELIMITER')) {
+            if (!\in_array(URL_DELIMITER, ['?', '/'], true)) {
                 exit('Security Violation');
             }
         } else {
             $moduleConfig = self::tag_load_config();
             if (empty($moduleConfig['do_urw'])) {
-                define('URL_DELIMITER', '?');
+                \define('URL_DELIMITER', '?');
             } else {
-                define('URL_DELIMITER', '/');
+                \define('URL_DELIMITER', '/');
             }
         }
     }
@@ -116,25 +116,25 @@ class Utility extends Common\SysUtility
         ];
         $args        = [];
         $args_string = [];
-        if (preg_match("/[^\?]*\.php[\/|\?]([^\?]*)/i", $_SERVER['REQUEST_URI'], $matches)) {
-            $vars = preg_split("/[\/|&]/", $matches[1]);
-            $vars = array_map('\trim', $vars);
+        if (\preg_match("/[^\?]*\.php[\/|\?]([^\?]*)/i", $_SERVER['REQUEST_URI'], $matches)) {
+            $vars = \preg_split("/[\/|&]/", $matches[1]);
+            $vars = \array_map('\trim', $vars);
             foreach ($vars as $var) {
-                if (is_numeric($var)) {
+                if (\is_numeric($var)) {
                     $args_string[] = $var;
                 } elseif (false === mb_strpos($var, '=')) {
-                    if (is_numeric(mb_substr($var, 1))) {
+                    if (\is_numeric(mb_substr($var, 1))) {
                         $args[$args_abb[mb_strtolower($var[0])]] = (int)mb_substr($var, 1);
                     } else {
-                        $args_string[] = urldecode($var);
+                        $args_string[] = \urldecode($var);
                     }
                 } else {
-                    parse_str($var, $args);
+                    \parse_str($var, $args);
                 }
             }
         }
 
-        return (0 == count($args) + count($args_string)) ? false : true;
+        return (0 == \count($args) + \count($args_string)) ? false : true;
     }
 
     /**
@@ -149,8 +149,8 @@ class Utility extends Common\SysUtility
         $tags = [];
         if (!empty($text_tag)) {
             $delimiters = self::tag_get_delimiter();
-            $tags_raw   = explode(',', str_replace($delimiters, ',', $text_tag));
-            $tags       = array_filter(array_map('\trim', $tags_raw)); // removes all array elements === false
+            $tags_raw   = \explode(',', \str_replace($delimiters, ',', $text_tag));
+            $tags       = \array_filter(\array_map('\trim', $tags_raw)); // removes all array elements === false
         }
         return $tags;
     }

@@ -13,11 +13,9 @@ namespace XoopsModules\Tag;
  */
 
 /**
- * @copyright    XOOPS Project https://xoops.org/
+ * @copyright    XOOPS Project (https://xoops.org)
  * @license      GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
- * @package
- * @since
- * @author       XOOPS Development Team
+ * @author      XOOPS Development Team
  */
 
 /**
@@ -42,11 +40,11 @@ class Helper extends \Xmf\Module\Helper
      *
      * @return \XoopsModules\Tag\Helper
      */
-    public static function getInstance($debug = false)
+    public static function getInstance(bool $debug = false): Helper
     {
         static $instance;
         if (null === $instance) {
-            $instance = new self($debug);
+            $instance = new static($debug);
         }
 
         return $instance;

@@ -36,11 +36,11 @@ class Link extends \XoopsObject
      */
     public function __construct()
     {
-        $this->initVar('tl_id', XOBJ_DTYPE_INT, null, false);
-        $this->initVar('tag_id', XOBJ_DTYPE_INT, 0);
-        $this->initVar('tag_modid', XOBJ_DTYPE_INT, 0);
-        $this->initVar('tag_catid', XOBJ_DTYPE_INT, 0);
-        $this->initVar('tag_itemid', XOBJ_DTYPE_INT, 0);
-        $this->initVar('tag_time', XOBJ_DTYPE_INT, 0);
+        $this->initVar('tl_id', \XOBJ_DTYPE_INT, null, false);
+        $this->initVar('tag_id', \XOBJ_DTYPE_INT, 0);
+        $this->initVar('tag_modid', \XOBJ_DTYPE_INT, 0);
+        $this->initVar('tag_catid', \XOBJ_DTYPE_INT, 0);
+        $this->initVar('tag_itemid', \XOBJ_DTYPE_INT, 0);
+        $this->initVar('tag_time', \XOBJ_DTYPE_INT, 0);
     }
 }

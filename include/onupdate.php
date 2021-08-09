@@ -11,7 +11,7 @@
 
 /**
  * @package      XoopsModules\Tag
- * @copyright    XOOPS Project https://xoops.org/
+ * @copyright    XOOPS Project (https://xoops.org)
  * @license      GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @author       XOOPS Development Team
  */
@@ -23,28 +23,9 @@ if ((!defined('XOOPS_ROOT_PATH')) || !($GLOBALS['xoopsUser'] instanceof \XoopsUs
     exit('Restricted access' . PHP_EOL);
 }
 
-$moduleDirName      = basename(dirname(dirname(__DIR__)));
+$moduleDirName      = \basename(\dirname(__DIR__, 2));
 $moduleDirNameUpper = mb_strtoupper($moduleDirName);
 xoops_loadLanguage('common', $moduleDirName);
-
-/**
- * @param string $tablename
- *
- * @return bool
- * @deprecated - not used, use Xmf\Database\Tables method(s) instead
- */
-function tableExists($tablename)
-{
-    $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1);
-    trigger_error(__FUNCTION__ . " is deprecated, called from {$trace[0]['file']} line {$trace[0]['line']}");
-    $GLOBALS['xoopsLogger']->addDeprecated(
-        'Tag Module: ' . __FUNCTION__ . " function is deprecated since Tag 2.3.4, please use Xmf\Database\Tables method(s) instead." . " Called from {$trace[0]['file']}line {$trace[0]['line']}"
-    );
-
-    $result = $GLOBALS['xoopsDB']->queryF("SHOW TABLES LIKE '$tablename'");
-
-    return $GLOBALS['xoopsDB']->getRowsNum($result) > 0;
-}
 
 /**
  * Prepares system prior to attempting to install module
@@ -56,7 +37,7 @@ function xoops_module_pre_update_tag(\XoopsModule $module)
 {
     /** @var Tag\Helper $helper */
     /** @var Tag\Utility $utility */
-    $moduleDirName = basename(dirname(__DIR__));
+    $moduleDirName = \basename(\dirname(__DIR__));
     $helper        = Tag\Helper::getInstance();
     $utility       = new Tag\Utility();
 
@@ -76,7 +57,7 @@ function xoops_module_pre_update_tag(\XoopsModule $module)
 function xoops_module_update_tag(\XoopsModule $module, $previousVersion = null)
 {
     global $xoopsDB;
-    $moduleDirName = basename(dirname(__DIR__));
+    $moduleDirName = \basename(\dirname(__DIR__));
 
     /** @var Tag\Helper $helper */ 
     /** @var Tag\Utility $utility */
@@ -137,7 +118,7 @@ function xoops_module_update_tag(\XoopsModule $module, $previousVersion = null)
 
         //  ---  COPY blank.png FILES ---------------
         if (count($configurator->copyBlankFiles) > 0) {
-            $file = dirname(__DIR__) . '/assets/images/blank.png';
+            $file = \dirname(__DIR__) . '/assets/images/blank.png';
             foreach (array_keys($configurator->copyBlankFiles) as $i) {
                 $dest = $configurator->copyBlankFiles[$i] . '/blank.png';
                 $utility::copyFile($file, $dest);

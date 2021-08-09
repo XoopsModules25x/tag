@@ -71,7 +71,7 @@ define('_MI_TAG_INDEX_TPL_DESK_DESC', 'Links of a custom tags ');
 define('_MI_TAG_ADMENU_MIGRATE', 'Migrate');
 
 //Help
-define('_MI_TAG_DIRNAME', basename(dirname(dirname(__DIR__))));
+define('_MI_TAG_DIRNAME', basename(dirname(__DIR__, 2)));
 define('_MI_TAG_HELP_HEADER', __DIR__ . '/help/helpheader.tpl');
 define('_MI_TAG_BACK_2_ADMIN', 'Back to Administration of ');
 define('_MI_TAG_OVERVIEW', 'Overview');

@@ -44,6 +44,10 @@ if (!defined('TAG_FUNCTIONS')) {
             'Tag Module: ' . __FUNCTION__ . " function is deprecated since Tag 2.3.4, please use 'Tag\Helper::getInstance()->getHandler('Tag')' method instead." . " Called from {$trace[0]['file']}line {$trace[0]['line']}"
         );
 
+        if (!class_exists(Helper::class)) {
+            return false;
+        }
+
         $tagHandler = Helper::getInstance()->getHandler('Tag');
 
         /*

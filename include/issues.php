@@ -23,10 +23,10 @@
 use XoopsModules\Tag;
 
 $GLOBALS['xoopsOption']['nocommon'] = true;
-require_once dirname(dirname(dirname(__DIR__))) . '/mainfile.php';
-require dirname(__DIR__) . '/preloads/autoloader.php';
+require \dirname(__DIR__, 3) . '/mainfile.php';
+require \dirname(__DIR__) . '/preloads/autoloader.php';
 
-$moduleDirName = basename(dirname(__DIR__));
+$moduleDirName = \basename(\dirname(__DIR__));
 
 xoops_loadLanguage('admin', $moduleDirName);
 

@@ -22,11 +22,11 @@
 use Xmf\Module\Admin;
 use XoopsModules\Tag\Helper;
 
-require dirname(__DIR__) . '/preloads/autoloader.php';
+require \dirname(__DIR__) . '/preloads/autoloader.php';
 
-require_once dirname(dirname(dirname(__DIR__))) . '/include/cp_header.php';
-// require_once  dirname(__DIR__) . '/class/constants.php';
-require_once dirname(__DIR__) . '/include/common.php';
+require \dirname(__DIR__, 3) . '/include/cp_header.php';
+// require_once  \dirname(__DIR__) . '/class/constants.php';
+require_once \dirname(__DIR__) . '/include/common.php';
 
 /**
  * {@internal $helper defined in ./include/common.php }}
