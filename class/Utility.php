@@ -116,8 +116,8 @@ class Utility extends Common\SysUtility
         ];
         $args        = [];
         $args_string = [];
-        if (\preg_match("/[^\?]*\.php[\/|\?]([^\?]*)/i", $_SERVER['REQUEST_URI'], $matches)) {
-            $vars = \preg_split("/[\/|&]/", $matches[1]);
+        if (\preg_match('/[^\?]*\.php[\/|\?]([^\?]*)/i', $_SERVER['REQUEST_URI'], $matches)) {
+            $vars = \preg_split('/[\/|&]/', $matches[1]);
             $vars = \array_map('\trim', $vars);
             foreach ($vars as $var) {
                 if (\is_numeric($var)) {
