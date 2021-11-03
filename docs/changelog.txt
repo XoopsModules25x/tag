@@ -1,6 +1,9 @@
-<h5>2.35.0 Beta 2          [NOT RELEASED]</h5>  Dev: XOOPS 2.5.11, PHP 7.4.25, PHP 8.0.12, PHP 8.1.0 Beta 5
+<h5>2.35.0 Beta 2          [2021-11-03]</h5>  Dev: XOOPS 2.5.11, PHP 7.4.25, PHP 8.0.12, PHP 8.1.0 Beta 5
 <hr>
 - various updates/cosmetics (mamba)
+- PSR-12 Access modifiers shall be defined (mamba)
+- trigger_error() (mamba)
+- Unqualified function/constant reference (mamba)
 
 
 <h5>2.35 Beta 1          [NOT RELEASED]</h5>  Dev: XOOPS 2.5.10, PHP 7.4.3 mySQL 5.7.28-log
