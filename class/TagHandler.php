@@ -415,7 +415,7 @@ class TagHandler extends \XoopsPersistableObjectHandler
      * Get items linked with a tag
      *
      * @access public
-     * @param \CriteriaElement $criteria {@link Criteria}
+     * @param \CriteriaElement|null $criteria {@link Criteria}
      * @return array associative array of items[] => (id, modid, catid, time)
      */
     public function getItems(\CriteriaElement $criteria = null)

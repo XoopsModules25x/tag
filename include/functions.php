@@ -31,7 +31,7 @@ if (!defined('TAG_FUNCTIONS')) {
     require_once $GLOBALS['xoops']->path('modules/tag/include/vars.php');
 
     /**
-     * @return XoopsModules\Tag\TagHandler
+     * @return false|\XoopsPersistableObjectHandler|null
      * @deprecated - use Tag\Helper::getInstance()->getHandler('Tag') instead
      * @todo       Figure out what, if anything, calls this
      */

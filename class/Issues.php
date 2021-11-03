@@ -95,7 +95,7 @@ class Issues
      * @param string $hdr
      * @param bool   $asArray
      *
-     * @return array|false|string array($hdr => value) or false if not found
+     * @return array|string array($hdr => value) or false if not found
      */
     public function getHeaderFromArray($hdr, $asArray = false)
     {
