@@ -19,7 +19,7 @@
 use Xmf\Module\Admin;
 
 $moduleDirName      = \basename(\dirname(__DIR__));
-$moduleDirNameUpper = mb_strtoupper($moduleDirName);
+$moduleDirNameUpper = \mb_strtoupper($moduleDirName);
 require_once \dirname(__DIR__) . '/include/common.php';
 
 return (object)[

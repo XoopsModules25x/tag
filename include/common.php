@@ -41,8 +41,8 @@ $helper->loadLanguage('common');
 //$categoryHandler     = new Tag\CategoryHandler($db);
 //$downloadHandler     = new Tag\DownloadHandler($db);
 
-$pathIcon16 = Admin::iconUrl('', 16);
-$pathIcon32 = Admin::iconUrl('', 32);
+$pathIcon16 = Admin::iconUrl('', '16');
+$pathIcon32 = Admin::iconUrl('', '32');
 
 if (!defined($moduleDirNameUpper . '_CONSTANTS_DEFINED')) {
     define($moduleDirNameUpper . '_DIRNAME', basename(dirname(__DIR__)));

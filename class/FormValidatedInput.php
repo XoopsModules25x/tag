@@ -108,7 +108,7 @@ class FormValidatedInput extends \XoopsFormText
     {
         if (isset($value)) {
             if (\is_array($value)) {
-                $value       = isset($value['type']) ? mb_strtolower($value['type']) : 'text';
+                $value       = isset($value['type']) ? \mb_strtolower($value['type']) : 'text';
                 $this->_type = \in_array($value, $this->_htmlTypes) ? $value : 'text';
                 if (\in_array(
                     $value['type'],
@@ -126,7 +126,7 @@ class FormValidatedInput extends \XoopsFormText
                     }
                 }
             } else {
-                $value       = isset($value) ? mb_strtolower($value) : 'text';
+                $value       = isset($value) ? \mb_strtolower($value) : 'text';
                 $this->_type = \in_array($value, $this->_htmlTypes) ? $value : 'text';
             }
         } else {

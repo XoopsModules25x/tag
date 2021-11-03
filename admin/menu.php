@@ -20,11 +20,12 @@
  */
 
 use Xmf\Module\Admin;
-use XoopsModules\Tag;
-use XoopsModules\Tag\Helper;
+use XoopsModules\Tag\{
+    Helper
+};
 
 $moduleDirName      = \basename(\dirname(__DIR__));
-$moduleDirNameUpper = mb_strtoupper($moduleDirName);
+$moduleDirNameUpper = \mb_strtoupper($moduleDirName);
 
 $helper = Helper::getInstance();
 $helper->loadLanguage('common');

@@ -72,7 +72,7 @@ $GLOBALS['xoTheme']->addStylesheet('browse.php?modules/' . $moduleDirName . '/as
 $GLOBALS['xoopsOption']['xoops_pagetitle'] = $page_title;
 
 $mode_display = empty($mode_display) ? \Xmf\Request::getCmd('mode', null, 'GET') : $mode_display;
-switch (mb_strtolower($mode_display)) {
+switch (mb_strtolower($mode_display??'')) {
     case 'list':
         $mode_display = 'list';
         $limit        = (0 === (int)$tag_config['limit_tag_list']) ? 10 : (int)$tag_config['limit_tag'];
@@ -102,7 +102,7 @@ $tags_data_array = $tagHandler->getTagData($tags_array, $tag_config['font_max'],
 
 $page_nav = '';
 if (!empty($start) || count($tags_data_array) >= $limit) {
-    if ('list' === mb_strtolower($mode_display)) {
+    if ('list' === \mb_strtolower($mode_display)) {
         require_once $GLOBALS['xoops']->path('class/pagenav.php');
         $count_tag = $tagHandler->getCount($criteria); // modid, catid
         $nav       = new \XoopsPageNav($count_tag, $limit, $start, 'start', "catid={$catid}&amp;mode={$mode_display}");

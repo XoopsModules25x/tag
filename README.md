@@ -6,8 +6,6 @@
 [![Scrutinizer Code Quality](https://img.shields.io/scrutinizer/g/XoopsModules25x/tag.svg?style=flat)](https://scrutinizer-ci.com/g/XoopsModules25x/tag/?branch=master)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/0fdcfa1725a14753865921b99bb3611e)](https://www.codacy.com/app/mambax7/tag_2)
 [![Code Climate](https://img.shields.io/codeclimate/github/XoopsModules25x/tag.svg?style=flat)](https://codeclimate.com/github/XoopsModules25x/tag)
-[![SensioLabsInsight](https://insight.sensiolabs.com/projects/0ffc2915-82a8-446a-978e-df50e2e58858/mini.png)](https://insight.sensiolabs.com/projects/0ffc2915-82a8-446a-978e-df50e2e58858)
-[![Latest Pre-Release](https://img.shields.io/github/tag/XoopsModules25x/tag.svg?style=flat)](https://github.com/XoopsModules25x/tag/tags/)
 [![Latest Version](https://img.shields.io/github/release/XoopsModules25x/tag.svg?style=flat)](https://github.com/XoopsModules25x/tag/releases/)
 
 **Tag module** for [XOOPS CMS](https://xoops.org) is designed for site-wide tag management, handling tag input, display and stats for each module that enables tag plugin.

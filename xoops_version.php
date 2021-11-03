@@ -24,39 +24,28 @@ require_once __DIR__ . '/preloads/autoloader.php';
 
 $moduleDirName = basename(__DIR__);
 
-// ------------------- Informations ------------------- //
+// ------------------- Information ------------------- /
 $modversion = [
-    'version'             => 2.35,
-    'module_status'       => 'Beta 1',
-    'release_date'        => '2019/12/19',
+    'version'             => '2.35.0',
+    'module_status'       => 'Beta 2',
+    'release_date'        => '2021/11/03',
     'name'                => _MI_TAG_NAME,
     'description'         => _MI_TAG_DESC,
-    'official'            => 0,
-    //1 indicates official XOOPS module supported by XOOPS Dev Team, 0 means 3rd party supported
+    'official'            => 0,    //1 indicates official XOOPS module supported by XOOPS Dev Team, 0 means 3rd party supported
     'author'              => 'Taiwen Jiang <phppp@users.sourceforge.net>',
     'author_website_url'  => 'https://xoops.org',
     'author_website_name' => 'XOOPS',
-    'credits'             => 'XOOPS Development Team, Trabis, Mamba, Aerograf, Mage, Alfredx, ZySpec',
+    'credits'             => 'XOOPS Development Team, Trabis, Mamba, Aerograf, Mage, Alfredx, ZySpec, Geekwright',
     'license'             => 'GPL 2.0 or later',
     'license_url'         => 'https://www.gnu.org/licenses/old-licenses/gpl-2.0.html',
     'help'                => 'page=help',
     'helpsection'         => [
-        [
-            'name' => _MI_TAG_HELP_OVERVIEW,
-            'link' => 'page=help',
-        ],
-        [
-            'name' => _MI_TAG_HELP_PLUGIN_DEV,
-            'link' => 'page=plugin_dev',
-        ],
-        [
-            'name' => _MI_TAG_HELP_ISSUES,
-            'link' => 'page=issues',
-        ],
-        [
-            'name' => _MI_TAG_LICENSE,
-            'link' => 'page=license',
-        ],
+        ['name' => _MI_TAG_HELP_OVERVIEW, 'link' => 'page=help'],
+        ['name' => _MI_TAG_HELP_PLUGIN_DEV, 'link' => 'page=plugin_dev'],
+        ['name' => _MI_TAG_LICENSE, 'link' => 'page=license'],
+        ['name' => _MI_TAG_DISCLAIMER, 'link' => 'page=disclaimer'],
+        ['name' => _MI_TAG_SUPPORT, 'link' => 'page=support'],
+        ['name' => _MI_TAG_HELP_ISSUES, 'link' => 'page=issues'],
     ],
     // ------------------- Folders & Files -------------------
     'release_info'        => 'Changelog',
@@ -133,16 +122,6 @@ $modversion = [
         'tag_link',
         'tag_stats',
     ],
-];
-
-// ------------------- Help files ------------------- //
-$modversion['helpsection'] = [
-    ['name' => _MI_TAG_OVERVIEW, 'link' => 'page=help'],
-    ['name' => _MI_TAG_DISCLAIMER, 'link' => 'page=disclaimer'],
-    ['name' => _MI_TAG_LICENSE, 'link' => 'page=license'],
-    ['name' => _MI_TAG_SUPPORT, 'link' => 'page=support'],
-    ['name' => _MI_TAG_PLUGINS, 'link' => 'page=plugin_dev'],
-    ['name' => _MI_TAG_ISSUES, 'link' => 'page=issues'],
 ];
 
 // Use smarty

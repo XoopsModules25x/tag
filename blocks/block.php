@@ -140,7 +140,7 @@ function tag_block_cloud_show($options, $dirname = '', $catid = 0)
     foreach ($tags_array as $tag) {
         $count_max   = max($count_max, $tag['count']); // set counter to the max tag count
         $count_min   = min(0, $count_min, $tag['count']); //set counter to the minimum for tag count
-        $tags_term[] = mb_strtolower($tag['term']);
+        $tags_term[] = \mb_strtolower($tag['term']);
     }
 
     if (!empty($tags_term)) {
@@ -312,7 +312,7 @@ function tag_block_top_show($options, $dirname = '', $catid = 0)
             //@todo test removal of the following as $count_min can never be less than 0, which is set above
             $count_min = min(0, $count_min, $tag['count']); //set counter to the minimum for tag count
             if (('a' === $options[2]) || ('alphabet' === $options[2])) {
-                $tags_sort[] = mb_strtolower($tag['term']);
+                $tags_sort[] = \mb_strtolower($tag['term']);
             }
         }
         $count_interval = $count_max - $count_min;

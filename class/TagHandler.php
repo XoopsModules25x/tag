@@ -329,7 +329,7 @@ class TagHandler extends \XoopsPersistableObjectHandler
         $start = \is_int($start) && ($start >= 0) ? $start : Constants::BEGINNING;
         $sort  = '';
         $order = '';
-        if (\is_object($criteria) && \is_subclass_of($criteria, \CriteriaElement::class)) {
+        if (($criteria instanceof \CriteriaCompo) || ($criteria instanceof \Criteria)) {
             $sql   .= ' ' . $criteria->renderWhere();
             $sort  = $criteria->getSort();
             $order = $criteria->getOrder();
@@ -338,8 +338,8 @@ class TagHandler extends \XoopsPersistableObjectHandler
         }
         $sql .= " GROUP BY o.{$this->keyName}, o.tag_term, o.tag_status, l.tag_modid";
 
-        $order = ('ASC' !== mb_strtoupper($order)) ? 'DESC' : 'ASC';
-        $sort  = mb_strtolower($sort);
+        $order = ('ASC' !== \mb_strtoupper($order)) ? 'DESC' : 'ASC';
+        $sort  = \mb_strtolower($sort);
         switch ($sort) {
             case 'a':
             case 'alphabet':
@@ -436,8 +436,8 @@ class TagHandler extends \XoopsPersistableObjectHandler
             $start = $criteria->getStart();
         }
 
-        $order = ('ASC' !== mb_strtoupper($order)) ? 'DESC' : 'ASC';
-        $sort  = mb_strtolower($sort);
+        $order = ('ASC' !== \mb_strtoupper($order)) ? 'DESC' : 'ASC';
+        $sort  = \mb_strtolower($sort);
         switch ($sort) {
             case 'i':
             case 'item':

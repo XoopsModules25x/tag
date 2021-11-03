@@ -30,9 +30,11 @@ class Helper extends \Xmf\Module\Helper
      */
     public function __construct($debug = false)
     {
-        $this->debug   = $debug;
-        $moduleDirName = \basename(\dirname(__DIR__));
-        parent::__construct($moduleDirName);
+        if (null === $this->dirname) {
+            $dirname       = \basename(\dirname(__DIR__));
+            $this->dirname = $dirname;
+        }
+        parent::__construct($this->dirname);
     }
 
     /**
@@ -53,7 +55,7 @@ class Helper extends \Xmf\Module\Helper
     /**
      * @return string
      */
-    public function getDirname()
+    public function getDirname(): string
     {
         return $this->dirname;
     }
@@ -80,11 +82,11 @@ class Helper extends \Xmf\Module\Helper
      *
      * @param string $name name of handler to load
      *
-     * @return bool|\XoopsObjectHandler|\XoopsPersistableObjectHandler
+     * @return \XoopsPersistableObjectHandler
      */
-    public function getHandler($name)
+    public function getHandler($name): ?\XoopsPersistableObjectHandler
     {
-        $ret = false;
+        $ret = null;
 
         $class = __NAMESPACE__ . '\\' . \ucfirst($name) . 'Handler';
         if (!\class_exists($class)) {
@@ -94,7 +96,7 @@ class Helper extends \Xmf\Module\Helper
         $db     = \XoopsDatabaseFactory::getDatabaseConnection();
         $helper = self::getInstance();
         $ret    = new $class($db, $helper);
-        $this->addLog("Getting handler '{$name}'");
+        $this->addLog("Getting handler '$name'");
         return $ret;
     }
 }
