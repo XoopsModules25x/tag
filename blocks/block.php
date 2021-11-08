@@ -294,7 +294,7 @@ function tag_block_top_show($options, $dirname = '', $catid = 0)
         return $block;
     }
 
-    $tag_data_array = $tagHandler->getTagData($tags_array, $options[1], $options[2]);
+    $tags_data_array = $tagHandler->getTagData($tags_array, $options[1], $options[2]);
     /*
         $count_max = 0;
         $count_min = 0;
