@@ -27,8 +27,8 @@ $moduleDirName = basename(__DIR__);
 // ------------------- Information ------------------- /
 $modversion = [
     'version'             => '2.35.0',
-    'module_status'       => 'Beta 2',
-    'release_date'        => '2021/11/03',
+    'module_status'       => 'Beta 3',
+    'release_date'        => '2021/11/11',
     'name'                => _MI_TAG_NAME,
     'description'         => _MI_TAG_DESC,
     'official'            => 0,    //1 indicates official XOOPS module supported by XOOPS Dev Team, 0 means 3rd party supported
