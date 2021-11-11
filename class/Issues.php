@@ -106,7 +106,7 @@ class Issues
                 break;
             }
         }
-        return (bool)$asArray ? [$hdr => \trim($val)] : \trim($val);
+        return $asArray ? [$hdr => \trim($val)] : \trim($val);
     }
 
     /**
@@ -118,7 +118,7 @@ class Issues
      */
     public function getCurlResponse($serialized = false)
     {
-        return (bool)$serialized ? \serialize(\base64_encode($this->curl_response)) : $this->curl_response;
+        return $serialized ? \serialize(\base64_encode($this->curl_response)) : $this->curl_response;
     }
 
     /**
