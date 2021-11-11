@@ -25,8 +25,8 @@ class Utility extends Common\SysUtility
             $moduleConfig = [];
             $helper       = \XoopsModules\Tag\Helper::getInstance();
             if ($GLOBALS['xoopsModule'] instanceof \XoopsModule
-                && ($helper->getDirname() === $GLOBALS['xoopsModule']->getVar('dirname', 'n'))
-                && !empty($GLOBALS['xoopsModuleConfig'])) {
+                && !empty($GLOBALS['xoopsModuleConfig'])
+                && ($helper->getDirname() === $GLOBALS['xoopsModule']->getVar('dirname', 'n'))) {
                 $moduleConfig = $GLOBALS['xoopsModuleConfig'];
             } else {
                 /** @var \XoopsConfigHandler $configHandler */
