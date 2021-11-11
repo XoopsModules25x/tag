@@ -132,8 +132,8 @@ function tag_block_cloud_show($options, $dirname = '', $catid = 0)
         return $block;
     }
 
-    $tags_data_array = $tagHandler->getTagData($tags_array, $options[2], $options[3]);
-    /*
+    //        $tags_data_array = $tagHandler->getTagData($tags_array, $options[2], $options[3]);//mb
+
     $count_max = 0;
     $count_min = 0;
     $tags_term = [];
@@ -165,7 +165,7 @@ function tag_block_cloud_show($options, $dirname = '', $catid = 0)
         ];
     }
     unset($tags_array, $tag, $tags_term, $tag_count_array);
-    */
+
     $block['tags']        = $tags_data_array;
     $block['tag_dirname'] = 'tag';
     if (!empty($modid)) {
@@ -294,48 +294,45 @@ function tag_block_top_show($options, $dirname = '', $catid = 0)
         return $block;
     }
 
-    $tags_data_array = $tagHandler->getTagData($tags_array, $options[1], $options[2]);
-    /*
-        $count_max = 0;
-        $count_min = 0;
-        $tag_count_array = array_column($tags_array, 'count'); // get the count values
-        $tag_count_array = array_map('intval', $tag_count_array); // make sure they're all integers
-        $count_max = max($tag_count_array); // get the max value in array
-        $count_max = max(0, $count_max); // make sure it's >= 0
-        $count_min = 0;
-        $tags_sort = array_column($tags_array, 'term'); // get all the terms
-        $tags_sort = array_map('mb_strtolower', $tags_sort); // convert them all to lowercase
+    //    $tags_data_array = $tagHandler->getTagData($tags_array, $options[2], $options[3]); //mb
 
-        $tags_sort = [];
-        foreach ($tags_array as $tag) {
-            $count_max = max($count_max, $tag['count']); // set counter to the max tag count
-            //@todo test removal of the following as $count_min can never be less than 0, which is set above
-            $count_min = min(0, $count_min, $tag['count']); //set counter to the minimum for tag count
-            if (('a' === $options[2]) || ('alphabet' === $options[2])) {
-                $tags_sort[] = \mb_strtolower($tag['term']);
-            }
+    $count_max       = 0;
+    $count_min       = 0;
+    $tag_count_array = array_column($tags_array, 'count'); // get the count values
+    $tag_count_array = array_map('intval', $tag_count_array); // make sure they're all integers
+    $count_max       = max($tag_count_array); // get the max value in array
+    $count_max       = max(0, $count_max); // make sure it's >= 0
+    $count_min       = 0;
+    $tags_sort       = array_column($tags_array, 'term'); // get all the terms
+    $tags_sort       = array_map('mb_strtolower', $tags_sort); // convert them all to lowercase
+
+    $tags_sort = [];
+
+    foreach ($tags_array as $tag) {
+        $count_max = max($count_max, $tag['count']); // set counter to the max tag count
+        //@todo test removal of the following as $count_min can never be less than 0, which is set above
+        $count_min = min(0, $count_min, $tag['count']); //set counter to the minimum for tag count
+        if (('a' === $options[2]) || ('alphabet' === $options[2])) {
+            $tags_sort[] = \mb_strtolower($tag['term']);
         }
-        $count_interval = $count_max - $count_min;
+    }
 
-        $font_max = $options[1];
-        $font_min = $options[2];
-        $font_ratio = ($count_interval) ? ($font_max - $font_min) / $count_interval : 1;
+    $count_interval = $count_max - $count_min;
 
-        if (!empty($tags_sort)) {
-            array_multisort($tags_sort, SORT_ASC, $tags_array);
-        }
+    if (!empty($tags_sort)) {
+        array_multisort($tags_sort, SORT_ASC, $tags_array);
+    }
 
-        $tags_data_array = [];
-        foreach ($tags_array as $tag) {
-            $tags_data_array[] = [
-                'id'    => $tag['id'],
-                'term'  => $tag['term'],
-                'count' => $tag['count'],
-                //"level" => ($tags_array[$key]["count"] - $count_min) * $font_ratio + $font_min,
-            ];
-        }
-        unset($tags_array, $tag_count_array, $tags_sort);
-    */
+    $tags_data_array = [];
+    foreach ($tags_array as $tag) {
+        $tags_data_array[] = [
+            'id'    => $tag['id'],
+            'term'  => $tag['term'],
+            'count' => $tag['count'],
+            //"level" => ($tags_array[$key]["count"] - $count_min) * $font_ratio + $font_min,
+        ];
+    }
+    unset($tags_array, $tag_count_array, $tags_sort);
 
     $block['tags']        = $tags_data_array;
     $block['tag_dirname'] = 'tag';

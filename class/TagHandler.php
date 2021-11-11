@@ -206,7 +206,7 @@ class TagHandler extends \XoopsPersistableObjectHandler
 
         /** @var \XoopsModules\Tag\LinkHandler $linkHandler */
         $linkHandler = \XoopsModules\Tag\Helper::getInstance()->getHandler('Link');
-        $criteria = new \CriteriaCompo(new \Criteria('tag_id', $tag_id));
+        $criteria    = new \CriteriaCompo(new \Criteria('tag_id', $tag_id));
         if (0 !== $modid) {
             $criteria->add(new \Criteria('tag_modid', $modid), 'ADD');
         }
@@ -519,43 +519,46 @@ class TagHandler extends \XoopsPersistableObjectHandler
      * @param int   $font_min
      * @return array tag data values for display
      */
-    public function getTagData($tags_array, $font_max = 0, $font_min = 0)
-    {
-        $tags_data_array = [];
-        if (\is_array($tags_array) && !empty($tags_array)) {
-            // set min and max tag count
-            $count_array = \array_column($tags_array, 'count', 'id');
-            $count_min   = \count($count_array) > 0 ? \min($count_array) : 0;
-            $count_min   = $count_min > 0 ? $count_min : 0;
-            $count_max   = \count($count_array) > 0 ? \max($count_array) : 0;
-            $count_max   = $count_max > 0 ? $count_max : 0;
-
-            $term_array      = \array_column($tags_array, 'term', 'id');
-            $tags_term_array = \array_map('\mb_strtolower', $term_array);
-            \array_multisort($tags_term_array, \SORT_ASC, $tags_array);
-            $count_interval = $count_max - $count_min;
-            $level_limit    = 5;
-
-            $font_ratio = $count_interval ? ($font_max - $font_min) / $count_interval : 1;
-
-            foreach ($tags_array as $tag) {
-                /*
-                 * Font-size = ((tag.count - count.min) * (font.max - font.min) / (count.max - count.min) ) * 100%
-                 */
-                $font_sz           = \floor(($tag['count'] - $count_min) * $font_ratio) + $font_min;
-                $level_sz          = \floor(($tag['count'] - $count_min) * $level_limit / $count_max);
-                $tags_data_array[] = [
-                    'id'    => $tag['id'],
-                    'font'  => empty($count_interval) ? 100 : (int)$font_sz,
-                    'level' => empty($count_max) ? 0 : (int)$level_sz,
-                    'term'  => \urlencode($tag['term']),
-                    'title' => \htmlspecialchars($tag['term'], \ENT_QUOTES | \ENT_HTML5),
-                    'count' => $tag['count'],
-                ];
-            }
-        }
-        return $tags_data_array;
-    }
+//    public function getTagData($tags_array, $font_max = 0, $font_min = 0)
+//    {
+//        $tags_data_array = [];
+//        if (\is_array($tags_array) && !empty($tags_array)) {
+//            // set min and max tag count
+//            $count_array = \array_column($tags_array, 'count', 'id');
+//            $count_min   = \count($count_array) > 0 ? \min($count_array) : 0;
+//            $count_min   = $count_min > 0 ? $count_min : 0;
+//            $count_max   = \count($count_array) > 0 ? \max($count_array) : 0;
+//            $count_max   = $count_max > 0 ? $count_max : 0;
+//            if ($count_max > 0) {
+//                $term_array      = \array_column($tags_array, 'term', 'id');
+//                $tags_term_array = \array_map('\mb_strtolower', $term_array);
+//                \array_multisort($tags_term_array, \SORT_ASC, $tags_array);
+//                $count_interval = $count_max - $count_min;
+//                $level_limit    = 5;
+//
+//                $font_ratio = $count_interval ? ($font_max - $font_min) / $count_interval : 1;
+//
+//                foreach ($tags_array as $tag) {
+//                    /*
+//                     * Font-size = ((tag.count - count.min) * (font.max - font.min) / (count.max - count.min) ) * 100%
+//                     */
+//                    $font_sz           = \floor(($tag['count'] - $count_min) * $font_ratio) + $font_min;
+//                    $level_sz          = \floor(($tag['count'] - $count_min) * $level_limit / $count_max);
+//                    $tags_data_array[] = [
+//                        'id'    => $tag['id'],
+//                        'font'  => empty($count_interval) ? 100 : (int)$font_sz,
+//                        'level' => empty($count_max) ? 0 : (int)$level_sz,
+//                        'term'  => \urlencode($tag['term']),
+//                        'title' => \htmlspecialchars($tag['term'], \ENT_QUOTES | \ENT_HTML5),
+//                        'count' => $tag['count'],
+//                    ];
+//                }
+//            }
+//        }
+//
+//
+//        return $tags_data_array;
+//    }
 
     /**
      * Delete an object as well as links relying on it
@@ -581,7 +584,7 @@ class TagHandler extends \XoopsPersistableObjectHandler
 
         /** @var \XoopsModules\Tag\LinkHandler $linkHandler */
         $linkHandler = $helper->getHandler('Link');
-        $criteria = new \Criteria($this->keyName, $object->getVar($this->keyName));
+        $criteria    = new \Criteria($this->keyName, $object->getVar($this->keyName));
         $linkHandler->deleteAll($criteria, $force);
         //$sql = 'DELETE' . " FROM {$this->table_link}" . " WHERE  {$this->keyName} = " . $object->getVar($this->keyName);
         /*
@@ -594,7 +597,7 @@ class TagHandler extends \XoopsPersistableObjectHandler
          */
         /** @var \XoopsModules\Tag\StatsHandler $statsHandler */
         $statsHandler = $helper->getHandler('Stats');
-        $criteria = new \Criteria($this->keyName, $object->getVar($this->keyName));
+        $criteria     = new \Criteria($this->keyName, $object->getVar($this->keyName));
         $statsHandler->deleteAll($criteria, $force);
         //$sql = 'DELETE' . " FROM {$this->table_stats}" . " WHERE  {$this->keyName} = " . $object->getVar($this->keyName);
 
