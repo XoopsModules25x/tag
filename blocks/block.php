@@ -299,11 +299,11 @@ function tag_block_top_show($options, $dirname = '', $catid = 0)
     $count_max       = 0;
     $count_min       = 0;
     $tag_count_array = array_column($tags_array, 'count'); // get the count values
-    $tag_count_array = array_map('intval', $tag_count_array); // make sure they're all integers
+    $tag_count_array = array_map('\intval', $tag_count_array); // make sure they're all integers
     $count_max       = max($tag_count_array); // get the max value in array
     $count_max       = max(0, $count_max); // make sure it's >= 0
     $tags_sort       = array_column($tags_array, 'term'); // get all the terms
-    $tags_sort       = array_map('mb_strtolower', $tags_sort); // convert them all to lowercase
+    $tags_sort       = array_map('\mb_strtolower', $tags_sort); // convert them all to lowercase
 
     $tags_sort = [];
 
