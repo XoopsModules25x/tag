@@ -18,7 +18,10 @@
  * @author          Gregory Mage (Aka Mage)
  * @since           1.00
  */
-defined('XOOPS_ROOT_PATH') || die('Restricted access');
+
+use XoopsModules\Xfaq\Helper;
+
+defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
 /**
  * @param $items
@@ -40,9 +43,9 @@ function xfaq_tag_iteminfo(&$items)
     /** @var \XoopsDatabase $db */
     $db = \XoopsDatabaseFactory::getDatabase();
     /** @var \XoopsModules\Xfaq\XfaqHandler $itemHandler */
-    $itemHandler = new \XoopsModules\Xfaq\XfaqHandler($db);
+    $itemHandler = Helper::getInstance()->getHandler('Xfaq');
 
-    $items_obj = &$itemHandler->getObjects(new \Criteria('faq_id', '(' . implode(', ', $items_id) . ')', 'IN'), true);
+    $items_obj = $itemHandler->getObjects(new \Criteria('faq_id', '(' . implode(', ', $items_id) . ')', 'IN'), true);
 
     foreach (array_keys($items) as $cat_id) {
         foreach (array_keys($items[$cat_id]) as $item_id) {

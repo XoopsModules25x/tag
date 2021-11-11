@@ -10,22 +10,24 @@
  */
 
 /**
+ * @package         XoopsModules\Tag
  * @copyright       The XUUPS Project http://sourceforge.net/projects/xuups/
  * @license         http://www.fsf.org/copyleft/gpl.html GNU public license
- * @package         tag
- * @subpackage      plugin
  * @since           1.0
  * @author          trabis <lusopoemas@gmail.com>
  * @author          The SmartFactory <www.smartfactory.ca>
  */
 
-//use XoopsModules\Publisher\Constants;
+use Xmf\Request;
+use XoopsModules\Tag\Helper;
+use XoopsModules\Tag\Utility;
+use XoopsModules\Publisher\Helper as PublisherHelper;
 
-defined('XOOPS_ROOT_PATH') || die('Restricted access');
+defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
 /**
- * Get item fields: title, content, time, link, uid, uname, tags
- * @param $items
+ * Get item fields: title, content, time, link, uid, tags
+ * @param array $items
  * @return bool
  */
 function publisher_tag_iteminfo(&$items)
@@ -44,7 +46,7 @@ function publisher_tag_iteminfo(&$items)
         }
     }
     /** @var \XoopsModules\Publisher\ItemHandler $itemHandler */
-    $itemHandler = new \XoopsModules\Publisher\ItemHandler();
+    $itemHandler = PublisherHelper::getInstance()->getHandler('Item');
 
     $criteria  = new \Criteria('itemid', '(' . implode(', ', $items_id) . ')', 'IN');
     $items_obj = $itemHandler->getObjects($criteria, 'itemid');
@@ -57,7 +59,7 @@ function publisher_tag_iteminfo(&$items)
                 'uid'     => $item_obj->getVar('uid'),
                 'link'    => "item.php?itemid={$item_id}",
                 'time'    => $item_obj->getVar('datesub'),
-                'tags'    => tag_parse_tag($item_obj->getVar('item_tag', 'n')), // optional
+                'tags'    => Utility::tag_parse_tag($item_obj->getVar('item_tag', 'n')), // optional
                 'content' => '',
             ];
         }
@@ -68,17 +70,16 @@ function publisher_tag_iteminfo(&$items)
 }
 
 /** Remove orphan tag-item links *
- * @param $mid
+ * @param int $mid
  * @return bool
  */
 function publisher_tag_synchronization($mid)
 {
     /** @var \XoopsModules\Publisher\ItemHandler $itemHandler */
-    //    $itemHandler = \XoopsModules\Publisher\Helper::getInstance()->getHandler('Item');
-    $itemHandler = new \XoopsModules\Publisher\ItemHandler();
+    $itemHandler = \XoopsModules\Publisher\Helper::getInstance()->getHandler('Item');
 
     /** @var \XoopsModules\Tag\LinkHandler $itemHandler */
-    $linkHandler = \XoopsModules\Tag\Helper::getInstance()->getHandler('Link');
+    $linkHandler = Helper::getInstance()->getHandler('Link');
 
     //    $mid = XoopsFilterInput::clean($mid, 'INT');
     $mid = \Xmf\Request::getInt('mid');

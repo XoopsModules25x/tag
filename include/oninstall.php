@@ -10,26 +10,23 @@
  */
 
 /**
- * @copyright    XOOPS Project https://xoops.org/
- * @license      GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package
- * @since
- * @author       XOOPS Development Team
+ * @copyright    XOOPS Project (https://xoops.org)
+ * @license      GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
+ * @author      XOOPS Development Team
  */
 
 use XoopsModules\Tag;
 
 /**
  * Prepares system prior to attempting to install module
- * @param XoopsModule $module {@link XoopsModule}
+ * @param \XoopsModule $module {@link XoopsModule}
  *
  * @return bool true if ready to install, false if not
  */
 function xoops_module_pre_install_tag(\XoopsModule $module)
 {
-    $moduleDirName = basename(dirname(__DIR__));
-    /** @var Tag\Utility $utility */
-    $utility = new Tag\Utility();
+    $moduleDirName = \basename(\dirname(__DIR__));
+    $utility       = new Tag\Utility();
     //check for minimum XOOPS version
     if (!$utility::checkVerXoops($module)) {
         return false;
@@ -40,7 +37,15 @@ function xoops_module_pre_install_tag(\XoopsModule $module)
         return false;
     }
 
-    $mod_tables = &$module->getInfo('tables');
+    $mod_tables = $module->getInfo('tables');
+    /** @todo replace table operations using Xmf\Tables object methods
+      $tableObj = new \Xmf\Database\Tables;
+      $tableObj->resetQueue();
+      foreach ($mod_tables as $table) {
+      $tableObj->dropTable($table);
+      }
+      return $tableObj->executeQueue();
+     */
     foreach ($mod_tables as $table) {
         $GLOBALS['xoopsDB']->queryF('DROP TABLE IF EXISTS ' . $GLOBALS['xoopsDB']->prefix($table) . ';');
     }
@@ -50,7 +55,7 @@ function xoops_module_pre_install_tag(\XoopsModule $module)
 
 /**
  * Performs tasks required during installation of the module
- * @param XoopsModule $module {@link XoopsModule}
+ * @param \XoopsModule $module {@link XoopsModule}
  *
  * @return bool true if installation successful, false if not
  */

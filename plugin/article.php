@@ -12,13 +12,18 @@
 /**
  * XOOPS tag management module
  *
- * @package         tag
+ * @package         \XoopsModules\Tag
  * @copyright       {@link http://sourceforge.net/projects/xoops/ The XOOPS Project}
  * @license         {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
  * @since           1.00
  */
-defined('XOOPS_ROOT_PATH') || die('Restricted access');
+
+use Xmf\Request;
+use XoopsModules\Tag\Helper;
+use XoopsModules\Tag\Utility;
+
+defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
 /**
  * Get item fields:
@@ -51,7 +56,7 @@ function article_tag_iteminfo(&$items)
     }
 
     /** @var \XoopsModules\Article\ArticleHandler $itemHandler */
-    $itemHandler = $helper->getHandler('Article', 'article');
+    $itemHandler = \XoopsModules\Article\Helper::getInstance()->getHandler('Article');
     $items_obj   = $itemHandler->getObjects(new \Criteria('art_id', '(' . implode(', ', $items_id) . ')', 'IN'), true);
 
     foreach (array_keys($items) as $cat_id) {
@@ -62,7 +67,7 @@ function article_tag_iteminfo(&$items)
                 'uid'     => $item_obj->getVar('uid'),
                 'link'    => "view.article.php?article={$item_id}",
                 'time'    => $item_obj->getVar('art_time_publish'),
-                'tags'    => tag_parse_tag($item_obj->getVar('art_keywords', 'n')),
+                'tags'    => Utility::tag_parse_tag($item_obj->getVar('art_keywords', 'n')),
                 'content' => '',
             ];
         }
@@ -82,19 +87,19 @@ function article_tag_iteminfo(&$items)
 function article_tag_synchronization($mid)
 {
     /** @var \XoopsModules\Article\ArticleHandler $itemHandler */
-    $itemHandler = $helper->getHandler('Article', 'article');
+    $itemHandler = \XoopsModules\Article\Helper::getInstance()->getHandler('Article', 'article');
     //    /** @var \TagLinkHandler $linkHandler */
     //    $linkHandler = \XoopsModules\Tag\Helper::getInstance()->getHandler('Link'); //@var \XoopsModules\Tag\Handler $tagHandler
     /** @var \XoopsModules\Tag\LinkHandler $itemHandler */
-    $linkHandler = \XoopsModules\Tag\Helper::getInstance()->getHandler('Link');
+    $linkHandler = Helper::getInstance()->getHandler('Link');
 
     //    $mid = XoopsFilterInput::clean($mid, 'INT');
-    $mid = \Xmf\Request::getInt('mid');
-    /* clear tag-item links */
+    $mid = Request::getInt('mid');
+    /* clear tag-item links */ 
     /** {@internal the following statement isn't really needed any more (MySQL is really old)
-     *   and some hosting companies block the $GLOBALS['xoopsDB']->getServerVersion() function for security
-     *   reasons.}
-     */
+ *   and some hosting companies block the $GLOBALS['xoopsDB']->getServerVersion() function for security
+ *   reasons. }}
+ */
     //    if (version_compare( $GLOBALS['xoopsDB']->getServerVersion(), "4.1.0", "ge" )) {
     $sql = "DELETE FROM {$linkHandler->table}"
            . " WHERE tag_modid = {$mid}"

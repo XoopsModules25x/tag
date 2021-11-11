@@ -18,7 +18,7 @@
  * @author          Taiwen Jiang (phppp or D.J.) <php_pp@hotmail.com>
  * @since           1.00
  */
-defined('XOOPS_ROOT_PATH') || die('Restricted access');
+defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
 define('_MB_TAG_ITEMS', 'Number to display');
 define('_MB_TAG_FONTSIZE_MAX', 'Maximum font-size(px or %) for display');
@@ -37,5 +37,5 @@ define('_MB_TAG_FLASH_BACKGROUND', 'flash background');
 define('_MB_TAG_FLASH_TRANSPARENT', 'transparent');
 define('_MB_TAG_FLASH_MINFONTCOLOR', 'min font color');
 define('_MB_TAG_FLASH_MAXFONTCOLOR', 'max font color');
-define('_MB_TAG_FLASH_HILIGHTFONTCOLOR', 'font hilight color');
+define('_MB_TAG_FLASH_HILIGHTFONTCOLOR', 'font highlight color');
 define('_MB_TAG_FLASH_SPEED', 'flash speed');

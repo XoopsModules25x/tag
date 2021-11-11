@@ -21,74 +21,76 @@ namespace XoopsModules\Tag;
  * the value(s) before module installation. Additionally the module may not
  * work correctly if trying to upgrade if these values have been changed.
  *
- * @category     Module
- * @package      tag
- * @copyright    ::  {@link http://sourceforge.net/projects/xoops/ The XOOPS Project}
- * @license      ::    {@link http://www.gnu.org/licenses/gpl-2.0.html GNU Public License}
- * @author       ::     ZySpec <owners@zyspec.com>
- * @since        ::      2.33
+ * @package      XoopsModules\Tag
+ * @copyright    {@link http://sourceforge.net/projects/xoops/ The XOOPS Project}
+ * @license      {@link https://www.gnu.org/licenses/gpl-2.0.html GNU Public License}
+ * @author       ZySpec <zyspec@yahoo.com>
+ * @since        2.33
  **/
-defined('XOOPS_ROOT_PATH') || die('Restricted access');
 
 /**
- * class Constants
+ * interface Constants
  */
-class Constants
+interface Constants
 {
     /**#@+
      * Constant definition
      */
     /**
-     *  indicates a quote is active
+     *  indicates a tag is active
      */
-    const STATUS_ACTIVE = 0;
+    public const STATUS_ACTIVE = 0;
     /**
-     *  indicates a quote is inactive
+     *  indicates a tag is inactive
      */
-    const STATUS_INACTIVE = 1;
+    public const STATUS_INACTIVE = 1;
     /**
      *  indicates a tag is to be deleted
      */
-    const STATUS_DELETE = -1;
+    public const STATUS_DELETE = -1;
     /**
      *  indicates inclusion of all tags in select
      */
-    const STATUS_ALL = -1;
+    public const STATUS_ALL = -1;
     /**
      *  indicates default for ID for tags, modules, etc.
      */
-    const DEFAULT_ID = 0;
+    public const DEFAULT_ID = 0;
     /**
      *  indicates default display limit to show
      */
-    const DEFAULT_LIMIT = 10;
+    public const DEFAULT_LIMIT = 10;
+    /**
+     *  indicates unlimitted number
+     */
+    public const UNLIMITED = 0;
     /**
      *  indicates starting point for searches, etc.
      */
-    const BEGINNING = 0;
+    public const BEGINNING = 0;
     /**
      * no delay XOOPS redirect delay (in seconds)
      */
-    const REDIRECT_DELAY_NONE = 0;
+    public const REDIRECT_DELAY_NONE = 0;
     /**
      * short XOOPS redirect delay (in seconds)
      */
-    const REDIRECT_DELAY_SHORT = 1;
+    public const REDIRECT_DELAY_SHORT = 1;
     /**
      * medium XOOPS redirect delay (in seconds)
      */
-    const REDIRECT_DELAY_MEDIUM = 3;
+    public const REDIRECT_DELAY_MEDIUM = 3;
     /**
      * long XOOPS redirect delay (in seconds)
      */
-    const REDIRECT_DELAY_LONG = 7;
+    public const REDIRECT_DELAY_LONG = 7;
     /**
      * confirm not ok to take action
      */
-    const CONFIRM_NOT_OK = 0;
+    public const CONFIRM_NOT_OK = 0;
     /**
      * confirm ok to take action
      */
-    const CONFIRM_OK = 1;
+    public const CONFIRM_OK = 1;
     /**#@-*/
 }

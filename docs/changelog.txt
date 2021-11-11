@@ -1,43 +1,84 @@
+<h5>2.35.0 Beta 3          [2021-11-11]</h5>  Dev: XOOPS 2.5.11, PHP 7.4.25, PHP 8.0.12, PHP 8.1.0 Beta 5
+<hr>
+- reverse refactoring (mamba)
+- Condition can be replaced with 'min()'/'max()' call (mamba)
+- Redundant cast to boolean (mamba)
+- check for CriteriaCompo (mamba)
+- refactor check for language file (mamba)
+- Non-optimal if conditions (mamba)
+- 'array_values(...)' misused (mamba)
+- Unqualified function/constant reference (mamba)
+- Method 'getTagData' is undefined (mamba)
+
+
+<h5>2.35.0 Beta 2          [2021-11-03]</h5>  Dev: XOOPS 2.5.11, PHP 7.4.25, PHP 8.0.12, PHP 8.1.0 Beta 5
+<hr>
+- various updates/cosmetics (mamba)
+- PSR-12 Access modifiers shall be defined (mamba)
+- trigger_error() (mamba)
+- Unqualified function/constant reference (mamba)
+
+
+<h5>2.35 Beta 1          [NOT RELEASED]</h5>  Dev: XOOPS 2.5.10, PHP 7.4.3 mySQL 5.7.28-log
+<hr>
++ fixed NOT IN GROUP BY error when using MySQL >= v5.7
++ fixed bug in index.php to limit number of tags in cloud (zyspec)
++ fixed font size (interval) calculation bug in list.tag.php (zyspec)
++ removed &$args_numeric (not used) in ./include/functions.php tag_parse_args() function (zyspec)
++ added new Help section (zyspec)
++ added module Issues display in help (zyspec)
++ created class and handler for stats (zyspec)
++ begin conversion to using object CRUD instead of direct SQL calls (zyspec)
++ eliminated multiple global usage instances (zyspec)
++ cleanup/update phpDoc comments (zyspec)
++ moved some functions to classes (zyspec)
++ changed page headers to use Tag\Common\Breadcrumb class (zyspec)
++ marked unused functions as @deprecated - will be removed later (zyspec)
++ added missing module icons folders (zyspec)
++ added tag search graphic (zyspec)
++ added check to make sure tag is active before showing results in search (zyspec)
++ created Tag\TagHandler::getTagData() to simplify/standardize code (zyspec)
++ fixed GROUP BY error when using MySQL >= v5.7 (Goffy)
++ fix $args['tag'] (Geekwright)
+
 <h5>2.34 RC 2          [2019-02-11]</h5>  Dev: Xoops 2.5.10, PHP 7.3.2
 <hr>
-- bug fixes/updates (mamba)
-- fixes (aerograf)
-- Optimize images (mamba)
-- bug fixes (alfredx)
-
-
++ bug fixes/updates (mamba)
++ fixes (aerograf)
++ Optimize images (mamba)
++ bug fixes (alfredx)
 
 <h5>2.34 RC 1         [NOT RELEASED]</h5>  Dev: Xoops 2.5.9, PHP 7.2.3
 <hr>
-- update Help (mamba)
-- Updates for PayPal changes (zyspec)
-- added Contributing.md (mamba)
-- replaced include with require (mamba)
-- added 'true' for tokens in forms (mamba)
-- changed _handler to Handler (mamba)
-- reference mismatch (mamba)
-- added debug_backtrace (mamba)
-- namespaces, autoloading (mamba)
-- updates (mage)
-- started conversion to XMF (mamba)
-    &nbsp;&nbsp;- updated addInfoBoxLine entries (mamba)
-    &nbsp;&nbsp;- displayNavigation(basename(__FILE__))  (mamba)
-    &nbsp;&nbsp;- changed to ->displayButton('left') (mamba)
++ update Help (mamba)
++ Updates for PayPal changes (zyspec)
++ added Contributing.md (mamba)
++ replaced include with require (mamba)
++ added 'true' for tokens in forms (mamba)
++ changed _handler to Handler (mamba)
++ reference mismatch (mamba)
++ added debug_backtrace (mamba)
++ namespaces, autoloading (mamba)
++ updates (mage)
++ started conversion to XMF (mamba)
+    &nbsp;&nbsp;+ updated addInfoBoxLine entries (mamba)
+    &nbsp;&nbsp;+ displayNavigation(basename(__FILE__))  (mamba)
+    &nbsp;&nbsp;+ changed to ->displayButton('left') (mamba)
 
 
 <h5>2.33 RC 1         [2016-06-01]</h5>
 <hr>
-- added check for plugins in /class/plugins (in preparation for next version of XOOPS (mamba)
-- fixed XOOPS version check on install (zyspec)
-- fixed call to XoopsFormText in TagFormTag class (zyspec)
-- removed @version (mamba)
-- code cosmetics (mamba)
-- replaced < br /> with < br > (mamba)
-- XOOPS 2.5.8 and PHP 7 fixes (mamba)
-- addNavigation(basename(__FILE__)) (mamba)
-- Unnecessary double quotes (mamba)
-- reference mismatch (mamba)
-- Hardening to type safe (mamba)
++ added check for plugins in /class/plugins (in preparation for next version of XOOPS (mamba)
++ fixed XOOPS version check on install (zyspec)
++ fixed call to XoopsFormText in TagFormTag class (zyspec)
++ removed @version (mamba)
++ code cosmetics (mamba)
++ replaced < br /> with < br > (mamba)
++ XOOPS 2.5.8 and PHP 7 fixes (mamba)
++ addNavigation(basename(__FILE__)) (mamba)
++ Unnecessary double quotes (mamba)
++ reference mismatch (mamba)
++ Hardening to type safe (mamba)
 
 
 <h5>2.33 Beta 1       [2014-12-05]</h5>
@@ -52,8 +93,7 @@
   present in all versions of XOOPS >= 2.5.7 (zyspec)
 + utilize XoopsRequest for input vars (zyspec)
 + normalized Frameworks icons directory to be similar to other XOOPS modules (zyspec)
-+ deprecated XoopsFormTag (modules should not create classes beginning with (zyspec)
-  'Xoops'). Created class TagFormTag to replace it. (zyspec)
++ deprecated XoopsFormTag (modules should not create classes beginning with 'Xoops'). Created class TagFormTag to replace it. (zyspec)
 + merged Cumulus module for flash cloud block - Cumulus module no longer needed (zyspec)
 + fixed bug in display limit in .list.tag.php for both list and cloud (zyspec)
 + removed support for MySQL < 4.1.0 (zyspec)

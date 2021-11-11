@@ -15,15 +15,13 @@ namespace XoopsModules\Tag;
 /**
  * Tag form element for form input
  *
- * @package         tag
- * @subpackage      class
+ * @package         XoopsModules\Tag
  * @copyright       {@link http://sourceforge.net/projects/xoops/ The XOOPS Project}
- * @license         {@link http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU GPL 2}
+ * @license         {@link https://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU GPL 2}
  * @author          Kazumi Ono (AKA onokazu) http://www.myweb.ne.jp/, http://jp.xoops.org/
- * @author          ZySpec <owners@zyspec.com>
+ * @author          ZySpec <zyspec@yahoo.com>
  * @since           2.33
  */
-defined('XOOPS_ROOT_PATH') || die('Restricted access');
 
 /**
  * A simple HTML5 type validated input field
@@ -37,7 +35,6 @@ class FormValidatedInput extends \XoopsFormText
      * @access private
      */
     private $_type;
-
     /**
      * Valid HTML Type array
      *
@@ -110,14 +107,17 @@ class FormValidatedInput extends \XoopsFormText
     public function setType($value)
     {
         if (isset($value)) {
-            if (is_array($value)) {
-                $value       = isset($value['type']) ? mb_strtolower($value['type']) : 'text';
-                $this->_type = in_array($value, $this->_htmlTypes, true) ? $value : 'text';
-                if (in_array($value['type'], [
-                    'number',
-                    'date',
-                    'range',
-                ], true)) {
+            if (\is_array($value)) {
+                $value       = isset($value['type']) ? \mb_strtolower($value['type']) : 'text';
+                $this->_type = \in_array($value, $this->_htmlTypes) ? $value : 'text';
+                if (\in_array(
+                    $value['type'],
+                    [
+                        'number',
+                        'date',
+                        'range',
+                    ]
+                )) {
                     if (isset($value['min'])) {
                         $this->setExtra('min=' . $value['min']);
                     }
@@ -126,8 +126,8 @@ class FormValidatedInput extends \XoopsFormText
                     }
                 }
             } else {
-                $value       = isset($value) ? mb_strtolower($value) : 'text';
-                $this->_type = in_array($value, $this->_htmlTypes, true) ? $value : 'text';
+                $value       = isset($value) ? \mb_strtolower($value) : 'text';
+                $this->_type = \in_array($value, $this->_htmlTypes) ? $value : 'text';
             }
         } else {
             $this->_type = 'text';

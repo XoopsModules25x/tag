@@ -12,12 +12,16 @@
 /**
  * XOOPS tag management module
  *
- * @package         tag
+ * @package         \XoopsModules\Tag
  * @copyright       {@link http://sourceforge.net/projects/xoops/ The XOOPS Project}
  * @license         {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
  * @since           1.00
  */
-defined('XOOPS_ROOT_PATH') || die('Restricted access');
+
+use Xmf\Request;
+use XoopsModules\Tag\Helper;
+
+defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 /**
  * Generate tag item information
  *
@@ -39,7 +43,7 @@ function extgallery_tag_iteminfo(&$items)
     }
 
     /** @var \XoopsModules\Extgallery\PublicPhotoHandler $itemHandler */
-    $itemHandler = new \XoopsModules\Extgallery\PublicPhotoHandler();
+    $itemHandler = \XoopsModules\Extgallery\Helper::getInstance()->getHandler('PublicPhoto');
     $items_obj   = $itemHandler->getObjects(new \Criteria('photo_id', '(' . implode(', ', $items_id) . ')', 'IN'), true);
 
     foreach (array_keys($items) as $cat_id) {
@@ -72,18 +76,18 @@ function extgallery_tag_iteminfo(&$items)
 function extgallery_tag_synchronization($mid)
 {
     /** @var \XoopsModules\Extgallery\PublicPhotoHandler $itemHandler */
-    $itemHandler = new \XoopsModules\Extgallery\PublicPhotoHandler();
+    $itemHandler = \XoopsModules\Extgallery\Helper::getInstance()->getHandler('PublicPhoto');
     /** @var \XoopsModules\Tag\LinkHandler $linkHandler */
-    $linkHandler = \XoopsModules\Tag\Helper::getInstance()->getHandler('Link'); //@var \XoopsModules\Tag\Handler $tagHandler
+    $linkHandler = Helper::getInstance()->getHandler('Link'); //@var \XoopsModules\Tag\Handler $tagHandler
 
     //    $mid = XoopsFilterInput::clean($mid, 'INT');
-    $mid = \Xmf\Request::getInt('mid');
+    $mid = Request::getInt('mid');
 
     /* clear tag-item links */
     /** {@internal the following statement isn't really needed any more (MySQL is really old)
-     *   and some hosting companies block the $GLOBALS['xoopsDB']->getServerVersion() function for security
-     *   reasons.}
-     */
+ *   and some hosting companies block the $GLOBALS['xoopsDB']->getServerVersion() function for security
+ *   reasons.}
+ */
     //    if (version_compare( $GLOBALS['xoopsDB']->getServerVersion(), "4.1.0", "ge" )):
     $sql = "DELETE FROM {$linkHandler->table}" . " WHERE tag_modid = {$mid}" . ' AND (tag_itemid NOT IN ' . "       (SELECT DISTINCT {$itemHandler->keyName} " . "        FROM {$itemHandler->table} " . "          WHERE {$itemHandler->table}.photo_approved > 0" . '       )' . '     )';
     /*

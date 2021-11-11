@@ -12,24 +12,30 @@
 /**
  * XOOPS tag management module
  *
+ * @package         XoopsModules\Tag
  * @copyright       XOOPS Project (https://xoops.org)
  * @license         http://www.fsf.org/copyleft/gpl.html GNU public license
  * @since           1.00
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
  * */
 
-use XoopsModules\Tag;
+use Xmf\Module\Admin;
+use XoopsModules\Tag\Helper;
 
-require_once dirname(dirname(dirname(__DIR__))) . '/include/cp_header.php';
-// require_once  dirname(__DIR__) . '/class/constants.php';
-require_once dirname(__DIR__) . '/include/common.php';
+require \dirname(__DIR__) . '/preloads/autoloader.php';
 
-$moduleDirName = basename(dirname(__DIR__));
-/** @var Tag\Helper $helper */
-$helper = Tag\Helper::getInstance();
+require \dirname(__DIR__, 3) . '/include/cp_header.php';
+// require_once  \dirname(__DIR__) . '/class/constants.php';
+require_once \dirname(__DIR__) . '/include/common.php';
 
-/** @var Xmf\Module\Admin $adminObject */
-$adminObject = \Xmf\Module\Admin::getInstance();
+/**
+ * {@internal $helper defined in ./include/common.php }}
+ *
+ */
+$helper = Helper::getInstance();
+
+/** @var \Xmf\Module\Admin $adminObject */
+$adminObject = Admin::getInstance();
 
 // Load language files
 $helper->loadLanguage('admin');

@@ -1,5 +1,7 @@
 # language: php
 build:
+  environment:
+    php: 8.0.11
   nodes:
     tests: true
     analysis:
@@ -17,3 +19,4 @@ build:
 filter:
   dependency_paths:
     - XoopsCore25/*
+    - tag/*

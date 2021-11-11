@@ -10,35 +10,26 @@
  */
 
 /**
- * @copyright    XOOPS Project https://xoops.org/
- * @license      GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package
- * @since
+ * @package      XoopsModules\Tag
+ * @copyright    XOOPS Project (https://xoops.org)
+ * @license      GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @author       XOOPS Development Team
  */
 
 use XoopsModules\Tag;
 
 if ((!defined('XOOPS_ROOT_PATH')) || !($GLOBALS['xoopsUser'] instanceof \XoopsUser)
-    || !$GLOBALS['xoopsUser']->IsAdmin()) {
+    || !$GLOBALS['xoopsUser']->isAdmin()) {
     exit('Restricted access' . PHP_EOL);
 }
 
-/**
- * @param string $tablename
- *
- * @return bool
- */
-function tableExists($tablename)
-{
-    $result = $GLOBALS['xoopsDB']->queryF("SHOW TABLES LIKE '$tablename'");
-
-    return $GLOBALS['xoopsDB']->getRowsNum($result) > 0;
-}
+$moduleDirName      = \basename(\dirname(__DIR__, 2));
+$moduleDirNameUpper = \mb_strtoupper($moduleDirName);
+xoops_loadLanguage('common', $moduleDirName);
 
 /**
  * Prepares system prior to attempting to install module
- * @param XoopsModule $module {@link XoopsModule}
+ * @param \XoopsModule $module {@link XoopsModule}
  *
  * @return bool true if ready to install, false if not
  */
@@ -46,7 +37,7 @@ function xoops_module_pre_update_tag(\XoopsModule $module)
 {
     /** @var Tag\Helper $helper */
     /** @var Tag\Utility $utility */
-    $moduleDirName = basename(dirname(__DIR__));
+    $moduleDirName = \basename(\dirname(__DIR__));
     $helper        = Tag\Helper::getInstance();
     $utility       = new Tag\Utility();
 
@@ -58,17 +49,17 @@ function xoops_module_pre_update_tag(\XoopsModule $module)
 
 /**
  * Performs tasks required during update of the module
- * @param XoopsModule $module {@link XoopsModule}
- * @param null        $previousVersion
+ * @param \XoopsModule $module {@link XoopsModule}
+ * @param null         $previousVersion
  *
  * @return bool true if update successful, false if not
  */
 function xoops_module_update_tag(\XoopsModule $module, $previousVersion = null)
 {
     global $xoopsDB;
-    $moduleDirName = basename(dirname(__DIR__));
+    $moduleDirName = \basename(\dirname(__DIR__));
 
-    /** @var Tag\Helper $helper */
+    /** @var Tag\Helper $helper */ 
     /** @var Tag\Utility $utility */
     /** @var Tag\Common\Configurator $configurator */
     $helper       = Tag\Helper::getInstance();
@@ -85,7 +76,7 @@ function xoops_module_update_tag(\XoopsModule $module, $previousVersion = null)
                     foreach ($templateList as $k => $v) {
                         $fileInfo = new \SplFileInfo($templateFolder . $v);
                         if ('html' === $fileInfo->getExtension() && 'index.html' !== $fileInfo->getFilename()) {
-                            if (file_exists($templateFolder . $v)) {
+                            if (is_file($templateFolder . $v)) {
                                 unlink($templateFolder . $v);
                             }
                         }
@@ -127,7 +118,7 @@ function xoops_module_update_tag(\XoopsModule $module, $previousVersion = null)
 
         //  ---  COPY blank.png FILES ---------------
         if (count($configurator->copyBlankFiles) > 0) {
-            $file = dirname(__DIR__) . '/assets/images/blank.png';
+            $file = \dirname(__DIR__) . '/assets/images/blank.png';
             foreach (array_keys($configurator->copyBlankFiles) as $i) {
                 $dest = $configurator->copyBlankFiles[$i] . '/blank.png';
                 $utility::copyFile($file, $dest);
