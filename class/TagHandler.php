@@ -526,9 +526,9 @@ class TagHandler extends \XoopsPersistableObjectHandler
             // set min and max tag count
             $count_array = \array_column($tags_array, 'count', 'id');
             $count_min   = \count($count_array) > 0 ? \min($count_array) : 0;
-            $count_min   = $count_min > 0 ? $count_min : 0;
+            $count_min   = max($count_min, 0);
             $count_max   = \count($count_array) > 0 ? \max($count_array) : 0;
-            $count_max   = $count_max > 0 ? $count_max : 0;
+            $count_max   = max($count_max, 0);
             if ($count_max > 0) {
                 $term_array      = \array_column($tags_array, 'term', 'id');
                 $tags_term_array = \array_map('\mb_strtolower', $term_array);
