@@ -22,9 +22,6 @@ namespace XoopsModules\Tag;
  * @since           1.00
  */
 
-use XoopsModules\Tag;
-use XoopsModules\Tag\Utility;
-
 \xoops_load('xoopsformtext');
 
 /**
@@ -34,19 +31,17 @@ class FormTag extends \XoopsFormText
 {
     /**
      * TagFormTag constructor.
-     * @param string $name      "name" attribute
-     * @param int    $size      size of input box
-     * @param int    $maxlength Maximum length of text
-     * @param null   $value     Initial text or itemid
-     * @param int    $catid     category id (applicable if $value is itemid)
+     * @param string     $name      "name" attribute
+     * @param int        $size      size of input box
+     * @param int        $maxlength Maximum length of text
+     * @param string|int $value     Initial text or itemid
+     * @param int        $catid     category id (applicable if $value is itemid)
      */
-    public function __construct($name, int $size, $maxlength, $value = null, $catid = 0)
+    public function __construct($name, int $size, $maxlength, $value = '', $catid = 0)
     {
         $helper = \XoopsModules\Tag\Helper::getInstance();
         require_once $helper->path('include/vars.php');
         $helper->loadLanguage('main');
-
-        $value = empty($value) ? '' : $value;
 
         if (!empty($value) && \is_numeric($value) && ($GLOBALS['xoopsModule'] instanceof \XoopsModule)) {
             $modid = $GLOBALS['xoopsModule']->getVar('mid');

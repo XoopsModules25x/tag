@@ -128,7 +128,7 @@ class TagHandler extends \XoopsPersistableObjectHandler
         if (0 < \count($tags_delete)) {
             $tags_delete = \array_map([$this->db, 'quoteString'], $tags_delete);
             $tags_id     = &$this->getIds(new \Criteria('tag_term', '(' . \implode(', ', $tags_delete) . ')', 'IN'));
-            if ($tags_id) {
+            if (! empty($tags_id)) {
                 $sql = "DELETE FROM {$this->table_link}" . ' WHERE ' . "     {$this->keyName} IN (" . \implode(', ', $tags_id) . ')' . "     AND tag_modid = {$modid} AND tag_catid = {$catid} AND tag_itemid = {$itemid}";
                 if (false === ($result = $this->db->queryF($sql))) {
                     //@todo: decide if we should do something here on failure
@@ -151,7 +151,7 @@ class TagHandler extends \XoopsPersistableObjectHandler
             $tag_count = [];
             foreach ($tags_add as $tag) {
                 $tags_id = &$this->getIds(new \Criteria('tag_term', $tag));
-                if ($tags_id) {
+                if (! empty($tags_id)) {
                     $tag_id      = $tags_id[0];
                     $tag_count[] = $tag_id;
                 } else {

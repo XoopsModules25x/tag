@@ -23,8 +23,6 @@ namespace XoopsModules\Tag;
  * @since           2.33
  */
 
-use XoopsModules\Tag;
-
 require_once $GLOBALS['xoops']->path('/class/xoopsformloader.php');
 
 /**

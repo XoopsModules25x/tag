@@ -23,7 +23,6 @@ namespace XoopsModules\Tag;
  * @since           1.00
  */
 
-use XoopsModules\Tag;
 
 /**
  * Tag link handler class.

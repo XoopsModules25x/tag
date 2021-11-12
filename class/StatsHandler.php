@@ -22,7 +22,6 @@ namespace XoopsModules\Tag;
  * @since           2.34
  */
 
-use XoopsModules\Tag;
 /**
  * Tag stats handler class.
  *

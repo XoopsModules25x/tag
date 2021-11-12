@@ -159,7 +159,7 @@ $modversion['blocks'][] = [
 // File: module_block_tag.php
 /**
  * @param $options
- * @return array
+ * @return array|bool
  */
 function mymodule_tag_block_cloud_show($options)
 {
@@ -181,7 +181,7 @@ function mymodule_tag_block_cloud_edit($options)
 
 /**
  * @param $options
- * @return array
+ * @return array|bool
  */
 function mymodule_tag_block_top_show($options)
 {

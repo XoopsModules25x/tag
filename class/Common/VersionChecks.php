@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace XoopsModules\Tag\Common;
 
 /*
@@ -17,17 +19,17 @@ namespace XoopsModules\Tag\Common;
  * @license     http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author      mamba <mambax7@gmail.com>
  */
+
+use Xmf\Module\Helper;
+
 trait VersionChecks
 {
     /**
      * Verifies XOOPS version meets minimum requirements for this module
      * @static
-     * @param \XoopsModule|null $module
      *
-     * @param null|string       $requiredVer
-     * @return bool true if meets requirements, false if not
      */
-    public static function checkVerXoops(\XoopsModule $module = null, $requiredVer = null)
+    public static function checkVerXoops(?\XoopsModule $module = null, ?string $requiredVer = null): bool
     {
         $moduleDirName      = \basename(\dirname(__DIR__, 2));
         $moduleDirNameUpper = \mb_strtoupper($moduleDirName);
@@ -38,9 +40,9 @@ trait VersionChecks
         \xoops_loadLanguage('common', $moduleDirName);
 
         //check for minimum XOOPS version
-        $currentVer = mb_substr(\XOOPS_VERSION, 6); // get the numeric part of string
+        $currentVer = \mb_substr(\XOOPS_VERSION, 6); // get the numeric part of string
         if (null === $requiredVer) {
-            $requiredVer = '' . $module->getInfo('min_xoops'); //making sure it's a string
+            $requiredVer = (string)$module->getInfo('min_xoops'); //making sure it's a string
         }
         $success = true;
 
@@ -55,11 +57,10 @@ trait VersionChecks
     /**
      * Verifies PHP version meets minimum requirements for this module
      * @static
-     * @param \XoopsModule|bool|null $module
      *
      * @return bool true if meets requirements, false if not
      */
-    public static function checkVerPhp(\XoopsModule $module = null)
+    public static function checkVerPhp(?\XoopsModule $module = null): bool
     {
         $moduleDirName      = \basename(\dirname(__DIR__, 2));
         $moduleDirNameUpper = \mb_strtoupper($moduleDirName);
@@ -89,14 +90,10 @@ trait VersionChecks
      *
      * compares current module version with the latest GitHub release
      * @static
-     * @param \Xmf\Module\Helper $helper
-     * @param string|null        $source
-     * @param string|null        $default
      *
-     * @return string|array info about the latest module version, if newer
      */
 
-    public static function checkVerModule(\Xmf\Module\Helper $helper, ?string $source = 'github', ?string $default = 'master'): ?array
+    public static function checkVerModule(Helper $helper, ?string $source = 'github', ?string $default = 'master'): ?array
     {
         $moduleDirName      = \basename(\dirname(__DIR__, 2));
         $moduleDirNameUpper = \mb_strtoupper($moduleDirName);
@@ -114,9 +111,9 @@ trait VersionChecks
                 $curlReturn = \curl_exec($curlHandle);
                 if (false === $curlReturn) {
                     \trigger_error(\curl_error($curlHandle));
-                } elseif (false !== \strpos($curlReturn, 'Not Found')) {
+                } elseif (\is_string($curlReturn) && false !== \strpos($curlReturn, 'Not Found')) {
                     \trigger_error('Repository Not Found: ' . $infoReleasesUrl);
-                } else {
+                } elseif (\is_string($curlReturn)) {
                     $file              = json_decode($curlReturn, false);
                     $latestVersionLink = \sprintf("https://github.com/$repository/archive/%s.zip", $file ? \reset($file)->tag_name : $default);
                     $latestVersion     = $file[0]->tag_name;

@@ -2,9 +2,8 @@
 
 namespace XoopsModules\Tag;
 
-use XoopsModules\Tag;
+
 use XoopsModules\Tag\Common;
-use XoopsModules\Tag\Constants;
 
 /**
  * Class Utility

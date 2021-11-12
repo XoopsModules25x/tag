@@ -25,6 +25,7 @@ trait FilesManagement
      * @param string $folder The full path of the directory to check
      *
      * @throws \RuntimeException
+     * @return void
      */
     public static function createFolder($folder)
     {
@@ -79,10 +80,10 @@ trait FilesManagement
      *
      * @param string $src source directory to delete
      *
-     * @return bool true on success
+     * @uses \Xmf\Module\Helper::getHelper()
      * @uses \Xmf\Module\Helper::isUserAdmin()
      *
-     * @uses \Xmf\Module\Helper::getHelper()
+     * @return bool true on success
      */
     public static function deleteDirectory($src)
     {
@@ -191,10 +192,10 @@ trait FilesManagement
         $iterator = new \DirectoryIterator($src);
         foreach ($iterator as $fObj) {
             if ($fObj->isFile()) {
-                \rename($fObj->getPathname(), "{$dest}/" . $fObj->getFilename());
+                \rename($fObj->getPathname(), "$dest/" . $fObj->getFilename());
             } elseif (!$fObj->isDot() && $fObj->isDir()) {
                 // Try recursively on directory
-                self::rmove($fObj->getPathname(), "{$dest}/" . $fObj->getFilename());
+                self::rmove($fObj->getPathname(), "$dest/" . $fObj->getFilename());
                 //                rmdir($fObj->getPath()); // now delete the directory
             }
         }
@@ -208,10 +209,10 @@ trait FilesManagement
      * @param string $src  - Source of files being moved
      * @param string $dest - Destination of files being moved
      *
-     * @return bool true on success
+     * @uses \Xmf\Module\Helper::getHelper()
      * @uses \Xmf\Module\Helper::isUserAdmin()
      *
-     * @uses \Xmf\Module\Helper::getHelper()
+     * @return bool true on success
      */
     public static function rcopy($src, $dest)
     {
@@ -234,9 +235,9 @@ trait FilesManagement
         $iterator = new \DirectoryIterator($src);
         foreach ($iterator as $fObj) {
             if ($fObj->isFile()) {
-                \copy($fObj->getPathname(), "{$dest}/" . $fObj->getFilename());
+                \copy($fObj->getPathname(), "$dest/" . $fObj->getFilename());
             } elseif (!$fObj->isDot() && $fObj->isDir()) {
-                self::rcopy($fObj->getPathname(), "{$dest}/" . $fObj->getFilename());
+                self::rcopy($fObj->getPathname(), "$dest/" . $fObj->getFilename());
             }
         }
 

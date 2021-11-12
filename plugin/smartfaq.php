@@ -77,7 +77,7 @@ function smartfaq_tag_iteminfo(&$items)
                     'link'    => 'faq.php?faqid=' . $item_id,
                     'time'    => strtotime($item_obj->getVar('datesub')),
                     'tags'    => Utility::tag_parse_tag($item_obj->getVar('tags', 'n')),
-                    'content' => $myts->displayTarea($item_obj->answer(), 1, 1, 1, 1, 1, 1),
+                    'content' => $myts->displayTarea($item_obj->answer(), 1, 1, 1, 1, 1),
                 ];
             }
         }

@@ -31,38 +31,36 @@ $helper = Helper::getInstance();
 $helper->loadLanguage('common');
 $helper->loadLanguage('modinfo');
 
-$pathIcon32 = Admin::menuIconPath('');
-$pathModIcon32 = XOOPS_URL .   '/modules/' . $moduleDirName . '/assets/images/icons/32/';
+$pathIcon32    = Admin::menuIconPath('');
+$pathModIcon32 = XOOPS_URL . '/modules/' . $moduleDirName . '/assets/images/icons/32/';
 if (is_object($helper->getModule()) && false !== $helper->getModule()->getInfo('modicons32')) {
     $pathModIcon32 = $helper->url($helper->getModule()->getInfo('modicons32'));
 }
 
-$adminmenu = [
-    [
-        'title' => _MI_TAG_ADMENU_INDEX,
-        'link'  => 'admin/index.php',
-        'desc'  => _MI_TAG_ADMIN_HOME_DESC,
-        'icon'  => "{$pathIcon32}/home.png",
-    ],
+$adminmenu[] = [
+    'title' => _MI_TAG_ADMENU_INDEX,
+    'link'  => 'admin/index.php',
+    'desc'  => _MI_TAG_ADMIN_HOME_DESC,
+    'icon'  => $pathIcon32 . '/home.png',
+];
 
-    [
-        'title' => _MI_TAG_ADMENU_EDIT,
-        'link'  => 'admin/admin.tag.php',
-        'desc'  => _MI_TAG_ADMENU_EDIT_DESC,
-        'icon'  => "{$pathIcon32}/administration.png",
-    ],
+$adminmenu[] = [
+    'title' => _MI_TAG_ADMENU_EDIT,
+    'link'  => 'admin/admin.tag.php',
+    'desc'  => _MI_TAG_ADMENU_EDIT_DESC,
+    'icon'  => $pathIcon32 . '/administration.png',
+];
 
-    [
-        'title' => _MI_TAG_ADMENU_SYNCHRONIZATION,
-        'link'  => 'admin/syn.tag.php',
-        'desc'  => _MI_TAG_HELP_DESC,
-        'icon'  => "{$pathIcon32}/synchronized.png",
-    ],
+$adminmenu[] = [
+    'title' => _MI_TAG_ADMENU_SYNCHRONIZATION,
+    'link'  => 'admin/syn.tag.php',
+    'desc'  => _MI_TAG_HELP_DESC,
+    'icon'  => $pathIcon32 . '/synchronized.png',
+];
 
-    [
-        'title' => _MI_TAG_ADMIN_ABOUT,
-        'link'  => 'admin/about.php',
-        'desc'  => _MI_TAG_ADMIN_HELP_DESC,
-        'icon'  => "{$pathIcon32}/about.png",
-    ],
+$adminmenu[] = [
+    'title' => _MI_TAG_ADMIN_ABOUT,
+    'link'  => 'admin/about.php',
+    'desc'  => _MI_TAG_ADMIN_HELP_DESC,
+    'icon'  => $pathIcon32 . '/about.png',
 ];

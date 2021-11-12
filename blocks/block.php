@@ -495,7 +495,7 @@ function tag_block_cumulus_show(array $options, $dirname = null, $catid = 0)
     ];
 
     $output    = '<tags>';
-    $xoops_url = $GLOBALS['xoops']->url('www');
+//    $xoops_url = $GLOBALS['xoops']->url('www');
     $view_url  = $helper->url('view.tag.php');
     foreach ($block['tags'] as $term) {
         //foreach ($tags_data_array as $term) {
@@ -519,7 +519,7 @@ EOT;
  *
  * @param array $options module config block options
  *
- * @return string html render of form
+ * @return string|false html render of form
  */
 function tag_block_cumulus_edit($options)
 {

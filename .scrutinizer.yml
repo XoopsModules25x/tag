@@ -11,6 +11,15 @@ build:
           # to install a specific release tag or branch instead.
           - git clone --depth=1 https://github.com/XOOPS/XoopsCore25
           - git clone --depth=1 https://github.com/mambax7/tag
+          - git clone --depth=1 https://github.com/mambax7/extgallery
+          - git clone --depth=1 https://github.com/mambax7/myalbum
+          - git clone --depth=1 https://github.com/mambax7/newbb
+          - git clone --depth=1 https://github.com/mambax7/publisher
+          - git clone --depth=1 https://github.com/mambax7/randomquote
+          - git clone --depth=1 https://github.com/mambax7/smartfaq
+          - git clone --depth=1 https://github.com/mambax7/smartsection
+          - git clone --depth=1 https://github.com/mambax7/tdmdownloads
+          - git clone --depth=1 https://github.com/mambax7/xfaq
       project_setup:
         override: true
       tests:
@@ -20,3 +29,12 @@ filter:
   dependency_paths:
     - XoopsCore25/*
     - tag/*
+    - extgallery/*
+    - myalbum/*
+    - newbb/*
+    - publisher/*
+    - randomquote/*
+    - smartfaq/*
+    - smartsection/*
+    - tdmdownloads/*
+    - xfaq/*
