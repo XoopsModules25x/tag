@@ -17,7 +17,6 @@ build:
           - git clone --depth=1 https://github.com/mambax7/publisher
           - git clone --depth=1 https://github.com/mambax7/randomquote
           - git clone --depth=1 https://github.com/mambax7/smartfaq
-          - git clone --depth=1 https://github.com/mambax7/smartsection
           - git clone --depth=1 https://github.com/mambax7/tdmdownloads
           - git clone --depth=1 https://github.com/mambax7/xfaq
       project_setup:
@@ -35,6 +34,5 @@ filter:
     - publisher/*
     - randomquote/*
     - smartfaq/*
-    - smartsection/*
     - tdmdownloads/*
     - xfaq/*
