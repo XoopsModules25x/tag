@@ -28,8 +28,8 @@ class Utility extends Common\SysUtility
                 && ($helper->getDirname() === $GLOBALS['xoopsModule']->getVar('dirname', 'n'))) {
                 $moduleConfig = $GLOBALS['xoopsModuleConfig'];
             } else {
-                /** @var \XoopsConfigHandler $configHandler */
                 $mid           = $helper->getModule()->getVar('mid');
+                /** @var \XoopsConfigHandler $configHandler */
                 $configHandler = \xoops_getHandler('config');
 
                 $criteria = new \Criteria('conf_modid', $mid);

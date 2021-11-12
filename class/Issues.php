@@ -78,7 +78,7 @@ class Issues
     /**
      * Function to put HTTP headers in an array
      *
-     * @param        $curl
+     * @param resource $curl
      * @param string $hdrLine
      *
      * @return int length of header line put into array

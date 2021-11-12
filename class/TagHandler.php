@@ -36,9 +36,9 @@ class TagHandler extends \XoopsPersistableObjectHandler
     /**
      * Constructor
      *
-     * @param \XoopsDatabase|null $db reference to the object {@link XoopsDatabase}
+     * @param \XoopsMySQLDatabase|null $db reference to the object {@link XoopsMySQLDatabase}
      */
-    public function __construct(\XoopsDatabase $db = null)
+    public function __construct(?\XoopsMySQLDatabase $db = null)
     {
         parent::__construct($db, 'tag_tag', Tag::class, 'tag_id', 'tag_term');
         $this->table_link  = $this->db->prefix('tag_link');

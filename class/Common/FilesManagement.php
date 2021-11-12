@@ -43,8 +43,8 @@ trait FilesManagement
     }
 
     /**
-     * @param $file
-     * @param $folder
+     * @param string $file
+     * @param string $folder
      * @return bool
      */
     public static function copyFile($file, $folder)
@@ -53,8 +53,8 @@ trait FilesManagement
     }
 
     /**
-     * @param $src
-     * @param $dst
+     * @param string $src
+     * @param string $dst
      */
     public static function recurseCopy($src, $dst)
     {
