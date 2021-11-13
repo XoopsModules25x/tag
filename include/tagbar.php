@@ -21,7 +21,8 @@
 
 use XoopsModules\Tag\{
     Helper,
-    Utility
+    Utility,
+    Tagbar
 };
 
 (defined('XOOPS_ROOT_PATH') && ($GLOBALS['xoopsModule'] instanceof \XoopsModule)) || exit('Restricted access');
@@ -34,62 +35,16 @@ use XoopsModules\Tag\{
  * @param int       $catid
  * @param int       $modid
  * @return array
- *                         {@internal param int $itemid }}
- * @todo move this to a namespaced class
  */
 function tagBar($tags, $catid = 0, $modid = 0)
 {
-    static $loaded, $delimiter;
+    $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1);
+    trigger_error(__FUNCTION__ . " is deprecated, called from {$trace[0]['file']} line {$trace[0]['line']}");
+    $GLOBALS['xoopsLogger']->addDeprecated(
+        'Tag Module: ' . __FUNCTION__ . " function  is deprecated since Tag 2.3.5, please use 'Tag\Tagbar' class instead." . " Called from {$trace[0]['file']}line {$trace[0]['line']}"
+    );
 
-    if (empty($tags)) {
-        return [];
-    }
+    $tagbar = new Tagbar();
+    return $tagbar->getTagbar($tags, $catid, $modid);
 
-    $helper = Helper::getInstance();
-
-    if (null === $loaded) {
-        require_once $helper->path('include/vars.php');
-        //require_once $helper->path('include/functions.php');
-        Utility::tag_define_url_delimiter();
-        $helper->loadLanguage('main'); // load Main lang file
-        /*
-        if (!($GLOBALS['xoopsModule'] instanceof \XoopsModule)
-            || ('tag' !== $GLOBALS['xoopsModule']->getVar('dirname'))) {
-            $helper->loadLanguage('main');
-        }
-        */
-        if (file_exists($helper->path('assets/images/delimiter.gif'))) {
-            $delimiter = "<img src='" . $helper->url('assets/images/delimiter.gif') . "' alt=''>";
-        } else {
-            $delimiter = "<img src='" . $GLOBALS['xoops']->url('www/images/pointer.gif') . "' alt=''>";
-        }
-        $loaded = 1;
-    }
-
-    // itemid
-    if (is_numeric($tags)) {
-        if (empty($modid) && ($GLOBALS['xoopsModule'] instanceof \XoopsModule)) {
-            $modid = $GLOBALS['xoopsModule']->getVar('mid');
-        }
-        /** @var \XoopsModules\Tag\TagHandler $tagHandler */
-        $tagHandler = $helper->getHandler('Tag');
-        if (!$tags = $tagHandler->getByItem($tags, $modid, $catid)) {
-            return [];
-        }
-        // if ready, do nothing
-    } elseif (is_array($tags)) {
-        // parse
-    } elseif (!$tags = Utility::tag_parse_tag($tags)) {
-        return [];
-    }
-    $tags_data = [];
-    foreach ($tags as $tag) {
-        $tags_data[] = "<a href='" . $helper->url('view.tag.php' . URL_DELIMITER . urlencode($tag)) . "' title='" . htmlspecialchars($tag, ENT_QUOTES | ENT_HTML5) . "'>" . htmlspecialchars($tag, ENT_QUOTES | ENT_HTML5) . '</a>';
-    }
-
-    return [
-        'title'     => _MD_TAG_TAGS,
-        'delimiter' => $delimiter,
-        'tags'      => $tags_data,
-    ];
 }
