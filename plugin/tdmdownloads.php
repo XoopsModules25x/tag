@@ -1,24 +1,32 @@
 <?php
 
-use XoopsModules\Tag\Helper;
+/*
+ You may not change or alter any portion of this comment or credits
+ of supporting developers from this source code or any supporting source code
+ which is considered copyrighted (c) material of the original comment or credit authors.
+
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ */
 
 /**
- * TDMDownload
- *
- * You may not change or alter any portion of this comment or credits
- * of supporting developers from this source code or any supporting source code
- * which is considered copyrighted (c) material of the original comment or credit authors.
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- *
  * @param $items
  * @return bool
  * @author      Gregory Mage (Aka Mage)
  * @copyright   Gregory Mage (Aka Mage)
  * @license     GNU GPL 2 (https://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
  */
-function tdmdownloads_tag_iteminfo($items)
+
+use XoopsModules\Tag\Helper;
+use XoopsModules\Tag\Utility;
+
+/**
+ * Get item fields: title, content, time, link, uid, tags
+ * @param array $items
+ * @return bool
+ */
+function tdmdownloads_tag_iteminfo(&$items)
 {
     if (empty($items) || !is_array($items)) {
         return false;
@@ -55,7 +63,7 @@ function tdmdownloads_tag_iteminfo($items)
     }
     unset($items_obj);
 
-    return '';
+    return true;
 }
 
 /**

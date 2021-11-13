@@ -20,6 +20,8 @@
  */
 
 use XoopsModules\Xfaq\Helper;
+use XoopsModules\Tag\Utility;
+
 
 defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
@@ -43,7 +45,7 @@ function xfaq_tag_iteminfo(&$items)
     /** @var \XoopsDatabase $db */
     $db = \XoopsDatabaseFactory::getDatabase();
     /** @var \XoopsModules\Xfaq\XfaqHandler $itemHandler */
-    $itemHandler = Helper::getInstance()->getHandler('Xfaq');
+    $itemHandler = Helper::getInstance()->getHandler('Faq');
 
     $items_obj = $itemHandler->getObjects(new \Criteria('faq_id', '(' . implode(', ', $items_id) . ')', 'IN'), true);
 

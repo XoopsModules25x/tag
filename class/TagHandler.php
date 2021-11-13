@@ -23,7 +23,6 @@ namespace XoopsModules\Tag;
  */
 \defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
-use XoopsModules\Tag\Utility;
 
 /**
  * Class TagHandler
@@ -233,7 +232,7 @@ class TagHandler extends \XoopsPersistableObjectHandler
                 }
             }
         } else {
-            $statsHandler = \XoopsModules\Tag\Helper::getInstance()->getHandler('Stats');
+            $statsHandler = Helper::getInstance()->getHandler('Stats');
             if (empty($count)) {
                 $criteria = new \CriteriaCompo(new \Criteria($this->keyName, $tag_id));
                 $criteria->add(new \Criteria('tag_modid, $modid'), 'AND');

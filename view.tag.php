@@ -59,7 +59,6 @@ if (!empty($tagid)) { // have a tag_id, so check to see if it yields a valid Tag
     if ((!$tag_obj = $tagHandler->get((int)$tagid)) || $tag_obj->isNew()) {
         $helper->redirect('index.php', Constants::REDIRECT_DELAY_MEDIUM, _MD_TAG_INVALID);
     }
-
     $tag_term = $tag_obj->getVar('tag_term', 'n');
 } elseif (!empty($tag_term)) {
     if (!$tags_obj = $tagHandler->getObjects(new \Criteria('tag_term', $myts->addSlashes(trim($tag_term))))) {
@@ -70,7 +69,7 @@ if (!empty($tagid)) { // have a tag_id, so check to see if it yields a valid Tag
 } else {
     $helper->redirect('index.php', Constants::REDIRECT_DELAY_MEDIUM, _MD_TAG_INVALID);
 }
-// made it here so now we have a valid $tagid and $tag_term
+// made it here, so now we have a valid $tagid and $tag_term
 $tag_term = mb_convert_case($tag_term, MB_CASE_TITLE, 'UTF-8');
 
 // @todo: where does $tag_desc come from? - looks like it will always be empty
@@ -177,6 +176,7 @@ if (!empty($start) || count($items_data) >= $limit) {
     $pagenav = '';
 }
 
+//add-ons to tag externally (e.g. Google, Flickr)
 $tag_addon = [];
 if (!empty($GLOBALS['_MD_TAG_ADDONS'])) {
     $tag_addon['title'] = _MD_TAG_TAG_ON;
