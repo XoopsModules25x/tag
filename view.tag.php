@@ -20,9 +20,13 @@
  * */
 
 use Xmf\Request;
-use XoopsModules\Tag\Constants;
-use XoopsModules\Tag\Utility;
-use XoopsModules\Tag\Common;
+use XoopsModules\Tag\{
+    Common,
+    Constants,
+    Tagbar,
+    Utility
+};
+
 
 require_once __DIR__ . '/header.php';
 
@@ -137,7 +141,8 @@ if (0 < count($items_array)) {
 
 $items_data = [];
 $uids       = [];
-require_once $helper->path('include/tagbar.php');
+//require_once $helper->path('include/tagbar.php');
+$tagbar = new Tagbar();
 foreach ($items_array as $key => $myItem) {
     /**
      * Get item fields:
@@ -154,7 +159,7 @@ foreach ($items_array as $key => $myItem) {
     $item['dirname'] = $module_obj_array[$myItem['modid']]->getVar('dirname', 'n');
     $time            = empty($item['time']) ? $myItem['time'] : $item['time'];
     $item['time']    = formatTimestamp($time, 's');
-    $item['tags']    = @tagBar($item['tags']);
+    $item['tags']    = $tagbar->getTagbar($item['tags']);
     $items_data[]    = $item;
     // @todo: fix this to use xoops user id, if present otherwise to 1st admin
     $uids[$item['uid']] = 1;

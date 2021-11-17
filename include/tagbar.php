@@ -20,8 +20,6 @@
  */
 
 use XoopsModules\Tag\{
-    Helper,
-    Utility,
     Tagbar
 };
 
