@@ -21,7 +21,7 @@
 defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
 define('_MD_TAG_TAGS', 'Tags');
-define('_MD_TAG_TAG_ON', 'Tag On');
+define('_MD_TAG_TAG_ON', 'Search Tags On');
 define('_MD_TAG_TAGVIEW', 'Items of Tag <strong>%1$s</strong> in %2$s');
 define('_MD_TAG_TAGLIST', 'Tag List of <strong>%s</strong>');
 define('_MD_TAG_JUMPTO', 'Jump to');

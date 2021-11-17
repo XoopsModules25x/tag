@@ -36,21 +36,15 @@ $count_tag  = $tagHandler->getCount();
 
 $linkHandler = $helper->getHandler('Link');
 $count_item  = $linkHandler->getCount();
-/*
-$count_item = 0;
-$sql        = 'SELECT COUNT(DISTINCT tl_id) FROM ' . $GLOBALS['xoopsDB']->prefix('tag_link');
-if (false === ($result = $GLOBALS['xoopsDB']->query($sql))) {
-    xoops_error($GLOBALS['xoopsDB']->error());
-} else {
-    list($count_item) = $GLOBALS['xoopsDB']->fetchRow($result);
-}
-*/
+
 $sql           = 'SELECT tag_modid, SUM(tag_count) AS count_item, COUNT(DISTINCT tag_id) AS count_tag';
 $sql           .= ' FROM ' . $GLOBALS['xoopsDB']->prefix('tag_stats');
 $sql           .= ' GROUP BY tag_modid';
 $counts_module = [];
-if (false === ($result = $GLOBALS['xoopsDB']->query($sql))) {
-    xoops_error($GLOBALS['xoopsDB']->error());
+
+$result = $GLOBALS['xoopsDB']->query($sql);
+if (!$result instanceof \mysqli_result) {
+    \trigger_error($GLOBALS['xoopsDB']->error());
 } else {
     while (false !== ($myrow = $GLOBALS['xoopsDB']->fetchArray($result))) {
         $counts_module[$myrow['tag_modid']] = [

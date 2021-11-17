@@ -66,7 +66,7 @@ function xoops_module_update_tag(\XoopsModule $module, $previousVersion = null)
     $utility      = new Tag\Utility();
     $configurator = new Tag\Common\Configurator();
 
-    if ($previousVersion < 235) {
+    if ($previousVersion < 236) {
         //delete old HTML templates
         if (count($configurator->templateFolders) > 0) {
             foreach ($configurator->templateFolders as $folder) {
@@ -128,6 +128,12 @@ function xoops_module_update_tag(\XoopsModule $module, $previousVersion = null)
         //delete .html entries from the tpl table
         $sql = 'DELETE FROM ' . $GLOBALS['xoopsDB']->prefix('tplfile') . " WHERE `tpl_module` = '" . $module->getVar('dirname', 'n') . '\' AND `tpl_file` LIKE \'%.html%\'';
         $GLOBALS['xoopsDB']->queryF($sql);
+
+
+        /* Do some synchronization */
+        require $GLOBALS['xoops']->path('/modules/' . $module->getVar('dirname') . '/include/functions.recon.php');
+        tag_synchronization();
+
 
         /** @var \XoopsGroupPermHandler $grouppermHandler */
         $grouppermHandler = xoops_getHandler('groupperm');

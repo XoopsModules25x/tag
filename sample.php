@@ -61,9 +61,15 @@ $form_item->addElement(new FormTag('item_tag', 60, 255, $itemid, $catid = 0));
 
 /* Step 2: add tag storage after item storage */
 // File: submit.item.php
+use XoopsModules\Tag as TagHelper;
 /** @var \XoopsModules\Tag\TagHandler $tagHandler */
-$tagHandler = Helper::getInstance()->getHandler('Tag'); // xoops_getModuleHandler('tag', 'tag');
-$tagHandler->updateByItem($_POST['item_tag'], $itemid, $GLOBALS['xoopsModule']->getVar('dirname'), $catid = 0);
+$tagHandler = TagHelper::getInstance()->getHandler('Tag'); // xoops_getModuleHandler('tag', 'tag');
+if (is_array($_POST['item_tag'])){
+    $item_tag = Xmf\Request::getArray('item_tag', [], 'POST');
+} elseif (is_string($_POST['item_tag'])) {
+    $item_tag = Xmf\Request::getString('item_tag', '', 'POST');
+}
+$tagHandler->updateByItem($item_tag, $itemid, $GLOBALS['xoopsModule']->getVar('dirname'), $catid = 0);
 
 /* Step 3: define functions to build info of tagged items */
 // File: /modules/tag/plugin/mymodule.php OR /modules/mymodule/include/plugin.tag.php
@@ -72,6 +78,7 @@ $tagHandler->updateByItem($_POST['item_tag'], $itemid, $GLOBALS['xoopsModule']->
  */
 function mymodule_tag_iteminfo($items)
 {
+    $helper = XoopsModules\Mymodule\Helper::getInstance();
     $items_id = [];
     foreach (array_keys($items) as $cat_id) {
         // Some handling here to build the link upon catid
@@ -81,7 +88,7 @@ function mymodule_tag_iteminfo($items)
             $items_id[] = (int)$item_id;
         }
     }
-    $itemHandler = $helper->getHandler('Item', 'module');
+    $itemHandler = $helper->getHandler('Item');
     $items_obj   = $itemHandler->getObjects(new \Criteria('itemid', '(' . implode(', ', $items_id) . ')', 'IN'), true);
 
     foreach (array_keys($items) as $cat_id) {
@@ -92,7 +99,7 @@ function mymodule_tag_iteminfo($items)
                 'uid'     => $item_obj->getVar('uid'),
                 'link'    => "view.item.php?itemid={$item_id}",
                 'time'    => $item_obj->getVar('item_time'),
-                'tags'    => Utility::tag_parse_tag($item_obj->getVar('item_tags', 'n')), // optional
+                'tags'    => XoopsModules\Tag\Utility::tag_parse_tag($item_obj->getVar('item_tags', 'n')), // optional
                 'content' => '',
             ];
         }

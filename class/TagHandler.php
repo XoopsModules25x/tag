@@ -134,12 +134,12 @@ class TagHandler extends \XoopsPersistableObjectHandler
                 }
                 $sql = 'DELETE FROM ' . $this->table . ' WHERE ' . '    tag_count < 2 AND ' . "     {$this->keyName} IN (" . \implode(', ', $tags_id) . ')';
                 if (false === ($result = $this->db->queryF($sql))) {
-                    //xoops_error($this->db->error());
+                    \trigger_error($this->db->error());
                 }
 
                 $sql = 'UPDATE ' . $this->table . ' SET tag_count = tag_count - 1' . ' WHERE ' . "     {$this->keyName} IN (" . \implode(', ', $tags_id) . ')';
                 if (false === ($result = $this->db->queryF($sql))) {
-                    //xoops_error($this->db->error());
+                    \trigger_error($this->db->error());
                 }
                 $tags_update = $tags_id;
             }
@@ -165,12 +165,12 @@ class TagHandler extends \XoopsPersistableObjectHandler
             }
             $sql = "INSERT INTO {$this->table_link}" . ' (tag_id, tag_itemid, tag_catid, tag_modid, tag_time) ' . ' VALUES ' . \implode(', ', $tag_link);
             if (false === ($result = $this->db->queryF($sql))) {
-                //xoops_error($this->db->error());
+                \trigger_error($this->db->error());
             }
             if (!empty($tag_count)) {
                 $sql = 'UPDATE ' . $this->table . ' SET tag_count = tag_count+1' . ' WHERE ' . "     {$this->keyName} IN (" . \implode(', ', $tag_count) . ')';
                 if (false === ($result = $this->db->queryF($sql))) {
-                    //xoops_error($this->db->error());
+                    \trigger_error($this->db->error());
                 }
             }
         }
@@ -207,10 +207,10 @@ class TagHandler extends \XoopsPersistableObjectHandler
         $linkHandler = \XoopsModules\Tag\Helper::getInstance()->getHandler('Link');
         $criteria    = new \CriteriaCompo(new \Criteria('tag_id', $tag_id));
         if (0 !== $modid) {
-            $criteria->add(new \Criteria('tag_modid', $modid), 'ADD');
+            $criteria->add(new \Criteria('tag_modid', $modid), 'AND');
         }
         if (0 < $catid) {
-            $criteria->add(new \Criteria('tag_catid', $catid), 'ADD');
+            $criteria->add(new \Criteria('tag_catid', $catid), 'AND');
         }
         $count = $linkHandler->getCount($criteria);
         /*
@@ -245,7 +245,7 @@ class TagHandler extends \XoopsPersistableObjectHandler
                 $sql = "DELETE FROM {$this->table_stats}" . ' WHERE ' . " {$this->keyName} = {$tag_id}" . " AND tag_modid = {$modid}" . " AND tag_catid = {$catid}";
 
                 if (false === $result = $this->db->queryF($sql)) {
-                    //xoops_error($this->db->error());
+                    \trigger_error($this->db->error());
                 }
                 */
             } else {
@@ -289,7 +289,7 @@ class TagHandler extends \XoopsPersistableObjectHandler
                 }
                 /*
                 if (!empty($sql) && false === ($result = $this->db->queryF($sql))) {
-                    //xoops_error($this->db->error());
+                    \trigger_error($this->db->error());
                 }
                 */
             }
@@ -319,9 +319,9 @@ class TagHandler extends \XoopsPersistableObjectHandler
     {
         $ret = [];
         if ($fromStats) {
-            $sql = "SELECT DISTINCT(o.{$this->keyName}), o.tag_term, o.tag_status, SUM(l.tag_count) AS count" . " FROM {$this->table} AS o LEFT JOIN {$this->table_stats} AS l ON l.{$this->keyName} = o.{$this->keyName}";
+            $sql = "SELECT DISTINCT(o.{$this->keyName}), o.tag_term, o.tag_status, SUM(l.tag_count) AS count , l.tag_modid" . " FROM {$this->table} AS o LEFT JOIN {$this->table_stats} AS l ON l.{$this->keyName} = o.{$this->keyName}";
         } else {
-            $sql = "SELECT DISTINCT(o.{$this->keyName}), o.tag_term, o.tag_status, COUNT(l.tl_id) AS count" . " FROM {$this->table} AS o LEFT JOIN {$this->table_link} AS l ON l.{$this->keyName} = o.{$this->keyName}";
+            $sql = "SELECT DISTINCT(o.{$this->keyName}), o.tag_term, o.tag_status, COUNT(l.tl_id) AS count , l.tag_modid" . " FROM {$this->table} AS o LEFT JOIN {$this->table_link} AS l ON l.{$this->keyName} = o.{$this->keyName}";
         }
 
         $limit = \is_int($limit) && ($limit >= 0) ? $limit : Constants::UNLIMITED;
@@ -356,7 +356,7 @@ class TagHandler extends \XoopsPersistableObjectHandler
         }
 
         if (false === ($result = $this->db->query($sql, $limit, $start))) {
-            //xoops_error($this->db->error());
+            \trigger_error($this->db->error());
             $ret = null;
         } else {
             while (false !== ($myrow = $this->db->fetchArray($result))) {
@@ -364,6 +364,7 @@ class TagHandler extends \XoopsPersistableObjectHandler
                     'id'     => $myrow[$this->keyName],
                     'term'   => \htmlspecialchars($myrow['tag_term'], \ENT_QUOTES | \ENT_HTML5),
                     'status' => $myrow['tag_status'],
+                    'modid'  => $myrow['tag_modid'],
                     'count'  => (int)$myrow['count'],
                 ];
             }
@@ -401,7 +402,7 @@ class TagHandler extends \XoopsPersistableObjectHandler
         $sql =     $sql_select . " " . $sql_from . " " . $sql_where;
         */
         if (false === ($result = $this->db->query($sql))) {
-            //xoops_error($this->db->error());
+            \trigger_error($this->db->error());
             $ret = 0;
         } else {
             [$ret] = $this->db->fetchRow($result);
@@ -454,7 +455,7 @@ class TagHandler extends \XoopsPersistableObjectHandler
         }
 
         if (false === ($result = $this->db->query($sql, $limit, $start))) {
-            //xoops_error($this->db->error());
+            \trigger_error($this->db->error());
             $ret = [];
         } else {
             while (false !== ($myrow = $this->db->fetchArray($result))) {
@@ -499,7 +500,7 @@ class TagHandler extends \XoopsPersistableObjectHandler
 
             $sql = $sql_select . ' ' . $sql_from . ' ' . $sql_where;
             if (false === ($result = $this->db->query($sql))) {
-                //xoops_error($this->db->error());
+                \trigger_error($this->db->error());
                 $ret = 0;
             } else {
                 [$ret] = $this->db->fetchRow($result);
@@ -520,40 +521,73 @@ class TagHandler extends \XoopsPersistableObjectHandler
      */
     public function getTagData($tags_array, $font_max = 0, $font_min = 0)
     {
-        $tags_data_array = [];
-        if (\is_array($tags_array) && !empty($tags_array)) {
-            // set min and max tag count
-            $count_array = \array_column($tags_array, 'count', 'id');
-            $count_min   = \count($count_array) > 0 ? \min($count_array) : 0;
-            $count_min   = max($count_min, 0);
-            $count_max   = \count($count_array) > 0 ? \max($count_array) : 0;
-            $count_max   = max($count_max, 0);
-            if ($count_max > 0) {
-                $term_array      = \array_column($tags_array, 'term', 'id');
-                $tags_term_array = \array_map('\mb_strtolower', $term_array);
-                \array_multisort($tags_term_array, \SORT_ASC, $tags_array);
-                $count_interval = $count_max - $count_min;
-                $level_limit    = 5;
 
-                $font_ratio = $count_interval ? ($font_max - $font_min) / $count_interval : 1;
+//        $tags_data_array = [];
+//        if (\is_array($tags_array) && !empty($tags_array)) {
+//            // set min and max tag count
+//            $count_array = \array_column($tags_array, 'count', 'id');
+//            $count_min   = \count($count_array) > 0 ? \min($count_array) : 0;
+//            $count_min   = max($count_min, 0);
+//            $count_max   = \count($count_array) > 0 ? \max($count_array) : 0;
+//            $count_max   = max($count_max, 0);
+//            if ($count_max > 0) {
+//                $term_array      = \array_column($tags_array, 'term', 'id');
+//                $tags_term_array = \array_map('\mb_strtolower', $term_array);
+//                \array_multisort($tags_term_array, \SORT_ASC, $tags_array);
+//                $count_interval = $count_max - $count_min;
+//                $level_limit    = 5;
+//
+//                $font_ratio = $count_interval ? ($font_max - $font_min) / $count_interval : 1;
+//
+//                foreach ($tags_array as $tag) {
+//                    /*
+//                     * Font-size = ((tag.count - count.min) * (font.max - font.min) / (count.max - count.min) ) * 100%
+//                     */
+//                    $font_sz           = \floor(($tag['count'] - $count_min) * $font_ratio) + $font_min;
+//                    $level_sz          = \floor(($tag['count'] - $count_min) * $level_limit / $count_max);
+//                    $tags_data_array[] = [
+//                        'id'    => $tag['id'],
+//                        'font'  => empty($count_interval) ? 100 : (int)$font_sz,
+//                        'level' => empty($count_max) ? 0 : (int)$level_sz,
+//                        'term'  => \urlencode($tag['term']),
+//                        'title' => \htmlspecialchars($tag['term'], \ENT_QUOTES | \ENT_HTML5),
+//                        'count' => $tag['count'],
+//                    ];
+//                }
+//            }
+//        }
 
-                foreach ($tags_array as $tag) {
-                    /*
-                     * Font-size = ((tag.count - count.min) * (font.max - font.min) / (count.max - count.min) ) * 100%
-                     */
-                    $font_sz           = \floor(($tag['count'] - $count_min) * $font_ratio) + $font_min;
-                    $level_sz          = \floor(($tag['count'] - $count_min) * $level_limit / $count_max);
-                    $tags_data_array[] = [
-                        'id'    => $tag['id'],
-                        'font'  => empty($count_interval) ? 100 : (int)$font_sz,
-                        'level' => empty($count_max) ? 0 : (int)$level_sz,
-                        'term'  => \urlencode($tag['term']),
-                        'title' => \htmlspecialchars($tag['term'], \ENT_QUOTES | \ENT_HTML5),
-                        'count' => $tag['count'],
-                    ];
-                }
+            $count_max = 0;
+            $count_min = 0;
+            $tags_term = [];
+            foreach ($tags_array as $tag) {
+                $count_max   = max($count_max, $tag['count']); // set counter to the max tag count
+                $count_min   = min(0, $count_min, $tag['count']); //set counter to the minimum for tag count
+                $tags_term[] = \mb_strtolower($tag['term']);
             }
-        }
+
+            if (!empty($tags_term)) {
+                array_multisort($tags_term, SORT_ASC, $tags_array);
+            }
+            $count_interval = $count_max - $count_min;
+            $level_limit    = 5;
+
+//            $font_max   = $options[2];
+//            $font_min   = $options[3];
+            $font_ratio = $count_interval ? ($font_max - $font_min) / $count_interval : 1;
+
+            $tags_data_array = [];
+            foreach ($tags_array as $tag) {
+                $tags_data_array[] = [
+                    'id'    => $tag['id'],
+                    'font'  => $count_interval ? floor(($tag['count'] - $count_min) * $font_ratio + $font_min) : 100,
+                    'level' => empty($count_max) ? 0 : floor(($tag['count'] - $count_min) * $level_limit / $count_max),
+                    'term'  => urlencode($tag['term']),
+                    'title' => htmlspecialchars($tag['term'], ENT_QUOTES | ENT_HTML5),
+                    'count' => $tag['count'],
+                ];
+            }
+//            unset($tags_array, $tag, $tags_term, $tag_count_array);
 
 
         return $tags_data_array;

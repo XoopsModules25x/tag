@@ -24,13 +24,15 @@ use XoopsModules\Tag\{
     Helper
 };
 
-$GLOBALS['xoopsOption']['nocommon'] = true;
+//$GLOBALS['xoopsOption']['nocommon'] = true;
 require \dirname(__DIR__, 3) . '/mainfile.php';
 require \dirname(__DIR__) . '/preloads/autoloader.php';
 
 $moduleDirName = \basename(\dirname(__DIR__));
+//xoops_loadLanguage('admin', $moduleDirName);
 
-xoops_loadLanguage('admin', $moduleDirName);
+$helper = Helper::getInstance();
+$helper->loadLanguage('admin');
 
 //session_start();
 

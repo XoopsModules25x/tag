@@ -168,7 +168,7 @@ $modversion['blocks'] = [
         'description' => _MI_TAG_BLOCK_TOP_DESC,
         'show_func'   => 'tag_block_top_show',
         'edit_func'   => 'tag_block_top_edit',
-        'options'     => '50|30|a',
+        'options'     => '10|30|a',
         'template'    => 'tag_block_top.tpl',
     ],
 
@@ -233,6 +233,6 @@ $modversion['config'] = [
         'description' => '_MI_TAG_LIMITPERCLOUD_DESC',
         'formtype'    => 'textbox',
         'valuetype'   => 'int',
-        'default'     => 100,
+        'default'     => 10,
     ],
 ];

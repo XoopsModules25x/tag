@@ -10,4 +10,3 @@ Features that are being considered/planned for the future releases:
    * WordCloud2 (https://github.com/timdream/wordcloud2.js)
    * jQCloud (http://mistic100.github.io/jQCloud/index.html)
 
-- feature 1

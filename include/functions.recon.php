@@ -23,11 +23,10 @@ use XoopsModules\Tag\Helper;
 
 defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
-defined('TAG_FUNCTIONS_INI') || require_once __DIR__ . '/functions.ini.php';
+//defined('TAG_FUNCTIONS_INI') || require __DIR__ . '/functions.ini.php';
 define('TAG_FUNCTIONS_RECON_LOADED', true);
 
-if (!defined('TAG_FUNCTIONS_RECON')):
-    define('TAG_FUNCTIONS_RECON', 1);
+if (!defined('TAG_FUNCTIONS_RECON')): define('TAG_FUNCTIONS_RECON', 1);
 
     /**
      * @return bool
@@ -46,9 +45,9 @@ if (!defined('TAG_FUNCTIONS_RECON')):
 
         foreach (array_keys($modules_obj) as $mid) {
             $dirname = $modules_obj[$mid]->getVar('dirname');
-            if (!@require_once $GLOBALS['xoops']->path("/modules/{$dirname}/class/plugins/plugin.tag.php")) {
-                if (!@require_once $GLOBALS['xoops']->path("/modules/{$dirname}/include/plugin.tag.php")) {
-                    if (!@require_once $GLOBALS['xoops']->path("/modules/tag/plugin/{$dirname}.php")) {
+            if (!@include $GLOBALS['xoops']->path("/modules/{$dirname}/class/plugins/plugin.tag.php")) {
+                if (!@include $GLOBALS['xoops']->path("/modules/{$dirname}/include/plugin.tag.php")) {
+                    if (!@include $GLOBALS['xoops']->path("/modules/tag/plugin/{$dirname}.php")) {
                         continue;
                     }
                 }
