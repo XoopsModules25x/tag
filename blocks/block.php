@@ -334,8 +334,8 @@ function tag_block_top_show($options, $dirname = '', $catid = 0)
     //-------------------------------------------
 
     $sql = 'SELECT o.tag_id, count(o.tag_id) AS count_tag, l.tag_term 
-FROM x786_tag_link as o 
-left join x786_tag_tag as l on l.tag_id = o.tag_id 
+FROM ' . $GLOBALS['xoopsDB']->prefix('tag_link') .' as o 
+left join ' . $GLOBALS['xoopsDB']->prefix('tag_tag') .' as l on l.tag_id = o.tag_id 
 group by o.tag_id 
 order by count_tag DESC';
     $result = $GLOBALS['xoopsDB']->query($sql);
