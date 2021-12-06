@@ -20,6 +20,7 @@
     <ol>
       <li>Add tag input box to your module's item edit form (required)</li>
       <li>Add tag storage to your item submission page (required)</li>
+	  <li>Removing tags (required)</li>
       <li>Define functions to build info of tagged items (required)</li>
       <li>Add tag display API to your item display page and include tag template in your item template (optional)</li>
       <li>Add module tag view page and tag list page (optional)</li>
@@ -56,8 +57,23 @@ $tagHandler->updateByItem($_POST['item_tag'], $itemid, $GLOBALS['xoopsModule']->
     </tbody>
     </table>
     </div>
+	
+	<h3 class="odd" id="tag_input_box">Step 3: Removing tags (When content is deleted)</h3>
+    <div class="even marg10 boxshadow1">
+    <table>
+    <tbody>
+    <tr><td>File:</td><td>delete.item.php</td></tr>
+    <tr><td>Code:</td>
+    <td><{literal}>
+<code>/** @var \XoopsModules\Tag\TagHandler $tagHandler */
+$tagHandler = \XoopsModules\Tag\Helper::getInstance()->getHandler('Tag'); // xoops_getModuleHandler('tag', 'tag');
+$tagHandler->updateByItem('', $itemid, $GLOBALS['xoopsModule']->getVar('dirname'), $catid = 0);
+    </code><{/literal}></td></tr>
+    </tbody>
+    </table>
+    </div>
 
-    <h3 class="odd" id="tag_input_box">Step 3: Define functions to build info of tagged itemse</h3>
+    <h3 class="odd" id="tag_input_box">Step 4: Define functions to build info of tagged itemse</h3>
     <div class="even marg10 boxshadow1">
     <table>
     <tbody>
@@ -67,7 +83,7 @@ $tagHandler->updateByItem($_POST['item_tag'], $itemid, $GLOBALS['xoopsModule']->
 <code>/** Get item fields: title, content, time, link, uid, uname, tags *
  * @param $items
  */
-function mymodule_tag_iteminfo($items)
+function mymodule_tag_iteminfo(&$items)
 {
     $items_id = [];
     foreach (array_keys($items) as $cat_id) {
@@ -109,7 +125,7 @@ function mymodule_tag_synchronization($mid)
     </table>
     </div>
 
-    <h3 class="odd" id="tag_input_box">Step 4: Display tags on the item page</h3>
+    <h3 class="odd" id="tag_input_box">Step 5: Display tags on the item page</h3>
     <div class="even marg10 boxshadow1">
     <table>
     <tbody>
@@ -125,7 +141,7 @@ $GLOBALS['xoopsTpl']->display('db:tag_bar.tpl');
     </table>
     </div>
 
-    <h3 class="odd" id="tag_input_box">Step 5: Create tag list page and tag view page</h3>
+    <h3 class="odd" id="tag_input_box">Step 6: Create tag list page and tag view page</h3>
     <div class="even marg10 boxshadow1">
     <table>
     <tbody>
@@ -145,7 +161,7 @@ require_once $GLOBALS['xoops']->path('/modules/tag/view.tag.php');
     </table>
     </div>
 
-    <h3 class="odd" id="tag_input_box">Step 6: Create tag blocks</h3>
+    <h3 class="odd" id="tag_input_box">Step 7: Create tag blocks</h3>
     <div class="even marg10 boxshadow1">
     <table>
     <tbody>
