@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -12,9 +12,8 @@
 /**
  * XOOPS tag management module
  *
- * @package         XoopsModules\Tag
- * @copyright       {@link http://sourceforge.net/projects/xoops/ The XOOPS Project}
- * @license         {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
+ * @copyright       {@link https://sourceforge.net/projects/xoops/ The XOOPS Project}
+ * @license         {@link https://www.fsf.org/copyleft/gpl.html GNU public license}
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
  * @since           1.00
  */
@@ -79,7 +78,6 @@ if (!defined('TAG_FUNCTIONS')) {
      * @param mixed $args_string array of string variable values pass-by-reference
      * @return bool true on args parsed
      * @deprecated - use {@see Utility::tag_parse_arg()} method instead
-     *
      */
 
     /* known issues:

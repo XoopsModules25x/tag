@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace XoopsModules\Tag\Common;
 
@@ -15,7 +15,6 @@ namespace XoopsModules\Tag\Common;
 /**
  * Breadcrumb Class
  *
- * @package     XoopsModules\Tag
  * @copyright   XOOPS Project (https://xoops.org)
  * @license     https://www.fsf.org/copyleft/gpl.html GNU public license
  * @author      lucio <lucio.rota@gmail.com>
@@ -47,7 +46,7 @@ class Breadcrumb
      * @param string $title
      * @param string $link
      */
-    public function addLink($title = '', $link = '')
+    public function addLink($title = '', $link = ''): void
     {
         $this->bread[] = [
             'link'  => $link,
@@ -58,7 +57,7 @@ class Breadcrumb
     /**
      * Render BreadCrumb
      */
-    public function render()
+    public function render(): void
     {
         /*
         TODO if you want to use the render code below,

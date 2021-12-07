@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace XoopsModules\Tag\Common;
 
@@ -14,7 +14,7 @@ namespace XoopsModules\Tag\Common;
 
 /**
  * @copyright   XOOPS Project (https://xoops.org)
- * @license     http://www.fsf.org/copyleft/gpl.html GNU public license
+ * @license     https://www.fsf.org/copyleft/gpl.html GNU public license
  * @author      mamba <mambax7@gmail.com>
  */
 trait FilesManagement
@@ -25,9 +25,8 @@ trait FilesManagement
      * @param string $folder The full path of the directory to check
      *
      * @throws \RuntimeException
-     * @return void
      */
-    public static function createFolder($folder)
+    public static function createFolder($folder): void
     {
         try {
             if (!\is_dir($folder)) {
@@ -37,17 +36,12 @@ trait FilesManagement
 
                 file_put_contents($folder . '/index.html', '<script>history.go(-1);</script>');
             }
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             echo 'Caught exception: ', $e->getMessage(), "\n", '<br>';
         }
     }
 
-    /**
-     * @param string $file
-     * @param string $folder
-     * @return bool
-     */
-    public static function copyFile($file, $folder)
+    public static function copyFile(string $file, string $folder): bool
     {
         return \copy($file, $folder);
     }
@@ -56,7 +50,7 @@ trait FilesManagement
      * @param string $src
      * @param string $dst
      */
-    public static function recurseCopy($src, $dst)
+    public static function recurseCopy($src, $dst): void
     {
         $dir = \opendir($src);
         //        @mkdir($dst);
@@ -80,10 +74,10 @@ trait FilesManagement
      *
      * @param string $src source directory to delete
      *
-     * @uses \Xmf\Module\Helper::getHelper()
+     * @return bool true on success
      * @uses \Xmf\Module\Helper::isUserAdmin()
      *
-     * @return bool true on success
+     * @uses \Xmf\Module\Helper::getHelper()
      */
     public static function deleteDirectory($src)
     {
@@ -160,6 +154,7 @@ trait FilesManagement
             }
         }
         $iterator = null;   // clear iterator Obj to close file/directory
+
         return \rmdir($src); // remove the directory & return results
     }
 
@@ -200,6 +195,7 @@ trait FilesManagement
             }
         }
         $iterator = null;   // clear iterator Obj to close file/directory
+
         return \rmdir($src); // remove the directory & return results
     }
 
@@ -209,10 +205,10 @@ trait FilesManagement
      * @param string $src  - Source of files being moved
      * @param string $dest - Destination of files being moved
      *
-     * @uses \Xmf\Module\Helper::getHelper()
+     * @return bool true on success
      * @uses \Xmf\Module\Helper::isUserAdmin()
      *
-     * @return bool true on success
+     * @uses \Xmf\Module\Helper::getHelper()
      */
     public static function rcopy($src, $dest)
     {

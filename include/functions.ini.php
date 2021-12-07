@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -12,9 +12,8 @@
 /**
  * XOOPS tag management module
  *
- * @package         XoopsModules\Tag
- * @copyright       {@link http://sourceforge.net/projects/xoops/ The XOOPS Project}
- * @license         {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
+ * @copyright       {@link https://sourceforge.net/projects/xoops/ The XOOPS Project}
+ * @license         {@link https://www.fsf.org/copyleft/gpl.html GNU public license}
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
  * @since           1.00
  */
@@ -74,7 +73,7 @@ function tag_load_config()
  * @deprecated - use {@see Utility::tag_define_url_delimiter()} method instead
  * return void
  */
-function tag_define_url_delimiter()
+function tag_define_url_delimiter(): void
 {
     $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1);
     trigger_error(__FUNCTION__ . " is deprecated, called from {$trace[0]['file']} line {$trace[0]['line']}");
@@ -83,7 +82,7 @@ function tag_define_url_delimiter()
     );
 
     if (defined('URL_DELIMITER')) {
-        if (!in_array(URL_DELIMITER, ['?', '/'])) {
+        if (!in_array(URL_DELIMITER, ['?', '/'], true)) {
             exit('Security Violation');
         }
     } else {

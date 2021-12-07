@@ -1,9 +1,6 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace XoopsModules\Tag;
-
-
-use XoopsModules\Tag\Common;
 
 /**
  * Class Utility
@@ -28,7 +25,7 @@ class Utility extends Common\SysUtility
                 && ($helper->getDirname() === $GLOBALS['xoopsModule']->getVar('dirname', 'n'))) {
                 $moduleConfig = $GLOBALS['xoopsModuleConfig'];
             } else {
-                $mid           = $helper->getModule()->getVar('mid');
+                $mid = $helper->getModule()->getVar('mid');
                 /** @var \XoopsConfigHandler $configHandler */
                 $configHandler = \xoops_getHandler('config');
 
@@ -54,7 +51,7 @@ class Utility extends Common\SysUtility
      *
      * return void
      */
-    public static function tag_define_url_delimiter()
+    public static function tag_define_url_delimiter(): void
     {
         if (\defined('URL_DELIMITER')) {
             if (!\in_array(URL_DELIMITER, ['?', '/'], true)) {
@@ -92,6 +89,7 @@ class Utility extends Common\SysUtility
 
         return $retVal;
     }
+
     /**
      * Function to parse arguments for a page according to $_SERVER['REQUEST_URI']
      *
@@ -151,6 +149,7 @@ class Utility extends Common\SysUtility
             $tags_raw   = \explode(',', \str_replace($delimiters, ',', $text_tag));
             $tags       = \array_filter(\array_map('\trim', $tags_raw)); // removes all array elements === false
         }
+
         return $tags;
     }
 }

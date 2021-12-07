@@ -6,7 +6,7 @@ Features that are being considered/planned for the future releases:
 - Update
  - replace flash based Tag Cloud with HTML5/Canvas implementation to remove flash requirement
    use something like:
-   * TagCanvas (http://www.goat1000.com/tagcanvas.php#links)
+   * TagCanvas (https://www.goat1000.com/tagcanvas.php#links)
    * WordCloud2 (https://github.com/timdream/wordcloud2.js)
-   * jQCloud (http://mistic100.github.io/jQCloud/index.html)
+   * jQCloud (https://mistic100.github.io/jQCloud/index.html)
 

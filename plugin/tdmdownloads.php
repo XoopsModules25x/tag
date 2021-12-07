@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 /*
  You may not change or alter any portion of this comment or credits
@@ -19,7 +19,6 @@
  */
 
 use XoopsModules\Tag\Helper;
-use XoopsModules\Tag\Utility;
 
 /**
  * Get item fields: title, content, time, link, uid, tags
@@ -69,7 +68,7 @@ function tdmdownloads_tag_iteminfo(&$items)
 /**
  * @param $mid
  */
-function tdmdownloads_tag_synchronization($mid)
+function tdmdownloads_tag_synchronization($mid): void
 {
     //    $itemHandler = $helper->getHandler('Downloads', 'tdmdownloads');
 
@@ -80,7 +79,7 @@ function tdmdownloads_tag_synchronization($mid)
     $linkHandler = Helper::getInstance()->getHandler('Link'); //@var \XoopsModules\Tag\Handler $tagHandler
 
     /* clear tag-item links */
-    if (version_compare($GLOBALS['xoopsDB']->getServerVersion(), '4.1.0', 'ge')):
+    if (version_compare($GLOBALS['xoopsDB']->getServerVersion(), '4.1.0', 'ge')) :
         $sql = "    DELETE FROM {$linkHandler->table}"
                . '    WHERE '
                . "        tag_modid = {$mid}"
@@ -91,7 +90,7 @@ function tdmdownloads_tag_synchronization($mid)
                . "                WHERE {$itemHandler->table}.status > 0"
                . '            ) '
                . '        )';
-    else:
+    else :
         $sql = "    DELETE {$linkHandler->table} FROM {$linkHandler->table}"
                . "    LEFT JOIN {$itemHandler->table} AS aa ON {$linkHandler->table}.tag_itemid = aa.{$itemHandler->keyName} "
                . '    WHERE '

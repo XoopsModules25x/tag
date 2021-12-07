@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -23,7 +23,7 @@ redirect_header('../../index.php', 0);
  * XOOPS tag management module
  *
  * @copyright       XOOPS Project (https://xoops.org)
- * @license         http://www.fsf.org/copyleft/gpl.html GNU public license
+ * @license         https://www.fsf.org/copyleft/gpl.html GNU public license
  * @since           1.00
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
  * */
@@ -33,7 +33,7 @@ This module provides a centralized toolkit including input, display, stats and
 substantially more for applications, so that each module does not need
 to develop its own tag handling scripts.
 
-Check http://en.wikipedia.org/wiki/Tags for more info about "tag"
+Check https://en.wikipedia.org/wiki/Tags for more info about "tag"
 */
 
 /*
@@ -60,11 +60,12 @@ XoopsLoad::load('formtag', 'tag');  // get the TagFormTag class
 $form_item->addElement(new FormTag('item_tag', 60, 255, $itemid, $catid = 0));
 
 /* Step 2: add tag storage after item storage */
+
 // File: submit.item.php
 use XoopsModules\Tag as TagHelper;
 /** @var \XoopsModules\Tag\TagHandler $tagHandler */
 $tagHandler = TagHelper::getInstance()->getHandler('Tag'); // xoops_getModuleHandler('tag', 'tag');
-if (is_array($_POST['item_tag'])){
+if (is_array($_POST['item_tag'])) {
     $item_tag = Xmf\Request::getArray('item_tag', [], 'POST');
 } elseif (is_string($_POST['item_tag'])) {
     $item_tag = Xmf\Request::getString('item_tag', '', 'POST');
@@ -76,9 +77,9 @@ $tagHandler->updateByItem($item_tag, $itemid, $GLOBALS['xoopsModule']->getVar('d
 /** Get item fields: title, content, time, link, uid, uname, tags *
  * @param $items
  */
-function mymodule_tag_iteminfo($items)
+function mymodule_tag_iteminfo($items): void
 {
-    $helper = XoopsModules\Mymodule\Helper::getInstance();
+    $helper   = XoopsModules\Mymodule\Helper::getInstance();
     $items_id = [];
     foreach (array_keys($items) as $cat_id) {
         // Some handling here to build the link upon catid
@@ -110,7 +111,7 @@ function mymodule_tag_iteminfo($items)
 /** Remove orphan tag-item links *
  * @param $mid
  */
-function mymodule_tag_synchronization($mid)
+function mymodule_tag_synchronization($mid): void
 {
     // Optional
 }

@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -12,9 +12,8 @@
 /**
  * XOOPS tag management module
  *
- * @package         XoopsModules\Tag
  * @copyright       XOOPS Project (https://xoops.org)
- * @license         http://www.fsf.org/copyleft/gpl.html GNU public license
+ * @license         https://www.fsf.org/copyleft/gpl.html GNU public license
  * @since           1.00
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
  * */
@@ -30,7 +29,6 @@ require_once \dirname(__DIR__) . '/include/common.php';
 
 /**
  * {@internal $helper defined in ./include/common.php }}
- *
  */
 $helper = Helper::getInstance();
 

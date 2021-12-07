@@ -8,14 +8,13 @@ namespace XoopsModules\Tag\Common;
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
  which is considered copyrighted (c) material of the original comment or credit authors.
- 
+
  This program is distributed in the hope that it will be useful,
  but WITHOUT ANY WARRANTY; without even the implied warranty of
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 */
 
 /**
- *
  * @category        Module
  * @author          XOOPS Development Team <https://xoops.org>
  * @copyright       {@link https://xoops.org/ XOOPS Project}
@@ -47,18 +46,14 @@ class TestdataButtons
 
     /**
      * Load the test button configuration
-     *
-     * @param \Xmf\Module\Admin $adminObject
-     *
-     * @return void
      */
     public static function loadButtonConfig(Admin $adminObject): void
     {
-        $moduleDirName      = \basename(\dirname(__DIR__, 2));
-        $moduleDirNameUpper = \mb_strtoupper($moduleDirName);
+        $moduleDirName       = \basename(\dirname(__DIR__, 2));
+        $moduleDirNameUpper  = \mb_strtoupper($moduleDirName);
         $helper              = Helper::getInstance();
         $yamlFile            = $helper->path('/config/admin.yml');
-        $config             = Yaml::readWrapped($yamlFile); // work with phpmyadmin YAML dumps
+        $config              = Yaml::readWrapped($yamlFile); // work with phpmyadmin YAML dumps
         $displaySampleButton = $config['displaySampleButton'];
 
         if (self::SHOW_BUTTONS == $displaySampleButton) {
@@ -76,8 +71,6 @@ class TestdataButtons
 
     /**
      * Hide the test buttons
-     *
-     * @return void
      */
     public static function hideButtons(): void
     {
@@ -91,8 +84,6 @@ class TestdataButtons
 
     /**
      * Show the test buttons
-     *
-     * @return void
      */
     public static function showButtons(): void
     {

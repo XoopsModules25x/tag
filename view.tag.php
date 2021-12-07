@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -12,9 +12,8 @@
 /**
  * XOOPS tag management module
  *
- * @package         XoopsModules\Tag
  * @copyright       XOOPS Project (https://xoops.org)
- * @license         http://www.fsf.org/copyleft/gpl.html GNU public license
+ * @license         https://www.fsf.org/copyleft/gpl.html GNU public license
  * @since           1.00
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
  * */
@@ -40,7 +39,7 @@ if (Utility::tag_parse_args($args, $args_string)) {
 }
 /*
 $tagid = (int)(empty($_GET['tag']) ? @$args['tag'] : $_GET['tag']);
-$tag_term = empty($_GET['term']) ? @$args['term'] : \Xmf\Request::getString('term', '', 'GET');
+$tag_term = empty($_GET['term']) ? @$args['term'] : Request::getString('term', '', 'GET');
 $modid = (int)(empty($_GET['modid']) ? @$args['modid'] : $_GET['modid']);
 $catid = (int)(empty($_GET['catid']) ? @$args['catid'] : $_GET['catid']);
 $start = (int)(empty($_GET['start']) ? @$args['start'] : $_GET['start']);

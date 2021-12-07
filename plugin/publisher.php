@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -10,18 +10,17 @@
  */
 
 /**
- * @package         XoopsModules\Tag
- * @copyright       The XUUPS Project http://sourceforge.net/projects/xuups/
- * @license         http://www.fsf.org/copyleft/gpl.html GNU public license
+ * @copyright       The XUUPS Project https://sourceforge.net/projects/xuups/
+ * @license         https://www.fsf.org/copyleft/gpl.html GNU public license
  * @since           1.0
  * @author          trabis <lusopoemas@gmail.com>
  * @author          The SmartFactory <www.smartfactory.ca>
  */
 
 use Xmf\Request;
+use XoopsModules\Publisher\Helper as PublisherHelper;
 use XoopsModules\Tag\Helper;
 use XoopsModules\Tag\Utility;
-use XoopsModules\Publisher\Helper as PublisherHelper;
 
 defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
@@ -82,7 +81,7 @@ function publisher_tag_synchronization($mid)
     $linkHandler = Helper::getInstance()->getHandler('Link');
 
     //    $mid = XoopsFilterInput::clean($mid, 'INT');
-    $mid = \Xmf\Request::getInt('mid');
+    $mid = Request::getInt('mid');
 
     /* clear tag-item links */
     $sql    = "    DELETE FROM {$linkHandler->table}"

@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -12,16 +12,13 @@
 /**
  * XOOPS tag management module
  *
- * @package         tag
  * @copyright       Gregory Mage (Aka Mage)
- * @license         {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
+ * @license         {@link https://www.fsf.org/copyleft/gpl.html GNU public license}
  * @author          Gregory Mage (Aka Mage)
  * @since           1.00
  */
 
 use XoopsModules\Xfaq\Helper;
-use XoopsModules\Tag\Utility;
-
 
 defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
@@ -72,7 +69,7 @@ function xfaq_tag_iteminfo(&$items)
 /**
  * @param $mid
  */
-function xfaq_tag_synchronization($mid)
+function xfaq_tag_synchronization($mid): void
 {
     // Optional
 }

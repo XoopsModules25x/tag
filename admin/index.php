@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -12,9 +12,8 @@
 /**
  * XOOPS tag management module
  *
- * @package        XoopsModules\Tag
- * @copyright      {@link http://sourceforge.net/projects/xoops/ The XOOPS Project}
- * @license        {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
+ * @copyright      {@link https://sourceforge.net/projects/xoops/ The XOOPS Project}
+ * @license        {@link https://www.fsf.org/copyleft/gpl.html GNU public license}
  * @author         Taiwen Jiang <phppp@users.sourceforge.net>
  * @since          1.00
  */
@@ -62,13 +61,13 @@ if (!$result instanceof \mysqli_result) {
 $adminObject->addInfoBox(_AM_TAG_STATS);
 $adminObject->addInfoBoxLine(sprintf('<infolabel>' . _AM_TAG_COUNT_TAG . '</infolabel>', $count_tag));
 $adminObject->addInfoBoxLine(sprintf('<infolabel>' . _AM_TAG_COUNT_ITEM . '</infolabel>', $count_item . '<br><br>'));
-$adminObject->addInfoBoxLine(sprintf('<infolabel>' . _AM_TAG_COUNT_MODULE . '</infolabel>' . '<infotext>' . _AM_TAG_COUNT_MODULE_TITLE . '</infotext>'));
+$adminObject->addInfoBoxLine('<infolabel>' . _AM_TAG_COUNT_MODULE . '</infolabel>' . '<infotext>' . _AM_TAG_COUNT_MODULE_TITLE . '</infotext>');
 
 foreach ($counts_module as $module => $count) {
     $moduleStat = "<infolabel>{$module_list[$module]}:</infolabel>\n" . "<infotext>{$count['count_tag']} / {$count['count_item']}\n" . "  [<a href='" . $helper->url("admin/admin.tag.php?modid={$module}") . "'>" . _AM_TAG_EDIT . "</a>]\n" . "  [<a href='" . $helper->url(
             "admin/syn.tag.php?modid={$module}"
         ) . "'>" . _AM_TAG_SYNCHRONIZATION . "</a>]\n" . "</infotext> \n";
-    $adminObject->addInfoBoxLine(sprintf($moduleStat));
+    $adminObject->addInfoBoxLine($moduleStat);
 }
 
 if (empty($counts_module)) {  // there aren't any so just display "none"

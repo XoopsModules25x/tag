@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -12,18 +12,17 @@
 /**
  * XOOPS tag management module
  *
- * @package         XoopsModules\Tag
- * @copyright       {@link http://sourceforge.net/projects/xoops/ The XOOPS Project}
- * @license         {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
+ * @copyright       {@link https://sourceforge.net/projects/xoops/ The XOOPS Project}
+ * @license         {@link https://www.fsf.org/copyleft/gpl.html GNU public license}
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
  * @since           1.00
  */
 
 use Xmf\Request;
+use XoopsModules\Tag\Common;
 use XoopsModules\Tag\Constants;
 use XoopsModules\Tag\Helper;
 use XoopsModules\Tag\Utility;
-use XoopsModules\Tag\Common;
 
 require_once __DIR__ . '/header.php';
 
@@ -41,9 +40,9 @@ $modid = (int)(empty($_GET['modid']) ? @$args['modid'] : $_GET['modid']);
 $catid = (int)(empty($_GET['catid']) ? @$args['catid'] : $_GET['catid']);
 $start = (int)(empty($_GET['start']) ? @$args['start'] : $_GET['start']);
 */
-$modid = \Xmf\Request::getInt('modid', !empty($args['modid']) ? $args['modid'] : Constants::DEFAULT_ID, 'GET');
-$catid = \Xmf\Request::getInt('catid', !empty($args['catid']) ? $args['catid'] : Constants::DEFAULT_ID, 'GET');
-$start = \Xmf\Request::getInt('start', !empty($args['start']) ? $args['start'] : Constants::BEGINNING, 'GET');
+$modid = Request::getInt('modid', !empty($args['modid']) ? $args['modid'] : Constants::DEFAULT_ID, 'GET');
+$catid = Request::getInt('catid', !empty($args['catid']) ? $args['catid'] : Constants::DEFAULT_ID, 'GET');
+$start = Request::getInt('start', !empty($args['start']) ? $args['start'] : Constants::BEGINNING, 'GET');
 
 if (empty($modid) && ($GLOBALS['xoopsModule'] instanceof \XoopsModule)
     && ('tag' !== $GLOBALS['xoopsModule']->getVar('dirname'))) {
@@ -71,8 +70,8 @@ require_once $GLOBALS['xoops']->path('header.php');
 $GLOBALS['xoTheme']->addStylesheet('browse.php?modules/' . $moduleDirName . '/assets/css/style.css');
 $GLOBALS['xoopsOption']['xoops_pagetitle'] = $page_title;
 
-$mode_display = empty($mode_display) ? \Xmf\Request::getCmd('mode', null, 'GET') : $mode_display;
-switch (mb_strtolower($mode_display??'')) {
+$mode_display = empty($mode_display) ? Request::getCmd('mode', null, 'GET') : $mode_display;
+switch (mb_strtolower($mode_display ?? '')) {
     case 'list':
         $mode_display = 'list';
         $limit        = (0 === (int)$tag_config['limit_tag_list']) ? 10 : (int)$tag_config['limit_tag'];

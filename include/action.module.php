@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -12,9 +12,8 @@
 /**
  * XOOPS tag management module
  *
- * @package         XoopsModules\Tag
  * @copyright       XOOPS Project (https://xoops.org)
- * @license         http://www.fsf.org/copyleft/gpl.html GNU public license
+ * @license         https://www.fsf.org/copyleft/gpl.html GNU public license
  * @since           1.00
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
  * */
@@ -110,7 +109,7 @@ function xoops_module_pre_update_tag(\XoopsModule $module)
     );
     $moduleDirName = \basename(\dirname(__DIR__));
     /** @var Tag\Utility $utility */
-    $utility       = new Tag\Utility();
+    $utility = new Tag\Utility();
 
     $xoopsSuccess = $utility::checkVerXoops($module);
     $phpSuccess   = $utility::checkVerPhp($module);
@@ -130,6 +129,7 @@ function xoops_module_pre_uninstall_tag(\XoopsModule $module)
     $GLOBALS['xoopsLogger']->addDeprecated(
         'Tag Module: ' . __FUNCTION__ . " function is deprecated since Tag 2.3.4, please use './tag/include/onuninstall()' functions instead." . " Called from {$trace[0]['file']}line {$trace[0]['line']}"
     );
+
     return true;
 }
 

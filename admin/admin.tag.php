@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -12,9 +12,8 @@
 /**
  * XOOPS tag management module
  *
- * @package         XoopsModules\Tag
- * @copyright       {@link http://sourceforge.net/projects/xoops/ The XOOPS Project}
- * @license         {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
+ * @copyright       {@link https://sourceforge.net/projects/xoops/ The XOOPS Project}
+ * @license         {@link https://www.fsf.org/copyleft/gpl.html GNU public license}
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
  * @since           1.00
  */
@@ -104,7 +103,7 @@ if (false === $result) {
         $module_list   = $moduleHandler->getList(new \Criteria('mid', '(' . implode(', ', array_keys($counts_module)) . ')', 'IN'));
     }
 }
-//
+
 $opform = new \XoopsSimpleForm('', 'moduleform', $_SERVER['SCRIPT_NAME'], 'get', true);
 //$opform = new \XoopsSimpleForm('', 'moduleform', xoops_getenv('SCRIPT_NAME'), 'post', true);
 $tray       = new \XoopsFormElementTray('');

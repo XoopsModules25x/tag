@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 /*
  You may not change or alter any portion of this comment or credits
@@ -14,11 +14,10 @@
  * XOOPS tag management module
  *
  * @copyright       XOOPS Project (https://xoops.org)
- * @license         http://www.fsf.org/copyleft/gpl.html GNU public license
+ * @license         https://www.fsf.org/copyleft/gpl.html GNU public license
  * @since           1.0.0
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
  * @version         $Id: article.php 2292 2008-10-12 04:53:18Z phppp $
- * @package         tag
  */
 
 use XoopsModules\Tag\Helper;
@@ -84,7 +83,7 @@ function smartsection_tag_iteminfo(&$items)
  *
  * @param $mid
  */
-function article_tag_synchronization($mid)
+function article_tag_synchronization($mid): void
 {
     /** @var \XoopsModules\Smartsection\ItemHandler $itemHandler */
     $itemHandler = \XoopsModules\Smartsection\Helper::getInstance()->getHandler('Item');
@@ -93,7 +92,7 @@ function article_tag_synchronization($mid)
     $linkHandler = Helper::getInstance()->getHandler('Link');
 
     /* clear tag-item links */
-    if (version_compare($GLOBALS['xoopsDB']->getServerVersion(), '4.1.0', 'ge')):
+    if (version_compare($GLOBALS['xoopsDB']->getServerVersion(), '4.1.0', 'ge')) :
         $sql = "    DELETE FROM {$linkHandler->table}"
                . '    WHERE '
                . "        tag_modid = {$mid}"
@@ -104,7 +103,7 @@ function article_tag_synchronization($mid)
                . "                WHERE {$itemHandler->table}.art_time_publish > 0"
                . '            ) '
                . '        )';
-    else:
+    else :
         $sql = "    DELETE {$linkHandler->table} FROM {$linkHandler->table}"
                . "    LEFT JOIN {$itemHandler->table} AS aa ON {$linkHandler->table}.tag_itemid = aa.{$itemHandler->keyName} "
                . '    WHERE '

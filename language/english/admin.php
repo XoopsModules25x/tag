@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -12,9 +12,8 @@
 /**
  * XOOPS tag management module
  *
- * @package        tag
- * @copyright      {@link http://sourceforge.net/projects/xoops/ The XOOPS Project}
- * @license        {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
+ * @copyright      {@link https://sourceforge.net/projects/xoops/ The XOOPS Project}
+ * @license        {@link https://www.fsf.org/copyleft/gpl.html GNU public license}
  * @author         Taiwen Jiang (phppp or D.J.) <php_pp@hotmail.com>
  * @since          1.00
  */
@@ -105,4 +104,3 @@ define('_AM_TAG_HELP_ISSUE', 'Issue #');
 define('_AM_TAG_HELP_DATE', 'Date');
 define('_AM_TAG_HELP_TITLE', 'Title');
 define('_AM_TAG_HELP_SUBMITTER', 'Submitter');
-

@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -13,7 +13,7 @@
  * XOOPS tag management module
  *
  * @copyright       XOOPS Project (https://xoops.org)
- * @license         http://www.fsf.org/copyleft/gpl.html GNU public license
+ * @license         https://www.fsf.org/copyleft/gpl.html GNU public license
  * @since           1.00
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
  */
@@ -26,7 +26,8 @@ defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 //defined('TAG_FUNCTIONS_INI') || require __DIR__ . '/functions.ini.php';
 define('TAG_FUNCTIONS_RECON_LOADED', true);
 
-if (!defined('TAG_FUNCTIONS_RECON')): define('TAG_FUNCTIONS_RECON', 1);
+if (!defined('TAG_FUNCTIONS_RECON')) :
+    define('TAG_FUNCTIONS_RECON', 1);
 
     /**
      * @return bool

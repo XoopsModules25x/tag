@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace XoopsModules\Tag;
 
@@ -15,18 +15,14 @@ namespace XoopsModules\Tag;
 /**
  * XOOPS tag management module
  *
- * @package         tag
- * @subpackage      class
- * @copyright       {@link http://sourceforge.net/projects/xoops/ The XOOPS Project}
- * @license         {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
+ * @copyright       {@link https://sourceforge.net/projects/xoops/ The XOOPS Project}
+ * @license         {@link https://www.fsf.org/copyleft/gpl.html GNU public license}
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
  * @since           1.00
  */
 
-
 /**
  * Tag link handler class.
- * @package     tag
  *
  * @author      Taiwen Jiang <phppp@users.sourceforge.net>
  * @copyright   copyright &copy; The XOOPS Project
@@ -39,7 +35,6 @@ class LinkHandler extends \XoopsPersistableObjectHandler
 
     /**
      * TagLinkHandler constructor.
-     * @param \XoopsDatabase|null $db
      */
     public function __construct(\XoopsDatabase $db = null)
     {
