@@ -69,15 +69,15 @@ if (!empty($post_tags)) {
     }
     */
     foreach ($post_tags as $tag => $tag_status) {
-        $tag_obj = $tagHandler->get($tag);
-        if (!($tag_obj instanceof Tag\Tag) || !$tag_obj->getVar('tag_id')) {
+        $tagObj = $tagHandler->get($tag);
+        if (!($tagObj instanceof Tag\Tag) || !$tagObj->getVar('tag_id')) {
             continue;
         }
         if ($tag_status < Constants::STATUS_ACTIVE) {
-            $tagHandler->delete($tag_obj);
-        } elseif ($tag_status != $tag_obj->getVar('tag_status')) {
-            $tag_obj->setVar('tag_status', $tag_status);
-            $tagHandler->insert($tag_obj);
+            $tagHandler->delete($tagObj);
+        } elseif ($tag_status != $tagObj->getVar('tag_status')) {
+            $tagObj->setVar('tag_status', $tag_status);
+            $tagHandler->insert($tagObj);
             $msg_db_updated = _AM_TAG_DB_UPDATED;
         }
     }

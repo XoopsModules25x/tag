@@ -151,11 +151,11 @@ class TagHandler extends \XoopsPersistableObjectHandler
                     $tag_id      = $tags_id[0];
                     $tag_count[] = $tag_id;
                 } else {
-                    $tag_obj = $this->create();
-                    $tag_obj->setVars(['tag_term' => $tag, 'tag_count' => 1]);
-                    $this->insert($tag_obj);
-                    $tag_id = $tag_obj->getVar('tag_id');
-                    unset($tag_obj);
+                    $tagObj = $this->create();
+                    $tagObj->setVars(['tag_term' => $tag, 'tag_count' => 1]);
+                    $this->insert($tagObj);
+                    $tag_id = $tagObj->getVar('tag_id');
+                    unset($tagObj);
                 }
                 $tag_link[]    = "({$tag_id}, {$itemid}, {$catid}, {$modid}, " . \time() . ')';
                 $tags_update[] = $tag_id;
@@ -218,13 +218,13 @@ class TagHandler extends \XoopsPersistableObjectHandler
         }
         */
         if (0 === $modid) {
-            $tag_obj = $this->get($tag_id);
-            if ($tag_obj instanceof \XoopsModules\Tag\Tag) {
+            $tagObj = $this->get($tag_id);
+            if ($tagObj instanceof \XoopsModules\Tag\Tag) {
                 if (0 === $count) {
-                    $this->delete($tag_obj);
+                    $this->delete($tagObj);
                 } else {
-                    $tag_obj->setVar('tag_count', $count);
-                    $this->insert($tag_obj, true);
+                    $tagObj->setVar('tag_count', $count);
+                    $this->insert($tagObj, true);
                 }
             }
         } else {
