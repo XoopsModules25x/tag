@@ -29,8 +29,6 @@ use XoopsModules\Tag\{
  *
  * @param int|array $tags  array of tag string
  *                         OR
- * @param int       $catid
- * @param int       $modid
  */
 function tagBar($tags, int $catid = 0, int $modid = 0): array
 {

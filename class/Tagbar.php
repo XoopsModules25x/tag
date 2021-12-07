@@ -29,8 +29,6 @@ class Tagbar
      *
      * @param int|array $tags  array of tag string
      *                         OR
-     * @param int       $catid
-     * @param int       $modid
      * @return array
      *                         {@internal param int $itemid }}
      */

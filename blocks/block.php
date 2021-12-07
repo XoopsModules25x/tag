@@ -84,8 +84,6 @@ require_once $helper->path('include/vars.php');
  *                          $options[1] - time duration, in days, 0 for all the time
  *                          $options[2] - max font size (px or %)
  *                          $options[3] - min font size (px or %)
- * @param string $dirname
- * @param int    $catid
  * @return array|bool
  */
 function tag_block_cloud_show(array $options, string $dirname = '', int $catid = 0)
@@ -237,8 +235,6 @@ function tag_block_cloud_edit($options): string
  *                          $options[0] - number of tags to display
  *                          $options[1] - time duration, in days, 0 for all the time
  *                          $options[2] - sort: a - alphabet; c - count; t - time
- * @param string $dirname
- * @param int    $catid
  * @return array|bool
  */
 function tag_block_top_show(array $options, string $dirname = '', int $catid = 0)

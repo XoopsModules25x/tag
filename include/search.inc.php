@@ -23,14 +23,6 @@ use XoopsModules\Tag\Helper;
 
 defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
-/**
- * @param array  $queryarray
- * @param string $andor
- * @param int    $limit
- * @param int    $offset
- * @param int    $userid
- * @param string $sortby
- */
 function &tag_search(array $queryarray, string $andor, int $limit, int $offset, int $userid, string $sortby = 'tag_term ASC'): array
 {
     $ret   = [];

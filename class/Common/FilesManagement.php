@@ -46,10 +46,6 @@ trait FilesManagement
         return \copy($file, $folder);
     }
 
-    /**
-     * @param string $src
-     * @param string $dst
-     */
     public static function recurseCopy(string $src, string $dst): void
     {
         $dir = \opendir($src);

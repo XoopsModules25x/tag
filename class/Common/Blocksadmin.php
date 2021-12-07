@@ -292,7 +292,7 @@ class Blocksadmin
     }
 
     /**
-     * @param int $bid
+     * @return false|void
      */
     public function deleteBlock(int $bid)
     {
@@ -314,9 +314,6 @@ class Blocksadmin
         $this->modHelper->redirect('admin/blocksadmin.php?op=list', 1, _AM_DBUPDATED);
     }
 
-    /**
-     * @param int $bid
-     */
     public function cloneBlock(int $bid): void
     {
         //require __DIR__ . '/admin_header.php';
@@ -365,13 +362,8 @@ class Blocksadmin
     }
 
     /**
-     * @param int               $bid
-     * @param string            $bside
-     * @param string            $bweight
-     * @param string            $bvisible
-     * @param string            $bcachetime
-     * @param array             $bmodule
      * @param null|array|string $options
+     * @param                   $groups
      */
     public function isBlockCloned(int $bid, string $bside, string $bweight, string $bvisible, string $bcachetime, array $bmodule, $options, $groups): void
     {
@@ -435,12 +427,7 @@ class Blocksadmin
     }
 
     /**
-     * @param int    $bid
-     * @param string $title
-     * @param int    $weight
-     * @param bool   $visible
-     * @param string $side
-     * @param int    $bcachetime
+     * @param        $bmodule
      */
     public function setOrder(int $bid, string $title, int $weight, bool $visible, string $side, int $bcachetime, $bmodule): void
     {
@@ -456,9 +443,6 @@ class Blocksadmin
         //        return $blockHandler->insert($myblock);
     }
 
-    /**
-     * @param int $bid
-     */
     public function editBlock(int $bid): void
     {
         //        require_once \dirname(__DIR__,2) . '/admin/admin_header.php';
@@ -505,15 +489,7 @@ class Blocksadmin
     }
 
     /**
-     * @param int               $bid
-     * @param string            $btitle
-     * @param string            $bside
-     * @param string            $bweight
-     * @param string            $bvisible
-     * @param string            $bcachetime
-     * @param array             $bmodule
      * @param null|array|string $options
-     * @param array|null        $groups
      */
     public function updateBlock(int $bid, string $btitle, string $bside, string $bweight, string $bvisible, string $bcachetime, array $bmodule, $options, ?array $groups): void
     {
@@ -567,7 +543,19 @@ class Blocksadmin
     }
 
     /**
-     * @param array $bid
+     * @param       $oldtitle
+     * @param       $oldside
+     * @param       $oldweight
+     * @param       $oldvisible
+     * @param       $oldgroups
+     * @param       $oldbcachetime
+     * @param       $title
+     * @param       $weight
+     * @param       $visible
+     * @param       $side
+     * @param       $bcachetime
+     * @param       $groups
+     * @param null  $bmodule
      */
     public function orderBlock(
         array $bid,

@@ -32,7 +32,6 @@ XoopsLoad::load('XoopsFilterInput');
  * Note that $items is "by reference" so modifying it in this
  * routine in effect passes it back...
  *
- * @param array $items
  *
  * @return bool always returns true
  **/

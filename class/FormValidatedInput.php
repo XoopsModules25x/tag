@@ -48,7 +48,6 @@ class FormValidatedInput extends \XoopsFormText
      * @param int    $size      Size
      * @param int    $maxlength Maximum length of text
      * @param string $value     Initial text
-     * @param string $type
      */
     public function __construct($caption, $name, $size, $maxlength, $value = '', string $type = 'text')
     {

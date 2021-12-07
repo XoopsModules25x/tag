@@ -26,7 +26,6 @@ defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
 /**
  * Get item fields: title, content, time, link, uid, tags
- * @param array $items
  */
 function publisher_tag_iteminfo(array &$items): bool
 {
@@ -68,7 +67,6 @@ function publisher_tag_iteminfo(array &$items): bool
 }
 
 /** Remove orphan tag-item links *
- * @param int $mid
  */
 function publisher_tag_synchronization(int $mid): bool
 {

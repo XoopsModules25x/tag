@@ -182,9 +182,6 @@ class TagHandler extends \XoopsPersistableObjectHandler
     /**
      * Update count stats or tag
      *
-     * @param int $tag_id
-     * @param int $modid
-     * @param int $catid
      */
     public function update_stats(int $tag_id, int $modid = 0, int $catid = 0): bool
     {
@@ -464,7 +461,6 @@ class TagHandler extends \XoopsPersistableObjectHandler
     /**
      * Get count of items linked with a tag
      *
-     * @param int $tag_id
      * @param int $modid id of corresponding module, optional: 0 for all; >1 for a specific module
      * @param int $catid id of corresponding category, optional
      * @return int count
@@ -503,8 +499,6 @@ class TagHandler extends \XoopsPersistableObjectHandler
      * Get detailed data (and font) for a tag
      *
      * @param array $tags_array associative array of tags (id, term, status, count)
-     * @param int   $font_max
-     * @param int   $font_min
      * @return array tag data values for display
      */
     public function getTagData(array $tags_array, int $font_max = 0, int $font_min = 0): array

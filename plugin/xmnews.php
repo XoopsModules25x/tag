@@ -64,7 +64,6 @@ function xmnews_tag_iteminfo(&$items): bool
 }
 
 /** Remove orphan tag-item links *
- * @param int $mid
  */
 function xmnews_tag_synchronization(int $mid): bool
 {
