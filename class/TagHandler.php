@@ -50,7 +50,7 @@ class TagHandler extends \XoopsPersistableObjectHandler
      * @param int $catid  id of corresponding category, optional
      * @return array associative array of tags (id, term)
      */
-    public function getByItem($itemid, $modid = 0, $catid = 0)
+    public function getByItem($itemid, $modid = 0, $catid = 0): array
     {
         $ret = [];
 
@@ -87,7 +87,7 @@ class TagHandler extends \XoopsPersistableObjectHandler
      * @param int          $catid  id of corresponding category, optional
      * @return bool
      */
-    public function updateByItem($tags, $itemid, $modid = '', $catid = 0)
+    public function updateByItem($tags, $itemid, $modid = '', $catid = 0): bool
     {
         $catid  = (int)$catid;
         $itemid = (int)$itemid;
@@ -188,7 +188,7 @@ class TagHandler extends \XoopsPersistableObjectHandler
      * @param int $catid
      * @return bool
      */
-    public function update_stats($tag_id, $modid = 0, $catid = 0)
+    public function update_stats($tag_id, $modid = 0, $catid = 0): bool
     {
         $tag_id = (int)$tag_id;
         if (0 === $tag_id) {
@@ -410,7 +410,7 @@ class TagHandler extends \XoopsPersistableObjectHandler
      * @param \CriteriaElement|null $criteria {@link Criteria}
      * @return array associative array of items[] => (id, modid, catid, time)
      */
-    public function getItems(\CriteriaElement $criteria = null)
+    public function getItems(\CriteriaElement $criteria = null): array
     {
         $ret = [];
         $sql = '    SELECT o.tl_id, o.tag_itemid, o.tag_modid, o.tag_catid, o.tag_time';
@@ -471,7 +471,7 @@ class TagHandler extends \XoopsPersistableObjectHandler
      * @param int $catid id of corresponding category, optional
      * @return int count
      */
-    public function getItemCount($tag_id, $modid = 0, $catid = 0)
+    public function getItemCount($tag_id, $modid = 0, $catid = 0): int
     {
         if ($tag_id = (int)$tag_id) {
             $catid = (int)$catid;
@@ -509,7 +509,7 @@ class TagHandler extends \XoopsPersistableObjectHandler
      * @param int   $font_min
      * @return array tag data values for display
      */
-    public function getTagData($tags_array, $font_max = 0, $font_min = 0)
+    public function getTagData($tags_array, $font_max = 0, $font_min = 0): array
     {
         //        $tags_data_array = [];
         //        if (\is_array($tags_array) && !empty($tags_array)) {

@@ -81,7 +81,7 @@ class FormValidatedInput extends \XoopsFormText
      *
      * @return string containing type
      */
-    public function getType()
+    public function getType(): string
     {
         return $this->_type;
     }

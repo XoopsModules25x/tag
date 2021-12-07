@@ -103,7 +103,7 @@ class Utility extends Common\SysUtility
      * - "/" in a string
      * - "&" in a string
      */
-    public static function tag_parse_args(&$args, &$args_string)
+    public static function tag_parse_args(&$args, &$args_string): bool
     {
         $args_abb    = [
             'c' => 'catid',
@@ -139,7 +139,7 @@ class Utility extends Common\SysUtility
      *
      * @return array containing parsed tags
      */
-    public static function tag_parse_tag($text_tag)
+    public static function tag_parse_tag($text_tag): array
     {
         $tags = [];
         if (!empty($text_tag)) {

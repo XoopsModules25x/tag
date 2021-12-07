@@ -58,7 +58,7 @@ class Helper extends \Xmf\Module\Helper
      *
      * @return string|null
      */
-    public function setConfig($name = null, $value = null)
+    public function setConfig($name = null, $value = null): ?string
     {
         if (null === $this->configs) {
             $this->initConfig();

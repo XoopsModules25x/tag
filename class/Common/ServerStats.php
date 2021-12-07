@@ -30,7 +30,7 @@ trait ServerStats
      *
      * @return string
      */
-    public static function getServerStats()
+    public static function getServerStats(): string
     {
         //mb    $wfdownloads = WfdownloadsWfdownloads::getInstance();
         $moduleDirName      = \basename(\dirname(__DIR__, 2));
