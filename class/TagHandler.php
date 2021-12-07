@@ -371,7 +371,7 @@ class TagHandler extends \XoopsPersistableObjectHandler
      * @param null|\CriteriaElement|\CriteriaCompo $criteria {@link Criteria)
      * @return int count
      */
-    public function getCount(\CriteriaElement $criteria = null): int
+    public function getCount(\CriteriaElement $criteria = null): ?int
     {
         /*
         $catid    = (int)($catid);
@@ -393,7 +393,7 @@ class TagHandler extends \XoopsPersistableObjectHandler
         $sql =     $sql_select . " " . $sql_from . " " . $sql_where;
         */
         if (false !== ($result = $this->db->query($sql))) {
-            [$ret] = $this->db->fetchRow($result);
+            [$ret] = (int)$this->db->fetchRow($result);
         } else {
             \trigger_error($this->db->error());
             $ret = 0;
