@@ -18,6 +18,9 @@ namespace XoopsModules\Tag\Common;
  */
 
 use Xmf\Request;
+use XoopsModules\Tag\{
+    Helper
+};
 
 //require __DIR__ . '/admin_header.php';
 
@@ -30,21 +33,20 @@ class Blocksadmin
      * @var \XoopsMySQLDatabase|null
      */
     public $db;
-    public $modHelper;
+    public $helper;
     public $moduleDirName;
     public $moduleDirNameUpper;
 
     /**
-     * @param $db
-     * @param $modHelper
+     * Blocksadmin constructor.
      */
-    public function __construct($db, $modHelper)
+    public function __construct(?\XoopsDatabase $db, Helper $helper)
     {
         if (null === $db){
             $db = \XoopsDatabaseFactory::getDatabaseConnection();
         }
         $this->db                 = $db;
-        $this->modHelper          = $modHelper;
+        $this->helper             = $helper;
         $this->moduleDirName      = \basename(\dirname(__DIR__, 2));
         $this->moduleDirNameUpper = \mb_strtoupper($this->moduleDirName);
         \xoops_loadLanguage('admin', 'system');
@@ -79,8 +81,6 @@ class Blocksadmin
         \ksort($moduleList);
         echo "
         <h4 style='text-align:left;'>" . \constant('CO_' . $this->moduleDirNameUpper . '_' . 'BADMIN') . '</h4>';
-        /** @var \XoopsModuleHandler $moduleHandler */
-        $moduleHandler = \xoops_getHandler('module');
         echo "<form action='" . $_SERVER['SCRIPT_NAME'] . "' name='blockadmin' method='post'>";
         echo $GLOBALS['xoopsSecurity']->getTokenHTML();
         echo "<table width='100%' class='outer' cellpadding='4' cellspacing='1'>
@@ -131,6 +131,9 @@ class Blocksadmin
             $sql               = 'SELECT module_id FROM ' . $this->db->prefix('block_module_link') . ' WHERE block_id=' . $i->getVar('bid');
             $result            = $this->db->query($sql);
             $modules           = [];
+            if (!$result instanceof \mysqli_result) {
+                \trigger_error("Query Failed! SQL: $sql Error: " . $this->db->error(), \E_USER_ERROR);
+            }
             while (false !== ($row = $this->db->fetchArray($result))) {
                 $modules[] = (int)$row['module_id'];
             }
@@ -144,7 +147,16 @@ class Blocksadmin
                 }
             }
 
-            $sel0 = $sel1 = $ssel0 = $ssel1 = $ssel2 = $ssel3 = $ssel4 = $ssel5 = $ssel6 = $ssel7 = '';
+            $ssel7 = '';
+            $ssel6 = $ssel7;
+            $ssel5 = $ssel6;
+            $ssel4 = $ssel5;
+            $ssel3 = $ssel4;
+            $ssel2 = $ssel3;
+            $ssel1 = $ssel2;
+            $ssel0 = $ssel1;
+            $sel1  = $ssel0;
+            $sel0  = $sel1;
             if (1 === $i->getVar('visible')) {
                 $sel1 = ' checked';
             } else {
@@ -291,9 +303,6 @@ class Blocksadmin
         <br><br>";
     }
 
-    /**
-     * @return false|void
-     */
     public function deleteBlock(int $bid)
     {
         //        \xoops_cp_header();
@@ -305,16 +314,15 @@ class Blocksadmin
         $myblock = new \XoopsBlock($bid);
 
         $sql = \sprintf('DELETE FROM %s WHERE bid = %u', $this->db->prefix('newblocks'), $bid);
-        if (!$result = $this->db->queryF($sql)) {
-            return false;
-        }
-        $sql = \sprintf('DELETE FROM %s WHERE block_id = %u', $this->db->prefix('block_module_link'), $bid);
-        $this->db->queryF($sql);
+        $this->db->queryF($sql) or \trigger_error($GLOBALS['xoopsDB']->error());
 
-        $this->modHelper->redirect('admin/blocksadmin.php?op=list', 1, _AM_DBUPDATED);
+        $sql = \sprintf('DELETE FROM %s WHERE block_id = %u', $this->db->prefix('block_module_link'), $bid);
+        $this->db->queryF($sql) or \trigger_error($GLOBALS['xoopsDB']->error());
+
+        $this->helper->redirect('admin/blocksadmin.php?op=list', 1, _AM_DBUPDATED);
     }
 
-    public function cloneBlock(int $bid): void
+    public function cloneBlock(int $bid)
     {
         //require __DIR__ . '/admin_header.php';
         //        \xoops_cp_header();
@@ -324,7 +332,7 @@ class Blocksadmin
         \xoops_loadLanguage('admin/groups', 'system');
 
         $myblock = new \XoopsBlock($bid);
-        $sql     = 'SELECT module_id FROM ' . $this->db->prefix('block_module_link') . ' WHERE block_id=' . (int)$bid;
+        $sql     = 'SELECT module_id FROM ' . $this->db->prefix('block_module_link') . ' WHERE block_id=' . $bid;
         $result  = $this->db->query($sql);
         $modules = [];
         if ($result instanceof \mysqli_result) {
@@ -363,9 +371,8 @@ class Blocksadmin
 
     /**
      * @param null|array|string $options
-     * @param                   $groups
      */
-    public function isBlockCloned(int $bid, string $bside, string $bweight, string $bvisible, string $bcachetime, array $bmodule, $options, $groups): void
+    public function isBlockCloned(int $bid, string $bside, string $bweight, string $bvisible, string $bcachetime, ?array $bmodule, ?array$options, ?array$groups): void
     {
         \xoops_loadLanguage('admin', 'system');
         \xoops_loadLanguage('admin/blocksadmin', 'system');
@@ -385,7 +392,7 @@ class Blocksadmin
         //$clone->setVar('content', $_POST['bcontent']);
         $clone->setVar('title', Request::getString('btitle', '', 'POST'));
         $clone->setVar('bcachetime', $bcachetime);
-        if (isset($options) && (\count($options) > 0)) {
+        if (\is_array($options) && (\count($options) > 0)) {
             $options = \implode('|', $options);
             $clone->setVar('options', $options);
         }
@@ -395,7 +402,10 @@ class Blocksadmin
         } else {
             $clone->setVar('block_type', 'D');
         }
-        $newid = $clone->store();
+//        $newid = $clone->store(); //see https://github.com/XOOPS/XoopsCore25/issues/1105
+        if ($clone->store()) {
+            $newid = $clone->id();  //get the id of the cloned block
+        }
         if (!$newid) {
             //            \xoops_cp_header();
             $clone->getHtmlErrors();
@@ -423,13 +433,11 @@ class Blocksadmin
             $sql = 'INSERT INTO ' . $this->db->prefix('group_permission') . ' (gperm_groupid, gperm_itemid, gperm_modid, gperm_name) VALUES (' . $iValue . ', ' . $newid . ", 1, 'block_read')";
             $this->db->query($sql);
         }
-        $this->modHelper->redirect('admin/blocksadmin.php?op=list', 1, _AM_DBUPDATED);
+        $this->helper->redirect('admin/blocksadmin.php?op=list', 1, _AM_DBUPDATED);
     }
 
-    /**
-     * @param        $bmodule
-     */
-    public function setOrder(int $bid, string $title, int $weight, bool $visible, string $side, int $bcachetime, $bmodule): void
+
+    public function setOrder(string $bid, string $title, string $weight, string $visible, string $side, string $bcachetime, ?array $bmodule = null)
     {
         $myblock = new \XoopsBlock($bid);
         $myblock->setVar('title', $title);
@@ -443,7 +451,7 @@ class Blocksadmin
         //        return $blockHandler->insert($myblock);
     }
 
-    public function editBlock(int $bid): void
+    public function editBlock(int $bid)
     {
         //        require_once \dirname(__DIR__,2) . '/admin/admin_header.php';
         //        \xoops_cp_header();
@@ -452,7 +460,7 @@ class Blocksadmin
         \xoops_loadLanguage('admin/groups', 'system');
         //        mpu_adm_menu();
         $myblock = new \XoopsBlock($bid);
-        $sql     = 'SELECT module_id FROM ' . $this->db->prefix('block_module_link') . ' WHERE block_id=' . (int)$bid;
+        $sql     = 'SELECT module_id FROM ' . $this->db->prefix('block_module_link') . ' WHERE block_id=' . $bid;
         $result  = $this->db->query($sql);
         $modules = [];
         if ($result instanceof \mysqli_result) {
@@ -481,17 +489,10 @@ class Blocksadmin
         ];
         echo '<a href="blocksadmin.php">' . \constant('CO_' . $this->moduleDirNameUpper . '_' . 'BADMIN') . '</a>&nbsp;<span style="font-weight:bold;">&raquo;&raquo;</span>&nbsp;' . \_AM_SYSTEM_BLOCKS_EDITBLOCK . '<br><br>';
 
-        /** @var \XoopsThemeForm $form */ //                $form = new Blockform();
-        //        $form->render($block);
-        //        $form = new \XoopsThemeForm();
-
         echo $this->render($block);
     }
 
-    /**
-     * @param null|array|string $options
-     */
-    public function updateBlock(int $bid, string $btitle, string $bside, string $bweight, string $bvisible, string $bcachetime, array $bmodule, $options, ?array $groups): void
+    public function updateBlock(int $bid, string $btitle, string $bside, string $bweight, string $bvisible, string $bcachetime, ?array $bmodule, ?array$options, ?array$groups): void
     {
         $myblock = new \XoopsBlock($bid);
         $myblock->setVar('title', $btitle);
@@ -539,47 +540,36 @@ class Blocksadmin
                 $this->db->query($sql);
             }
         }
-        $this->modHelper->redirect('admin/blocksadmin.php', 1, \constant('CO_' . $this->moduleDirNameUpper . '_' . 'UPDATE_SUCCESS'));
+        $this->helper->redirect('admin/blocksadmin.php', 1, \constant('CO_' . $this->moduleDirNameUpper . '_' . 'UPDATE_SUCCESS'));
     }
 
-    /**
-     * @param       $oldtitle
-     * @param       $oldside
-     * @param       $oldweight
-     * @param       $oldvisible
-     * @param       $oldgroups
-     * @param       $oldbcachetime
-     * @param       $title
-     * @param       $weight
-     * @param       $visible
-     * @param       $side
-     * @param       $bcachetime
-     * @param       $groups
-     * @param null  $bmodule
-     */
     public function orderBlock(
         array $bid,
-        $oldtitle,
-        $oldside,
-        $oldweight,
-        $oldvisible,
-        $oldgroups,
-        $oldbcachetime,
-        $title,
-        $weight,
-        $visible,
-        $side,
-        $bcachetime,
-        $groups,
-        $bmodule = null
+        array $oldtitle,
+        array $oldside,
+        array $oldweight,
+        array $oldvisible,
+        array $oldgroups,
+        array $oldbcachetime,
+        array $oldbmodule ,
+        array $title,
+        array $weight,
+        array $visible,
+        array $side,
+        array $bcachetime,
+        array $groups,
+        array $bmodule
     ): void {
         if (!$GLOBALS['xoopsSecurity']->check()) {
             \redirect_header($_SERVER['SCRIPT_NAME'], 3, \implode('<br>', $GLOBALS['xoopsSecurity']->getErrors()));
         }
         foreach (\array_keys($bid) as $i) {
-            if ($oldtitle[$i] !== $title[$i] || $oldweight[$i] !== $weight[$i] || $oldvisible[$i] !== $visible[$i]
+            if ($oldtitle[$i] !== $title[$i]
+                || $oldweight[$i] !== $weight[$i]
+                || $oldvisible[$i] !== $visible[$i]
                 || $oldside[$i] !== $side[$i]
-                || $oldbcachetime[$i] !== $bcachetime[$i]) {
+                || $oldbcachetime[$i] !== $bcachetime[$i]
+                || $oldbmodule[$i] !== $bmodule[$i]){
                 $this->setOrder($bid[$i], $title[$i], $weight[$i], $visible[$i], $side[$i], $bcachetime[$i], $bmodule[$i]);
             }
             if (!empty($bmodule[$i]) && \count($bmodule[$i]) > 0) {
@@ -605,13 +595,10 @@ class Blocksadmin
             }
         }
 
-        $this->modHelper->redirect('admin/blocksadmin.php', 1, \constant('CO_' . $this->moduleDirNameUpper . '_' . 'UPDATE_SUCCESS'));
+        $this->helper->redirect('admin/blocksadmin.php', 1, \constant('CO_' . $this->moduleDirNameUpper . '_' . 'UPDATE_SUCCESS'));
     }
 
-    /**
-     * @param \array|null $block
-     */
-    public function render(array $block = null): void
+    public function render(?array $block = null)
     {
         \xoops_load('XoopsFormLoader');
         \xoops_loadLanguage('common', $this->moduleDirNameUpper);
