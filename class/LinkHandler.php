@@ -50,7 +50,7 @@ class LinkHandler extends \XoopsPersistableObjectHandler
      * @param string $field_object
      * @return bool true on success
      */
-    public function cleanOrphan($table_link = '', $field_link = '', $field_object = '')
+    public function cleanOrphan($table_link = '', $field_link = '', $field_object = ''): bool
     {
         return parent::cleanOrphan($this->db->prefix('tag_tag'), 'tag_id');
     }

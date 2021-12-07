@@ -23,7 +23,7 @@ use XoopsModules\Tag;
  *
  * @return bool true if ready to install, false if not
  */
-function xoops_module_pre_install_tag(\XoopsModule $module)
+function xoops_module_pre_install_tag(\XoopsModule $module): bool
 {
     $moduleDirName = \basename(\dirname(__DIR__));
     $utility       = new Tag\Utility();
@@ -59,7 +59,7 @@ function xoops_module_pre_install_tag(\XoopsModule $module)
  *
  * @return bool true if installation successful, false if not
  */
-function xoops_module_install_tag(\XoopsModule $module)
+function xoops_module_install_tag(\XoopsModule $module): bool
 {
     return true;
 }

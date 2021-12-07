@@ -85,7 +85,6 @@ class TagHandler extends \XoopsPersistableObjectHandler
      * @param int          $itemid item ID
      * @param int|string   $modid  module ID or module dirname, optional
      * @param int          $catid  id of corresponding category, optional
-     * @return bool
      */
     public function updateByItem($tags, $itemid, $modid = '', $catid = 0): bool
     {
@@ -186,7 +185,6 @@ class TagHandler extends \XoopsPersistableObjectHandler
      * @param int $tag_id
      * @param int $modid
      * @param int $catid
-     * @return bool
      */
     public function update_stats($tag_id, $modid = 0, $catid = 0): bool
     {
@@ -310,7 +308,7 @@ class TagHandler extends \XoopsPersistableObjectHandler
         \CriteriaElement $criteria = null,
         $fields = null,
         $fromStats = true
-    ) {//&getByLimit($criteria = null, $fromStats = true)
+    ): ?array {//&getByLimit($criteria = null, $fromStats = true)
         $ret = [];
         if ($fromStats) {
             $sql = "SELECT DISTINCT(o.{$this->keyName}), o.tag_term, o.tag_status, SUM(l.tag_count) AS count , l.tag_modid" . " FROM {$this->table} AS o LEFT JOIN {$this->table_stats} AS l ON l.{$this->keyName} = o.{$this->keyName}";
@@ -373,7 +371,7 @@ class TagHandler extends \XoopsPersistableObjectHandler
      * @param null|\CriteriaElement|\CriteriaCompo $criteria {@link Criteria)
      * @return int count
      */
-    public function getCount(\CriteriaElement $criteria = null)
+    public function getCount(\CriteriaElement $criteria = null): int
     {
         /*
         $catid    = (int)($catid);
@@ -586,9 +584,8 @@ class TagHandler extends \XoopsPersistableObjectHandler
      *
      * @param \XoopsObject $object $object {@link Tag}
      * @param bool         $force  flag to force the query execution despite security settings
-     * @return bool
      */
-    public function delete(\XoopsObject $object, $force = true)
+    public function delete(\XoopsObject $object, $force = true): bool
     {
         /* {@internal - this isn't needed if we type hint Tag object }}
         if (!is_object($object) || !$object->getVar($this->keyName)) {
@@ -638,7 +635,7 @@ class TagHandler extends \XoopsPersistableObjectHandler
      * @param string $field_object
      * @return bool true on success
      */
-    public function cleanOrphan($table_link = '', $field_link = '', $field_object = '')
+    public function cleanOrphan($table_link = '', $field_link = '', $field_object = ''): bool
     {
         require_once $GLOBALS['xoops']->path('/modules/tag/functions.recon.php');
 

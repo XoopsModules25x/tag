@@ -24,10 +24,9 @@ defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 defined('TAG_INI') || require_once __DIR__ . '/vars.php';
 
 /**
- * @return bool
  * @deprecated
  */
-function xoops_module_install_tag(\XoopsModule $module)
+function xoops_module_install_tag(\XoopsModule $module): bool
 {
     $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1);
     trigger_error(__FUNCTION__ . " is deprecated, called from {$trace[0]['file']} line {$trace[0]['line']}");
@@ -39,10 +38,9 @@ function xoops_module_install_tag(\XoopsModule $module)
 }
 
 /**
- * @return bool
  * @deprecated
  */
-function xoops_module_pre_install_tag(\XoopsModule $module)
+function xoops_module_pre_install_tag(\XoopsModule $module): bool
 {
     $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1);
     trigger_error(__FUNCTION__ . " is deprecated, called from {$trace[0]['file']} line {$trace[0]['line']}");
@@ -94,10 +92,9 @@ function xoops_module_pre_install_tag(\XoopsModule $module)
 }
 
 /**
- * @return bool
  * @deprecated
  */
-function xoops_module_pre_update_tag(\XoopsModule $module)
+function xoops_module_pre_update_tag(\XoopsModule $module): bool
 {
     $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1);
     trigger_error(__FUNCTION__ . " is deprecated, called from {$trace[0]['file']} line {$trace[0]['line']}");
@@ -114,10 +111,9 @@ function xoops_module_pre_update_tag(\XoopsModule $module)
 }
 
 /**
- * @return bool
  * @deprecated
  */
-function xoops_module_pre_uninstall_tag(\XoopsModule $module)
+function xoops_module_pre_uninstall_tag(\XoopsModule $module): bool
 {
     $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1);
     trigger_error(__FUNCTION__ . " is deprecated, called from {$trace[0]['file']} line {$trace[0]['line']}");
@@ -130,10 +126,9 @@ function xoops_module_pre_uninstall_tag(\XoopsModule $module)
 
 /**
  * @param null        $prev_version
- * @return bool
  * @deprecated
  */
-function xoops_module_update_tag(\XoopsModule $module, $prev_version = null)
+function xoops_module_update_tag(\XoopsModule $module, $prev_version = null): bool
 {
     $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1);
     trigger_error(__FUNCTION__ . " is deprecated, called from {$trace[0]['file']} line {$trace[0]['line']}");

@@ -29,10 +29,7 @@ define('TAG_FUNCTIONS_RECON_LOADED', true);
 if (!defined('TAG_FUNCTIONS_RECON')) :
     define('TAG_FUNCTIONS_RECON', 1);
 
-    /**
-     * @return bool
-     */
-    function tag_synchronization()
+    function tag_synchronization(): bool
     {
         /** @var \XoopsModuleHandler $moduleHandler */
         $moduleHandler = xoops_getHandler('module');
@@ -69,7 +66,7 @@ if (!defined('TAG_FUNCTIONS_RECON')) :
      *
      * @return bool true successfully deleted all orphans, false otherwise
      */
-    function tag_cleanOrphan()
+    function tag_cleanOrphan(): bool
     {
         /** @var \XoopsModules\Tag\TagHandler $tagHandler */
         $tagHandler = Helper::getInstance()->getHandler('Tag'); // xoops_getModuleHandler('tag', 'tag');

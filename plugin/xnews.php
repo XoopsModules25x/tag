@@ -22,9 +22,8 @@ use XoopsModules\Tag\Utility;
 
 /**
  * @param $items
- * @return bool
  */
-function xnews_tag_iteminfo(&$items)
+function xnews_tag_iteminfo(&$items): bool
 {
     if (empty($items) || !is_array($items)) {
         return false;

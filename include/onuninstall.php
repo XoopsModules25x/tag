@@ -14,7 +14,7 @@
  *
  * @return bool true if ready to uninstall, false if not
  */
-function xoops_module_pre_uninstall_tag(\XoopsModule $module)
+function xoops_module_pre_uninstall_tag(\XoopsModule $module): bool
 {
     // Do some synchronization
     return true;
@@ -26,7 +26,7 @@ function xoops_module_pre_uninstall_tag(\XoopsModule $module)
  *
  * @return bool true if uninstallation successful, false if not
  */
-function xoops_module_uninstall_tag(\XoopsModule $module)
+function xoops_module_uninstall_tag(\XoopsModule $module): bool
 {
     return true;
 }

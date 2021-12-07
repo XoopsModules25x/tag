@@ -36,9 +36,8 @@ defined('XOOPS_ROOT_PATH') || exit('Restricted access');
  *
  *
  * @param mixed $items associative array of items: [modid][catid][itemid]
- * @return bool
  */
-function myalbum0_tag_iteminfo(&$items)
+function myalbum0_tag_iteminfo(&$items): bool
 {
     if (empty($items) || !is_array($items)) {
         return false;

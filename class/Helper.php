@@ -56,7 +56,6 @@ class Helper extends \Xmf\Module\Helper
      * @param null|string $name
      * @param null|string $value
      *
-     * @return string|null
      */
     public function setConfig($name = null, $value = null): ?string
     {

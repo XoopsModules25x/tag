@@ -181,9 +181,8 @@ function tag_block_cloud_show($options, $dirname = '', $catid = 0)
 
 /**
  * @param $options
- * @return string
  */
-function tag_block_cloud_edit($options)
+function tag_block_cloud_edit($options): string
 {
     $form = _MB_TAG_ITEMS . ":&nbsp;&nbsp;<input type='number' name='options[0]' value='{$options[0]}' min='0' ><br>\n";
     $form .= _MB_TAG_TIME_DURATION . ":&nbsp;&nbsp;<input type='number' name='options[1]' value='{$options[1]}' min='0' ><br>\n";

@@ -178,9 +178,8 @@ function mymodule_tag_block_cloud_show($options)
 
 /**
  * @param $options
- * @return string
  */
-function mymodule_tag_block_cloud_edit($options)
+function mymodule_tag_block_cloud_edit($options): string
 {
     require_once $GLOBALS['xoops']->path('/modules/tag/blocks/block.php');
 
@@ -200,9 +199,8 @@ function mymodule_tag_block_top_show($options)
 
 /**
  * @param $options
- * @return string
  */
-function mymodule_tag_block_top_edit($options)
+function mymodule_tag_block_top_edit($options): string
 {
     require_once $GLOBALS['xoops']->path('/modules/tag/blocks/block.php');
 

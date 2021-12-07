@@ -36,9 +36,8 @@ defined('XOOPS_ROOT_PATH') || exit('Restricted access');
  *
  * @param array $items associative array of items: [modid][catid][itemid]
  *
- * @return bool
  */
-function newbb_tag_iteminfo(&$items)
+function newbb_tag_iteminfo(&$items): bool
 {
     if (empty($items) || !is_array($items)) {
         return false;
@@ -80,9 +79,8 @@ function newbb_tag_iteminfo(&$items)
  * Remove orphan tag-item links
  *
  * @param int $mid module id
- * @return bool
  */
-function newbb_tag_synchronization($mid)
+function newbb_tag_synchronization($mid): bool
 {
     /** @var \XoopsModules\Newbb\TopicHandler $itemHandler */
     $itemHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Topic');

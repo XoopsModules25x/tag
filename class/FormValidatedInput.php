@@ -137,7 +137,7 @@ class FormValidatedInput extends \XoopsFormText
      *
      * @return string HTML <input>
      */
-    public function render()
+    public function render(): string
     {
         $myClasses = $this->getClass();
         $classes   = $myClasses ? " class='{$myClasses}'" : '';

@@ -24,9 +24,8 @@ defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
 /**
  * @param $items
- * @return bool
  */
-function xfaq_tag_iteminfo(&$items)
+function xfaq_tag_iteminfo(&$items): bool
 {
     if (empty($items) || !is_array($items)) {
         return false;

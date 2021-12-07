@@ -33,7 +33,7 @@ class BlockForm extends \XoopsForm
      *
      * @return string HTML div containing element
      */
-    public function render()
+    public function render(): string
     {
         //        $ele_name = $this->getName();
         $ret    = "<div>\n";

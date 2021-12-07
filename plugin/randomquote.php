@@ -36,7 +36,7 @@ XoopsLoad::load('XoopsFilterInput');
  *
  * @return bool always returns true
  **/
-function randomquote_tag_iteminfo(&$items)
+function randomquote_tag_iteminfo(&$items): bool
 {
     $items_id = [];
     $cats_id  = [];
@@ -86,9 +86,8 @@ function randomquote_tag_iteminfo(&$items)
  * Remove orphan tag-item links
  *
  * @param int $mid module ID
- * @return bool
  */
-function randomquote_tag_synchronization($mid)
+function randomquote_tag_synchronization($mid): bool
 {
     /** @var \XoopsModules\Randomquote\QuotesHandler $itemHandler */
     $itemHandler = \XoopsModules\Randomquote\Helper::getInstance()->getHandler('Quotes');

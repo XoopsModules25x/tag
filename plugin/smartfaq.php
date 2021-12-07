@@ -44,9 +44,8 @@ defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
 /**
  * @param $items
- * @return bool
  */
-function smartfaq_tag_iteminfo(&$items)
+function smartfaq_tag_iteminfo(&$items): bool
 {
     if (empty($items) || !is_array($items)) {
         return false;
@@ -91,9 +90,8 @@ function smartfaq_tag_iteminfo(&$items)
  * Remove orphan tag-item links
  *
  * @param $mid
- * @return bool
  */
-function smartfaq_tag_synchronization($mid)
+function smartfaq_tag_synchronization($mid): bool
 {
     /** @var \XoopsDatabase $db */
     $db = \XoopsDatabaseFactory::getDatabase();

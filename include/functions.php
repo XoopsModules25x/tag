@@ -84,7 +84,7 @@ if (!defined('TAG_FUNCTIONS')) {
      * - "/" in a string
      * - "&" in a string
     */
-    function tag_parse_args(&$args, &$args_string)
+    function tag_parse_args(&$args, &$args_string): bool
     {
         $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1);
         trigger_error(__FUNCTION__ . " is deprecated, called from {$trace[0]['file']} line {$trace[0]['line']}");
@@ -133,7 +133,7 @@ if (!defined('TAG_FUNCTIONS')) {
      * @deprecated - use {@see Utility::tag_parse_tag()} method instead
      *             {@internal keep this file/function since it is called by 'unknown' plugins }}
      */
-    function tag_parse_tag($text_tag)
+    function tag_parse_tag($text_tag): array
     {
         $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1);
         trigger_error(__FUNCTION__ . " is deprecated, called from {$trace[0]['file']} line {$trace[0]['line']}");

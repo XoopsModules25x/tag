@@ -24,9 +24,8 @@ use Xmf\Module\Helper;
 
 /**
  * @param $items
- * @return bool
  */
-function xmnews_tag_iteminfo(&$items)
+function xmnews_tag_iteminfo(&$items): bool
 {
     if (empty($items) || !is_array($items)) {
         return false;
@@ -66,9 +65,8 @@ function xmnews_tag_iteminfo(&$items)
 
 /** Remove orphan tag-item links *
  * @param int $mid
- * @return bool
  */
-function xmnews_tag_synchronization($mid)
+function xmnews_tag_synchronization($mid): bool
 {
     //$itemHandler = \XoopsModules\xmnews\Helper::getInstance()->getHandler('xmnews_news');
 	$helper      = Helper::getHelper('xmnews');

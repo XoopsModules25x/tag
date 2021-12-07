@@ -32,7 +32,7 @@ xoops_loadLanguage('common', $moduleDirName);
  *
  * @return bool true if ready to install, false if not
  */
-function xoops_module_pre_update_tag(\XoopsModule $module)
+function xoops_module_pre_update_tag(\XoopsModule $module): bool
 {
     /** @var Tag\Helper $helper */
     /** @var Tag\Utility $utility */
@@ -53,7 +53,7 @@ function xoops_module_pre_update_tag(\XoopsModule $module)
  *
  * @return bool true if update successful, false if not
  */
-function xoops_module_update_tag(\XoopsModule $module, $previousVersion = null)
+function xoops_module_update_tag(\XoopsModule $module, $previousVersion = null): bool
 {
     global $xoopsDB;
     $moduleDirName = \basename(\dirname(__DIR__));
