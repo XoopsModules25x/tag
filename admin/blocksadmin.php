@@ -45,7 +45,7 @@ if ($GLOBALS['xoopsUser']->isAdmin($xoopsModule->mid())) {
     require_once XOOPS_ROOT_PATH . '/class/xoopsblock.php';
 
     $op = Request::getCmd('op', 'list');
-    if (isset($_POST)) {
+    if (!empty($_POST)) {
         $ok             = Request::getInt('ok', 0, 'POST');
         $confirm_submit = Request::getCmd('confirm_submit', '', 'POST');
         $submit         = Request::getString('submit', '', 'POST');
@@ -74,6 +74,7 @@ if ($GLOBALS['xoopsUser']->isAdmin($xoopsModule->mid())) {
 
     if (\in_array($op, ['edit', 'edit_ok', 'delete', 'delete_ok', 'clone', 'clone_ok'])) {
         $bid = Request::getInt('bid', 0);
+        $ok = Request::getInt('ok', 0);
 
         if ('clone' === $op) {
             $blocksadmin->cloneBlock($bid);
@@ -113,6 +114,7 @@ if ($GLOBALS['xoopsUser']->isAdmin($xoopsModule->mid())) {
         $weight     = Request::getArray('weight', [], 'POST');
         $visible    = Request::getArray('visible', [], 'POST');
         $bcachetime = Request::getArray('bcachetime', [], 'POST');
+        $bmodule    = Request::getArray('bmodule', [], 'POST');//mb
 
         $oldtitle      = Request::getArray('oldtitle', [], 'POST');
         $oldside       = Request::getArray('oldside', [], 'POST');
@@ -120,6 +122,7 @@ if ($GLOBALS['xoopsUser']->isAdmin($xoopsModule->mid())) {
         $oldvisible    = Request::getArray('oldvisible', [], 'POST');
         $oldgroups     = Request::getArray('oldgroups', [], 'POST');
         $oldbcachetime = Request::getArray('oldcachetime', [], 'POST');
+        $oldbmodule    = Request::getArray('oldbmodule', [], 'POST');//mb
 
         $blocksadmin->orderBlock(
             $bid,
@@ -129,13 +132,14 @@ if ($GLOBALS['xoopsUser']->isAdmin($xoopsModule->mid())) {
             $oldvisible,
             $oldgroups,
             $oldbcachetime,
+            $oldbmodule ,
             $title,
             $weight,
             $visible,
             $side,
             $bcachetime,
             $groups,
-            $bmodule = null
+            $bmodule
         );
     }
 } else {
