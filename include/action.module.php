@@ -24,7 +24,6 @@ defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 defined('TAG_INI') || require_once __DIR__ . '/vars.php';
 
 /**
- * @param XoopsModule $module
  * @return bool
  * @deprecated
  */
@@ -40,7 +39,6 @@ function xoops_module_install_tag(\XoopsModule $module)
 }
 
 /**
- * @param XoopsModule $module
  * @return bool
  * @deprecated
  */
@@ -96,7 +94,6 @@ function xoops_module_pre_install_tag(\XoopsModule $module)
 }
 
 /**
- * @param XoopsModule $module
  * @return bool
  * @deprecated
  */
@@ -117,7 +114,6 @@ function xoops_module_pre_update_tag(\XoopsModule $module)
 }
 
 /**
- * @param XoopsModule $module
  * @return bool
  * @deprecated
  */
@@ -133,7 +129,6 @@ function xoops_module_pre_uninstall_tag(\XoopsModule $module)
 }
 
 /**
- * @param XoopsModule $module
  * @param null        $prev_version
  * @return bool
  * @deprecated
