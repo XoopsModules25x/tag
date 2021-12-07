@@ -91,7 +91,7 @@ if (Request::hasVar('start', 'GET')) {
     //    $tags = $tagHandler->getByLimit(0, 0, $criteria, null, false);
     if ($tags && is_array($tags)) {
         foreach ($tags as $tag_id => $tag) {
-            $tagHandler->update_stats($tag_id, (-1 == $modid) ? Constants::DEFAULT_ID : $tag['modid'] ?? 0);
+            $tagHandler->update_stats($tag_id, (int)((-1 == $modid) ? Constants::DEFAULT_ID : $tag['modid'] ?? 0));
         }
         $helper->redirect("admin/syn.tag.php?modid={$modid}&amp;start=" . ($start + $limit) . "&amp;limit={$limit}", Constants::REDIRECT_DELAY_MEDIUM, _AM_TAG_IN_PROCESS);
     }

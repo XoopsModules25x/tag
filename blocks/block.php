@@ -129,7 +129,7 @@ function tag_block_cloud_show(array $options, string $dirname = '', int $catid =
         return $block;
     }
 
-            $tags_data_array = $tagHandler->getTagData($tags_array, $options[2], $options[3]);//mb
+            $tags_data_array = $tagHandler->getTagData($tags_array, (int)$options[2], (int)$options[3]);//mb
 //-----------------------------------------------------------------
 //    $count_max = 0;
 //    $count_min = 0;

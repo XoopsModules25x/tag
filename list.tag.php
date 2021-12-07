@@ -97,7 +97,7 @@ if (!empty($modid)) {
     }
 }
 $tags_array      = $tagHandler->getByLimit($limit, $start, $criteria, null, false);
-$tags_data_array = $tagHandler->getTagData($tags_array, $tag_config['font_max'], $tag_config['font_min']);
+$tags_data_array = $tagHandler->getTagData($tags_array, (int)$tag_config['font_max'], $tag_config['font_min']);
 
 $page_nav = '';
 if (!empty($start) || count($tags_data_array) >= $limit) {
