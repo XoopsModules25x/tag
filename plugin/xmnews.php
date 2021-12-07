@@ -68,14 +68,14 @@ function xmnews_tag_iteminfo(&$items)
  * @param int $mid
  * @return bool
  */
-function publisher_tag_synchronization($mid)
+function xmnews_tag_synchronization($mid)
 {
     //$itemHandler = \XoopsModules\xmnews\Helper::getInstance()->getHandler('xmnews_news');
 	$helper      = Helper::getHelper('xmnews');
 	$newsHandler = $helper->getHandler('xmnews_news');
 
-    /** @var \XoopsModules\Tag\LinkHandler $itemHandler */
-    $linkHandler = Helper::getInstance()->getHandler('Link');
+    /** @var \XoopsModules\Tag\LinkHandler $linkHandler */
+    $linkHandler = \XoopsModules\Tag\Helper::getInstance()->getHandler('Link');
 
     //    $mid = XoopsFilterInput::clean($mid, 'INT');
     $mid = \Xmf\Request::getInt('mid');
