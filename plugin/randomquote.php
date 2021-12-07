@@ -110,5 +110,5 @@ function randomquote_tag_synchronization($mid)
         }
     }
 
-    return $result ? true : false;
+    return (bool)$result;
 }

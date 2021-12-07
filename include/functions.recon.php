@@ -77,17 +77,17 @@ if (!defined('TAG_FUNCTIONS_RECON')) :
         $success = true;
         /* clear item-tag links */
         $sql     = "DELETE FROM {$tagHandler->table_link}" . " WHERE ({$tagHandler->keyName} NOT IN ( SELECT DISTINCT {$tagHandler->keyName} FROM {$tagHandler->table}) )";
-        $s1      = $tagHandler->db->queryF($sql) ? true : false;
+        $s1      = $tagHandler->db->queryF($sql);
         $success = $success && $s1;
 
         /* remove empty stats-tag links */
         $sql     = "DELETE FROM {$tagHandler->table_stats} WHERE tag_count = 0";
-        $s1      = $tagHandler->db->queryF($sql) ? true : false;
+        $s1      = $tagHandler->db->queryF($sql);
         $success = $success && $s1;
 
         /* clear stats-tag links */
         $sql     = "DELETE FROM {$tagHandler->table_stats}" . " WHERE ({$tagHandler->keyName} NOT IN ( SELECT DISTINCT {$tagHandler->keyName} FROM {$tagHandler->table}) )";
-        $s1      = $tagHandler->db->queryF($sql) ? true : false;
+        $s1      = $tagHandler->db->queryF($sql);
         $success = $success && $s1;
 
         $sql     = "    DELETE FROM {$tagHandler->table_stats}"
@@ -95,12 +95,12 @@ if (!defined('TAG_FUNCTIONS_RECON')) :
                    . "                       WHERE  {$tagHandler->table_link}.tag_modid={$tagHandler->table_stats}.tag_modid"
                    . "                       AND  {$tagHandler->table_link}.tag_catid={$tagHandler->table_stats}.tag_catid"
                    . '                     )';
-        $s1      = $tagHandler->db->queryF($sql) ? true : false;
+        $s1      = $tagHandler->db->queryF($sql);
         $success = $success && $s1;
 
         /* clear empty tags */
         $sql     = "DELETE FROM {$tagHandler->table}" . " WHERE ({$tagHandler->keyName} NOT IN ( SELECT DISTINCT {$tagHandler->keyName} FROM {$tagHandler->table_link}) )";
-        $s1      = $tagHandler->db->queryF($sql) ? true : false;
+        $s1      = $tagHandler->db->queryF($sql);
         $success = $success && $s1;
 
         return $success;

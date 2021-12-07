@@ -131,7 +131,7 @@ class Utility extends Common\SysUtility
             }
         }
 
-        return (0 == \count($args) + \count($args_string)) ? false : true;
+        return !((0 == \count($args) + \count($args_string)));
     }
 
     /**

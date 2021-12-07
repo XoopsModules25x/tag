@@ -87,5 +87,5 @@ function publisher_tag_synchronization($mid)
               . '        )';
     $result = $linkHandler->db->queryF($sql);
 
-    return $result ? true : false;
+    return (bool)$result;
 }
