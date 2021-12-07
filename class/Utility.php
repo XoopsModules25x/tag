@@ -119,14 +119,14 @@ class Utility extends Common\SysUtility
             foreach ($vars as $var) {
                 if (\is_numeric($var)) {
                     $args_string[] = $var;
-                } elseif (false === mb_strpos($var, '=')) {
+                } elseif (false !== mb_strpos($var, '=')) {
+                    \parse_str($var, $args);
+                } else {
                     if (\is_numeric(mb_substr($var, 1))) {
                         $args[$args_abb[mb_strtolower($var[0])]] = (int)mb_substr($var, 1);
                     } else {
                         $args_string[] = \urldecode($var);
                     }
-                } else {
-                    \parse_str($var, $args);
                 }
             }
         }

@@ -91,9 +91,7 @@ $module_list   = [];
 $sql    = 'SELECT tag_modid, COUNT(DISTINCT tag_id) AS count_tag' . ' FROM ' . $GLOBALS['xoopsDB']->prefix('tag_link') . ' GROUP BY tag_modid';
 $result = $GLOBALS['xoopsDB']->query($sql);
 
-if (false === $result) {
-    xoops_error($GLOBALS['xoopsDB']->error());
-} else {
+if (false !== $result) {
     while (false !== ($myrow = $GLOBALS['xoopsDB']->fetchArray($result))) {
         $counts_module[$myrow['tag_modid']] = $myrow['count_tag'];
     }
@@ -102,6 +100,8 @@ if (false === $result) {
         $moduleHandler = xoops_getHandler('module');
         $module_list   = $moduleHandler->getList(new \Criteria('mid', '(' . implode(', ', array_keys($counts_module)) . ')', 'IN'));
     }
+} else {
+    xoops_error($GLOBALS['xoopsDB']->error());
 }
 
 $opform = new \XoopsSimpleForm('', 'moduleform', $_SERVER['SCRIPT_NAME'], 'get', true);

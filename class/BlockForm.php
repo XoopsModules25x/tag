@@ -41,14 +41,14 @@ class BlockForm extends \XoopsForm
         foreach ($this->getElements() as $ele) {
             if (!\is_object($ele)) {
                 $ret .= $ele;
-            } elseif (!$ele->isHidden()) {
+            } elseif ($ele->isHidden()) {
+                $hidden .= $ele->render();
+            } else {
                 if ('' != $caption = $ele->getCaption()) {
                     $ret .= "<div class='xoops-form-element-caption" . ($ele->isRequired() ? '-required' : '') . "'>\n" . "  <span class='caption-text'>{$caption}</span>\n" . "  <span class='caption-marker'>*</span>\n" . "</div>\n";
                 }
 
                 $ret .= "<div style='margin:5px 0 8px 0; '>" . $ele->render() . "</div>\n";
-            } else {
-                $hidden .= $ele->render();
             }
         }
         $ret .= "</div>\n";

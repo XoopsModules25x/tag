@@ -39,9 +39,7 @@ $sql           = 'SELECT tag_modid, COUNT(DISTINCT tag_id) AS count_tag' . ' FRO
 $counts_module = [];
 $module_list   = [];
 $result        = $GLOBALS['xoopsDB']->query($sql);
-if (!$result instanceof \mysqli_result) {
-    \trigger_error($GLOBALS['xoopsDB']->error());
-} else {
+if ($result instanceof \mysqli_result) {
     while (false !== ($myrow = $GLOBALS['xoopsDB']->fetchArray($result))) {
         $counts_module[$myrow['tag_modid']] = $myrow['count_tag'];
     }
@@ -50,6 +48,8 @@ if (!$result instanceof \mysqli_result) {
         $moduleHandler = xoops_getHandler('module');
         $module_list   = $moduleHandler->getList(new \Criteria('mid', '(' . implode(', ', array_keys($counts_module)) . ')', 'IN'));
     }
+} else {
+    \trigger_error($GLOBALS['xoopsDB']->error());
 }
 
 $opform     = new \XoopsSimpleForm('', 'moduleform', xoops_getenv('SCRIPT_NAME'), 'get', true);

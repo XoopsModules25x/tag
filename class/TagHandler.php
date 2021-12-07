@@ -349,10 +349,7 @@ class TagHandler extends \XoopsPersistableObjectHandler
                 break;
         }
 
-        if (false === ($result = $this->db->query($sql, $limit, $start))) {
-            \trigger_error($this->db->error());
-            $ret = null;
-        } else {
+        if (false !== ($result = $this->db->query($sql, $limit, $start))) {
             while (false !== ($myrow = $this->db->fetchArray($result))) {
                 $ret[$myrow[$this->keyName]] = [
                     'id'     => $myrow[$this->keyName],
@@ -362,6 +359,9 @@ class TagHandler extends \XoopsPersistableObjectHandler
                     'count'  => (int)$myrow['count'],
                 ];
             }
+        } else {
+            \trigger_error($this->db->error());
+            $ret = null;
         }
 
         return $ret;
@@ -394,11 +394,11 @@ class TagHandler extends \XoopsPersistableObjectHandler
 
         $sql =     $sql_select . " " . $sql_from . " " . $sql_where;
         */
-        if (false === ($result = $this->db->query($sql))) {
+        if (false !== ($result = $this->db->query($sql))) {
+            [$ret] = $this->db->fetchRow($result);
+        } else {
             \trigger_error($this->db->error());
             $ret = 0;
-        } else {
-            [$ret] = $this->db->fetchRow($result);
         }
 
         return $ret;
@@ -446,10 +446,7 @@ class TagHandler extends \XoopsPersistableObjectHandler
                 break;
         }
 
-        if (false === ($result = $this->db->query($sql, $limit, $start))) {
-            \trigger_error($this->db->error());
-            $ret = [];
-        } else {
+        if (false !== ($result = $this->db->query($sql, $limit, $start))) {
             while (false !== ($myrow = $this->db->fetchArray($result))) {
                 $ret[$myrow['tl_id']] = [
                     'itemid' => $myrow['tag_itemid'],
@@ -458,6 +455,9 @@ class TagHandler extends \XoopsPersistableObjectHandler
                     'time'   => $myrow['tag_time'],
                 ];
             }
+        } else {
+            \trigger_error($this->db->error());
+            $ret = [];
         }
 
         return $ret;
@@ -473,9 +473,7 @@ class TagHandler extends \XoopsPersistableObjectHandler
      */
     public function getItemCount($tag_id, $modid = 0, $catid = 0)
     {
-        if (!$tag_id = (int)$tag_id) {
-            $ret = 0;
-        } else {
+        if ($tag_id = (int)$tag_id) {
             $catid = (int)$catid;
             $modid = (int)$modid;
 
@@ -490,12 +488,14 @@ class TagHandler extends \XoopsPersistableObjectHandler
             }
 
             $sql = $sql_select . ' ' . $sql_from . ' ' . $sql_where;
-            if (false === ($result = $this->db->query($sql))) {
+            if (false !== ($result = $this->db->query($sql))) {
+                [$ret] = $this->db->fetchRow($result);
+            } else {
                 \trigger_error($this->db->error());
                 $ret = 0;
-            } else {
-                [$ret] = $this->db->fetchRow($result);
             }
+        } else {
+            $ret = 0;
         }
 
         return $ret;

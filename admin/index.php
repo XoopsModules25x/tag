@@ -42,9 +42,7 @@ $sql           .= ' GROUP BY tag_modid';
 $counts_module = [];
 
 $result = $GLOBALS['xoopsDB']->query($sql);
-if (!$result instanceof \mysqli_result) {
-    \trigger_error($GLOBALS['xoopsDB']->error());
-} else {
+if ($result instanceof \mysqli_result) {
     while (false !== ($myrow = $GLOBALS['xoopsDB']->fetchArray($result))) {
         $counts_module[$myrow['tag_modid']] = [
             'count_item' => $myrow['count_item'],
@@ -56,6 +54,8 @@ if (!$result instanceof \mysqli_result) {
         $moduleHandler = xoops_getHandler('module');
         $module_list   = $moduleHandler->getList(new \Criteria('mid', '(' . implode(', ', array_keys($counts_module)) . ')', 'IN'));
     }
+} else {
+    \trigger_error($GLOBALS['xoopsDB']->error());
 }
 
 $adminObject->addInfoBox(_AM_TAG_STATS);

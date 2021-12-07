@@ -338,9 +338,7 @@ LEFT JOIN ' . $GLOBALS['xoopsDB']->prefix('tag_tag') .' AS l ON l.tag_id = o.tag
 GROUP BY o.tag_id 
 ORDER BY count_tag DESC';
     $result = $GLOBALS['xoopsDB']->query($sql);
-    if (!$result instanceof \mysqli_result) {
-        \trigger_error($GLOBALS['xoopsDB']->error());
-    } else {
+    if ($result instanceof \mysqli_result) {
         $tags_array2 = [];
         $tags_data_array = [];
         while (false !== ($myrow = $GLOBALS['xoopsDB']->fetchArray($result))) {
@@ -353,6 +351,8 @@ ORDER BY count_tag DESC';
                 'count' => $tag['count_tag'],
             ];
         }
+    } else {
+        \trigger_error($GLOBALS['xoopsDB']->error());
     }
 
     //-------------------------------------------
