@@ -20,7 +20,7 @@ namespace XoopsModules\Tag;
  * @author         Taiwen Jiang <phppp@users.sourceforge.net>
  * @since          1.00
  */
-(defined('XOOPS_ROOT_PATH') && ($GLOBALS['xoopsModule'] instanceof \XoopsModule)) || exit('Restricted access');
+(\defined('XOOPS_ROOT_PATH') && ($GLOBALS['xoopsModule'] instanceof \XoopsModule)) || exit('Restricted access');
 
 class Tagbar
 {
@@ -55,7 +55,7 @@ class Tagbar
                 $helper->loadLanguage('main');
             }
             */
-            if (file_exists($helper->path('assets/images/delimiter.gif'))) {
+            if (\file_exists($helper->path('assets/images/delimiter.gif'))) {
                 $delimiter = "<img src='" . $helper->url('assets/images/delimiter.gif') . "' alt=''>";
             } else {
                 $delimiter = "<img src='" . $GLOBALS['xoops']->url('www/images/pointer.gif') . "' alt=''>";
@@ -64,7 +64,7 @@ class Tagbar
         }
 
         // itemid
-        if (is_numeric($tags)) {
+        if (\is_numeric($tags)) {
             if (empty($modid) && ($GLOBALS['xoopsModule'] instanceof \XoopsModule)) {
                 $modid = $GLOBALS['xoopsModule']->getVar('mid');
             }
@@ -74,18 +74,18 @@ class Tagbar
                 return [];
             }
             // if ready, do nothing
-        } elseif (is_array($tags)) {
+        } elseif (\is_array($tags)) {
             // parse
         } elseif (!$tags = Utility::tag_parse_tag($tags)) {
             return [];
         }
         $tags_data = [];
         foreach ($tags as $tag) {
-            $tags_data[] = "<a href='" . $helper->url('view.tag.php' . URL_DELIMITER . urlencode($tag)) . "' title='" . htmlspecialchars($tag, ENT_QUOTES | ENT_HTML5) . "'>" . htmlspecialchars($tag, ENT_QUOTES | ENT_HTML5) . '</a>';
+            $tags_data[] = "<a href='" . $helper->url('view.tag.php' . URL_DELIMITER . \urlencode($tag)) . "' title='" . \htmlspecialchars($tag, \ENT_QUOTES | \ENT_HTML5) . "'>" . \htmlspecialchars($tag, \ENT_QUOTES | \ENT_HTML5) . '</a>';
         }
 
         return [
-            'title'     => _MD_TAG_TAGS,
+            'title'     => \_MD_TAG_TAGS,
             'delimiter' => $delimiter,
             'tags'      => $tags_data,
         ];

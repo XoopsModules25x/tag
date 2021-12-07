@@ -164,7 +164,7 @@ class SysUtility
             $tempTable = $GLOBALS['xoopsDB']->fetchArray($result, \MYSQLI_ASSOC);
         }
         if (!$tempTable) {
-            trigger_error($GLOBALS['xoopsDB']->error());
+            \trigger_error($GLOBALS['xoopsDB']->error());
         }
         // set the auto-incremented id's value to blank.
         unset($tempTable[$idField]);
@@ -172,7 +172,7 @@ class SysUtility
         $sql    = "INSERT INTO $table (" . \implode(', ', \array_keys($tempTable)) . ") VALUES ('" . \implode("', '", $tempTable) . "')";
         $result = $GLOBALS['xoopsDB']->queryF($sql);
         if (!$result) {
-            trigger_error($GLOBALS['xoopsDB']->error());
+            \trigger_error($GLOBALS['xoopsDB']->error());
         }
         // Return the new id
         $newId = $GLOBALS['xoopsDB']->getInsertId();

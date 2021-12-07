@@ -550,13 +550,13 @@ class TagHandler extends \XoopsPersistableObjectHandler
         $count_min = 0;
         $tags_term = [];
         foreach ($tags_array as $tag) {
-            $count_max   = max($count_max, $tag['count']); // set counter to the max tag count
-            $count_min   = min(0, $count_min, $tag['count']); //set counter to the minimum for tag count
+            $count_max   = \max($count_max, $tag['count']); // set counter to the max tag count
+            $count_min   = \min(0, $count_min, $tag['count']); //set counter to the minimum for tag count
             $tags_term[] = \mb_strtolower($tag['term']);
         }
 
         if (!empty($tags_term)) {
-            array_multisort($tags_term, SORT_ASC, $tags_array);
+            \array_multisort($tags_term, \SORT_ASC, $tags_array);
         }
         $count_interval = $count_max - $count_min;
         $level_limit    = 5;
@@ -569,10 +569,10 @@ class TagHandler extends \XoopsPersistableObjectHandler
         foreach ($tags_array as $tag) {
             $tags_data_array[] = [
                 'id'    => $tag['id'],
-                'font'  => $count_interval ? floor(($tag['count'] - $count_min) * $font_ratio + $font_min) : 100,
-                'level' => empty($count_max) ? 0 : floor(($tag['count'] - $count_min) * $level_limit / $count_max),
-                'term'  => urlencode($tag['term']),
-                'title' => htmlspecialchars($tag['term'], ENT_QUOTES | ENT_HTML5),
+                'font'  => $count_interval ? \floor(($tag['count'] - $count_min) * $font_ratio + $font_min) : 100,
+                'level' => empty($count_max) ? 0 : \floor(($tag['count'] - $count_min) * $level_limit / $count_max),
+                'term'  => \urlencode($tag['term']),
+                'title' => \htmlspecialchars($tag['term'], \ENT_QUOTES | \ENT_HTML5),
                 'count' => $tag['count'],
             ];
         }
