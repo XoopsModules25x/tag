@@ -61,7 +61,7 @@ class FormTag extends \XoopsFormText
      *
      * @return string HTML
      */
-    public function render()
+    public function render(): string
     {
         $delimiters = Utility::tag_get_delimiter();
         foreach (\array_keys($delimiters) as $key) {
