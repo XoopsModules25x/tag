@@ -37,7 +37,7 @@ defined('XOOPS_ROOT_PATH') || exit('Restricted access');
  * @param array $items associative array of items: [modid][catid][itemid]
  *
  */
-function xforum_tag_iteminfo(&$items): bool
+function xforum_tag_iteminfo(array &$items): bool
 {
     if (empty($items) || !is_array($items)) {
         return false;
@@ -82,7 +82,7 @@ function xforum_tag_iteminfo(&$items): bool
  * @param int $mid module id
  *
  */
-function xforum_tag_synchronization($mid): bool
+function xforum_tag_synchronization(int $mid): bool
 {
     /** @var \XoopsModules\Xforum\PostHandler $itemHandler */
     $itemHandler = \XoopsModules\Xforum\Helper::getInstance()->getHandler('Post');

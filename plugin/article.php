@@ -37,7 +37,7 @@ defined('XOOPS_ROOT_PATH') || exit('Restricted access');
  * @param array $items associative array of items: [modid][catid][itemid]
  *
  */
-function article_tag_iteminfo(&$items): bool
+function article_tag_iteminfo(array &$items): bool
 {
     if (empty($items) || !is_array($items)) {
         return false;
@@ -81,7 +81,7 @@ function article_tag_iteminfo(&$items): bool
  * @param int $mid module ID
  *
  */
-function article_tag_synchronization($mid): bool
+function article_tag_synchronization(int $mid): bool
 {
     /** @var \XoopsModules\Article\ArticleHandler $itemHandler */
     $itemHandler = \XoopsModules\Article\Helper::getInstance()->getHandler('Article', 'article');

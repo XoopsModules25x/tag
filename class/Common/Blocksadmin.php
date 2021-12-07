@@ -294,7 +294,7 @@ class Blocksadmin
     /**
      * @param int $bid
      */
-    public function deleteBlock($bid)
+    public function deleteBlock(int $bid)
     {
         //        \xoops_cp_header();
 
@@ -317,7 +317,7 @@ class Blocksadmin
     /**
      * @param int $bid
      */
-    public function cloneBlock($bid): void
+    public function cloneBlock(int $bid): void
     {
         //require __DIR__ . '/admin_header.php';
         //        \xoops_cp_header();
@@ -373,7 +373,7 @@ class Blocksadmin
      * @param array             $bmodule
      * @param null|array|string $options
      */
-    public function isBlockCloned($bid, $bside, $bweight, $bvisible, $bcachetime, $bmodule, $options, $groups): void
+    public function isBlockCloned(int $bid, string $bside, string $bweight, string $bvisible, string $bcachetime, array $bmodule, $options, $groups): void
     {
         \xoops_loadLanguage('admin', 'system');
         \xoops_loadLanguage('admin/blocksadmin', 'system');
@@ -442,7 +442,7 @@ class Blocksadmin
      * @param string $side
      * @param int    $bcachetime
      */
-    public function setOrder($bid, $title, $weight, $visible, $side, $bcachetime, $bmodule): void
+    public function setOrder(int $bid, string $title, int $weight, bool $visible, string $side, int $bcachetime, $bmodule): void
     {
         $myblock = new \XoopsBlock($bid);
         $myblock->setVar('title', $title);
@@ -459,7 +459,7 @@ class Blocksadmin
     /**
      * @param int $bid
      */
-    public function editBlock($bid): void
+    public function editBlock(int $bid): void
     {
         //        require_once \dirname(__DIR__,2) . '/admin/admin_header.php';
         //        \xoops_cp_header();
@@ -513,9 +513,9 @@ class Blocksadmin
      * @param string            $bcachetime
      * @param array             $bmodule
      * @param null|array|string $options
-     * @param null|array        $groups
+     * @param array|null        $groups
      */
-    public function updateBlock($bid, $btitle, $bside, $bweight, $bvisible, $bcachetime, $bmodule, $options, $groups): void
+    public function updateBlock(int $bid, string $btitle, string $bside, string $bweight, string $bvisible, string $bcachetime, array $bmodule, $options, ?array $groups): void
     {
         $myblock = new \XoopsBlock($bid);
         $myblock->setVar('title', $btitle);
@@ -570,7 +570,7 @@ class Blocksadmin
      * @param array $bid
      */
     public function orderBlock(
-        $bid,
+        array $bid,
         $oldtitle,
         $oldside,
         $oldweight,
@@ -621,9 +621,9 @@ class Blocksadmin
     }
 
     /**
-     * @param null|\array $block
+     * @param \array|null $block
      */
-    public function render($block = null): void
+    public function render(array $block = null): void
     {
         \xoops_load('XoopsFormLoader');
         \xoops_loadLanguage('common', $this->moduleDirNameUpper);

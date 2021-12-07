@@ -24,7 +24,7 @@ use XoopsModules\Tag\Helper;
  * Get item fields: title, content, time, link, uid, tags
  * @param array $items
  */
-function tdmdownloads_tag_iteminfo(&$items): bool
+function tdmdownloads_tag_iteminfo(array &$items): bool
 {
     if (empty($items) || !is_array($items)) {
         return false;

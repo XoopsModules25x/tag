@@ -34,7 +34,7 @@ class Tagbar
      * @return array
      *                         {@internal param int $itemid }}
      */
-    public function getTagbar($tags, $catid = 0, $modid = 0): array
+    public function getTagbar($tags, int $catid = 0, int $modid = 0): array
     {
         static $loaded, $delimiter;
 

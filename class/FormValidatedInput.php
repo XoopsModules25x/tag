@@ -50,7 +50,7 @@ class FormValidatedInput extends \XoopsFormText
      * @param string $value     Initial text
      * @param string $type
      */
-    public function __construct($caption, $name, $size, $maxlength, $value = '', $type = 'text')
+    public function __construct($caption, $name, $size, $maxlength, $value = '', string $type = 'text')
     {
         $this->_htmlTypes = [
             'color',

@@ -50,7 +50,7 @@ class TagHandler extends \XoopsPersistableObjectHandler
      * @param int $catid  id of corresponding category, optional
      * @return array associative array of tags (id, term)
      */
-    public function getByItem($itemid, $modid = 0, $catid = 0): array
+    public function getByItem(int $itemid, int $modid = 0, int $catid = 0): array
     {
         $ret = [];
 
@@ -86,7 +86,7 @@ class TagHandler extends \XoopsPersistableObjectHandler
      * @param int|string   $modid  module ID or module dirname, optional
      * @param int          $catid  id of corresponding category, optional
      */
-    public function updateByItem($tags, $itemid, $modid = '', $catid = 0): bool
+    public function updateByItem($tags, int $itemid, $modid = '', int $catid = 0): bool
     {
         $catid  = (int)$catid;
         $itemid = (int)$itemid;
@@ -186,7 +186,7 @@ class TagHandler extends \XoopsPersistableObjectHandler
      * @param int $modid
      * @param int $catid
      */
-    public function update_stats($tag_id, $modid = 0, $catid = 0): bool
+    public function update_stats(int $tag_id, int $modid = 0, int $catid = 0): bool
     {
         $tag_id = (int)$tag_id;
         if (0 === $tag_id) {
@@ -469,7 +469,7 @@ class TagHandler extends \XoopsPersistableObjectHandler
      * @param int $catid id of corresponding category, optional
      * @return int count
      */
-    public function getItemCount($tag_id, $modid = 0, $catid = 0): int
+    public function getItemCount(int $tag_id, int $modid = 0, int $catid = 0): int
     {
         if ($tag_id = (int)$tag_id) {
             $catid = (int)$catid;
@@ -507,7 +507,7 @@ class TagHandler extends \XoopsPersistableObjectHandler
      * @param int   $font_min
      * @return array tag data values for display
      */
-    public function getTagData($tags_array, $font_max = 0, $font_min = 0): array
+    public function getTagData(array $tags_array, int $font_max = 0, int $font_min = 0): array
     {
         //        $tags_data_array = [];
         //        if (\is_array($tags_array) && !empty($tags_array)) {

@@ -88,7 +88,7 @@ require_once $helper->path('include/vars.php');
  * @param int    $catid
  * @return array|bool
  */
-function tag_block_cloud_show($options, $dirname = '', $catid = 0)
+function tag_block_cloud_show(array $options, string $dirname = '', int $catid = 0)
 {
     if (!xoops_isActiveModule('tag')) {
         return false;
@@ -241,7 +241,7 @@ function tag_block_cloud_edit($options): string
  * @param int    $catid
  * @return array|bool
  */
-function tag_block_top_show($options, $dirname = '', $catid = 0)
+function tag_block_top_show(array $options, string $dirname = '', int $catid = 0)
 {
     if (!xoops_isActiveModule('tag')) {
         return false;
@@ -423,11 +423,11 @@ function tag_block_top_edit($options)
 /**
  * Prepare output for Cumulus block display
  *
- * @param null|string $dirname null for all modules, $dirname for specific module
+ * @param string|null $dirname null for all modules, $dirname for specific module
  * @param int         $catid   category id (only used if $dirname is set)
  * @return array|bool
  */
-function tag_block_cumulus_show(array $options, $dirname = null, $catid = 0)
+function tag_block_cumulus_show(array $options, string $dirname = null, int $catid = 0)
 {
     if (!xoops_isActiveModule('tag')) {
         return false;
@@ -543,7 +543,7 @@ EOT;
  *
  * @return string|false html render of form
  */
-function tag_block_cumulus_edit($options)
+function tag_block_cumulus_edit(array $options)
 {
     if (!xoops_isActiveModule('tag')) {
         return false;

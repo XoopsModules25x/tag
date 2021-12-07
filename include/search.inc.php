@@ -31,7 +31,7 @@ defined('XOOPS_ROOT_PATH') || exit('Restricted access');
  * @param int    $userid
  * @param string $sortby
  */
-function &tag_search($queryarray, $andor, $limit, $offset, $userid, $sortby = 'tag_term ASC'): array
+function &tag_search(array $queryarray, string $andor, int $limit, int $offset, int $userid, string $sortby = 'tag_term ASC'): array
 {
     $ret   = [];
     $count = is_array($queryarray) ? count($queryarray) : 0;

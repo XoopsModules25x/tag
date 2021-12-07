@@ -66,7 +66,7 @@ function xmnews_tag_iteminfo(&$items): bool
 /** Remove orphan tag-item links *
  * @param int $mid
  */
-function xmnews_tag_synchronization($mid): bool
+function xmnews_tag_synchronization(int $mid): bool
 {
     //$itemHandler = \XoopsModules\xmnews\Helper::getInstance()->getHandler('xmnews_news');
 	$helper      = Helper::getHelper('xmnews');

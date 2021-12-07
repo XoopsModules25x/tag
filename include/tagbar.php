@@ -32,7 +32,7 @@ use XoopsModules\Tag\{
  * @param int       $catid
  * @param int       $modid
  */
-function tagBar($tags, $catid = 0, $modid = 0): array
+function tagBar($tags, int $catid = 0, int $modid = 0): array
 {
     $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1);
     trigger_error(__FUNCTION__ . " is deprecated, called from {$trace[0]['file']} line {$trace[0]['line']}");

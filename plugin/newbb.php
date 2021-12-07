@@ -37,7 +37,7 @@ defined('XOOPS_ROOT_PATH') || exit('Restricted access');
  * @param array $items associative array of items: [modid][catid][itemid]
  *
  */
-function newbb_tag_iteminfo(&$items): bool
+function newbb_tag_iteminfo(array &$items): bool
 {
     if (empty($items) || !is_array($items)) {
         return false;
@@ -80,7 +80,7 @@ function newbb_tag_iteminfo(&$items): bool
  *
  * @param int $mid module id
  */
-function newbb_tag_synchronization($mid): bool
+function newbb_tag_synchronization(int $mid): bool
 {
     /** @var \XoopsModules\Newbb\TopicHandler $itemHandler */
     $itemHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Topic');

@@ -28,7 +28,7 @@ defined('XOOPS_ROOT_PATH') || exit('Restricted access');
  * Get item fields: title, content, time, link, uid, tags
  * @param array $items
  */
-function publisher_tag_iteminfo(&$items): bool
+function publisher_tag_iteminfo(array &$items): bool
 {
     if (empty($items) || !is_array($items)) {
         return false;
@@ -70,7 +70,7 @@ function publisher_tag_iteminfo(&$items): bool
 /** Remove orphan tag-item links *
  * @param int $mid
  */
-function publisher_tag_synchronization($mid): bool
+function publisher_tag_synchronization(int $mid): bool
 {
     /** @var \XoopsModules\Publisher\ItemHandler $itemHandler */
     $itemHandler = \XoopsModules\Publisher\Helper::getInstance()->getHandler('Item');

@@ -37,7 +37,7 @@ defined('XOOPS_ROOT_PATH') || exit('Restricted access');
  * @param array $items associative array of items: [modid][catid][itemid]
  *
  */
-function myalbum_tag_iteminfo(&$items): bool
+function myalbum_tag_iteminfo(array &$items): bool
 {
     if (empty($items) || !is_array($items)) {
         return false;
@@ -83,7 +83,7 @@ function myalbum_tag_iteminfo(&$items): bool
  * @param int $mid module id
  *
  */
-function myalbum_tag_synchronization($mid): bool
+function myalbum_tag_synchronization(int $mid): bool
 {
     /** @var \XoopsModules\Myalbum\PhotosHandler $itemHandler */
     $itemHandler = \XoopsModules\Myalbum\Helper::getInstance()->getHandler('Photos');

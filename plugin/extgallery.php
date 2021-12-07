@@ -27,7 +27,7 @@ defined('XOOPS_ROOT_PATH') || exit('Restricted access');
  * @param array $items is an array containing category and item information
  *
  */
-function extgallery_tag_iteminfo(&$items): bool
+function extgallery_tag_iteminfo(array &$items): bool
 {
     if (empty($items) || !is_array($items)) {
         return false;
@@ -70,7 +70,7 @@ function extgallery_tag_iteminfo(&$items): bool
  * @param int $mid module id
  *
  */
-function extgallery_tag_synchronization($mid): bool
+function extgallery_tag_synchronization(int $mid): bool
 {
     /** @var \XoopsModules\Extgallery\PublicPhotoHandler $itemHandler */
     $itemHandler = \XoopsModules\Extgallery\Helper::getInstance()->getHandler('PublicPhoto');

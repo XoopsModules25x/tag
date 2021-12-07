@@ -139,7 +139,7 @@ class Utility extends Common\SysUtility
      *
      * @return array containing parsed tags
      */
-    public static function tag_parse_tag($text_tag): array
+    public static function tag_parse_tag(string $text_tag): array
     {
         $tags = [];
         if (!empty($text_tag)) {
