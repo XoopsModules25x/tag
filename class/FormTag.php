@@ -55,7 +55,9 @@ class FormTag extends \XoopsFormText
             $tags       = $tagHandler->getByItem($value, $modid, $catid);
             if ($tags) {
                 $value = \htmlspecialchars(\implode(', ', $tags), \ENT_QUOTES | \ENT_HTML5);
-            }
+            } else {
+				$value = '';
+			}
         }
         $caption = \_MD_TAG_TAGS;
         parent::__construct($caption, $name, $size, $maxlength, $value);
