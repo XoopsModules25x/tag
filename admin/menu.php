@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -12,9 +12,8 @@
 /**
  * XOOPS tag management module
  *
- * @package         XoopsModules\Tag
- * @copyright       {@link http://sourceforge.net/projects/xoops/ The XOOPS Project}
- * @license         {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
+ * @copyright       {@link https://sourceforge.net/projects/xoops/ The XOOPS Project}
+ * @license         {@link https://www.fsf.org/copyleft/gpl.html GNU public license}
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
  * @since           1.00
  */
@@ -30,6 +29,7 @@ $moduleDirNameUpper = \mb_strtoupper($moduleDirName);
 $helper = Helper::getInstance();
 $helper->loadLanguage('common');
 $helper->loadLanguage('modinfo');
+$helper->loadLanguage('common');
 
 $pathIcon32    = Admin::menuIconPath('');
 $pathModIcon32 = XOOPS_URL . '/modules/' . $moduleDirName . '/assets/images/icons/32/';
@@ -57,6 +57,14 @@ $adminmenu[] = [
     'desc'  => _MI_TAG_HELP_DESC,
     'icon'  => $pathIcon32 . '/synchronized.png',
 ];
+
+// Blocks Admin
+$adminmenu[] = [
+    'title' => constant('CO_' . $moduleDirNameUpper . '_' . 'BLOCKS'),
+    'link' => 'admin/blocksadmin.php',
+    'icon' => $pathIcon32 . '/block.png',
+];
+
 
 $adminmenu[] = [
     'title' => _MI_TAG_ADMIN_ABOUT,

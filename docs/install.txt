@@ -7,4 +7,4 @@ No special measures necessary, follow the standard installation process
 3. Configure module settings in the Admin -> Preferences -> Tags
 
 Detailed instructions on installing modules are available in the XOOPS
-Operations Manual (http://goo.gl/adT2i)
+Operations Manual (https://goo.gl/adT2i)

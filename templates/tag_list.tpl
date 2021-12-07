@@ -1,4 +1,4 @@
-<!-- phppp (D.J.): http://xoopsforge.com; https://xoops.org.cn -->
+<!-- phppp (D.J.): https://xoopsforge.com; https://xoops.org.cn -->
 
 <div class="tag-page-title">
     <h3><{$tag_breadcrumb}></h3>
