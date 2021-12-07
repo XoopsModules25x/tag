@@ -108,7 +108,6 @@ function xoops_module_pre_update_tag(\XoopsModule $module)
         'Tag Module: ' . __FUNCTION__ . " function is deprecated since Tag 2.3.4, please use './tag/include/onupdate()' functions instead." . " Called from {$trace[0]['file']}line {$trace[0]['line']}"
     );
     $moduleDirName = \basename(\dirname(__DIR__));
-    /** @var Tag\Utility $utility */
     $utility = new Tag\Utility();
 
     $xoopsSuccess = $utility::checkVerXoops($module);
