@@ -80,7 +80,7 @@ foreach ($tags_array as $tag) {
     ];
 }
 
-unset($tags_array, $tag, $count_array, $term_array, $tags_term_array);
+unset($tags_array, $count_array, $term_array, $tags_term_array);
 
 // Breadcrumb
 $breadcrumb = new Common\Breadcrumb();
