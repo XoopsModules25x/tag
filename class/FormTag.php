@@ -49,7 +49,7 @@ class FormTag extends \XoopsFormText
             if ($tags) {
                 $value = \htmlspecialchars(\implode(', ', $tags), \ENT_QUOTES | \ENT_HTML5);
             } else {
-				$value = '';
+				        $value = '';
             }
         }
         $caption = \_MD_TAG_TAGS;
