@@ -44,7 +44,7 @@ class BlockForm extends \XoopsForm
             } elseif ($ele->isHidden()) {
                 $hidden .= $ele->render();
             } else {
-                if ('' != $caption = $ele->getCaption()) {
+                if ('' != ($caption = $ele->getCaption())) {
                     $ret .= "<div class='xoops-form-element-caption" . ($ele->isRequired() ? '-required' : '') . "'>\n" . "  <span class='caption-text'>{$caption}</span>\n" . "  <span class='caption-marker'>*</span>\n" . "</div>\n";
                 }
 
