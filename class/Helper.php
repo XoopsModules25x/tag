@@ -37,9 +37,6 @@ class Helper extends \Xmf\Module\Helper
         parent::__construct($this->dirname);
     }
 
-    /**
-     * @return \XoopsModules\Tag\Helper
-     */
     public static function getInstance(bool $debug = false): self
     {
         static $instance;

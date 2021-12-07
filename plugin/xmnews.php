@@ -20,6 +20,10 @@
 //use XoopsModules\Tag\Helper;
 use Xmf\Module\Helper;
 
+/**
+ * @param $items
+ * @return bool
+ */
 function xmnews_tag_iteminfo(&$items)
 {
     if (empty($items) || !is_array($items)) {
