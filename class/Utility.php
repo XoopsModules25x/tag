@@ -121,12 +121,10 @@ class Utility extends Common\SysUtility
                     $args_string[] = $var;
                 } elseif (false !== mb_strpos($var, '=')) {
                     \parse_str($var, $args);
+                } elseif (\is_numeric(mb_substr($var, 1))) {
+                    $args[$args_abb[mb_strtolower($var[0])]] = (int)mb_substr($var, 1);
                 } else {
-                    if (\is_numeric(mb_substr($var, 1))) {
-                        $args[$args_abb[mb_strtolower($var[0])]] = (int)mb_substr($var, 1);
-                    } else {
-                        $args_string[] = \urldecode($var);
-                    }
+                    $args_string[] = \urldecode($var);
                 }
             }
         }
