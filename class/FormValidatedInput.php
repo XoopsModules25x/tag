@@ -36,7 +36,7 @@ class FormValidatedInput extends \XoopsFormText
     /**
      * Valid HTML Type array
      *
-     * @var string
+     * @var array
      */
     private $_htmlTypes;
 
@@ -100,9 +100,9 @@ class FormValidatedInput extends \XoopsFormText
      *
      * @param string|array $value is string, set value; value is array then keys are ('type', 'min', 'max')
      */
-    public function setType($value): void
+    public function setType($value = ''): void
     {
-        if (isset($value)) {
+        if ('' !== $value) {
             if (\is_array($value)) {
                 $value       = isset($value['type']) ? \mb_strtolower($value['type']) : 'text';
                 $this->_type = \in_array($value, $this->_htmlTypes, true) ? $value : 'text';

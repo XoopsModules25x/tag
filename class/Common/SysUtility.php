@@ -33,9 +33,17 @@ use XoopsModules\Tag\{
  */
 class SysUtility
 {
-    use VersionChecks; //checkVerXoops, checkVerPhp Traits
-    use ServerStats; // getServerStats Trait
-    use FilesManagement; // Files Management Trait
+    use VersionChecks;
+
+    //checkVerXoops, checkVerPhp Traits
+
+    use ServerStats;
+
+    // getServerStats Trait
+
+    use FilesManagement;
+
+    // Files Management Trait
     //    use ModuleStats;    // ModuleStats Trait
 
     //--------------- Common module methods -----------------------------
@@ -86,9 +94,10 @@ class SysUtility
         if (!empty($cats)) {
             $catSql = '(' . \current($cats);
             \array_shift($cats);
-            foreach ($cats as $cat) {
-                $catSql .= ',' . $cat;
-            }
+            //            foreach ($cats as $cat) {
+            //                $catSql .= ',' . $cat;
+            //            }
+            $catSql .= \implode(',', $cats);
             $catSql .= ')';
         }
 
@@ -130,7 +139,7 @@ class SysUtility
         $sql    = 'SELECT COLUMN_TYPE FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = "' . $table . '" AND COLUMN_NAME = "' . $columnName . '"';
         $result = $GLOBALS['xoopsDB']->query($sql);
         if (!$result instanceof \mysqli_result) {
-            //            trigger_error($GLOBALS['xoopsDB']->error());
+            //            \trigger_error($GLOBALS['xoopsDB']->error());
             $logger = \XoopsLogger::getInstance();
             $logger->handleError(\E_USER_WARNING, $sql, __FILE__, __LINE__);
 
@@ -154,15 +163,31 @@ class SysUtility
      */
     public static function cloneRecord(string $tableName, string $idField, int $id): ?int
     {
-        $newId     = null;
-        $tempTable = '';
-        $table     = $GLOBALS['xoopsDB']->prefix($tableName);
+        //        $newId = null;
+        //        $tempTable = '';
+        $table = $GLOBALS['xoopsDB']->prefix($tableName);
         // copy content of the record you wish to clone
         $sql    = "SELECT * FROM $table WHERE $idField='" . $id . "' ";
         $result = $GLOBALS['xoopsDB']->query($sql);
         if ($result instanceof \mysqli_result) {
             $tempTable = $GLOBALS['xoopsDB']->fetchArray($result, \MYSQLI_ASSOC);
+        } else {
+            //            trigger_error("Query Failed! SQL: $sql- Error: " . $GLOBALS['xoopsDB']->error(), E_USER_ERROR);
+            $logger = \XoopsLogger::getInstance();
+            $logger->handleError(\E_USER_WARNING, $sql, __FILE__, __LINE__);
+            return null;
         }
+
+        //        $result = $GLOBALS['xoopsDB']->query($sql);
+        //        if ($result instanceof \mysqli_result) {
+        //            $result_array = $GLOBALS['xoopsDB']->fetchArray($result);
+        //        } else {
+        //            trigger_error("Query Failed! SQL: $sql- Error: " . $GLOBALS['xoopsDB']->error(), E_USER_ERROR);
+        //            $logger = \XoopsLogger::getInstance();
+        //            $logger->handleError(\E_USER_WARNING, $sql, __FILE__, __LINE__);
+        //            return null;
+        //        }
+
         if (!$tempTable) {
             \trigger_error($GLOBALS['xoopsDB']->error());
         }
@@ -276,7 +301,7 @@ class SysUtility
         if (!$exact) {
             // ...search the last occurance of a space...
             $spacepos = \mb_strrpos($truncate, ' ');
-            if (isset($spacepos)) {
+            if (false !== $spacepos) {
                 // ...and cut the text in this position
                 $truncate = \mb_substr($truncate, 0, $spacepos);
             }

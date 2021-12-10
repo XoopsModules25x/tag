@@ -25,7 +25,7 @@ use XoopsModules\Tag\Helper;
  */
 function tdmdownloads_tag_iteminfo(array &$items): bool
 {
-    if (empty($items) || !is_array($items)) {
+    if (empty($items)) {
         return false;
     }
 
@@ -63,10 +63,7 @@ function tdmdownloads_tag_iteminfo(array &$items): bool
     return true;
 }
 
-/**
- * @param $mid
- */
-function tdmdownloads_tag_synchronization($mid): void
+function tdmdownloads_tag_synchronization(int $mid): void
 {
     //    $itemHandler = $helper->getHandler('Downloads', 'tdmdownloads');
 

@@ -32,8 +32,14 @@ namespace XoopsModules\Tag\Common;
  */
 class Breadcrumb
 {
-    public  $dirname;
-    private $bread = [];
+    /**
+     * @var string
+     */
+    public $dirname;
+    /**
+     * @var array
+     */
+    private $bread;
 
     public function __construct()
     {
@@ -55,7 +61,7 @@ class Breadcrumb
     /**
      * Render BreadCrumb
      */
-    public function render(): void
+    public function render()
     {
         /*
         TODO if you want to use the render code below,

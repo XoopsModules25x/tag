@@ -29,7 +29,7 @@ defined('XOOPS_ROOT_PATH') || exit('Restricted access');
  */
 function publisher_tag_iteminfo(array &$items): bool
 {
-    if (empty($items) || !is_array($items)) {
+    if (empty($items)) {
         return false;
     }
 

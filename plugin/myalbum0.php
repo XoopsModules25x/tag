@@ -35,11 +35,11 @@ defined('XOOPS_ROOT_PATH') || exit('Restricted access');
  * tags
  *
  *
- * @param mixed $items associative array of items: [modid][catid][itemid]
+ * @param array $items associative array of items: [modid][catid][itemid]
  */
-function myalbum0_tag_iteminfo(&$items): bool
+function myalbum0_tag_iteminfo(array &$items): bool
 {
-    if (empty($items) || !is_array($items)) {
+    if (empty($items)) {
         return false;
     }
 
@@ -54,8 +54,8 @@ function myalbum0_tag_iteminfo(&$items): bool
     }
     $helper = \XoopsModules\Myalbum\Helper::getInstance();
     /** @var \Myalbum0PhotosHandler $itemHandler */
-    $itemHandler = $helper->getHandler('Photos', 'myalbum0');
-    $textHandler = $helper->getHandler('Text', 'myalbum0');
+    $itemHandler = $helper->getHandler('Photos');
+    $textHandler = $helper->getHandler('Text');
 
     /** @var \XoopsModules\Myalbum\PhotosHandler $itemHandler */
     $itemHandler = \XoopsModules\Myalbum\Helper::getInstance()->getHandler('Photos');
@@ -91,7 +91,7 @@ function myalbum0_tag_iteminfo(&$items): bool
 function myalbum0_tag_synchronization($mid): void
 {
     /** @var \Myalbum0PhotosHandler $itemHandler */
-    $itemHandler = \XoopsModules\Myalbum\Helper::getInstance()->getHandler('Photos', 'myalbum0');
+    $itemHandler = \XoopsModules\Myalbum\Helper::getInstance()->getHandler('Photos');
     /** @var \XoopsModules\Tag\LinkHandler $linkHandler */
     $linkHandler = Helper::getInstance()->getHandler('Link'); //@var \XoopsModules\Tag\Handler $tagHandler
 

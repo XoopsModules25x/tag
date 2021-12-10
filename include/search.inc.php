@@ -36,7 +36,7 @@ function &tag_search(array $queryarray, string $andor, int $limit, int $offset, 
     $criteria   = new \CriteriaCompo();
     $criteria->setLimit($limit);
     $criteria->setStart($offset);
-    $criteria->add(new \Criteria('tag_status', Constants::STATUS_ACTIVE));
+    $criteria->add(new \Criteria('tag_status', (string)Constants::STATUS_ACTIVE));
     if ('exact' === $andor) {
         $criteria->add(new \Criteria('tag_term', $queryarray[0]));
         for ($i = 1; $i < $count; ++$i) {

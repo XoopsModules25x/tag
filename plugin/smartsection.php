@@ -38,11 +38,11 @@ if (!defined('XOOPS_ROOT_PATH')) {
  * tags
  *
  *
- * @param mixed $items associative array of items: [modid][catid][itemid]
+ * @param array $items associative array of items: [modid][catid][itemid]
  */
-function smartsection_tag_iteminfo(&$items): bool
+function smartsection_tag_iteminfo(array &$items): bool
 {
-    if (empty($items) || !is_array($items)) {
+    if (empty($items)) {
         return false;
     }
 
@@ -75,14 +75,14 @@ function smartsection_tag_iteminfo(&$items): bool
         }
     }
     unset($items_obj);
+    return true;
 }
 
 /**
  * Remove orphan tag-item links
  *
- * @param $mid
  */
-function article_tag_synchronization($mid): void
+function article_tag_synchronization(int $mid): void
 {
     /** @var \XoopsModules\Smartsection\ItemHandler $itemHandler */
     $itemHandler = \XoopsModules\Smartsection\Helper::getInstance()->getHandler('Item');

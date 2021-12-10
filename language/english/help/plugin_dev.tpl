@@ -81,10 +81,13 @@ $tagHandler->updateByItem('', $itemid, $GLOBALS['xoopsModule']->getVar('dirname'
     <tr><td>Code:</td>
     <td><{literal}>
 <code>/** Get item fields: title, content, time, link, uid, uname, tags *
- * @param $items
+ * @param array $items
  */
-function mymodule_tag_iteminfo(&$items)
+function mymodule_tag_iteminfo(array &$items): bool
 {
+    if (empty($items) || !is_array($items)) {
+    return false;
+    }
     $items_id = [];
     foreach (array_keys($items) as $cat_id) {
         // Some handling here to build the link upon catid
@@ -111,6 +114,7 @@ function mymodule_tag_iteminfo(&$items)
         }
     }
     unset($items_obj);
+    return true;
 }
 
 /** Remove orphan tag-item links *

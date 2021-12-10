@@ -19,17 +19,25 @@
  */
 
 use Xmf\Module\Admin;
-use XoopsModules\Tag;
-use XoopsModules\Tag\Utility;
+use XoopsModules\Tag\{
+    Helper,
+    LinkHandler,
+    TagHandler,
+    Utility
+};
+
+/** @var Helper $helper */
+/** @var TagHandler $tagHandler */
+/** @var LinkHandler $linkHandler */
+/** @var Admin $adminObject */
 
 require_once __DIR__ . '/admin_header.php';
-/** @var XoopsModules\Tag\Helper $helper */
 require_once $helper->path('include/vars.php');
 
 xoops_cp_header();
 
 $adminObject = Admin::getInstance();
-/** @var XoopsModules\Tag\TagHandler $tagHandler */
+
 $tagHandler = $helper->getHandler('Tag');
 $count_tag  = $tagHandler->getCount();
 

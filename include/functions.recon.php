@@ -33,7 +33,7 @@ if (!defined('TAG_FUNCTIONS_RECON')) :
     {
         /** @var \XoopsModuleHandler $moduleHandler */
         $moduleHandler = xoops_getHandler('module');
-        $criteria      = new \CriteriaCompo(new \Criteria('isactive', 1));
+        $criteria      = new \CriteriaCompo(new \Criteria('isactive', '1'));
         $criteria->add(new \Criteria('dirname', "('system', 'tag')", 'NOT IN'));
         $modules_obj = $moduleHandler->getObjects($criteria, true);
 

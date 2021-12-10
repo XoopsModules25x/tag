@@ -36,7 +36,6 @@ if (!defined('TAG_FUNCTIONS')) {
      */
     function tag_getTagHandler()
     {
-        /** @var \XoopsModuleHandler $moduleHandler */
         $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1);
         trigger_error(__FUNCTION__ . " is deprecated, called from {$trace[0]['file']} line {$trace[0]['line']}");
         $GLOBALS['xoopsLogger']->addDeprecated(
@@ -49,6 +48,7 @@ if (!defined('TAG_FUNCTIONS')) {
 
         $tagHandler = Helper::getInstance()->getHandler('Tag');
 
+        //            /** @var \XoopsModuleHandler $moduleHandler */
         /*
         static $tagHandler;
 
@@ -58,7 +58,6 @@ if (!defined('TAG_FUNCTIONS')) {
         $tagHandler = null;
         if (!($GLOBALS['xoopsModule'] instanceof \XoopsModule)
             || ('tag' !== $GLOBALS['xoopsModule']->getVar('dirname'))) {
-            // @var \XoopsModuleHandler $moduleHandler
 
         $moduleHandler = xoops_getHandler('module');
         $module        = $moduleHandler->getByDirname('tag');

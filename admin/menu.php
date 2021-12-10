@@ -61,10 +61,9 @@ $adminmenu[] = [
 // Blocks Admin
 $adminmenu[] = [
     'title' => constant('CO_' . $moduleDirNameUpper . '_' . 'BLOCKS'),
-    'link' => 'admin/blocksadmin.php',
-    'icon' => $pathIcon32 . '/block.png',
+    'link'  => 'admin/blocksadmin.php',
+    'icon'  => $pathIcon32 . '/block.png',
 ];
-
 
 $adminmenu[] = [
     'title' => _MI_TAG_ADMIN_ABOUT,

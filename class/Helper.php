@@ -30,6 +30,7 @@ class Helper extends \Xmf\Module\Helper
      */
     public function __construct($debug = false)
     {
+        $this->debug = $debug;
         if (null === $this->dirname) {
             $dirname       = \basename(\dirname(__DIR__));
             $this->dirname = $dirname;
@@ -53,32 +54,12 @@ class Helper extends \Xmf\Module\Helper
     }
 
     /**
-     * @param string|null $name
-     * @param string|null $value
-     *
-     */
-    public function setConfig(string $name = null, string $value = null): ?string
-    {
-        if (null === $this->configs) {
-            $this->initConfig();
-        }
-        $this->configs[$name] = $value;
-        $this->addLog("Setting config '{$name}' : " . $this->configs[$name]);
-
-        return $this->configs[$name];
-    }
-
-    /**
      * Get an Object Handler
      *
      * @param string $name name of handler to load
-     *
-     * @return \XoopsPersistableObjectHandler
      */
-    public function getHandler($name): ?\XoopsPersistableObjectHandler
+    public function getHandler($name): \XoopsPersistableObjectHandler
     {
-        $ret = null;
-
         $class = __NAMESPACE__ . '\\' . \ucfirst($name) . 'Handler';
         if (!\class_exists($class)) {
             throw new \RuntimeException("Class '$class' not found");

@@ -30,7 +30,7 @@ class Tagbar
      * @param int|array $tags  array of tag string
      *                         OR
      * @return array
-     *                         {@internal param int $itemid }}
+     * {@internal param int $itemid }}
      */
     public function getTagbar($tags, int $catid = 0, int $modid = 0): array
     {
@@ -41,11 +41,10 @@ class Tagbar
         }
 
         $helper = Helper::getInstance();
-
+        Utility::tag_define_url_delimiter();
         if (null === $loaded) {
             require_once $helper->path('include/vars.php');
             //require_once $helper->path('include/functions.php');
-            Utility::tag_define_url_delimiter();
             $helper->loadLanguage('main'); // load Main lang file
             /*
             if (!($GLOBALS['xoopsModule'] instanceof \XoopsModule)

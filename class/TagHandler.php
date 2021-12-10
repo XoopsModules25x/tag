@@ -54,9 +54,9 @@ class TagHandler extends \XoopsPersistableObjectHandler
     {
         $ret = [];
 
-        $itemid = (int)$itemid;
+        $itemid = $itemid;
         $modid  = (empty($modid) && \is_object($GLOBALS['xoopsModule'])
-                   && 'tag' !== $GLOBALS['xoopsModule']->getVar('dirname')) ? $GLOBALS['xoopsModule']->getVar('mid') : (int)$modid;
+                   && 'tag' !== $GLOBALS['xoopsModule']->getVar('dirname')) ? $GLOBALS['xoopsModule']->getVar('mid') : $modid;
         if (empty($itemid) || empty($modid)) {
             return $ret;
         }
@@ -65,7 +65,7 @@ class TagHandler extends \XoopsPersistableObjectHandler
                . " FROM {$this->table_link} AS l "
                . " LEFT JOIN {$this->table} AS o ON o.{$this->keyName} = l.{$this->keyName} "
                . " WHERE  l.tag_itemid = {$itemid} AND l.tag_modid = {$modid}"
-               . (empty($catid) ? '' : (' AND l.tag_catid=' . (int)$catid))
+               . (empty($catid) ? '' : (' AND l.tag_catid=' . $catid))
                . ' ORDER BY o.tag_count DESC';
 
         $result = $this->db->query($sql);
@@ -88,8 +88,8 @@ class TagHandler extends \XoopsPersistableObjectHandler
      */
     public function updateByItem($tags, int $itemid, $modid = '', int $catid = 0): bool
     {
-        $catid  = (int)$catid;
-        $itemid = (int)$itemid;
+        $catid  = $catid;
+        $itemid = $itemid;
 
         if (!empty($modid) && !\is_numeric($modid)) {
             if (($GLOBALS['xoopsModule'] instanceof \XoopsModule)
@@ -98,7 +98,7 @@ class TagHandler extends \XoopsPersistableObjectHandler
             } else {
                 /** @var \XoopsModuleHandler $moduleHandler */
                 $moduleHandler = \xoops_getHandler('module');
-                $modid         = ($module_obj = $moduleHandler->getByDirname($modid)) ? $module_obj->getVar('mid') : 0;
+                $modid         = ($moduleObj = $moduleHandler->getByDirname($modid)) ? $moduleObj->getVar('mid') : 0;
             }
         } elseif ($GLOBALS['xoopsModule'] instanceof \XoopsModule) {
             $modid = $GLOBALS['xoopsModule']->getVar('mid');
@@ -185,23 +185,23 @@ class TagHandler extends \XoopsPersistableObjectHandler
      */
     public function update_stats(int $tag_id, int $modid = 0, int $catid = 0): bool
     {
-        $tag_id = (int)$tag_id;
+        $tag_id = $tag_id;
         if (0 === $tag_id) {
             return true;
         }
 
         $tag_count = [];
-        $modid     = (int)$modid;
-        $catid     = (0 === $modid) ? -1 : (int)$catid;
+        $modid     = $modid;
+        $catid     = (0 === $modid) ? -1 : $catid;
 
         /** @var \XoopsModules\Tag\LinkHandler $linkHandler */
         $linkHandler = \XoopsModules\Tag\Helper::getInstance()->getHandler('Link');
-        $criteria    = new \CriteriaCompo(new \Criteria('tag_id', $tag_id));
+        $criteria    = new \CriteriaCompo(new \Criteria('tag_id', (string)$tag_id));
         if (0 !== $modid) {
-            $criteria->add(new \Criteria('tag_modid', $modid), 'AND');
+            $criteria->add(new \Criteria('tag_modid', (string)$modid), 'AND');
         }
         if (0 < $catid) {
-            $criteria->add(new \Criteria('tag_catid', $catid), 'AND');
+            $criteria->add(new \Criteria('tag_catid', (string)$catid), 'AND');
         }
         $count = $linkHandler->getCount($criteria);
         /*
@@ -225,7 +225,7 @@ class TagHandler extends \XoopsPersistableObjectHandler
         } else {
             $statsHandler = Helper::getInstance()->getHandler('Stats');
             if (empty($count)) {
-                $criteria = new \CriteriaCompo(new \Criteria($this->keyName, $tag_id));
+                $criteria = new \CriteriaCompo(new \Criteria($this->keyName, (string)$tag_id));
                 $criteria->add(new \Criteria('tag_modid, $modid'), 'AND');
                 $criteria->add(new \Criteria('tag_catid', $catid), 'AND');
                 $status = $statsHandler->deleteAll($criteria);
@@ -241,9 +241,9 @@ class TagHandler extends \XoopsPersistableObjectHandler
                 */
             } else {
                 $ts_id    = null;
-                $criteria = new \CriteriaCompo(new \Criteria($this->keyName, $tag_id));
-                $criteria->add(new \Criteria('tag_modid', $modid), 'AND');
-                $criteria->add(new \Criteria('tag_catid', $catid), 'AND');
+                $criteria = new \CriteriaCompo(new \Criteria($this->keyName, (string)$tag_id));
+                $criteria->add(new \Criteria('tag_modid', (string)$modid), 'AND');
+                $criteria->add(new \Criteria('tag_catid', (string)$catid), 'AND');
                 $criteria->setLimit(1);
                 $tsCountObjs = $statsHandler->getAll($criteria);
                 if (\count($tsCountObjs) > 0) {
@@ -295,17 +295,12 @@ class TagHandler extends \XoopsPersistableObjectHandler
      * @param int                                  $limit
      * @param int                                  $start
      * @param null|\CriteriaElement|\CriteriaCompo $criteria  {@link Criteria}
-     * @param null                                 $fields
+     * @param null|array                           $fields
      * @param bool                                 $fromStats fetch from tag-stats table
      * @return array associative array of tags (id, term, status, count)
      */
-    public function &getByLimit(
-        $limit = Constants::UNLIMITED,
-        $start = Constants::BEGINNING,
-        \CriteriaElement $criteria = null,
-        $fields = null,
-        $fromStats = true
-    ): ?array {//&getByLimit($criteria = null, $fromStats = true)
+    public function &getByLimit($limit = Constants::UNLIMITED, $start = Constants::BEGINNING, \CriteriaElement $criteria = null, $fields = null, $fromStats = true): ?array
+    {//&getByLimit($criteria = null, $fromStats = true)
         $ret = [];
         if ($fromStats) {
             $sql = "SELECT DISTINCT(o.{$this->keyName}), o.tag_term, o.tag_status, SUM(l.tag_count) AS count , l.tag_modid" . " FROM {$this->table} AS o LEFT JOIN {$this->table_stats} AS l ON l.{$this->keyName} = o.{$this->keyName}";
@@ -344,7 +339,8 @@ class TagHandler extends \XoopsPersistableObjectHandler
                 break;
         }
 
-        if (false !== ($result = $this->db->query($sql, $limit, $start))) {
+        $result = $this->db->query($sql, $limit, $start);
+        if ($result instanceof \mysqli_result) {
             while (false !== ($myrow = $this->db->fetchArray($result))) {
                 $ret[$myrow[$this->keyName]] = [
                     'id'     => $myrow[$this->keyName],
@@ -366,7 +362,6 @@ class TagHandler extends \XoopsPersistableObjectHandler
      * Get count of tags
      *
      * @param null|\CriteriaElement|\CriteriaCompo $criteria {@link Criteria)
-     * @return int count
      */
     public function getCount(\CriteriaElement $criteria = null): ?int
     {
@@ -389,7 +384,8 @@ class TagHandler extends \XoopsPersistableObjectHandler
 
         $sql =     $sql_select . " " . $sql_from . " " . $sql_where;
         */
-        if (false !== ($result = $this->db->query($sql))) {
+        $result = $this->db->query($sql);
+        if ($result instanceof \mysqli_result) {
             [$ret] = (int)$this->db->fetchRow($result);
         } else {
             \trigger_error($this->db->error());
@@ -441,7 +437,8 @@ class TagHandler extends \XoopsPersistableObjectHandler
                 break;
         }
 
-        if (false !== ($result = $this->db->query($sql, $limit, $start))) {
+        $result = $this->db->query($sql, $limit, $start);
+        if ($result instanceof \mysqli_result) {
             while (false !== ($myrow = $this->db->fetchArray($result))) {
                 $ret[$myrow['tl_id']] = [
                     'itemid' => $myrow['tag_itemid'],
@@ -452,7 +449,6 @@ class TagHandler extends \XoopsPersistableObjectHandler
             }
         } else {
             \trigger_error($this->db->error());
-            $ret = [];
         }
 
         return $ret;
@@ -467,9 +463,9 @@ class TagHandler extends \XoopsPersistableObjectHandler
      */
     public function getItemCount(int $tag_id, int $modid = 0, int $catid = 0): int
     {
-        if ($tag_id = (int)$tag_id) {
-            $catid = (int)$catid;
-            $modid = (int)$modid;
+        if ($tag_id = $tag_id) {
+            $catid = $catid;
+            $modid = $modid;
 
             $sql_select = '    SELECT COUNT(DISTINCT o.tl_id)';
             $sql_from   = "    FROM {$this->table_link} AS o LEFT JOIN {$this->table} AS l ON l.{$this->keyName} = o.{$this->keyName}";
@@ -481,8 +477,9 @@ class TagHandler extends \XoopsPersistableObjectHandler
                 $sql_where .= " AND o.tag_catid = {$catid}";
             }
 
-            $sql = $sql_select . ' ' . $sql_from . ' ' . $sql_where;
-            if (false !== ($result = $this->db->query($sql))) {
+            $sql    = $sql_select . ' ' . $sql_from . ' ' . $sql_where;
+            $result = $this->db->query($sql);
+            if ($result instanceof \mysqli_result) {
                 [$ret] = $this->db->fetchRow($result);
             } else {
                 \trigger_error($this->db->error());

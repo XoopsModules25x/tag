@@ -83,8 +83,8 @@ function xoops_module_pre_install_tag(\XoopsModule $module): bool
     }
     */
 
-    $mod_tables = $module->getInfo('tables');
-    foreach ($mod_tables as $table) {
+    $modTables = $module->getInfo('tables');
+    foreach ($modTables as $table) {
         $GLOBALS['xoopsDB']->queryF('DROP TABLE IF EXISTS ' . $GLOBALS['xoopsDB']->prefix($table) . ';');
     }
 
@@ -102,7 +102,7 @@ function xoops_module_pre_update_tag(\XoopsModule $module): bool
         'Tag Module: ' . __FUNCTION__ . " function is deprecated since Tag 2.3.4, please use './tag/include/onupdate()' functions instead." . " Called from {$trace[0]['file']}line {$trace[0]['line']}"
     );
     $moduleDirName = \basename(\dirname(__DIR__));
-    $utility = new Tag\Utility();
+    $utility       = new Tag\Utility();
 
     $xoopsSuccess = $utility::checkVerXoops($module);
     $phpSuccess   = $utility::checkVerPhp($module);
@@ -125,7 +125,7 @@ function xoops_module_pre_uninstall_tag(\XoopsModule $module): bool
 }
 
 /**
- * @param null        $prev_version
+ * @param null $prev_version
  * @deprecated
  */
 function xoops_module_update_tag(\XoopsModule $module, $prev_version = null): bool

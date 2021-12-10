@@ -91,7 +91,7 @@ $module_list   = [];
 $sql    = 'SELECT tag_modid, COUNT(DISTINCT tag_id) AS count_tag' . ' FROM ' . $GLOBALS['xoopsDB']->prefix('tag_link') . ' GROUP BY tag_modid';
 $result = $GLOBALS['xoopsDB']->query($sql);
 
-if (false !== $result) {
+if ($result instanceof \mysqli_result) {
     while (false !== ($myrow = $GLOBALS['xoopsDB']->fetchArray($result))) {
         $counts_module[$myrow['tag_modid']] = $myrow['count_tag'];
     }
@@ -108,15 +108,15 @@ $opform = new \XoopsSimpleForm('', 'moduleform', $_SERVER['SCRIPT_NAME'], 'get',
 //$opform = new \XoopsSimpleForm('', 'moduleform', xoops_getenv('SCRIPT_NAME'), 'post', true);
 $tray       = new \XoopsFormElementTray('');
 $mod_select = new \XoopsFormSelect(_SELECT, 'modid', $modid);
-$mod_select->addOption(0, _ALL);
+$mod_select->addOption('0', _ALL);
 foreach ($module_list as $module => $module_name) {
     $mod_select->addOption($module, $module_name . ' (' . $counts_module[$module] . ')');
 }
 $tray->addElement($mod_select);
-$status_select = new \XoopsFormRadio('', 'status', $status);
-$status_select->addOption(Constants::STATUS_ALL, _ALL);
-$status_select->addOption(Constants::STATUS_ACTIVE, _AM_TAG_ACTIVE);
-$status_select->addOption(Constants::STATUS_INACTIVE, _AM_TAG_INACTIVE);
+$status_select = new \XoopsFormRadio('', 'status', (string)$status);
+$status_select->addOption((string)Constants::STATUS_ALL, _ALL);
+$status_select->addOption((string)Constants::STATUS_ACTIVE, _AM_TAG_ACTIVE);
+$status_select->addOption((string)Constants::STATUS_INACTIVE, _AM_TAG_INACTIVE);
 $tray->addElement($status_select);
 $tray->addElement(new \XoopsFormButton('', 'submit', _SUBMIT, 'submit'));
 $opform->addElement($tray);
@@ -128,10 +128,10 @@ $criteria->order = 'ASC'; // patch for XOOPS <= 2.5.10, does not set order corre
 $criteria->setStart($start);
 $criteria->setLimit($limit);
 if ($status >= Constants::STATUS_ACTIVE) {
-    $criteria->add(new \Criteria('o.tag_status', $status));
+    $criteria->add(new \Criteria('o.tag_status', (string)$status));
 }
 if (!empty($modid)) {
-    $criteria->add(new \Criteria('l.tag_modid', $modid));
+    $criteria->add(new \Criteria('l.tag_modid', (string)$modid));
 }
 $tags = $tagHandler->getByLimit(0, 0, $criteria, null, false);
 

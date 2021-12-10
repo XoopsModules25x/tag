@@ -37,16 +37,16 @@ function xoops_module_pre_install_tag(\XoopsModule $module): bool
         return false;
     }
 
-    $mod_tables = $module->getInfo('tables');
+    $modTables = $module->getInfo('tables');
     /** @todo replace table operations using Xmf\Tables object methods
-      $tableObj = new \Xmf\Database\Tables;
-      $tableObj->resetQueue();
-      foreach ($mod_tables as $table) {
-      $tableObj->dropTable($table);
-      }
-      return $tableObj->executeQueue();
+     * $tableObj = new \Xmf\Database\Tables;
+     * $tableObj->resetQueue();
+     * foreach ($modTables as $table) {
+     * $tableObj->dropTable($table);
+     * }
+     * return $tableObj->executeQueue();
      */
-    foreach ($mod_tables as $table) {
+    foreach ($modTables as $table) {
         $GLOBALS['xoopsDB']->queryF('DROP TABLE IF EXISTS ' . $GLOBALS['xoopsDB']->prefix($table) . ';');
     }
 

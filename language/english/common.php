@@ -5,7 +5,7 @@
  * Author: XOOPS Dev. Team
  * Licence: GNU
  */
-$moduleDirName = basename(dirname(__DIR__, 2));
+$moduleDirName      = basename(dirname(__DIR__, 2));
 $moduleDirNameUpper = \mb_strtoupper($moduleDirName);
 
 \define('CO_' . $moduleDirNameUpper . '_GDLIBSTATUS', 'GD library support: ');
@@ -174,7 +174,7 @@ $moduleDirNameUpper = \mb_strtoupper($moduleDirName);
 \define('CO_' . $moduleDirNameUpper . '_' . 'IMAGE_UPLOAD_PATH_DSC', 'Path for uploading images');
 
 \define('CO_' . $moduleDirNameUpper . '_' . 'IMAGE_FILE_SIZE', 'Image File Size (in Bytes)');
-\define('CO_' . $moduleDirNameUpper . '_' . 'IMAGE_FILE_SIZE_DSC','The maximum file size of the image file (in Bytes)');
+\define('CO_' . $moduleDirNameUpper . '_' . 'IMAGE_FILE_SIZE_DSC', 'The maximum file size of the image file (in Bytes)');
 
 //Module Stats
 \define('CO_' . $moduleDirNameUpper . '_' . 'STATS_SUMMARY', 'Module Statistics');
@@ -204,7 +204,6 @@ define('CO_' . $moduleDirNameUpper . '_' . 'CLONE_EXISTS', 'ERROR: Module name a
 define('CO_' . $moduleDirNameUpper . '_' . 'CLONE_CONGRAT', 'Congratulations! %s was sucessfully created!<br>You may want to make changes in language files.');
 define('CO_' . $moduleDirNameUpper . '_' . 'CLONE_IMAGEFAIL', 'Attention, we failed creating the new module logo. Please consider modifying assets/images/logo_module.png manually!');
 define('CO_' . $moduleDirNameUpper . '_' . 'CLONE_FAIL', "Sorry, we failed in creating the new clone. Maybe you need to temporally set write permissions (CHMOD 777) to 'modules' folder and try again.");
-
 
 //JSON-LD generation of www.schema.org
 \define('CO_' . $moduleDirNameUpper . '_' . 'GENERATE_JSONLD', 'Generate Schema Markup through JSON LD');

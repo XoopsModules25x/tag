@@ -33,8 +33,17 @@ class Blocksadmin
      * @var \XoopsMySQLDatabase|null
      */
     public $db;
+    /**
+     * @var \XoopsModules\Tag\Helper
+     */
     public $helper;
+    /**
+     * @var string
+     */
     public $moduleDirName;
+    /**
+     * @var string
+     */
     public $moduleDirNameUpper;
 
     /**
@@ -42,7 +51,7 @@ class Blocksadmin
      */
     public function __construct(?\XoopsDatabase $db, Helper $helper)
     {
-        if (null === $db){
+        if (null === $db) {
             $db = \XoopsDatabaseFactory::getDatabaseConnection();
         }
         $this->db                 = $db;
@@ -73,8 +82,8 @@ class Blocksadmin
         /** @var \XoopsGroupPermHandler $grouppermHandler */
         $grouppermHandler = \xoops_getHandler('groupperm');
         $groups           = $memberHandler->getGroups();
-        $criteria         = new \CriteriaCompo(new \Criteria('hasmain', 1));
-        $criteria->add(new \Criteria('isactive', 1));
+        $criteria         = new \CriteriaCompo(new \Criteria('hasmain', '1'));
+        $criteria->add(new \Criteria('isactive', '1'));
         $moduleList     = $moduleHandler->getList($criteria);
         $moduleList[-1] = \_AM_SYSTEM_BLOCKS_TOPPAGE;
         $moduleList[0]  = \_AM_SYSTEM_BLOCKS_ALLPAGES;
@@ -303,7 +312,7 @@ class Blocksadmin
         <br><br>";
     }
 
-    public function deleteBlock(int $bid)
+    public function deleteBlock(int $bid): void
     {
         //        \xoops_cp_header();
 
@@ -322,7 +331,7 @@ class Blocksadmin
         $this->helper->redirect('admin/blocksadmin.php?op=list', 1, _AM_DBUPDATED);
     }
 
-    public function cloneBlock(int $bid)
+    public function cloneBlock(int $bid): void
     {
         //require __DIR__ . '/admin_header.php';
         //        \xoops_cp_header();
@@ -369,10 +378,7 @@ class Blocksadmin
         //        exit();
     }
 
-    /**
-     * @param null|array|string $options
-     */
-    public function isBlockCloned(int $bid, string $bside, string $bweight, string $bvisible, string $bcachetime, ?array $bmodule, ?array$options, ?array$groups): void
+    public function isBlockCloned(int $bid, string $bside, string $bweight, string $bvisible, string $bcachetime, ?array $bmodule, ?array $options, ?array $groups): void
     {
         \xoops_loadLanguage('admin', 'system');
         \xoops_loadLanguage('admin/blocksadmin', 'system');
@@ -402,7 +408,7 @@ class Blocksadmin
         } else {
             $clone->setVar('block_type', 'D');
         }
-//        $newid = $clone->store(); //see https://github.com/XOOPS/XoopsCore25/issues/1105
+        //        $newid = $clone->store(); //see https://github.com/XOOPS/XoopsCore25/issues/1105
         if ($clone->store()) {
             $newid = $clone->id();  //get the id of the cloned block
         }
@@ -436,8 +442,7 @@ class Blocksadmin
         $this->helper->redirect('admin/blocksadmin.php?op=list', 1, _AM_DBUPDATED);
     }
 
-
-    public function setOrder(string $bid, string $title, string $weight, string $visible, string $side, string $bcachetime, ?array $bmodule = null)
+    public function setOrder(string $bid, string $title, string $weight, string $visible, string $side, string $bcachetime, ?array $bmodule = null): void
     {
         $myblock = new \XoopsBlock($bid);
         $myblock->setVar('title', $title);
@@ -451,7 +456,7 @@ class Blocksadmin
         //        return $blockHandler->insert($myblock);
     }
 
-    public function editBlock(int $bid)
+    public function editBlock(int $bid): void
     {
         //        require_once \dirname(__DIR__,2) . '/admin/admin_header.php';
         //        \xoops_cp_header();
@@ -492,7 +497,7 @@ class Blocksadmin
         echo $this->render($block);
     }
 
-    public function updateBlock(int $bid, string $btitle, string $bside, string $bweight, string $bvisible, string $bcachetime, ?array $bmodule, ?array$options, ?array$groups): void
+    public function updateBlock(int $bid, string $btitle, string $bside, string $bweight, string $bvisible, string $bcachetime, ?array $bmodule, ?array $options, ?array $groups): void
     {
         $myblock = new \XoopsBlock($bid);
         $myblock->setVar('title', $btitle);
@@ -501,7 +506,7 @@ class Blocksadmin
         $myblock->setVar('side', $bside);
         $myblock->setVar('bcachetime', $bcachetime);
         //update block options
-        if (isset($options) && \is_array($options)) {
+        if (isset($options)) {
             $optionsCount = \count($options);
             if ($optionsCount > 0) {
                 //Convert array values to comma-separated
@@ -551,7 +556,7 @@ class Blocksadmin
         array $oldvisible,
         array $oldgroups,
         array $oldbcachetime,
-        array $oldbmodule ,
+        array $oldbmodule,
         array $title,
         array $weight,
         array $visible,
@@ -569,7 +574,7 @@ class Blocksadmin
                 || $oldvisible[$i] !== $visible[$i]
                 || $oldside[$i] !== $side[$i]
                 || $oldbcachetime[$i] !== $bcachetime[$i]
-                || $oldbmodule[$i] !== $bmodule[$i]){
+                || $oldbmodule[$i] !== $bmodule[$i]) {
                 $this->setOrder($bid[$i], $title[$i], $weight[$i], $visible[$i], $side[$i], $bcachetime[$i], $bmodule[$i]);
             }
             if (!empty($bmodule[$i]) && \count($bmodule[$i]) > 0) {
@@ -598,7 +603,7 @@ class Blocksadmin
         $this->helper->redirect('admin/blocksadmin.php', 1, \constant('CO_' . $this->moduleDirNameUpper . '_' . 'UPDATE_SUCCESS'));
     }
 
-    public function render(?array $block = null)
+    public function render(?array $block = null): void
     {
         \xoops_load('XoopsFormLoader');
         \xoops_loadLanguage('common', $this->moduleDirNameUpper);
@@ -624,8 +629,8 @@ class Blocksadmin
         $modSelect = new \XoopsFormSelect(\constant('CO_' . $this->moduleDirNameUpper . '_' . 'VISIBLEIN'), 'bmodule', $block['modules'], 5, true);
         /** @var \XoopsModuleHandler $moduleHandler */
         $moduleHandler = \xoops_getHandler('module');
-        $criteria      = new \CriteriaCompo(new \Criteria('hasmain', 1));
-        $criteria->add(new \Criteria('isactive', 1));
+        $criteria      = new \CriteriaCompo(new \Criteria('hasmain', '1'));
+        $criteria->add(new \Criteria('isactive', '1'));
         $moduleList     = $moduleHandler->getList($criteria);
         $moduleList[-1] = \_AM_SYSTEM_BLOCKS_TOPPAGE;
         $moduleList[0]  = \_AM_SYSTEM_BLOCKS_ALLPAGES;

@@ -9,13 +9,12 @@
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 */
 
+use XoopsModules\Tag\FormTag;
+use XoopsModules\Tag\Utility;
+
 /** {@internal - DO NOT INCLUDE THE FOLLOWING LINE IN YOUR PLUGIN, IT IS INCLUDED
  *               HERE TO PREVENT THIS INSTRUCTIONAL FILE FROM BEING EXECUTED }}
  */
-
-use XoopsModules\Tag\FormTag;
-use XoopsModules\Tag\Helper;
-use XoopsModules\Tag\Utility;
 
 redirect_header('../../index.php', 0);
 
@@ -53,16 +52,17 @@ The following steps are needed to enable tag for a module ("mymodule"):
 6. add module tag blocks (optional)
 */
 
-/* Step 1: add tag input box */
+//-----------  Step 1: add tag input box to your item edit form  -----------
 // File: edit.item.php
 $itemid = $item_obj->isNew() ? 0 : $item_obj->getVar('itemid');
-XoopsLoad::load('formtag', 'tag');  // get the TagFormTag class
+//XoopsLoad::load('formtag', 'tag');  // get the TagFormTag class
 $form_item->addElement(new FormTag('item_tag', 60, 255, $itemid, $catid = 0));
 
-/* Step 2: add tag storage after item storage */
 
+//-----------  Step 2: add tag storage after item storage -----------
 // File: submit.item.php
-use XoopsModules\Tag as TagHelper;
+use XoopsModules\Tag\Helper as TagHelper;
+
 /** @var \XoopsModules\Tag\TagHandler $tagHandler */
 $tagHandler = TagHelper::getInstance()->getHandler('Tag'); // xoops_getModuleHandler('tag', 'tag');
 if (is_array($_POST['item_tag'])) {
@@ -72,13 +72,15 @@ if (is_array($_POST['item_tag'])) {
 }
 $tagHandler->updateByItem($item_tag, $itemid, $GLOBALS['xoopsModule']->getVar('dirname'), $catid = 0);
 
-/* Step 3: define functions to build info of tagged items */
+//-----------  Step 3: define functions to build info of tagged items -----------
 // File: /modules/tag/plugin/mymodule.php OR /modules/mymodule/include/plugin.tag.php
 /** Get item fields: title, content, time, link, uid, uname, tags *
- * @param $items
  */
-function mymodule_tag_iteminfo($items): void
+function mymodule_tag_iteminfo(array $items): bool
 {
+    if (empty($items)) {
+        return false;
+    }
     $helper   = XoopsModules\Mymodule\Helper::getInstance();
     $items_id = [];
     foreach (array_keys($items) as $cat_id) {
@@ -106,20 +108,22 @@ function mymodule_tag_iteminfo($items): void
         }
     }
     unset($items_obj);
+    return true;
 }
 
 /** Remove orphan tag-item links *
- * @param $mid
  */
-function mymodule_tag_synchronization($mid): void
+function mymodule_tag_synchronization(int $mid): void
 {
     // Optional
 }
 
-/* Step 4: Display tags on our item page */
+//----------- Step 4: Display tags on our item page ----------------
 // File: view.item.php
-require_once $GLOBALS['xoops']->path('/modules/tag/include/tagbar.php');
-$GLOBALS['xoopsTpl']->assign('tagbar', tagBar($itemid, $catid = 0));
+//require_once $GLOBALS['xoops']->path('/modules/tag/include/tagbar.php');
+use XoopsModules\Tag\Tagbar;
+$tagBar = new TagBar();
+$GLOBALS['xoopsTpl']->assign('tagbar', $tagBar->getTagbar($itemid, $catid = 0));
 // File: mymodule_item_template.tpl
 $GLOBALS['xoopsTpl']->display('db:tag_bar.tpl');
 
@@ -131,7 +135,7 @@ require_once $GLOBALS['xoops']->path('/modules/tag/list.tag.php');
 require_once __DIR__ . '/header.php';
 require_once $GLOBALS['xoops']->path('/modules/tag/view.tag.php');
 
-/* Step 6: create tag blocks */
+//-----------  Step 6: create tag blocks ----------------
 // File: xoops_version.php
 /*
  * $options:
@@ -166,10 +170,10 @@ $modversion['blocks'][] = [
 ];
 // File: module_block_tag.php
 /**
- * @param $options
+ * @param array $options
  * @return array|bool
  */
-function mymodule_tag_block_cloud_show($options)
+function mymodule_tag_block_cloud_show(?array $options)
 {
     require_once $GLOBALS['xoops']->path('/modules/tag/blocks/block.php');
 
@@ -177,9 +181,9 @@ function mymodule_tag_block_cloud_show($options)
 }
 
 /**
- * @param $options
+ * @param array $options
  */
-function mymodule_tag_block_cloud_edit($options): string
+function mymodule_tag_block_cloud_edit(?array $options): string
 {
     require_once $GLOBALS['xoops']->path('/modules/tag/blocks/block.php');
 
@@ -187,10 +191,10 @@ function mymodule_tag_block_cloud_edit($options): string
 }
 
 /**
- * @param $options
+ * @param array $options
  * @return array|bool
  */
-function mymodule_tag_block_top_show($options)
+function mymodule_tag_block_top_show(?array $options)
 {
     require_once $GLOBALS['xoops']->path('/modules/tag/blocks/block.php');
 
@@ -198,9 +202,9 @@ function mymodule_tag_block_top_show($options)
 }
 
 /**
- * @param $options
+ * @param array $options
  */
-function mymodule_tag_block_top_edit($options): string
+function mymodule_tag_block_top_edit(?array $options): string
 {
     require_once $GLOBALS['xoops']->path('/modules/tag/blocks/block.php');
 

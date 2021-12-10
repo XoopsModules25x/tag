@@ -26,7 +26,6 @@ use XoopsModules\Tag\{
     Utility
 };
 
-
 require_once __DIR__ . '/header.php';
 
 //@todo refactor this code - it "works" but it's not right. Look at previous revs using $args_num to see what it's suppose to do
@@ -68,7 +67,7 @@ if (!empty($tagid)) { // have a tag_id, so check to see if it yields a valid Tag
         $helper->redirect('index.php', Constants::REDIRECT_DELAY_MEDIUM, _MD_TAG_INVALID);
     }
     $tagObj = $tags_obj[0];
-    $tagid   = $tagObj->getVar('tag_id');
+    $tagid  = $tagObj->getVar('tag_id');
 } else {
     $helper->redirect('index.php', Constants::REDIRECT_DELAY_MEDIUM, _MD_TAG_INVALID);
 }
@@ -94,15 +93,15 @@ Utility::tag_define_url_delimiter();
 
 $limit = empty($tag_config['items_perpage']) ? Constants::DEFAULT_LIMIT : $tag_config['items_perpage'];
 
-$criteria = new \CriteriaCompo(new \Criteria('o.tag_id', $tagid));
+$criteria = new \CriteriaCompo(new \Criteria('o.tag_id', (string)$tagid));
 $criteria->setSort('time');
 $criteria->order = 'DESC'; // set order directly, XOOPS 2.5x does not set order correctly using Criteria::setOrder() method
 $criteria->setStart($start);
 $criteria->setLimit($limit);
 if (!empty($modid)) {
-    $criteria->add(new \Criteria('o.tag_modid', $modid));
+    $criteria->add(new \Criteria('o.tag_modid', (string)$modid));
     if ($catid >= Constants::DEFAULT_ID) {
-        $criteria->add(new \Criteria('o.tag_catid', $catid));
+        $criteria->add(new \Criteria('o.tag_catid', (string)$catid));
     }
 }
 
@@ -117,8 +116,8 @@ if (0 < count($items_array)) {
     /** @var \XoopsModuleHandler $moduleHandler */
     $moduleHandler    = xoops_getHandler('module');
     $module_obj_array = $moduleHandler->getObjects(new \Criteria('mid', '(' . implode(', ', array_keys($module_item_array)) . ')', 'IN'), true);
-    foreach ($module_obj_array as $mid => $module_obj) {
-        $dirname = $module_obj->getVar('dirname', 'n');
+    foreach ($module_obj_array as $mid => $moduleObj) {
+        $dirname = $moduleObj->getVar('dirname', 'n');
         //$dirname = $module_obj_array[$mid]->getVar('dirname', 'n');
         if (file_exists($GLOBALS['xoops']->path("modules/{$dirname}/class/plugins/plugin.tag.php"))) {
             require_once $GLOBALS['xoops']->path("modules/{$dirname}/class/plugins/plugin.tag.php");

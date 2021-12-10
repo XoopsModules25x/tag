@@ -22,12 +22,9 @@ use XoopsModules\Xfaq\Helper;
 
 defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
-/**
- * @param $items
- */
-function xfaq_tag_iteminfo(&$items): bool
+function xfaq_tag_iteminfo(array &$items): bool
 {
-    if (empty($items) || !is_array($items)) {
+    if (empty($items)) {
         return false;
     }
 
@@ -40,7 +37,7 @@ function xfaq_tag_iteminfo(&$items): bool
 
     /** @var \XoopsDatabase $db */
     $db = \XoopsDatabaseFactory::getDatabase();
-    /** @var \XoopsModules\Xfaq\XfaqHandler $itemHandler */
+    /** @var \XoopsModules\Xfaq\FaqHandler $itemHandler */
     $itemHandler = Helper::getInstance()->getHandler('Faq');
 
     $items_obj = $itemHandler->getObjects(new \Criteria('faq_id', '(' . implode(', ', $items_id) . ')', 'IN'), true);
@@ -65,10 +62,7 @@ function xfaq_tag_iteminfo(&$items): bool
     return true;
 }
 
-/**
- * @param $mid
- */
-function xfaq_tag_synchronization($mid): void
+function xfaq_tag_synchronization(int $mid): void
 {
     // Optional
 }

@@ -55,8 +55,8 @@ if ($result instanceof \mysqli_result) {
 $opform     = new \XoopsSimpleForm('', 'moduleform', xoops_getenv('SCRIPT_NAME'), 'get', true);
 $tray       = new \XoopsFormElementTray('');
 $mod_select = new \XoopsFormSelect(_SELECT, 'modid', $modid);
-$mod_select->addOption(-1, _AM_TAG_GLOBAL);
-$mod_select->addOption(0, _AM_TAG_ALL);
+$mod_select->addOption('-1', _AM_TAG_GLOBAL);
+$mod_select->addOption('0', _AM_TAG_ALL);
 foreach ($module_list as $module => $module_name) {
     $mod_select->addOption($module, $module_name . ' (' . $counts_module[$module] . ')');
 }
@@ -73,7 +73,7 @@ $num_select->addOptionArray(
 );
 $tray->addElement($num_select);
 $tray->addElement(new \XoopsFormButton('', 'submit', _SUBMIT, 'submit'));
-$tray->addElement(new \XoopsFormHidden('start', $start));
+$tray->addElement(new \XoopsFormHidden('start', (string)$start));
 $opform->addElement($tray);
 $opform->display();
 
@@ -85,7 +85,7 @@ if (Request::hasVar('start', 'GET')) {
     //    $criteria->setStart($start);
     //    $criteria->setLimit($limit);
     if ($modid > Constants::DEFAULT_ID) {
-        $criteria->add(new \Criteria('l.tag_modid', $modid));
+        $criteria->add(new \Criteria('l.tag_modid', (string)$modid));
     }
     $tags = $tagHandler->getByLimit($limit, $start, $criteria, null, false);
     //    $tags = $tagHandler->getByLimit(0, 0, $criteria, null, false);

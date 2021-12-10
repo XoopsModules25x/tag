@@ -79,7 +79,7 @@ require_once $helper->path('include/vars.php');
  *
  * {@link Tag}
  *
- * @param array  $options   :
+ * @param array $options    :
  *                          $options[0] - number of tags to display
  *                          $options[1] - time duration, in days, 0 for all the time
  *                          $options[2] - max font size (px or %)
@@ -118,69 +118,66 @@ function tag_block_cloud_show(array $options, string $dirname = '', int $catid =
     $criteria = new \CriteriaCompo();
     $criteria->setSort('count');
     $criteria->order = 'DESC';// patch for XOOPS <= 2.5.10, does not set order correctly using setOrder() method
-    $criteria->add(new \Criteria('o.tag_status', Constants::STATUS_ACTIVE));
+    $criteria->add(new \Criteria('o.tag_status', (string)Constants::STATUS_ACTIVE));
     if (!empty($modid)) {
-        $criteria->add(new \Criteria('l.tag_modid', $modid));
+        $criteria->add(new \Criteria('l.tag_modid', (string)$modid));
         if ($catid >= Constants::DEFAULT_ID) {
-            $criteria->add(new \Criteria('l.tag_catid', $catid));
+            $criteria->add(new \Criteria('l.tag_catid', (string)$catid));
         }
     }
     if (!$tags_array = $tagHandler->getByLimit($options[0], Constants::BEGINNING, $criteria, null, empty($options[1]))) {
         return $block;
     }
 
-            $tags_data_array = $tagHandler->getTagData($tags_array, (int)$options[2], (int)$options[3]);//mb
-//-----------------------------------------------------------------
-//    $count_max = 0;
-//    $count_min = 0;
-//    $tags_term = [];
-//    foreach ($tags_array as $tag) {
-//        $count_max   = max($count_max, $tag['count']); // set counter to the max tag count
-//        $count_min   = min(0, $count_min, $tag['count']); //set counter to the minimum for tag count
-//        $tags_term[] = \mb_strtolower($tag['term']);
-//    }
-//
-//    if (!empty($tags_term)) {
-//        array_multisort($tags_term, SORT_ASC, $tags_array);
-//    }
-//    $count_interval = $count_max - $count_min;
-//    $level_limit    = 5;
-//
-//    $font_max   = $options[2];
-//    $font_min   = $options[3];
-//    $font_ratio = $count_interval ? ($font_max - $font_min) / $count_interval : 1;
-//
-//    $tags_data_array = [];
-//    foreach ($tags_array as $tag) {
-//        $tags_data_array[] = [
-//            'id'    => $tag['id'],
-//            'font'  => $count_interval ? floor(($tag['count'] - $count_min) * $font_ratio + $font_min) : 100,
-//            'level' => empty($count_max) ? 0 : floor(($tag['count'] - $count_min) * $level_limit / $count_max),
-//            'term'  => urlencode($tag['term']),
-//            'title' => htmlspecialchars($tag['term'], ENT_QUOTES | ENT_HTML5),
-//            'count' => $tag['count'],
-//        ];
-//    }
-//    unset($tags_array, $tag, $tags_term, $tag_count_array);
-//---------------------------------
+    $tags_data_array = $tagHandler->getTagData($tags_array, (int)$options[2], (int)$options[3]);//mb
+    //-----------------------------------------------------------------
+    //    $count_max = 0;
+    //    $count_min = 0;
+    //    $tags_term = [];
+    //    foreach ($tags_array as $tag) {
+    //        $count_max   = max($count_max, $tag['count']); // set counter to the max tag count
+    //        $count_min   = min(0, $count_min, $tag['count']); //set counter to the minimum for tag count
+    //        $tags_term[] = \mb_strtolower($tag['term']);
+    //    }
+    //
+    //    if (!empty($tags_term)) {
+    //        array_multisort($tags_term, SORT_ASC, $tags_array);
+    //    }
+    //    $count_interval = $count_max - $count_min;
+    //    $level_limit    = 5;
+    //
+    //    $font_max   = $options[2];
+    //    $font_min   = $options[3];
+    //    $font_ratio = $count_interval ? ($font_max - $font_min) / $count_interval : 1;
+    //
+    //    $tags_data_array = [];
+    //    foreach ($tags_array as $tag) {
+    //        $tags_data_array[] = [
+    //            'id'    => $tag['id'],
+    //            'font'  => $count_interval ? floor(($tag['count'] - $count_min) * $font_ratio + $font_min) : 100,
+    //            'level' => empty($count_max) ? 0 : floor(($tag['count'] - $count_min) * $level_limit / $count_max),
+    //            'term'  => urlencode($tag['term']),
+    //            'title' => htmlspecialchars($tag['term'], ENT_QUOTES | ENT_HTML5),
+    //            'count' => $tag['count'],
+    //        ];
+    //    }
+    //    unset($tags_array, $tag, $tags_term, $tag_count_array);
+    //---------------------------------
 
     $block['tags']        = $tags_data_array;
     $block['tag_dirname'] = 'tag';
     if (!empty($modid)) {
         /** @var \XoopsModuleHandler $moduleHandler */
         $moduleHandler = xoops_getHandler('module');
-        if (false !== ($module_obj = $moduleHandler->get($modid))) {
-            $block['tag_dirname'] = $module_obj->getVar('dirname');
+        if (false !== ($moduleObj = $moduleHandler->get($modid))) {
+            $block['tag_dirname'] = $moduleObj->getVar('dirname');
         }
     }
 
     return $block;
 }
 
-/**
- * @param $options
- */
-function tag_block_cloud_edit($options): string
+function tag_block_cloud_edit(array $options): string
 {
     $form = _MB_TAG_ITEMS . ":&nbsp;&nbsp;<input type='number' name='options[0]' value='{$options[0]}' min='0' ><br>\n";
     $form .= _MB_TAG_TIME_DURATION . ":&nbsp;&nbsp;<input type='number' name='options[1]' value='{$options[1]}' min='0' ><br>\n";
@@ -228,7 +225,9 @@ function tag_block_cloud_edit($options): string
  *        </code>
  *    </li>
  * </ul>
- *
+ */
+
+/*
  * {@link Tag}
  *
  * @param array  $options   :
@@ -252,7 +251,9 @@ function tag_block_top_show(array $options, string $dirname = '', int $catid = 0
         /** @var \XoopsModuleHandler $moduleHandler */
         $moduleHandler = xoops_getHandler('module');
         $module        = $moduleHandler->getByDirname($dirname);
-        $modid         = $module->getVar('mid');
+        if ($module) {
+            $modid = $module->getVar('mid');
+        }
     }
 
     $block = [];
@@ -261,25 +262,25 @@ function tag_block_top_show(array $options, string $dirname = '', int $catid = 0
     $tagHandler = Helper::getInstance()->getHandler('Tag');
     Utility::tag_define_url_delimiter();
 
-    $sort = 'count';
-    $order = 'DESC';
+    $sort     = 'count';
+    $order    = 'DESC';
     $criteria = new \CriteriaCompo();
     if (isset($options[2])) {
-//        $sort = (('a' === $options[2]) || ('alphabet' === $options[2])) ? 'count' : $options[2];
+        //        $sort = (('a' === $options[2]) || ('alphabet' === $options[2])) ? 'count' : $options[2];
         $sort = $options[2];
     }
     $criteria->setSort($sort);
     $criteria->order = $order;// patch for XOOPS <= 2.5.10, does not set order correctly using setOrder() method
     $criteria->setLimit((int)$options[0]);
-    $criteria->add(new \Criteria('o.tag_status', Constants::STATUS_ACTIVE));
+    $criteria->add(new \Criteria('o.tag_status', (string)Constants::STATUS_ACTIVE));
     if (!empty($options[1])) {
-        $criteria->add(new \Criteria('l.tag_time', time() - (float)$options[1] * 24 * 3600, '>'));
+        $criteria->add(new \Criteria('l.tag_time', (string)(time() - (float)$options[1] * 24 * 3600), '>'));
     }
     if (!empty($modid)) {
-        $criteria->add(new \Criteria('l.tag_modid', $modid));
-        $catid = (int)$catid;
+        $criteria->add(new \Criteria('l.tag_modid', (string)$modid));
+        $catid = $catid;
         if ($catid >= 0) {
-            $criteria->add(new \Criteria('l.tag_catid', $catid));
+            $criteria->add(new \Criteria('l.tag_catid', (string)$catid));
         }
     }
     if (!$tags_array = $tagHandler->getByLimit(0, 0, $criteria, null, false)) {
@@ -288,16 +289,16 @@ function tag_block_top_show(array $options, string $dirname = '', int $catid = 0
 
     //    $tags_data_array = $tagHandler->getTagData($tags_array, $options[2], $options[3]); //mb
 
-    $count_max       = 0;
-    $count_min       = 0;
-//    $tag_count_array = array_column($tags_array, 'count'); // get the count values
-//    $tag_count_array = array_map('\intval', $tag_count_array); // make sure they're all integers
-//    $count_max       = max($tag_count_array); // get the max value in array
-//    $count_max       = max(0, $count_max); // make sure it's >= 0
-//    $tags_sort       = array_column($tags_array, 'term'); // get all the terms
-//    $tags_sort       = array_map('\mb_strtolower', $tags_sort); // convert them all to lowercase
+    $count_max = 0;
+    $count_min = 0;
+    //    $tag_count_array = array_column($tags_array, 'count'); // get the count values
+    //    $tag_count_array = array_map('\intval', $tag_count_array); // make sure they're all integers
+    //    $count_max       = max($tag_count_array); // get the max value in array
+    //    $count_max       = max(0, $count_max); // make sure it's >= 0
+    //    $tags_sort       = array_column($tags_array, 'term'); // get all the terms
+    //    $tags_sort       = array_map('\mb_strtolower', $tags_sort); // convert them all to lowercase
 
-//    $tags_sort = [];
+    //    $tags_sort = [];
 
     foreach ($tags_array as $tag) {
         $count_max = max($count_max, $tag['count']); // set counter to the max tag count
@@ -323,18 +324,18 @@ function tag_block_top_show(array $options, string $dirname = '', int $catid = 0
             //"level" => ($tags_array[$key]["count"] - $count_min) * $font_ratio + $font_min,
         ];
     }
-    unset($tags_array, $tag_count_array, $tags_sort);
+    unset($tags_array, $tags_sort);
 
     //-------------------------------------------
 
     $sql    = 'SELECT o.tag_id, COUNT(o.tag_id) AS count_tag, l.tag_term 
-FROM ' . $GLOBALS['xoopsDB']->prefix('tag_link') .' AS o 
-LEFT JOIN ' . $GLOBALS['xoopsDB']->prefix('tag_tag') .' AS l ON l.tag_id = o.tag_id 
+FROM ' . $GLOBALS['xoopsDB']->prefix('tag_link') . ' AS o 
+LEFT JOIN ' . $GLOBALS['xoopsDB']->prefix('tag_tag') . ' AS l ON l.tag_id = o.tag_id 
 GROUP BY o.tag_id 
 ORDER BY count_tag DESC';
     $result = $GLOBALS['xoopsDB']->query($sql);
     if ($result instanceof \mysqli_result) {
-        $tags_array2 = [];
+        $tags_array2     = [];
         $tags_data_array = [];
         while (false !== ($myrow = $GLOBALS['xoopsDB']->fetchArray($result))) {
             $tags_array2[] = $myrow;
@@ -357,8 +358,8 @@ ORDER BY count_tag DESC';
     if (!empty($modid)) {
         /** @var \XoopsModuleHandler $moduleHandler */
         $moduleHandler = xoops_getHandler('module');
-        if (false !== ($module_obj = $moduleHandler->get($modid))) {
-            $block['tag_dirname'] = $module_obj->getVar('dirname');
+        if (false !== ($moduleObj = $moduleHandler->get($modid))) {
+            $block['tag_dirname'] = $moduleObj->getVar('dirname');
         }
     }
 
@@ -366,10 +367,9 @@ ORDER BY count_tag DESC';
 }
 
 /**
- * @param $options
- * @return string
+ * @return string|false
  */
-function tag_block_top_edit($options)
+function tag_block_top_edit(array $options)
 {
     if (!xoops_isActiveModule('tag')) {
         return false;
@@ -450,11 +450,11 @@ function tag_block_cumulus_show(array $options, string $dirname = null, int $cat
     $criteria->setSort('count');
     $criteria->order = 'DESC';// patch for XOOPS <= 2.5.10, does not set order correctly using setOrder() method
     $criteria->setLimit($options[0]);
-    $criteria->add(new \Criteria('o.tag_status', Constants::STATUS_ACTIVE));
+    $criteria->add(new \Criteria('o.tag_status', (string)Constants::STATUS_ACTIVE));
     if (!empty($modid)) {
-        $criteria->add(new \Criteria('l.tag_modid', $modid));
+        $criteria->add(new \Criteria('l.tag_modid', (string)$modid));
         if (0 <= $catid) {
-            $criteria->add(new \Criteria('l.tag_catid', $catid));
+            $criteria->add(new \Criteria('l.tag_catid', (string)$catid));
         }
     }
     if (!$tags_array = $tagHandler->getByLimit(0, 0, $criteria, null, empty($options[1]))) {
@@ -466,8 +466,8 @@ function tag_block_cumulus_show(array $options, string $dirname = null, int $cat
     if (!empty($modid)) {
         /** @var \XoopsModuleHandler $moduleHandler */
         $moduleHandler = xoops_getHandler('module');
-        if (false !== ($module_obj = $moduleHandler->get($modid))) {
-            $block['tag_dirname'] = $module_obj->getVar('dirname');
+        if (false !== ($moduleObj = $moduleHandler->get($modid))) {
+            $block['tag_dirname'] = $moduleObj->getVar('dirname');
         }
     }
     $flash_params = [
@@ -512,9 +512,9 @@ function tag_block_cumulus_show(array $options, string $dirname = null, int $cat
         'speed'      => (int)$options[11],
     ];
 
-    $output    = '<tags>';
-//    $xoops_url = $GLOBALS['xoops']->url('www');
-    $view_url  = $helper->url('view.tag.php');
+    $output = '<tags>';
+    //    $xoops_url = $GLOBALS['xoops']->url('www');
+    $view_url = $helper->url('view.tag.php');
     foreach ($block['tags'] as $term) {
         //foreach ($tags_data_array as $term) {
         // assign font size
@@ -558,8 +558,8 @@ function tag_block_cumulus_edit(array $options)
     $form->addElement(new Tag\FormValidatedInput(_MB_TAG_FLASH_HEIGHT, 'options[5]', 25, 25, $options[5], 'number'));
     $form->addElement(new \XoopsFormColorPicker(_MB_TAG_FLASH_BACKGROUND, 'options[6]', $options[6]));
     $form_cumulus_flash_transparency = new \XoopsFormSelect(_MB_TAG_FLASH_TRANSPARENCY, 'options[7]', $options[7]);
-    $form_cumulus_flash_transparency->addOption(0, _NONE);
-    $form_cumulus_flash_transparency->addOption(1, _MB_TAG_FLASH_TRANSPARENT);
+    $form_cumulus_flash_transparency->addOption('0', _NONE);
+    $form_cumulus_flash_transparency->addOption('1', _MB_TAG_FLASH_TRANSPARENT);
     $form->addElement($form_cumulus_flash_transparency);
     $form->addElement(new \XoopsFormColorPicker(_MB_TAG_FLASH_MINFONTCOLOR, 'options[8]', $options[8]));
     $form->addElement(new \XoopsFormColorPicker(_MB_TAG_FLASH_MAXFONTCOLOR, 'options[9]', $options[9]));

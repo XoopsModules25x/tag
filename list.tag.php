@@ -89,11 +89,11 @@ Utility::tag_define_url_delimiter();
 $criteria = new \CriteriaCompo();
 $criteria->setSort('count');
 $criteria->order = 'DESC'; // direct set of order because XOOPS 2.5x won't allow anything other than 'ASC' to be set using setOrder() method
-$criteria->add(new \Criteria('o.tag_status', Constants::STATUS_ACTIVE));
+$criteria->add(new \Criteria('o.tag_status', (string)Constants::STATUS_ACTIVE));
 if (!empty($modid)) {
-    $criteria->add(new \Criteria('l.tag_modid', $modid));
+    $criteria->add(new \Criteria('l.tag_modid', (string)$modid));
     if ($catid >= 0) {
-        $criteria->add(new \Criteria('l.tag_catid', $catid));
+        $criteria->add(new \Criteria('l.tag_catid', (string)$catid));
     }
 }
 $tags_array      = $tagHandler->getByLimit($limit, $start, $criteria, null, false);

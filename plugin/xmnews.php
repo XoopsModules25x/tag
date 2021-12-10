@@ -22,12 +22,9 @@ declare(strict_types=1);
 //use XoopsModules\Tag\Helper;
 use Xmf\Module\Helper;
 
-/**
- * @param $items
- */
-function xmnews_tag_iteminfo(&$items): bool
+function xmnews_tag_iteminfo(array &$items): bool
 {
-    if (empty($items) || !is_array($items)) {
+    if (empty($items)) {
         return false;
     }
 
@@ -40,27 +37,27 @@ function xmnews_tag_iteminfo(&$items): bool
             $items_id[] = (int)$item_id;
         }
     }
-	$helper      = Helper::getHelper('xmnews');
-	$newsHandler = $helper->getHandler('xmnews_news');
+    $helper      = Helper::getHelper('xmnews');
+    $newsHandler = $helper->getHandler('xmnews_news');
     $items_obj   = $newsHandler->getObjects(new \Criteria('news_id', '(' . implode(', ', $items_id) . ')', 'IN'), true);
-	if (count($items_obj) > 0){
-		foreach (array_keys($items) as $cat_id) {
-			foreach (array_keys($items[$cat_id]) as $item_id) {
-				$item_obj                 = $items_obj[$item_id];
-				$items[$cat_id][$item_id] = [
-					'title'   => $item_obj->getVar('news_title'),
-					'uid'     => $item_obj->getVar('news_userid'),
-					'link'    => "article.php?news_id={$item_id}",
-					'time'    => $item_obj->getVar('news_date'),
-					'tags'    => \XoopsModules\Tag\Utility::tag_parse_tag($item_obj->getVar('news_mkeyword', 'n')), // optional
-					'content' => '',
-				];
-			}
-		}
-		unset($items_obj);
-		return true;
-	}
-	return false;
+    if (count($items_obj) > 0) {
+        foreach (array_keys($items) as $cat_id) {
+            foreach (array_keys($items[$cat_id]) as $item_id) {
+                $item_obj                 = $items_obj[$item_id];
+                $items[$cat_id][$item_id] = [
+                    'title'   => $item_obj->getVar('news_title'),
+                    'uid'     => $item_obj->getVar('news_userid'),
+                    'link'    => "article.php?news_id={$item_id}",
+                    'time'    => $item_obj->getVar('news_date'),
+                    'tags'    => \XoopsModules\Tag\Utility::tag_parse_tag($item_obj->getVar('news_mkeyword', 'n')), // optional
+                    'content' => '',
+                ];
+            }
+        }
+        unset($items_obj);
+        return true;
+    }
+    return false;
 }
 
 /** Remove orphan tag-item links *
@@ -68,8 +65,8 @@ function xmnews_tag_iteminfo(&$items): bool
 function xmnews_tag_synchronization(int $mid): bool
 {
     //$itemHandler = \XoopsModules\xmnews\Helper::getInstance()->getHandler('xmnews_news');
-	$helper      = Helper::getHelper('xmnews');
-	$newsHandler = $helper->getHandler('xmnews_news');
+    $helper      = Helper::getHelper('xmnews');
+    $newsHandler = $helper->getHandler('xmnews_news');
 
     /** @var \XoopsModules\Tag\LinkHandler $linkHandler */
     $linkHandler = \XoopsModules\Tag\Helper::getInstance()->getHandler('Link');

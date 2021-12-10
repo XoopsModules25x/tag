@@ -39,7 +39,7 @@ defined('XOOPS_ROOT_PATH') || exit('Restricted access');
  */
 function xforum_tag_iteminfo(array &$items): bool
 {
-    if (empty($items) || !is_array($items)) {
+    if (empty($items)) {
         return false;
     }
 
@@ -66,7 +66,7 @@ function xforum_tag_iteminfo(array &$items): bool
                     'link'    => "viewpost.php?post_id={$item_id}",
                     'time'    => strtotime(date(_DATESTRING, $item_obj->getVar('post_time'))),
                     'tags'    => Utility::tag_parse_tag($item_obj->getVar('tags', 'n')),
-                    'content' => $myts->displayTarea($item_obj->getVar('post_text'), true, true, true, true, true, true),
+                    'content' => $myts->displayTarea($item_obj->getVar('post_text'), true, true, true, true, true),
                 ];
             }
         }
