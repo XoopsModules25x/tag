@@ -54,7 +54,6 @@ class TagHandler extends \XoopsPersistableObjectHandler
     {
         $ret = [];
 
-        $itemid = $itemid;
         $modid  = (empty($modid) && \is_object($GLOBALS['xoopsModule'])
                    && 'tag' !== $GLOBALS['xoopsModule']->getVar('dirname')) ? $GLOBALS['xoopsModule']->getVar('mid') : $modid;
         if (empty($itemid) || empty($modid)) {
@@ -88,9 +87,6 @@ class TagHandler extends \XoopsPersistableObjectHandler
      */
     public function updateByItem($tags, int $itemid, $modid = '', int $catid = 0): bool
     {
-        $catid  = $catid;
-        $itemid = $itemid;
-
         if (!empty($modid) && !\is_numeric($modid)) {
             if (($GLOBALS['xoopsModule'] instanceof \XoopsModule)
                 && ($modid == $GLOBALS['xoopsModule']->getVar('dirname'))) {
@@ -185,13 +181,11 @@ class TagHandler extends \XoopsPersistableObjectHandler
      */
     public function update_stats(int $tag_id, int $modid = 0, int $catid = 0): bool
     {
-        $tag_id = $tag_id;
         if (0 === $tag_id) {
             return true;
         }
 
         $tag_count = [];
-        $modid     = $modid;
         $catid     = (0 === $modid) ? -1 : $catid;
 
         /** @var \XoopsModules\Tag\LinkHandler $linkHandler */
@@ -464,9 +458,6 @@ class TagHandler extends \XoopsPersistableObjectHandler
     public function getItemCount(int $tag_id, int $modid = 0, int $catid = 0): int
     {
         if ($tag_id = $tag_id) {
-            $catid = $catid;
-            $modid = $modid;
-
             $sql_select = '    SELECT COUNT(DISTINCT o.tl_id)';
             $sql_from   = "    FROM {$this->table_link} AS o LEFT JOIN {$this->table} AS l ON l.{$this->keyName} = o.{$this->keyName}";
             $sql_where  = "    WHERE o.tag_id = {$tag_id}";

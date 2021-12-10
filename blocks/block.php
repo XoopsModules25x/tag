@@ -278,7 +278,6 @@ function tag_block_top_show(array $options, string $dirname = '', int $catid = 0
     }
     if (!empty($modid)) {
         $criteria->add(new \Criteria('l.tag_modid', (string)$modid));
-        $catid = $catid;
         if ($catid >= 0) {
             $criteria->add(new \Criteria('l.tag_catid', (string)$catid));
         }
