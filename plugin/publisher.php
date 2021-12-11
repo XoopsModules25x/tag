@@ -47,7 +47,7 @@ function publisher_tag_iteminfo(array &$items): bool
 
     $criteria  = new \Criteria('itemid', '(' . implode(', ', $items_id) . ')', 'IN');
     $items_obj = $itemHandler->getObjects($criteria, 'itemid');
-    $myts      = \MyTextSanitizer::getInstance();
+    //$myts      = \MyTextSanitizer::getInstance(); //uncomment it if you use the summary for the content
     foreach (array_keys($items) as $cat_id) {
         foreach (array_keys($items[$cat_id]) as $item_id) {
             $item_obj                 = $items_obj[$item_id];
