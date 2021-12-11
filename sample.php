@@ -9,6 +9,7 @@
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 */
 
+use Xmf\Request;
 use XoopsModules\Tag\FormTag;
 use XoopsModules\Tag\Utility;
 
@@ -66,9 +67,9 @@ use XoopsModules\Tag\Helper as TagHelper;
 /** @var \XoopsModules\Tag\TagHandler $tagHandler */
 $tagHandler = TagHelper::getInstance()->getHandler('Tag'); // xoops_getModuleHandler('tag', 'tag');
 if (is_array($_POST['item_tag'])) {
-    $item_tag = Xmf\Request::getArray('item_tag', [], 'POST');
+    $item_tag = Request::getArray('item_tag', [], 'POST');
 } elseif (is_string($_POST['item_tag'])) {
-    $item_tag = Xmf\Request::getString('item_tag', '', 'POST');
+    $item_tag = Request::getString('item_tag', '', 'POST');
 }
 $tagHandler->updateByItem($item_tag, $itemid, $GLOBALS['xoopsModule']->getVar('dirname'), $catid = 0);
 
