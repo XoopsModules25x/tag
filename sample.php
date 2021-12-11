@@ -123,7 +123,7 @@ function mymodule_tag_synchronization(int $mid): void
 // File: view.item.php
 //require_once $GLOBALS['xoops']->path('/modules/tag/include/tagbar.php');
 use XoopsModules\Tag\Tagbar;
-$tagBar = new TagBar();
+$tagBar = new Tagbar();
 $GLOBALS['xoopsTpl']->assign('tagbar', $tagBar->getTagbar($itemid, $catid = 0));
 // File: mymodule_item_template.tpl
 $GLOBALS['xoopsTpl']->display('db:tag_bar.tpl');
