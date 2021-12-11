@@ -47,7 +47,7 @@ function publisher_tag_iteminfo(array &$items): bool
 
     $criteria  = new \Criteria('itemid', '(' . implode(', ', $items_id) . ')', 'IN');
     $items_obj = $itemHandler->getObjects($criteria, 'itemid');
-
+    $myts      = \MyTextSanitizer::getInstance();
     foreach (array_keys($items) as $cat_id) {
         foreach (array_keys($items[$cat_id]) as $item_id) {
             $item_obj                 = $items_obj[$item_id];
@@ -58,6 +58,7 @@ function publisher_tag_iteminfo(array &$items): bool
                 'time'    => $item_obj->getVar('datesub'),
                 'tags'    => Utility::tag_parse_tag($item_obj->getVar('item_tag', 'n')), // optional
                 'content' => '',
+//                'content' => $myts->displayTarea($item_obj->summary(), 1, 1, 1, 1, 1), // in case you want to show the summary of the article
             ];
         }
     }

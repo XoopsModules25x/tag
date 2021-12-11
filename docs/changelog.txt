@@ -13,6 +13,9 @@
 - fix: when using the tags for the first time, the id was displayed in the field (maga)
 - added Blocksadmin (mamba)
 - PHP 8.1 cosmetics and type hinting (mamba)
+- $module_name in tag_index.tpl (alain01/mamba)
+- fix for int required in TagHandler (mamba)
+- added pull for summary for Publisher (alain01/mamba)
 
 
 <h5>2.35.0 Beta 3          [2021-11-11]</h5>  Dev: XOOPS 2.5.11, PHP 7.4.25, PHP 8.0.12, PHP 8.1.0 Beta 5
