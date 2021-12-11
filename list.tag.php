@@ -113,6 +113,7 @@ if (!empty($start) || count($tags_data_array) >= $limit) {
 
 $xoopsTpl->assign(
     [
+        'module_name'            => $GLOBALS['xoopsModule']->getVar('name'),
         'lang_jumpto'    => _MD_TAG_JUMPTO,
         'tag_page_title' => $page_title,
         'tag_breadcrumb' => $breadcrumb->render(),
