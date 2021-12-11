@@ -36,7 +36,7 @@
     <tr><td>Code:</td>
     <td><{literal}>
 <code>$itemid = $item_obj->isNew() ? 0 : $item_obj->getVar('itemid');
-XoopsLoad::load('formtag', 'tag');  // get the TagFormTag class
+//XoopsLoad::load('formtag', 'tag');  // get the TagFormTag class
 $form_item->addElement(new \XoopsModules\Tag\FormTag('item_tag', 60, 255, $itemid, $catid = 0));
     <{/literal}></code></td></tr>
     </tbody>

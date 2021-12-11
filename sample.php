@@ -174,17 +174,18 @@ $modversion['blocks'][] = [
  * @param array $options
  * @return array|bool
  */
-function mymodule_tag_block_cloud_show(?array $options)
+function mymodule_tag_block_cloud_show(array $options)
 {
     require_once $GLOBALS['xoops']->path('/modules/tag/blocks/block.php');
 
+    $moduleDirName      = \basename(\dirname(__DIR__));
     return tag_block_cloud_show($options, $moduleDirName);
 }
 
 /**
  * @param array $options
  */
-function mymodule_tag_block_cloud_edit(?array $options): string
+function mymodule_tag_block_cloud_edit(array $options): string
 {
     require_once $GLOBALS['xoops']->path('/modules/tag/blocks/block.php');
 
@@ -195,17 +196,18 @@ function mymodule_tag_block_cloud_edit(?array $options): string
  * @param array $options
  * @return array|bool
  */
-function mymodule_tag_block_top_show(?array $options)
+function mymodule_tag_block_top_show(array $options)
 {
     require_once $GLOBALS['xoops']->path('/modules/tag/blocks/block.php');
 
+    $moduleDirName      = \basename(\dirname(__DIR__));
     return tag_block_top_show($options, $moduleDirName);
 }
 
 /**
  * @param array $options
  */
-function mymodule_tag_block_top_edit(?array $options): string
+function mymodule_tag_block_top_edit(array $options): string
 {
     require_once $GLOBALS['xoops']->path('/modules/tag/blocks/block.php');
 
