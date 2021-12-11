@@ -168,7 +168,7 @@ class TagHandler extends \XoopsPersistableObjectHandler
         }
         if (\is_array($tags_update)) {
             foreach ($tags_update as $tag_id) {
-                $this->update_stats($tag_id, $modid, $catid);
+                $this->update_stats((int)$tag_id, $modid, $catid);
             }
         }
 
