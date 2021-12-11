@@ -88,6 +88,7 @@ $breadcrumb->addLink($helper->getModule()->getVar('name'));
 
 $GLOBALS['xoopsTpl']->assign(
     [
+        'module_name'            => $GLOBALS['xoopsModule']->getVar('name'),
         'lang_jumpto'            => _MD_TAG_JUMPTO,
         'pagenav'                => '<a href="' . $helper->url('list.tag.php') . '">' . _MORE . "</a>\n",
         'tag_page_title'         => $page_title,
