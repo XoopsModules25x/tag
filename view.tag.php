@@ -139,7 +139,6 @@ if (0 < count($items_array)) {
 
 $items_data = [];
 $uids       = [];
-//require_once $helper->path('include/tagbar.php');
 $tagbar = new Tagbar();
 foreach ($items_array as $key => $myItem) {
     /**

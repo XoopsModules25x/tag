@@ -121,7 +121,6 @@ function mymodule_tag_synchronization(int $mid): void
 
 //----------- Step 4: Display tags on our item page ----------------
 // File: view.item.php
-//require_once $GLOBALS['xoops']->path('/modules/tag/include/tagbar.php');
 use XoopsModules\Tag\Tagbar;
 $tagBar = new Tagbar();
 $GLOBALS['xoopsTpl']->assign('tagbar', $tagBar->getTagbar($itemid, $catid = 0));

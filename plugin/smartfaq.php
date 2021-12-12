@@ -40,7 +40,6 @@ defined('XOOPS_ROOT_PATH') || exit('Restricted access');
  * @var array   $items associative array of items: [modid][catid][itemid]
  *
  */
-//require_once $GLOBALS['xoops']->path('/modules/smartfaq/include/functions.php');
 
 function smartfaq_tag_iteminfo(array &$items): bool
 {

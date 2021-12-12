@@ -107,7 +107,6 @@ class TagHandler extends \XoopsPersistableObjectHandler
         if (empty($tags)) {
             $tags = [];
         } elseif (!\is_array($tags)) {
-            //require_once $GLOBALS['xoops']->path('/modules/tag/include/functions.php');
             $tags = Utility::tag_parse_tag(\addslashes(\stripslashes($tags)));
         }
 
@@ -123,6 +122,7 @@ class TagHandler extends \XoopsPersistableObjectHandler
                 $sql = "DELETE FROM {$this->table_link}" . ' WHERE ' . "     {$this->keyName} IN (" . \implode(', ', $tags_id) . ')' . "     AND tag_modid = {$modid} AND tag_catid = {$catid} AND tag_itemid = {$itemid}";
                 if (false === ($result = $this->db->queryF($sql))) {
                     //@todo: decide if we should do something here on failure
+                    \trigger_error($this->db->error());
                 }
                 $sql = 'DELETE FROM ' . $this->table . ' WHERE ' . '    tag_count < 2 AND ' . "     {$this->keyName} IN (" . \implode(', ', $tags_id) . ')';
                 if (false === ($result = $this->db->queryF($sql))) {
@@ -457,6 +457,7 @@ class TagHandler extends \XoopsPersistableObjectHandler
      */
     public function getItemCount(int $tag_id, int $modid = 0, int $catid = 0): int
     {
+        $ret = 0;
         if ($tag_id = $tag_id) {
             $sql_select = '    SELECT COUNT(DISTINCT o.tl_id)';
             $sql_from   = "    FROM {$this->table_link} AS o LEFT JOIN {$this->table} AS l ON l.{$this->keyName} = o.{$this->keyName}";
@@ -476,8 +477,6 @@ class TagHandler extends \XoopsPersistableObjectHandler
                 \trigger_error($this->db->error());
                 $ret = 0;
             }
-        } else {
-            $ret = 0;
         }
 
         return $ret;

@@ -54,13 +54,7 @@ $modversion = [
     'manual_file'         => XOOPS_URL . "/modules/$moduleDirName/docs/install.txt",
     // images
     'image'               => 'assets/images/logoModule.png',
-    /* @todo determine if the following icons are needed, they currently don't exist
-     *       so they've been commented out in v2.35
-     */
-    //'iconsmall'           => 'assets/images/iconsmall.png',
-    //'iconbig'             => 'assets/images/iconbig.png',
     'dirname'             => $moduleDirName,
-    //Frameworks
     // Local path icons
     'modicons16'          => 'assets/images/icons/16',
     'modicons32'          => 'assets/images/icons/32',

@@ -23,7 +23,6 @@ use XoopsModules\Tag;
 require_once \dirname(__DIR__, 2) . '/mainfile.php';
 require_once __DIR__ . '/include/vars.php';
 require_once __DIR__ . '/include/common.php';
-//require_once __DIR__ . '/include/functions.php';
 
 /**
  * {@internal defined in ./include/common.php }}

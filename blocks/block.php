@@ -26,7 +26,6 @@ use XoopsModules\Tag\Utility;
 defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
 require_once $GLOBALS['xoops']->path('/modules/tag/include/vars.php');
-//require_once $GLOBALS['xoops']->path('/modules/tag/include/functions.php');
 
 if (!xoops_isActiveModule('tag')) {
     return false;

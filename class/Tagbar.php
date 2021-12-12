@@ -44,14 +44,7 @@ class Tagbar
         Utility::tag_define_url_delimiter();
         if (null === $loaded) {
             require_once $helper->path('include/vars.php');
-            //require_once $helper->path('include/functions.php');
             $helper->loadLanguage('main'); // load Main lang file
-            /*
-            if (!($GLOBALS['xoopsModule'] instanceof \XoopsModule)
-                || ('tag' !== $GLOBALS['xoopsModule']->getVar('dirname'))) {
-                $helper->loadLanguage('main');
-            }
-            */
             if (\file_exists($helper->path('assets/images/delimiter.gif'))) {
                 $delimiter = "<img src='" . $helper->url('assets/images/delimiter.gif') . "' alt=''>";
             } else {
