@@ -180,15 +180,15 @@ $modversion['blocks'] = [
      *                    $options[10] - cumulus_flash_hicolor
      *                    $options[11] - cumulus_flash_speed
      */
-    [
-        'file'        => 'block.php',
-        'name'        => _MI_TAG_BLOCK_CUMULUS,
-        'description' => _MI_TAG_BLOCK_CUMULUS_DESC,
-        'show_func'   => 'tag_block_cumulus_show',
-        'edit_func'   => 'tag_block_cumulus_edit',
-        'options'     => '100|0|24|12|160|140|#ffffff|0|#000000|#003300|#00ff00|100',
-        'template'    => 'tag_block_cumulus.tpl',
-    ],
+//    [
+//        'file'        => 'block.php',
+//        'name'        => _MI_TAG_BLOCK_CUMULUS,
+//        'description' => _MI_TAG_BLOCK_CUMULUS_DESC,
+//        'show_func'   => 'tag_block_cumulus_show',
+//        'edit_func'   => 'tag_block_cumulus_edit',
+//        'options'     => '100|0|24|12|160|140|#ffffff|0|#000000|#003300|#00ff00|100',
+//        'template'    => 'tag_block_cumulus.tpl',
+//    ],
 ];
 
 // Configs

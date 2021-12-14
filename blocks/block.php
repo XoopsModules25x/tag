@@ -396,173 +396,173 @@ function tag_block_top_edit(array $options)
     return $form;
 }
 
-/**
- * $options for cumulus:
- *                     $options[0] - number of tags to display
- *                     $options[1] - time duration
- *                     $options[2] - max font size (px or %)
- *                     $options[3] - min font size (px or %)
- *                     $options[4] - cumulus_flash_width
- *                     $options[5] - cumulus_flash_height
- *                     $options[6] - cumulus_flash_background
- *                     $options[7] - cumulus_flash_transparency
- *                     $options[8] - cumulus_flash_min_font_color
- *                     $options[9] - cumulus_flash_max_font_color
- *                    $options[10] - cumulus_flash_hicolor
- *                    $options[11] - cumulus_flash_speed
- * @param mixed $dirname
- * @param mixed $catid
- */
-
-/**
- * Prepare output for Cumulus block display
- *
- * @param string|null $dirname null for all modules, $dirname for specific module
- * @param int         $catid   category id (only used if $dirname is set)
- * @return array|bool
- */
-function tag_block_cumulus_show(array $options, string $dirname = null, int $catid = 0)
-{
-    if (!xoops_isActiveModule('tag')) {
-        return false;
-    }
-
-    $helper = XoopsModules\Tag\Helper::getInstance();
-
-    if (null === $dirname) {
-        $modid = 0;
-    } elseif (isset($GLOBALS['xoopsModule']) && ($GLOBALS['xoopsModule'] instanceof \XoopsModule)
-              && ($GLOBALS['xoopsModule']->getVar('dirname') == $dirname)) {
-        $modid = $GLOBALS['xoopsModule']->getVar('mid');
-    } else {
-        $module = $helper->getModule();
-        $modid  = $helper->getModule()->getVar('mid');
-    }
-
-    $block = [];
-    /** @var XoopsModules\Tag\TagHandler $tagHandler */
-    $tagHandler = $helper->getHandler('Tag');
-    Utility::tag_define_url_delimiter();
-
-    $criteria = new \CriteriaCompo();
-    $criteria->setSort('count');
-    $criteria->order = 'DESC';// patch for XOOPS <= 2.5.10, does not set order correctly using setOrder() method
-    $criteria->setLimit($options[0]);
-    $criteria->add(new \Criteria('o.tag_status', (string)Constants::STATUS_ACTIVE));
-    if (!empty($modid)) {
-        $criteria->add(new \Criteria('l.tag_modid', (string)$modid));
-        if (0 <= $catid) {
-            $criteria->add(new \Criteria('l.tag_catid', (string)$catid));
-        }
-    }
-    if (!$tags_array = $tagHandler->getByLimit(0, 0, $criteria, null, empty($options[1]))) {
-        return $block;
-    }
-
-    $block['tags']        = $tagHandler->getTagData($tags_array, $options[2], $options[3]);
-    $block['tag_dirname'] = 'tag';
-    if (!empty($modid)) {
-        /** @var \XoopsModuleHandler $moduleHandler */
-        $moduleHandler = xoops_getHandler('module');
-        if (false !== ($moduleObj = $moduleHandler->get($modid))) {
-            $block['tag_dirname'] = $moduleObj->getVar('dirname');
-        }
-    }
-    $flash_params = [
-        'flash_url'  => $GLOBALS['xoops']->url('www/modules/tag/assets/cumulus.swf'),
-        'width'      => (int)$options[4],
-        'height'     => (int)$options[5],
-        'background' => preg_replace_callback(
-            '/(#)/i',
-            static function ($m) {
-                return '';
-            },
-            $options[6]
-        ),
-        'color'      => '0x' . preg_replace_callback(
-                '/(#)/i',
-                static function ($m) {
-                    return '';
-                },
-                $options[8]
-            ),
-        'hicolor'    => '0x' . preg_replace_callback(
-                '/(#)/i',
-                static function ($m) {
-                    return '';
-                },
-                $options[9]
-            ),
-        'tcolor'     => '0x' . preg_replace_callback(
-                '/(#)/i',
-                static function ($m) {
-                    return '';
-                },
-                $options[8]
-            ),
-        'tcolor2'    => '0x' . preg_replace_callback(
-                '/(#)/i',
-                static function ($m) {
-                    return '';
-                },
-                $options[10]
-            ),
-        'speed'      => (int)$options[11],
-    ];
-
-    $output = '<tags>';
-    //    $xoops_url = $GLOBALS['xoops']->url('www');
-    $view_url = $helper->url('view.tag.php');
-    foreach ($block['tags'] as $term) {
-        //foreach ($tags_data_array as $term) {
-        // assign font size
-        $output .= <<<EOT
-<a href='{$view_url}?{$term['term']}' style='{$term['font']}'>{$term['title']}</a>
-EOT;
-    }
-    $output                               .= '</tags>';
-    $flash_params['tags_formatted_flash'] = urlencode($output);
-    if (1 == $options[7]) {
-        $flash_params['transparency'] = 'widget_so.addParam("wmode", "transparent");';
-    }
-    $block['flash_params'] = $flash_params;
-
-    return $block;
-}
-
-/**
- * Block function to render Cumulus Preferences form
- *
- * @param array $options module config block options
- *
- * @return string|false html render of form
- */
-function tag_block_cumulus_edit(array $options)
-{
-    if (!xoops_isActiveModule('tag')) {
-        return false;
-    }
-
-    require_once $GLOBALS['xoops']->path('/class/xoopsformloader.php');
-    //    xoops_load('blockform', 'tag');
-    //    xoops_load('formvalidatedinput', 'tag');
-
-    $form = new Tag\BlockForm('', '', '');
-    $form->addElement(new Tag\FormValidatedInput(_MB_TAG_ITEMS, 'options[0]', 25, 25, $options[0], 'number'));
-    $form->addElement(new Tag\FormValidatedInput(_MB_TAG_TIME_DURATION, 'options[1]', 25, 25, $options[1], 'number'));
-    $form->addElement(new Tag\FormValidatedInput(_MB_TAG_FONTSIZE_MAX, 'options[2]', 25, 25, $options[2], 'number'));
-    $form->addElement(new Tag\FormValidatedInput(_MB_TAG_FONTSIZE_MIN, 'options[3]', 25, 25, $options[3], 'number'));
-    $form->addElement(new Tag\FormValidatedInput(_MB_TAG_FLASH_WIDTH, 'options[4]', 25, 25, $options[4], 'number'));
-    $form->addElement(new Tag\FormValidatedInput(_MB_TAG_FLASH_HEIGHT, 'options[5]', 25, 25, $options[5], 'number'));
-    $form->addElement(new \XoopsFormColorPicker(_MB_TAG_FLASH_BACKGROUND, 'options[6]', $options[6]));
-    $form_cumulus_flash_transparency = new \XoopsFormSelect(_MB_TAG_FLASH_TRANSPARENCY, 'options[7]', $options[7]);
-    $form_cumulus_flash_transparency->addOption('0', _NONE);
-    $form_cumulus_flash_transparency->addOption('1', _MB_TAG_FLASH_TRANSPARENT);
-    $form->addElement($form_cumulus_flash_transparency);
-    $form->addElement(new \XoopsFormColorPicker(_MB_TAG_FLASH_MINFONTCOLOR, 'options[8]', $options[8]));
-    $form->addElement(new \XoopsFormColorPicker(_MB_TAG_FLASH_MAXFONTCOLOR, 'options[9]', $options[9]));
-    $form->addElement(new \XoopsFormColorPicker(_MB_TAG_FLASH_HILIGHTFONTCOLOR, 'options[10]', $options[10]));
-    $form->addElement(new Tag\FormValidatedInput(_MB_TAG_FLASH_SPEED, 'options[11]', 25, 25, $options[11], 'number'));
-
-    return $form->render();
-}
+///**
+// * $options for cumulus:
+// *                     $options[0] - number of tags to display
+// *                     $options[1] - time duration
+// *                     $options[2] - max font size (px or %)
+// *                     $options[3] - min font size (px or %)
+// *                     $options[4] - cumulus_flash_width
+// *                     $options[5] - cumulus_flash_height
+// *                     $options[6] - cumulus_flash_background
+// *                     $options[7] - cumulus_flash_transparency
+// *                     $options[8] - cumulus_flash_min_font_color
+// *                     $options[9] - cumulus_flash_max_font_color
+// *                    $options[10] - cumulus_flash_hicolor
+// *                    $options[11] - cumulus_flash_speed
+// * @param mixed $dirname
+// * @param mixed $catid
+// */
+//
+///**
+// * Prepare output for Cumulus block display
+// *
+// * @param string|null $dirname null for all modules, $dirname for specific module
+// * @param int         $catid   category id (only used if $dirname is set)
+// * @return array|bool
+// */
+//function tag_block_cumulus_show(array $options, string $dirname = null, int $catid = 0)
+//{
+//    if (!xoops_isActiveModule('tag')) {
+//        return false;
+//    }
+//
+//    $helper = XoopsModules\Tag\Helper::getInstance();
+//
+//    if (null === $dirname) {
+//        $modid = 0;
+//    } elseif (isset($GLOBALS['xoopsModule']) && ($GLOBALS['xoopsModule'] instanceof \XoopsModule)
+//              && ($GLOBALS['xoopsModule']->getVar('dirname') == $dirname)) {
+//        $modid = $GLOBALS['xoopsModule']->getVar('mid');
+//    } else {
+//        $module = $helper->getModule();
+//        $modid  = $helper->getModule()->getVar('mid');
+//    }
+//
+//    $block = [];
+//    /** @var XoopsModules\Tag\TagHandler $tagHandler */
+//    $tagHandler = $helper->getHandler('Tag');
+//    Utility::tag_define_url_delimiter();
+//
+//    $criteria = new \CriteriaCompo();
+//    $criteria->setSort('count');
+//    $criteria->order = 'DESC';// patch for XOOPS <= 2.5.10, does not set order correctly using setOrder() method
+//    $criteria->setLimit($options[0]);
+//    $criteria->add(new \Criteria('o.tag_status', (string)Constants::STATUS_ACTIVE));
+//    if (!empty($modid)) {
+//        $criteria->add(new \Criteria('l.tag_modid', (string)$modid));
+//        if (0 <= $catid) {
+//            $criteria->add(new \Criteria('l.tag_catid', (string)$catid));
+//        }
+//    }
+//    if (!$tags_array = $tagHandler->getByLimit(0, 0, $criteria, null, empty($options[1]))) {
+//        return $block;
+//    }
+//
+//    $block['tags']        = $tagHandler->getTagData($tags_array, $options[2], $options[3]);
+//    $block['tag_dirname'] = 'tag';
+//    if (!empty($modid)) {
+//        /** @var \XoopsModuleHandler $moduleHandler */
+//        $moduleHandler = xoops_getHandler('module');
+//        if (false !== ($moduleObj = $moduleHandler->get($modid))) {
+//            $block['tag_dirname'] = $moduleObj->getVar('dirname');
+//        }
+//    }
+//    $flash_params = [
+//        'flash_url'  => $GLOBALS['xoops']->url('www/modules/tag/assets/cumulus.swf'),
+//        'width'      => (int)$options[4],
+//        'height'     => (int)$options[5],
+//        'background' => preg_replace_callback(
+//            '/(#)/i',
+//            static function ($m) {
+//                return '';
+//            },
+//            $options[6]
+//        ),
+//        'color'      => '0x' . preg_replace_callback(
+//                '/(#)/i',
+//                static function ($m) {
+//                    return '';
+//                },
+//                $options[8]
+//            ),
+//        'hicolor'    => '0x' . preg_replace_callback(
+//                '/(#)/i',
+//                static function ($m) {
+//                    return '';
+//                },
+//                $options[9]
+//            ),
+//        'tcolor'     => '0x' . preg_replace_callback(
+//                '/(#)/i',
+//                static function ($m) {
+//                    return '';
+//                },
+//                $options[8]
+//            ),
+//        'tcolor2'    => '0x' . preg_replace_callback(
+//                '/(#)/i',
+//                static function ($m) {
+//                    return '';
+//                },
+//                $options[10]
+//            ),
+//        'speed'      => (int)$options[11],
+//    ];
+//
+//    $output = '<tags>';
+//    //    $xoops_url = $GLOBALS['xoops']->url('www');
+//    $view_url = $helper->url('view.tag.php');
+//    foreach ($block['tags'] as $term) {
+//        //foreach ($tags_data_array as $term) {
+//        // assign font size
+//        $output .= <<<EOT
+//<a href='{$view_url}?{$term['term']}' style='{$term['font']}'>{$term['title']}</a>
+//EOT;
+//    }
+//    $output                               .= '</tags>';
+//    $flash_params['tags_formatted_flash'] = urlencode($output);
+//    if (1 == $options[7]) {
+//        $flash_params['transparency'] = 'widget_so.addParam("wmode", "transparent");';
+//    }
+//    $block['flash_params'] = $flash_params;
+//
+//    return $block;
+//}
+//
+///**
+// * Block function to render Cumulus Preferences form
+// *
+// * @param array $options module config block options
+// *
+// * @return string|false html render of form
+// */
+//function tag_block_cumulus_edit(array $options)
+//{
+//    if (!xoops_isActiveModule('tag')) {
+//        return false;
+//    }
+//
+//    require_once $GLOBALS['xoops']->path('/class/xoopsformloader.php');
+//    //    xoops_load('blockform', 'tag');
+//    //    xoops_load('formvalidatedinput', 'tag');
+//
+//    $form = new Tag\BlockForm('', '', '');
+//    $form->addElement(new Tag\FormValidatedInput(_MB_TAG_ITEMS, 'options[0]', 25, 25, $options[0], 'number'));
+//    $form->addElement(new Tag\FormValidatedInput(_MB_TAG_TIME_DURATION, 'options[1]', 25, 25, $options[1], 'number'));
+//    $form->addElement(new Tag\FormValidatedInput(_MB_TAG_FONTSIZE_MAX, 'options[2]', 25, 25, $options[2], 'number'));
+//    $form->addElement(new Tag\FormValidatedInput(_MB_TAG_FONTSIZE_MIN, 'options[3]', 25, 25, $options[3], 'number'));
+//    $form->addElement(new Tag\FormValidatedInput(_MB_TAG_FLASH_WIDTH, 'options[4]', 25, 25, $options[4], 'number'));
+//    $form->addElement(new Tag\FormValidatedInput(_MB_TAG_FLASH_HEIGHT, 'options[5]', 25, 25, $options[5], 'number'));
+//    $form->addElement(new \XoopsFormColorPicker(_MB_TAG_FLASH_BACKGROUND, 'options[6]', $options[6]));
+//    $form_cumulus_flash_transparency = new \XoopsFormSelect(_MB_TAG_FLASH_TRANSPARENCY, 'options[7]', $options[7]);
+//    $form_cumulus_flash_transparency->addOption('0', _NONE);
+//    $form_cumulus_flash_transparency->addOption('1', _MB_TAG_FLASH_TRANSPARENT);
+//    $form->addElement($form_cumulus_flash_transparency);
+//    $form->addElement(new \XoopsFormColorPicker(_MB_TAG_FLASH_MINFONTCOLOR, 'options[8]', $options[8]));
+//    $form->addElement(new \XoopsFormColorPicker(_MB_TAG_FLASH_MAXFONTCOLOR, 'options[9]', $options[9]));
+//    $form->addElement(new \XoopsFormColorPicker(_MB_TAG_FLASH_HILIGHTFONTCOLOR, 'options[10]', $options[10]));
+//    $form->addElement(new Tag\FormValidatedInput(_MB_TAG_FLASH_SPEED, 'options[11]', 25, 25, $options[11], 'number'));
+//
+//    return $form->render();
+//}
