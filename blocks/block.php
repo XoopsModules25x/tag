@@ -124,7 +124,7 @@ function tag_block_cloud_show(array $options, string $dirname = '', int $catid =
             $criteria->add(new \Criteria('l.tag_catid', (string)$catid));
         }
     }
-    if (!$tags_array = $tagHandler->getByLimit($options[0], Constants::BEGINNING, $criteria, null, empty($options[1]))) {
+    if (!$tags_array = $tagHandler->getByLimit((int)$options[0], Constants::BEGINNING, $criteria, null, empty($options[1]))) {
         return $block;
     }
 
@@ -281,7 +281,7 @@ function tag_block_top_show(array $options, string $dirname = '', int $catid = 0
             $criteria->add(new \Criteria('l.tag_catid', (string)$catid));
         }
     }
-    if (!$tags_array = $tagHandler->getByLimit(0, 0, $criteria, null, false)) {
+    if (!$tags_array = $tagHandler->getByLimit((int)$options[0], Constants::BEGINNING, $criteria, null, false)) {
         return $block;
     }
 
@@ -326,28 +326,28 @@ function tag_block_top_show(array $options, string $dirname = '', int $catid = 0
 
     //-------------------------------------------
 
-    $sql    = 'SELECT o.tag_id, COUNT(o.tag_id) AS count_tag, l.tag_term 
-FROM ' . $GLOBALS['xoopsDB']->prefix('tag_link') . ' AS o 
-LEFT JOIN ' . $GLOBALS['xoopsDB']->prefix('tag_tag') . ' AS l ON l.tag_id = o.tag_id 
-GROUP BY o.tag_id 
-ORDER BY count_tag DESC';
-    $result = $GLOBALS['xoopsDB']->query($sql);
-    if ($result instanceof \mysqli_result) {
-        $tags_array2     = [];
-        $tags_data_array = [];
-        while (false !== ($myrow = $GLOBALS['xoopsDB']->fetchArray($result))) {
-            $tags_array2[] = $myrow;
-        }
-        foreach ($tags_array2 as $tag) {
-            $tags_data_array[] = [
-                'id'    => $tag['tag_id'],
-                'term'  => $tag['tag_term'],
-                'count' => $tag['count_tag'],
-            ];
-        }
-    } else {
-        \trigger_error($GLOBALS['xoopsDB']->error());
-    }
+//    $sql    = 'SELECT o.tag_id, COUNT(o.tag_id) AS count_tag, l.tag_term
+//FROM ' . $GLOBALS['xoopsDB']->prefix('tag_link') . ' AS o
+//LEFT JOIN ' . $GLOBALS['xoopsDB']->prefix('tag_tag') . ' AS l ON l.tag_id = o.tag_id
+//GROUP BY o.tag_id
+//ORDER BY count_tag DESC' . ' LIMIT ' . $options[0];
+//    $result = $GLOBALS['xoopsDB']->query($sql);
+//    if ($result instanceof \mysqli_result) {
+//        $tags_array2     = [];
+//        $tags_data_array2 = [];
+//        while (false !== ($myrow = $GLOBALS['xoopsDB']->fetchArray($result))) {
+//            $tags_array2[] = $myrow;
+//        }
+//        foreach ($tags_array2 as $tag) {
+//            $tags_data_array2[] = [
+//                'id'    => $tag['tag_id'],
+//                'term'  => $tag['tag_term'],
+//                'count' => $tag['count_tag'],
+//            ];
+//        }
+//    } else {
+//        \trigger_error($GLOBALS['xoopsDB']->error());
+//    }
 
     //-------------------------------------------
 

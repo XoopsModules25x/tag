@@ -320,7 +320,8 @@ class TagHandler extends \XoopsPersistableObjectHandler
         switch ($sort) {
             case 'a':
             case 'alphabet':
-                $sql .= " ORDER BY o.tag_term {$order}";
+                $order = 'ASC';
+                $sql   .= " ORDER BY o.tag_term {$order}";
                 break;
             case 'id':
             case 'time':
@@ -329,6 +330,7 @@ class TagHandler extends \XoopsPersistableObjectHandler
             case 'c':
             case 'count':
             default:
+                $order = 'DESC';
                 $sql .= " ORDER BY count {$order}";
                 break;
         }
