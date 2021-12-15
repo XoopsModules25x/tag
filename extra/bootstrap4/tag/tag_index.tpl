@@ -8,8 +8,8 @@
 
 <!--
 <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/list.tag.php" title="<{$smarty.const._MD_TAG_TAGS}>"><{$smarty.const._MD_TAG_TAGS}></a><br />
-<a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/list.tag.php<{$smarty.const.URL_DELIMITER}><{$tag_term}>" title="<{$tag_page_title|strip_tags}>" rel="tag"><{$tag_page_title|regex_replace:'/^.+g>/U':''|replace:'</strong>':''}></a><br />
-<a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/list.tag.php<{$smarty.const.URL_DELIMITER}><{$tag_term}>" title="<{$tag_page_title|strip_tags}>" rel="tag"><{$tag_page_title}></a>
+<a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/list.tag.php<{$smarty.const.URL_DELIMITER}><{$tag_term|default:''}>" title="<{$tag_page_title|strip_tags}>" rel="tag"><{$tag_page_title|regex_replace:'/^.+g>/U':''|replace:'</strong>':''}></a><br />
+<a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/list.tag.php<{$smarty.const.URL_DELIMITER}><{$tag_term|default:''}>" title="<{$tag_page_title|strip_tags}>" rel="tag"><{$tag_page_title}></a>
 -->
 
 <form id="form-tag-jumpto" name="form-tag-jumpto" action="<{$xoops_url}>/modules/<{$xoops_dirname}>/view.tag.php" method="get">

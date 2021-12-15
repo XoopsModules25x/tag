@@ -4,7 +4,7 @@
         <li class="breadcrumb-item"><span class="fa fa-tags text-secondary fa-lg fa-fw mr-2 mt-1"></span><a href="index.php"><{$module_name}></a></li>
         <li class="breadcrumb-item active"><{$smarty.const._MD_TAG_TAGS}></li>
 <!--
-    <li class="breadcrumb-item active"><a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/list.tag.php<{$smarty.const.URL_DELIMITER}><{$tag_term}>" title="<{$tag_page_title|strip_tags}>" rel="tag"><{$tag_page_title|regex_replace:'/^.+g>/U':''|replace:'</strong>':''}></a></li>
+    <li class="breadcrumb-item active"><a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/list.tag.php<{$smarty.const.URL_DELIMITER}><{$tag_term|default:''}>" title="<{$tag_page_title|strip_tags}>" rel="tag"><{$tag_page_title|regex_replace:'/^.+g>/U':''|replace:'</strong>':''}></a></li>
 -->
     </ol>
 </nav>
