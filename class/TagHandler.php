@@ -472,7 +472,8 @@ class TagHandler extends \XoopsPersistableObjectHandler
             $sql    = $sql_select . ' ' . $sql_from . ' ' . $sql_where;
             $result = $this->db->query($sql);
             if ($result instanceof \mysqli_result) {
-                [$ret] = $this->db->fetchRow($result);
+                [$temp] = $this->db->fetchRow($result);
+                $ret = (int)$temp[0];
             } else {
                 \trigger_error($this->db->error());
                 $ret = 0;
