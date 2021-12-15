@@ -38,7 +38,7 @@ $tagHandler = $helper->getHandler('Tag');
 $tag_config = Utility::tag_load_config();
 Utility::tag_define_url_delimiter();
 
-$limit = empty($tag_config['limit_cloud_list']) ? 100 : $tag_config['limit_cloud_list'];
+$limit = empty($tag_config['limit_tag_list']) ? 100 : $tag_config['limit_tag_list'];
 
 $criteria = new \CriteriaCompo();
 $criteria->setSort('count');

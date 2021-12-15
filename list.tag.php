@@ -74,7 +74,7 @@ $mode_display = empty($mode_display) ? Request::getCmd('mode', null, 'GET') : $m
 switch (mb_strtolower($mode_display ?? '')) {
     case 'list':
         $mode_display = 'list';
-        $limit        = (0 === (int)$tag_config['limit_tag_list']) ? 10 : (int)$tag_config['limit_tag'];
+        $limit        = (0 === (int)$tag_config['limit_tag_list']) ? 10 : (int)$tag_config['limit_tag_list'];
         break;
     case 'cloud':
     default:
