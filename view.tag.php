@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -12,17 +12,19 @@
 /**
  * XOOPS tag management module
  *
- * @package         XoopsModules\Tag
  * @copyright       XOOPS Project (https://xoops.org)
- * @license         http://www.fsf.org/copyleft/gpl.html GNU public license
+ * @license         https://www.fsf.org/copyleft/gpl.html GNU public license
  * @since           1.00
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
  * */
 
 use Xmf\Request;
-use XoopsModules\Tag\Constants;
-use XoopsModules\Tag\Utility;
-use XoopsModules\Tag\Common;
+use XoopsModules\Tag\{
+    Common,
+    Constants,
+    Tagbar,
+    Utility
+};
 
 require_once __DIR__ . '/header.php';
 
@@ -36,7 +38,7 @@ if (Utility::tag_parse_args($args, $args_string)) {
 }
 /*
 $tagid = (int)(empty($_GET['tag']) ? @$args['tag'] : $_GET['tag']);
-$tag_term = empty($_GET['term']) ? @$args['term'] : \Xmf\Request::getString('term', '', 'GET');
+$tag_term = empty($_GET['term']) ? @$args['term'] : Request::getString('term', '', 'GET');
 $modid = (int)(empty($_GET['modid']) ? @$args['modid'] : $_GET['modid']);
 $catid = (int)(empty($_GET['catid']) ? @$args['catid'] : $_GET['catid']);
 $start = (int)(empty($_GET['start']) ? @$args['start'] : $_GET['start']);
@@ -56,21 +58,20 @@ if (empty($modid) && ($GLOBALS['xoopsModule'] instanceof \XoopsModule)
 $tagHandler = $helper->getHandler('Tag');
 
 if (!empty($tagid)) { // have a tag_id, so check to see if it yields a valid Tag object
-    if ((!$tag_obj = $tagHandler->get((int)$tagid)) || $tag_obj->isNew()) {
+    if ((!$tagObj = $tagHandler->get((int)$tagid)) || $tagObj->isNew()) {
         $helper->redirect('index.php', Constants::REDIRECT_DELAY_MEDIUM, _MD_TAG_INVALID);
     }
-
-    $tag_term = $tag_obj->getVar('tag_term', 'n');
+    $tag_term = $tagObj->getVar('tag_term', 'n');
 } elseif (!empty($tag_term)) {
     if (!$tags_obj = $tagHandler->getObjects(new \Criteria('tag_term', $myts->addSlashes(trim($tag_term))))) {
         $helper->redirect('index.php', Constants::REDIRECT_DELAY_MEDIUM, _MD_TAG_INVALID);
     }
-    $tag_obj = $tags_obj[0];
-    $tagid   = $tag_obj->getVar('tag_id');
+    $tagObj = $tags_obj[0];
+    $tagid  = $tagObj->getVar('tag_id');
 } else {
     $helper->redirect('index.php', Constants::REDIRECT_DELAY_MEDIUM, _MD_TAG_INVALID);
 }
-// made it here so now we have a valid $tagid and $tag_term
+// made it here, so now we have a valid $tagid and $tag_term
 $tag_term = mb_convert_case($tag_term, MB_CASE_TITLE, 'UTF-8');
 
 // @todo: where does $tag_desc come from? - looks like it will always be empty
@@ -92,15 +93,15 @@ Utility::tag_define_url_delimiter();
 
 $limit = empty($tag_config['items_perpage']) ? Constants::DEFAULT_LIMIT : $tag_config['items_perpage'];
 
-$criteria = new \CriteriaCompo(new \Criteria('o.tag_id', $tagid));
+$criteria = new \CriteriaCompo(new \Criteria('o.tag_id', (string)$tagid));
 $criteria->setSort('time');
 $criteria->order = 'DESC'; // set order directly, XOOPS 2.5x does not set order correctly using Criteria::setOrder() method
 $criteria->setStart($start);
 $criteria->setLimit($limit);
 if (!empty($modid)) {
-    $criteria->add(new \Criteria('o.tag_modid', $modid));
+    $criteria->add(new \Criteria('o.tag_modid', (string)$modid));
     if ($catid >= Constants::DEFAULT_ID) {
-        $criteria->add(new \Criteria('o.tag_catid', $catid));
+        $criteria->add(new \Criteria('o.tag_catid', (string)$catid));
     }
 }
 
@@ -115,8 +116,8 @@ if (0 < count($items_array)) {
     /** @var \XoopsModuleHandler $moduleHandler */
     $moduleHandler    = xoops_getHandler('module');
     $module_obj_array = $moduleHandler->getObjects(new \Criteria('mid', '(' . implode(', ', array_keys($module_item_array)) . ')', 'IN'), true);
-    foreach ($module_obj_array as $mid => $module_obj) {
-        $dirname = $module_obj->getVar('dirname', 'n');
+    foreach ($module_obj_array as $mid => $moduleObj) {
+        $dirname = $moduleObj->getVar('dirname', 'n');
         //$dirname = $module_obj_array[$mid]->getVar('dirname', 'n');
         if (file_exists($GLOBALS['xoops']->path("modules/{$dirname}/class/plugins/plugin.tag.php"))) {
             require_once $GLOBALS['xoops']->path("modules/{$dirname}/class/plugins/plugin.tag.php");
@@ -138,7 +139,7 @@ if (0 < count($items_array)) {
 
 $items_data = [];
 $uids       = [];
-require_once $helper->path('include/tagbar.php');
+$tagbar = new Tagbar();
 foreach ($items_array as $key => $myItem) {
     /**
      * Get item fields:
@@ -155,7 +156,7 @@ foreach ($items_array as $key => $myItem) {
     $item['dirname'] = $module_obj_array[$myItem['modid']]->getVar('dirname', 'n');
     $time            = empty($item['time']) ? $myItem['time'] : $item['time'];
     $item['time']    = formatTimestamp($time, 's');
-    $item['tags']    = @tagBar($item['tags']);
+    $item['tags']    = $tagbar->getTagbar($item['tags']);
     $items_data[]    = $item;
     // @todo: fix this to use xoops user id, if present otherwise to 1st admin
     $uids[$item['uid']] = 1;
@@ -177,6 +178,7 @@ if (!empty($start) || count($items_data) >= $limit) {
     $pagenav = '';
 }
 
+//add-ons to tag externally (e.g. Google, Flickr)
 $tag_addon = [];
 if (!empty($GLOBALS['_MD_TAG_ADDONS'])) {
     $tag_addon['title'] = _MD_TAG_TAG_ON;

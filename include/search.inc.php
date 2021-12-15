@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -12,9 +12,8 @@
 /**
  * XOOPS tag management module
  *
- * @package         XoopsModules\Tag
- * @copyright       {@link http://sourceforge.net/projects/xoops/ The XOOPS Project}
- * @license         {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
+ * @copyright       {@link https://sourceforge.net/projects/xoops/ The XOOPS Project}
+ * @license         {@link https://www.fsf.org/copyleft/gpl.html GNU public license}
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
  * @since           1.00
  */
@@ -24,16 +23,7 @@ use XoopsModules\Tag\Helper;
 
 defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
-/**
- * @param array  $queryarray
- * @param string $andor
- * @param int    $limit
- * @param int    $offset
- * @param int    $userid
- * @param string $sortby
- * @return array
- */
-function &tag_search($queryarray, $andor, $limit, $offset, $userid, $sortby = 'tag_term ASC')
+function &tag_search(array $queryarray, string $andor, int $limit, int $offset, int $userid, string $sortby = 'tag_term ASC'): array
 {
     $ret   = [];
     $count = is_array($queryarray) ? count($queryarray) : 0;
@@ -46,7 +36,7 @@ function &tag_search($queryarray, $andor, $limit, $offset, $userid, $sortby = 't
     $criteria   = new \CriteriaCompo();
     $criteria->setLimit($limit);
     $criteria->setStart($offset);
-    $criteria->add(new \Criteria('tag_status', Constants::STATUS_ACTIVE));
+    $criteria->add(new \Criteria('tag_status', (string)Constants::STATUS_ACTIVE));
     if ('exact' === $andor) {
         $criteria->add(new \Criteria('tag_term', $queryarray[0]));
         for ($i = 1; $i < $count; ++$i) {

@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -12,9 +12,8 @@
 /**
  * XOOPS tag management module
  *
- * @package         \XoopsModules\Tag
- * @copyright       {@link http://sourceforge.net/projects/xoops/ The XOOPS Project}
- * @license         {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
+ * @copyright       {@link https://sourceforge.net/projects/xoops/ The XOOPS Project}
+ * @license         {@link https://www.fsf.org/copyleft/gpl.html GNU public license}
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
  * @since           1.00
  */
@@ -37,11 +36,10 @@ defined('XOOPS_ROOT_PATH') || exit('Restricted access');
  *
  * @param array $items associative array of items: [modid][catid][itemid]
  *
- * @return bool
  */
-function article_tag_iteminfo(&$items)
+function article_tag_iteminfo(array &$items): bool
 {
-    if (empty($items) || !is_array($items)) {
+    if (empty($items)) {
         return false;
     }
 
@@ -82,24 +80,23 @@ function article_tag_iteminfo(&$items)
  *
  * @param int $mid module ID
  *
- * @return bool
  */
-function article_tag_synchronization($mid)
+function article_tag_synchronization(int $mid): bool
 {
     /** @var \XoopsModules\Article\ArticleHandler $itemHandler */
     $itemHandler = \XoopsModules\Article\Helper::getInstance()->getHandler('Article', 'article');
-    //    /** @var \TagLinkHandler $linkHandler */
-    //    $linkHandler = \XoopsModules\Tag\Helper::getInstance()->getHandler('Link'); //@var \XoopsModules\Tag\Handler $tagHandler
+    // /** @var \TagLinkHandler $linkHandler */
+    // $linkHandler = \XoopsModules\Tag\Helper::getInstance()->getHandler('Link'); //@var \XoopsModules\Tag\Handler $tagHandler
     /** @var \XoopsModules\Tag\LinkHandler $itemHandler */
     $linkHandler = Helper::getInstance()->getHandler('Link');
 
     //    $mid = XoopsFilterInput::clean($mid, 'INT');
     $mid = Request::getInt('mid');
-    /* clear tag-item links */ 
+    /* clear tag-item links */
     /** {@internal the following statement isn't really needed any more (MySQL is really old)
- *   and some hosting companies block the $GLOBALS['xoopsDB']->getServerVersion() function for security
- *   reasons. }}
- */
+     *   and some hosting companies block the $GLOBALS['xoopsDB']->getServerVersion() function for security
+     *   reasons. }}
+     */
     //    if (version_compare( $GLOBALS['xoopsDB']->getServerVersion(), "4.1.0", "ge" )) {
     $sql = "DELETE FROM {$linkHandler->table}"
            . " WHERE tag_modid = {$mid}"
@@ -122,5 +119,5 @@ function article_tag_synchronization($mid)
         //xoops_error($linkHandler->db->error());
     }
 
-    return $result ? true : false;
+    return (bool)$result;
 }

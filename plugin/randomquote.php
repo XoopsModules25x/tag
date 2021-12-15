@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -12,9 +12,8 @@
 /**
  * XOOPS tag management module
  *
- * @package        \XoopsModules\Tag
- * @copyright      {@link http://sourceforge.net/projects/xoops/ The XOOPS Project}
- * @license        {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
+ * @copyright      {@link https://sourceforge.net/projects/xoops/ The XOOPS Project}
+ * @license        {@link https://www.fsf.org/copyleft/gpl.html GNU public license}
  * @author         Taiwen Jiang <phppp@users.sourceforge.net>
  * @author         ZySpec <zyspec@yahoo.com>
  * @since          2.33
@@ -33,11 +32,10 @@ XoopsLoad::load('XoopsFilterInput');
  * Note that $items is "by reference" so modifying it in this
  * routine in effect passes it back...
  *
- * @param array $items
  *
  * @return bool always returns true
  **/
-function randomquote_tag_iteminfo(&$items)
+function randomquote_tag_iteminfo(array &$items): bool
 {
     $items_id = [];
     $cats_id  = [];
@@ -58,7 +56,7 @@ function randomquote_tag_iteminfo(&$items)
 
     $criteria = new \CriteriaCompo();
     $criteria->add(new \Criteria('id', '(' . implode(',', $items_id) . ')', 'IN'));
-    $criteria->add(new \Criteria('quote_status', Constants::STATUS_ONLINE));
+    $criteria->add(new \Criteria('quote_status', (string)Constants::STATUS_ONLINE));
 
     /** @var \XoopsModules\Randomquote\QuotesHandler $itemHandler */
     $itemHandler = \XoopsModules\Randomquote\Helper::getInstance()->getHandler('Quotes');
@@ -87,9 +85,8 @@ function randomquote_tag_iteminfo(&$items)
  * Remove orphan tag-item links
  *
  * @param int $mid module ID
- * @return bool
  */
-function randomquote_tag_synchronization($mid)
+function randomquote_tag_synchronization(int $mid): bool
 {
     /** @var \XoopsModules\Randomquote\QuotesHandler $itemHandler */
     $itemHandler = \XoopsModules\Randomquote\Helper::getInstance()->getHandler('Quotes');
@@ -98,7 +95,7 @@ function randomquote_tag_synchronization($mid)
 
     $result = false;
     if ($itemHandler && $linkHandler) {
-        $mid = \Xmf\Request::getInt('mid', 0);
+        $mid = Request::getInt('mid', 0);
         /** @var \XoopsModuleHandler $moduleHandler */
         $moduleHandler = xoops_getHandler('module');
         $rqModule      = XoopsModule::getByDirname('randomquote');
@@ -111,5 +108,5 @@ function randomquote_tag_synchronization($mid)
         }
     }
 
-    return $result ? true : false;
+    return (bool)$result;
 }

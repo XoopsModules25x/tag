@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace XoopsModules\Tag;
 
@@ -15,19 +15,14 @@ namespace XoopsModules\Tag;
 /**
  * XOOPS tag management module
  *
- * @package         tag
- * @subpackage      class
- * @copyright       {@link http://sourceforge.net/projects/xoops/ The XOOPS Project}
- * @license         {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
+ * @copyright       {@link https://sourceforge.net/projects/xoops/ The XOOPS Project}
+ * @license         {@link https://www.fsf.org/copyleft/gpl.html GNU public license}
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
  * @since           1.00
  */
 
-use XoopsModules\Tag;
-
 /**
  * Tag link handler class.
- * @package     tag
  *
  * @author      Taiwen Jiang <phppp@users.sourceforge.net>
  * @copyright   copyright &copy; The XOOPS Project
@@ -40,7 +35,6 @@ class LinkHandler extends \XoopsPersistableObjectHandler
 
     /**
      * TagLinkHandler constructor.
-     * @param \XoopsDatabase|null $db
      */
     public function __construct(\XoopsDatabase $db = null)
     {
@@ -56,7 +50,7 @@ class LinkHandler extends \XoopsPersistableObjectHandler
      * @param string $field_object
      * @return bool true on success
      */
-    public function cleanOrphan($table_link = '', $field_link = '', $field_object = '')
+    public function cleanOrphan($table_link = '', $field_link = '', $field_object = ''): bool
     {
         return parent::cleanOrphan($this->db->prefix('tag_tag'), 'tag_id');
     }

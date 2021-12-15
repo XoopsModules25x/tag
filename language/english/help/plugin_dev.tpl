@@ -36,7 +36,7 @@
     <tr><td>Code:</td>
     <td><{literal}>
 <code>$itemid = $item_obj->isNew() ? 0 : $item_obj->getVar('itemid');
-XoopsLoad::load('formtag', 'tag');  // get the TagFormTag class
+//XoopsLoad::load('formtag', 'tag');  // get the TagFormTag class
 $form_item->addElement(new \XoopsModules\Tag\FormTag('item_tag', 60, 255, $itemid, $catid = 0));
     <{/literal}></code></td></tr>
     </tbody>
@@ -51,7 +51,7 @@ $form_item->addElement(new \XoopsModules\Tag\FormTag('item_tag', 60, 255, $itemi
     <tr><td>Code:</td>
     <td><{literal}>
 <code>/** @var \XoopsModules\Tag\TagHandler $tagHandler */
-$tagHandler = \XoopsModules\Tag\Helper::getInstance()->getHandler('Tag'); // xoops_getModuleHandler('tag', 'tag');
+$tagHandler = \XoopsModules\Tag\Helper::getInstance()->getHandler('Tag')
 $tagHandler->updateByItem($_POST['item_tag'], $itemid, $GLOBALS['xoopsModule']->getVar('dirname'), $catid = 0);
     </code><{/literal}></td></tr>
     </tbody>
@@ -66,7 +66,7 @@ $tagHandler->updateByItem($_POST['item_tag'], $itemid, $GLOBALS['xoopsModule']->
     <tr><td>Code:</td>
     <td><{literal}>
 <code>/** @var \XoopsModules\Tag\TagHandler $tagHandler */
-$tagHandler = \XoopsModules\Tag\Helper::getInstance()->getHandler('Tag'); // xoops_getModuleHandler('tag', 'tag');
+$tagHandler = \XoopsModules\Tag\Helper::getInstance()->getHandler('Tag')
 $tagHandler->updateByItem('', $itemid, $GLOBALS['xoopsModule']->getVar('dirname'), $catid = 0);
     </code><{/literal}></td></tr>
     </tbody>
@@ -81,10 +81,13 @@ $tagHandler->updateByItem('', $itemid, $GLOBALS['xoopsModule']->getVar('dirname'
     <tr><td>Code:</td>
     <td><{literal}>
 <code>/** Get item fields: title, content, time, link, uid, uname, tags *
- * @param $items
+ * @param array $items
  */
-function mymodule_tag_iteminfo(&$items)
+function mymodule_tag_iteminfo(array &$items): bool
 {
+    if (empty($items) || !is_array($items)) {
+    return false;
+    }
     $items_id = [];
     foreach (array_keys($items) as $cat_id) {
         // Some handling here to build the link upon catid
@@ -111,6 +114,7 @@ function mymodule_tag_iteminfo(&$items)
         }
     }
     unset($items_obj);
+    return true;
 }
 
 /** Remove orphan tag-item links *
@@ -132,8 +136,10 @@ function mymodule_tag_synchronization($mid)
     <tr><td>File:</td><td>view.item.php</td></tr>
     <tr><td>Code:</td>
     <td><{literal}>
-<code>require_once $GLOBALS['xoops']->path('/modules/tag/include/tagbar.php');
-$GLOBALS['xoopsTpl']->assign('tagbar', tagBar($itemid, $catid = 0));
+<code>if (\class_exists(\XoopsModules\Tag\Tagbar::class) && \xoops_isActiveModule('tag')) {
+    $tagbarObj = new \XoopsModules\Tag\Tagbar();
+    $xoopsTpl->assign('tagbar', $tagbarObj->getTagbar($itemId, $catid = 0));
+    }
 // File: mymodule_item_template.tpl
 $GLOBALS['xoopsTpl']->display('db:tag_bar.tpl');
     <{/literal}></code></td></tr>

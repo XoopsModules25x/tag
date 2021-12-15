@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -12,9 +12,8 @@
 /**
  * XOOPS tag management module - xForum
  *
- * @package         \XoopsModules\Tag
- * @copyright       {@link http://sourceforge.net/projects/xoops/ The XOOPS Project}
- * @license         {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
+ * @copyright       {@link https://sourceforge.net/projects/xoops/ The XOOPS Project}
+ * @license         {@link https://www.fsf.org/copyleft/gpl.html GNU public license}
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
  * @since           1.00
  */
@@ -37,11 +36,10 @@ defined('XOOPS_ROOT_PATH') || exit('Restricted access');
  *
  * @param array $items associative array of items: [modid][catid][itemid]
  *
- * @return bool
  */
-function xforum_tag_iteminfo(&$items)
+function xforum_tag_iteminfo(array &$items): bool
 {
-    if (empty($items) || !is_array($items)) {
+    if (empty($items)) {
         return false;
     }
 
@@ -68,7 +66,7 @@ function xforum_tag_iteminfo(&$items)
                     'link'    => "viewpost.php?post_id={$item_id}",
                     'time'    => strtotime(date(_DATESTRING, $item_obj->getVar('post_time'))),
                     'tags'    => Utility::tag_parse_tag($item_obj->getVar('tags', 'n')),
-                    'content' => $myts->displayTarea($item_obj->getVar('post_text'), true, true, true, true, true, true),
+                    'content' => $myts->displayTarea($item_obj->getVar('post_text'), true, true, true, true, true),
                 ];
             }
         }
@@ -83,9 +81,8 @@ function xforum_tag_iteminfo(&$items)
  *
  * @param int $mid module id
  *
- * @return bool
  */
-function xforum_tag_synchronization($mid)
+function xforum_tag_synchronization(int $mid): bool
 {
     /** @var \XoopsModules\Xforum\PostHandler $itemHandler */
     $itemHandler = \XoopsModules\Xforum\Helper::getInstance()->getHandler('Post');
@@ -94,11 +91,11 @@ function xforum_tag_synchronization($mid)
 
     //    $mid = XoopsFilterInput::clean($mid, 'INT');
     $mid = Request::getInt('mid');
-    /* clear tag-item links */ 
+    /* clear tag-item links */
     /** {@internal the following statement isn't really needed any more (MySQL is really old)
- *   and some hosting companies block the $GLOBALS['xoopsDB']->getServerVersion() function for security
- *   reasons. }
- */
+     *   and some hosting companies block the $GLOBALS['xoopsDB']->getServerVersion() function for security
+     *   reasons. }
+     */
     //    if (version_compare( $GLOBALS['xoopsDB']->getServerVersion(), "4.1.0", "ge" )):
     $sql = "    DELETE FROM {$linkHandler->table}"
            . '    WHERE '
@@ -126,5 +123,5 @@ function xforum_tag_synchronization($mid)
         //xoops_error($linkHandler->db->error());
     }
 
-    return $result ? true : false;
+    return (bool)$result;
 }

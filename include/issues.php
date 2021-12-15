@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /*
  You may not change or alter any portion of this comment or credits of
  supporting developers from this source code or any supporting source code
@@ -13,29 +13,31 @@
 /**
  * Module: Tag
  *
- * @package   \XoopsModules\Tag
  * @author    ZySpec <zyspec@yahoo.com>
- * @copyright Copyright (c) 2001-2019 {@link https://xoops.org XOOPS Project}}
+ * @copyright Copyright (c) 2001-2021 {@link https://xoops.org XOOPS Project}}
  * @license   https://www.gnu.org/licenses/gpl-2.0.html GNU Public License
  * @since     2.00
  */
 
 use XoopsModules\Tag\{
-    Helper
+    Helper,
+    Issues
 };
 
-$GLOBALS['xoopsOption']['nocommon'] = true;
+/** @var Issues $modIssues */
+
+//$GLOBALS['xoopsOption']['nocommon'] = true;
 require \dirname(__DIR__, 3) . '/mainfile.php';
 require \dirname(__DIR__) . '/preloads/autoloader.php';
 
 $moduleDirName = \basename(\dirname(__DIR__));
 
-xoops_loadLanguage('admin', $moduleDirName);
-
+$helper = Helper::getInstance();
+$helper->loadLanguage('admin');
+$helper->loadLanguage('modinfo');
 //session_start();
 
-$issuesClass = '\XoopsModules\\' . ucfirst(mb_strtolower($moduleDirName)) . '\Issues';
-$modIssues   = new $issuesClass();
+$modIssues = new Issues();
 if ($modIssues->getCachedEtag()) {
     // Found the session var so check to see if anything's changed since last time we checked
     $hdrSize       = $modIssues->execCurl();
@@ -44,21 +46,21 @@ if ($modIssues->getCachedEtag()) {
     $status = $modIssues->getHeaderFromArray('Status: ');
     if (preg_match('/^304 Not Modified/', $status)) {
         // Hasn't been modified so get response & header size from session
-        $curl_response = isset($_SESSION[$modIssues->getsKeyResponse()]) ? base64_decode(unserialize($_SESSION[$modIssues->getsKeyResponse()])) : [];
+        $curl_response = isset($_SESSION[$modIssues->getsKeyResponse()]) ? base64_decode(unserialize($_SESSION[$modIssues->getsKeyResponse()]), true) : [];
         $hdrSize       = isset($_SESSION[$modIssues->getsKeyHdrSize()]) ? unserialize($_SESSION[$modIssues->getsKeyHdrSize()]) : 0;
     } elseif (preg_match('/^200 OK/', $status)) {
         // Ok, request new info
         unset($modIssues);
-        $modIssues     = new $issuesClass();
+        $modIssues     = new Issues();
         $hdrSize       = $modIssues->execCurl();
         $curl_response = $modIssues->getCurlResponse();
     } elseif (preg_match('/^403 Forbidden/', $status)) {
         // Probably exceeded rate limit
         $responseArray = explode('\n', $modIssues->getCurlResponse());
-        $msgEle        = array_search('message: ', $responseArray);
+        $msgEle        = array_search('message: ', $responseArray, true);
         if (false !== $msgEle) {
             // Found the error message so set it
-            $modIssues->setError(substr($responseArray[$msgEle], 8)); //set the error message
+            $modIssues->setError(mb_substr($responseArray[$msgEle], 8)); //set the error message
         } else {
             // Couldn't find error message, but something went wrong
             // so clear session vars
@@ -82,11 +84,12 @@ if ($modIssues->getCachedEtag()) {
     $curl_response = $modIssues->getCurlResponse();
 }
 
-$hdr        = substr($curl_response, 0, $hdrSize);
-$rspSize    = strlen($curl_response) - $hdrSize;
-$response   = substr($curl_response, -$rspSize);
+$hdr        = mb_substr($curl_response, 0, $hdrSize);
+$rspSize    = mb_strlen($curl_response) - $hdrSize;
+$response   = mb_substr($curl_response, -$rspSize);
 $issuesObjs = json_decode($response); //get as objects
 
+// isue table
 echo '<br>'
      . '<h4 class="odd">'
      . _AM_TAG_ISSUES_OPEN
@@ -119,14 +122,14 @@ if (!empty($issuesObjs)) {
     foreach ($issuesObjs as $issue) {
         $suffix = '';
         if (isset($issue->pull_request)) {
-            /** {@internal {uncomment the following line if you don't want to see pull requests as issues }} */
+            /** @internal {uncomment the following line if you don't want to see pull requests as issues}}} */
             //            continue; // github counts pull requests as open issues so ignore these
 
             $suffix       = '*';
             $pullReqFound = true;
         }
 
-        $dateTimeObj = \DateTime::createFromFormat(\DateTime::ATOM, $issue->created_at);
+        $dateTimeObj = \DateTime::createFromFormat(DateTimeInterface::ATOM, $issue->created_at);
         $dispDate    = $dateTimeObj->format('Y-m-d');
         ++$i; // issue count
 

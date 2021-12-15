@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -12,9 +12,8 @@
 /**
  * XOOPS tag management module
  *
- * @package        XoopsModules\Tag
- * @copyright      {@link http://sourceforge.net/projects/xoops/ The XOOPS Project}
- * @license        {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
+ * @copyright      {@link https://sourceforge.net/projects/xoops/ The XOOPS Project}
+ * @license        {@link https://www.fsf.org/copyleft/gpl.html GNU public license}
  * @author         Taiwen Jiang <phppp@users.sourceforge.net>
  * @since          1.00
  */
@@ -27,8 +26,8 @@ $moduleDirName = basename(__DIR__);
 // ------------------- Information ------------------- /
 $modversion = [
     'version'             => '2.35.0',
-    'module_status'       => 'Beta 3',
-    'release_date'        => '2021/11/11',
+    'module_status'       => 'Beta 4',
+    'release_date'        => '2021/12/15',
     'name'                => _MI_TAG_NAME,
     'description'         => _MI_TAG_DESC,
     'official'            => 0,    //1 indicates official XOOPS module supported by XOOPS Dev Team, 0 means 3rd party supported
@@ -55,13 +54,7 @@ $modversion = [
     'manual_file'         => XOOPS_URL . "/modules/$moduleDirName/docs/install.txt",
     // images
     'image'               => 'assets/images/logoModule.png',
-    /* @todo determine if the following icons are needed, they currently don't exist
-     *       so they've been commented out in v2.35
-     */
-    //'iconsmall'           => 'assets/images/iconsmall.png',
-    //'iconbig'             => 'assets/images/iconbig.png',
     'dirname'             => $moduleDirName,
-    //Frameworks
     // Local path icons
     'modicons16'          => 'assets/images/icons/16',
     'modicons32'          => 'assets/images/icons/32',
@@ -168,7 +161,7 @@ $modversion['blocks'] = [
         'description' => _MI_TAG_BLOCK_TOP_DESC,
         'show_func'   => 'tag_block_top_show',
         'edit_func'   => 'tag_block_top_edit',
-        'options'     => '50|30|a',
+        'options'     => '10|30|a',
         'template'    => 'tag_block_top.tpl',
     ],
 
@@ -187,15 +180,15 @@ $modversion['blocks'] = [
      *                    $options[10] - cumulus_flash_hicolor
      *                    $options[11] - cumulus_flash_speed
      */
-    [
-        'file'        => 'block.php',
-        'name'        => _MI_TAG_BLOCK_CUMULUS,
-        'description' => _MI_TAG_BLOCK_CUMULUS_DESC,
-        'show_func'   => 'tag_block_cumulus_show',
-        'edit_func'   => 'tag_block_cumulus_edit',
-        'options'     => '100|0|24|12|160|140|#ffffff|0|#000000|#003300|#00ff00|100',
-        'template'    => 'tag_block_cumulus.tpl',
-    ],
+//    [
+//        'file'        => 'block.php',
+//        'name'        => _MI_TAG_BLOCK_CUMULUS,
+//        'description' => _MI_TAG_BLOCK_CUMULUS_DESC,
+//        'show_func'   => 'tag_block_cumulus_show',
+//        'edit_func'   => 'tag_block_cumulus_edit',
+//        'options'     => '100|0|24|12|160|140|#ffffff|0|#000000|#003300|#00ff00|100',
+//        'template'    => 'tag_block_cumulus.tpl',
+//    ],
 ];
 
 // Configs
@@ -206,7 +199,7 @@ $modversion['config'] = [
         'description' => '_MI_TAG_DOURLREWRITE_DESC',
         'formtype'    => 'yesno',
         'valuetype'   => 'int',
-        'default'     => in_array(PHP_SAPI, ['apache', 'apache2handler']),
+        'default'     => in_array(PHP_SAPI, ['apache', 'apache2handler'], true),
     ],
 
     [
@@ -233,6 +226,6 @@ $modversion['config'] = [
         'description' => '_MI_TAG_LIMITPERCLOUD_DESC',
         'formtype'    => 'textbox',
         'valuetype'   => 'int',
-        'default'     => 100,
+        'default'     => 10,
     ],
 ];

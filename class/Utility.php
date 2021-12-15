@@ -1,10 +1,6 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace XoopsModules\Tag;
-
-use XoopsModules\Tag;
-use XoopsModules\Tag\Common;
-use XoopsModules\Tag\Constants;
 
 /**
  * Class Utility
@@ -29,8 +25,8 @@ class Utility extends Common\SysUtility
                 && ($helper->getDirname() === $GLOBALS['xoopsModule']->getVar('dirname', 'n'))) {
                 $moduleConfig = $GLOBALS['xoopsModuleConfig'];
             } else {
+                $mid = $helper->getModule()->getVar('mid');
                 /** @var \XoopsConfigHandler $configHandler */
-                $mid           = $helper->getModule()->getVar('mid');
                 $configHandler = \xoops_getHandler('config');
 
                 $criteria = new \Criteria('conf_modid', $mid);
@@ -55,7 +51,7 @@ class Utility extends Common\SysUtility
      *
      * return void
      */
-    public static function tag_define_url_delimiter()
+    public static function tag_define_url_delimiter(): void
     {
         if (\defined('URL_DELIMITER')) {
             if (!\in_array(URL_DELIMITER, ['?', '/'], true)) {
@@ -93,6 +89,7 @@ class Utility extends Common\SysUtility
 
         return $retVal;
     }
+
     /**
      * Function to parse arguments for a page according to $_SERVER['REQUEST_URI']
      *
@@ -106,7 +103,7 @@ class Utility extends Common\SysUtility
      * - "/" in a string
      * - "&" in a string
      */
-    public static function tag_parse_args(&$args, &$args_string)
+    public static function tag_parse_args(&$args, &$args_string): bool
     {
         $args_abb    = [
             'c' => 'catid',
@@ -122,19 +119,17 @@ class Utility extends Common\SysUtility
             foreach ($vars as $var) {
                 if (\is_numeric($var)) {
                     $args_string[] = $var;
-                } elseif (false === mb_strpos($var, '=')) {
-                    if (\is_numeric(mb_substr($var, 1))) {
-                        $args[$args_abb[mb_strtolower($var[0])]] = (int)mb_substr($var, 1);
-                    } else {
-                        $args_string[] = \urldecode($var);
-                    }
-                } else {
+                } elseif (false !== mb_strpos($var, '=')) {
                     \parse_str($var, $args);
+                } elseif (\is_numeric(mb_substr($var, 1))) {
+                    $args[$args_abb[mb_strtolower($var[0])]] = (int)mb_substr($var, 1);
+                } else {
+                    $args_string[] = \urldecode($var);
                 }
             }
         }
 
-        return (0 == \count($args) + \count($args_string)) ? false : true;
+        return !((0 == \count($args) + \count($args_string)));
     }
 
     /**
@@ -144,7 +139,7 @@ class Utility extends Common\SysUtility
      *
      * @return array containing parsed tags
      */
-    public static function tag_parse_tag($text_tag)
+    public static function tag_parse_tag(string $text_tag): array
     {
         $tags = [];
         if (!empty($text_tag)) {
@@ -152,6 +147,7 @@ class Utility extends Common\SysUtility
             $tags_raw   = \explode(',', \str_replace($delimiters, ',', $text_tag));
             $tags       = \array_filter(\array_map('\trim', $tags_raw)); // removes all array elements === false
         }
+
         return $tags;
     }
 }

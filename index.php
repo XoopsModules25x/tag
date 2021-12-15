@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -12,15 +12,14 @@
 /**
  * XOOPS tag management module
  *
- * @package         XoopsModules\Tag
- * @copyright       {@link http://sourceforge.net/projects/xoops/ The XOOPS Project}
- * @license         {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
+ * @copyright       {@link https://sourceforge.net/projects/xoops/ The XOOPS Project}
+ * @license         {@link https://www.fsf.org/copyleft/gpl.html GNU public license}
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
  * @since           1.00
  */
 
-use XoopsModules\Tag\Utility;
 use XoopsModules\Tag\Common;
+use XoopsModules\Tag\Utility;
 
 require_once __DIR__ . '/header.php';
 
@@ -39,7 +38,7 @@ $tagHandler = $helper->getHandler('Tag');
 $tag_config = Utility::tag_load_config();
 Utility::tag_define_url_delimiter();
 
-$limit = empty($tag_config['limit_cloud_list']) ? 100 : $tag_config['limit_cloud_list'];
+$limit = empty($tag_config['limit_tag_list']) ? 100 : $tag_config['limit_tag_list'];
 
 $criteria = new \CriteriaCompo();
 $criteria->setSort('count');
@@ -81,7 +80,7 @@ foreach ($tags_array as $tag) {
     ];
 }
 
-unset($tags_array, $tag, $count_array, $term_array, $tags_term_array);
+unset($tags_array, $count_array, $term_array, $tags_term_array);
 
 // Breadcrumb
 $breadcrumb = new Common\Breadcrumb();
@@ -89,6 +88,7 @@ $breadcrumb->addLink($helper->getModule()->getVar('name'));
 
 $GLOBALS['xoopsTpl']->assign(
     [
+        'module_name'            => $GLOBALS['xoopsModule']->getVar('name'),
         'lang_jumpto'            => _MD_TAG_JUMPTO,
         'pagenav'                => '<a href="' . $helper->url('list.tag.php') . '">' . _MORE . "</a>\n",
         'tag_page_title'         => $page_title,

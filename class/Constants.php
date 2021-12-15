@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace XoopsModules\Tag;
 
@@ -21,8 +21,7 @@ namespace XoopsModules\Tag;
  * the value(s) before module installation. Additionally the module may not
  * work correctly if trying to upgrade if these values have been changed.
  *
- * @package      XoopsModules\Tag
- * @copyright    {@link http://sourceforge.net/projects/xoops/ The XOOPS Project}
+ * @copyright    {@link https://sourceforge.net/projects/xoops/ The XOOPS Project}
  * @license      {@link https://www.gnu.org/licenses/gpl-2.0.html GNU Public License}
  * @author       ZySpec <zyspec@yahoo.com>
  * @since        2.33

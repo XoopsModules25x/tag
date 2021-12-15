@@ -1,26 +1,31 @@
-<?php
+<?php declare(strict_types=1);
 
-use XoopsModules\Tag\Helper;
+/*
+ You may not change or alter any portion of this comment or credits
+ of supporting developers from this source code or any supporting source code
+ which is considered copyrighted (c) material of the original comment or credit authors.
+
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ */
 
 /**
- * TDMDownload
- *
- * You may not change or alter any portion of this comment or credits
- * of supporting developers from this source code or any supporting source code
- * which is considered copyrighted (c) material of the original comment or credit authors.
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- *
  * @param $items
  * @return bool
  * @author      Gregory Mage (Aka Mage)
  * @copyright   Gregory Mage (Aka Mage)
  * @license     GNU GPL 2 (https://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
  */
-function tdmdownloads_tag_iteminfo($items)
+
+use XoopsModules\Tag\Helper;
+
+/**
+ * Get item fields: title, content, time, link, uid, tags
+ */
+function tdmdownloads_tag_iteminfo(array &$items): bool
 {
-    if (empty($items) || !is_array($items)) {
+    if (empty($items)) {
         return false;
     }
 
@@ -55,13 +60,10 @@ function tdmdownloads_tag_iteminfo($items)
     }
     unset($items_obj);
 
-    return '';
+    return true;
 }
 
-/**
- * @param $mid
- */
-function tdmdownloads_tag_synchronization($mid)
+function tdmdownloads_tag_synchronization(int $mid): void
 {
     //    $itemHandler = $helper->getHandler('Downloads', 'tdmdownloads');
 
@@ -72,7 +74,7 @@ function tdmdownloads_tag_synchronization($mid)
     $linkHandler = Helper::getInstance()->getHandler('Link'); //@var \XoopsModules\Tag\Handler $tagHandler
 
     /* clear tag-item links */
-    if (version_compare($GLOBALS['xoopsDB']->getServerVersion(), '4.1.0', 'ge')):
+    if (version_compare($GLOBALS['xoopsDB']->getServerVersion(), '4.1.0', 'ge')) :
         $sql = "    DELETE FROM {$linkHandler->table}"
                . '    WHERE '
                . "        tag_modid = {$mid}"
@@ -83,7 +85,7 @@ function tdmdownloads_tag_synchronization($mid)
                . "                WHERE {$itemHandler->table}.status > 0"
                . '            ) '
                . '        )';
-    else:
+    else :
         $sql = "    DELETE {$linkHandler->table} FROM {$linkHandler->table}"
                . "    LEFT JOIN {$itemHandler->table} AS aa ON {$linkHandler->table}.tag_itemid = aa.{$itemHandler->keyName} "
                . '    WHERE '

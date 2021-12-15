@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -12,9 +12,8 @@
 /**
  * XOOPS tag management module
  *
- * @package         \XoopsModules\Tag
- * @copyright       {@link http://sourceforge.net/projects/xoops/ The XOOPS Project}
- * @license         {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
+ * @copyright       {@link https://sourceforge.net/projects/xoops/ The XOOPS Project}
+ * @license         {@link https://www.fsf.org/copyleft/gpl.html GNU public license}
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
  * @since           1.00
  */
@@ -36,17 +35,13 @@ defined('XOOPS_ROOT_PATH') || exit('Restricted access');
  * uname
  * tags
  *
+ * @param mixed $items
  * @return bool
- * @var array $items associative array of items: [modid][catid][itemid]
+ * @var array   $items associative array of items: [modid][catid][itemid]
  *
  */
-//require_once $GLOBALS['xoops']->path('/modules/smartfaq/include/functions.php');
 
-/**
- * @param $items
- * @return bool
- */
-function smartfaq_tag_iteminfo(&$items)
+function smartfaq_tag_iteminfo(array &$items): bool
 {
     if (empty($items) || !is_array($items)) {
         return false;
@@ -77,7 +72,7 @@ function smartfaq_tag_iteminfo(&$items)
                     'link'    => 'faq.php?faqid=' . $item_id,
                     'time'    => strtotime($item_obj->getVar('datesub')),
                     'tags'    => Utility::tag_parse_tag($item_obj->getVar('tags', 'n')),
-                    'content' => $myts->displayTarea($item_obj->answer(), 1, 1, 1, 1, 1, 1),
+                    'content' => $myts->displayTarea($item_obj->answer(), 1, 1, 1, 1, 1),
                 ];
             }
         }
@@ -90,10 +85,8 @@ function smartfaq_tag_iteminfo(&$items)
 /**
  * Remove orphan tag-item links
  *
- * @param $mid
- * @return bool
  */
-function smartfaq_tag_synchronization($mid)
+function smartfaq_tag_synchronization(int $mid): bool
 {
     /** @var \XoopsDatabase $db */
     $db = \XoopsDatabaseFactory::getDatabase();
@@ -128,5 +121,5 @@ function smartfaq_tag_synchronization($mid)
         //xoops_error($linkHandler->db->error());
     }
 
-    return $result ? true : false;
+    return (bool)$result;
 }

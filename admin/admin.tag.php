@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -12,9 +12,8 @@
 /**
  * XOOPS tag management module
  *
- * @package         XoopsModules\Tag
- * @copyright       {@link http://sourceforge.net/projects/xoops/ The XOOPS Project}
- * @license         {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
+ * @copyright       {@link https://sourceforge.net/projects/xoops/ The XOOPS Project}
+ * @license         {@link https://www.fsf.org/copyleft/gpl.html GNU public license}
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
  * @since           1.00
  */
@@ -70,15 +69,15 @@ if (!empty($post_tags)) {
     }
     */
     foreach ($post_tags as $tag => $tag_status) {
-        $tag_obj = $tagHandler->get($tag);
-        if (!($tag_obj instanceof Tag\Tag) || !$tag_obj->getVar('tag_id')) {
+        $tagObj = $tagHandler->get($tag);
+        if (!($tagObj instanceof Tag\Tag) || !$tagObj->getVar('tag_id')) {
             continue;
         }
         if ($tag_status < Constants::STATUS_ACTIVE) {
-            $tagHandler->delete($tag_obj);
-        } elseif ($tag_status != $tag_obj->getVar('tag_status')) {
-            $tag_obj->setVar('tag_status', $tag_status);
-            $tagHandler->insert($tag_obj);
+            $tagHandler->delete($tagObj);
+        } elseif ($tag_status != $tagObj->getVar('tag_status')) {
+            $tagObj->setVar('tag_status', $tag_status);
+            $tagHandler->insert($tagObj);
             $msg_db_updated = _AM_TAG_DB_UPDATED;
         }
     }
@@ -92,9 +91,7 @@ $module_list   = [];
 $sql    = 'SELECT tag_modid, COUNT(DISTINCT tag_id) AS count_tag' . ' FROM ' . $GLOBALS['xoopsDB']->prefix('tag_link') . ' GROUP BY tag_modid';
 $result = $GLOBALS['xoopsDB']->query($sql);
 
-if (false === $result) {
-    xoops_error($GLOBALS['xoopsDB']->error());
-} else {
+if ($result instanceof \mysqli_result) {
     while (false !== ($myrow = $GLOBALS['xoopsDB']->fetchArray($result))) {
         $counts_module[$myrow['tag_modid']] = $myrow['count_tag'];
     }
@@ -103,21 +100,23 @@ if (false === $result) {
         $moduleHandler = xoops_getHandler('module');
         $module_list   = $moduleHandler->getList(new \Criteria('mid', '(' . implode(', ', array_keys($counts_module)) . ')', 'IN'));
     }
+} else {
+    xoops_error($GLOBALS['xoopsDB']->error());
 }
-//
+
 $opform = new \XoopsSimpleForm('', 'moduleform', $_SERVER['SCRIPT_NAME'], 'get', true);
 //$opform = new \XoopsSimpleForm('', 'moduleform', xoops_getenv('SCRIPT_NAME'), 'post', true);
 $tray       = new \XoopsFormElementTray('');
 $mod_select = new \XoopsFormSelect(_SELECT, 'modid', $modid);
-$mod_select->addOption(0, _ALL);
+$mod_select->addOption('0', _ALL);
 foreach ($module_list as $module => $module_name) {
     $mod_select->addOption($module, $module_name . ' (' . $counts_module[$module] . ')');
 }
 $tray->addElement($mod_select);
-$status_select = new \XoopsFormRadio('', 'status', $status);
-$status_select->addOption(Constants::STATUS_ALL, _ALL);
-$status_select->addOption(Constants::STATUS_ACTIVE, _AM_TAG_ACTIVE);
-$status_select->addOption(Constants::STATUS_INACTIVE, _AM_TAG_INACTIVE);
+$status_select = new \XoopsFormRadio('', 'status', (string)$status);
+$status_select->addOption((string)Constants::STATUS_ALL, _ALL);
+$status_select->addOption((string)Constants::STATUS_ACTIVE, _AM_TAG_ACTIVE);
+$status_select->addOption((string)Constants::STATUS_INACTIVE, _AM_TAG_INACTIVE);
 $tray->addElement($status_select);
 $tray->addElement(new \XoopsFormButton('', 'submit', _SUBMIT, 'submit'));
 $opform->addElement($tray);
@@ -129,10 +128,10 @@ $criteria->order = 'ASC'; // patch for XOOPS <= 2.5.10, does not set order corre
 $criteria->setStart($start);
 $criteria->setLimit($limit);
 if ($status >= Constants::STATUS_ACTIVE) {
-    $criteria->add(new \Criteria('o.tag_status', $status));
+    $criteria->add(new \Criteria('o.tag_status', (string)$status));
 }
 if (!empty($modid)) {
-    $criteria->add(new \Criteria('l.tag_modid', $modid));
+    $criteria->add(new \Criteria('l.tag_modid', (string)$modid));
 }
 $tags = $tagHandler->getByLimit(0, 0, $criteria, null, false);
 

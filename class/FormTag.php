@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace XoopsModules\Tag;
 
@@ -15,16 +15,11 @@ namespace XoopsModules\Tag;
 /**
  * XOOPS tag management module
  *
- * @package         XoopsModules\Tag
- * @copyright       {@link http://sourceforge.net/projects/xoops/ The XOOPS Project}
- * @license         {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
+ * @copyright       {@link https://sourceforge.net/projects/xoops/ The XOOPS Project}
+ * @license         {@link https://www.fsf.org/copyleft/gpl.html GNU public license}
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
  * @since           1.00
  */
-
-use XoopsModules\Tag;
-use XoopsModules\Tag\Utility;
-
 \xoops_load('xoopsformtext');
 
 /**
@@ -34,19 +29,17 @@ class FormTag extends \XoopsFormText
 {
     /**
      * TagFormTag constructor.
-     * @param string $name      "name" attribute
-     * @param int    $size      size of input box
-     * @param int    $maxlength Maximum length of text
-     * @param null   $value     Initial text or itemid
-     * @param int    $catid     category id (applicable if $value is itemid)
+     * @param string     $name      "name" attribute
+     * @param int        $size      size of input box
+     * @param int        $maxlength Maximum length of text
+     * @param string|int $value     Initial text or itemid
+     * @param int        $catid     category id (applicable if $value is itemid)
      */
-    public function __construct($name, int $size, $maxlength, $value = null, $catid = 0)
+    public function __construct($name, int $size, $maxlength, $value = '', $catid = 0)
     {
         $helper = \XoopsModules\Tag\Helper::getInstance();
         require_once $helper->path('include/vars.php');
         $helper->loadLanguage('main');
-
-        $value = empty($value) ? '' : $value;
 
         if (!empty($value) && \is_numeric($value) && ($GLOBALS['xoopsModule'] instanceof \XoopsModule)) {
             $modid = $GLOBALS['xoopsModule']->getVar('mid');
@@ -56,8 +49,8 @@ class FormTag extends \XoopsFormText
             if ($tags) {
                 $value = \htmlspecialchars(\implode(', ', $tags), \ENT_QUOTES | \ENT_HTML5);
             } else {
-				$value = '';
-			}
+                $value = '';
+            }
         }
         $caption = \_MD_TAG_TAGS;
         parent::__construct($caption, $name, $size, $maxlength, $value);
@@ -68,7 +61,7 @@ class FormTag extends \XoopsFormText
      *
      * @return string HTML
      */
-    public function render()
+    public function render(): string
     {
         $delimiters = Utility::tag_get_delimiter();
         foreach (\array_keys($delimiters) as $key) {

@@ -1,4 +1,6 @@
-<?php
+<?php declare(strict_types=1);
+
+//declare(strict_types=1); //mb do not use it here, as it generates conflict on line 280: base64_encode(): Argument #1 ($string) must be of type string, bool given
 
 namespace XoopsModules\Tag;
 
@@ -15,7 +17,6 @@ namespace XoopsModules\Tag;
 /**
  * Module: Tag
  *
- * @package   XoopsModules\Tag
  * @author    ZySpec <zyspec@yahoo.com>
  * @copyright Copyright (c) 2001-2019 {@link https://xoops.org XOOPS Project}}
  * @license   https://www.gnu.org/licenses/gpl-2.0.html GNU Public License
@@ -24,36 +25,35 @@ namespace XoopsModules\Tag;
 
 /**
  * Issues class to collect information from GitHub
- *
  */
 class Issues
 {
     /**
-     * @var array $hdrs
+     * @var array
      */
     protected $hdrs;
     /**
-     * @var string $dirname module directory name
+     * @var string module directory name
      */
     protected $dirname;
     /**
-     * @var string $curl_respones response from involking curl
+     * @var string response from involking curl
      */
     protected $curl_response;
     /**
-     * @var int $hdrSize Curl response header size
+     * @var int Curl response header size
      */
     protected $hdrSize;
     /**
-     * @var string $serviceUrl Service URL for curl
+     * @var string Service URL for curl
      */
     protected $serviceUrl;
     /**
-     * @var string $sessPrefix prefix for all SESSION vars
+     * @var string prefix for all SESSION vars
      */
     protected $sessPrefix;
     /**
-     * @var string $err class error text
+     * @var string class error text
      */
     protected $err;
 
@@ -78,34 +78,33 @@ class Issues
     /**
      * Function to put HTTP headers in an array
      *
-     * @param        $curl
-     * @param string $hdrLine
+     * @param resource $curl
      *
      * @return int length of header line put into array
      */
-    public function handleHeaderLine($curl, $hdrLine)
+    public function handleHeaderLine($curl, string $hdrLine): int
     {
         $this->hdrs[] = \trim($hdrLine);
-        return \strlen($hdrLine);
+
+        return mb_strlen($hdrLine);
     }
 
     /**
      * Function to get a header from the header array
      *
-     * @param string $hdr
-     * @param bool   $asArray
      *
      * @return array|string array($hdr => value) or false if not found
      */
-    public function getHeaderFromArray($hdr, $asArray = false)
+    public function getHeaderFromArray(string $hdr, bool $asArray = false)
     {
         $val = '';
         foreach ($this->hdrs as $thisHdr) {
             if (\preg_match("/^{$hdr}/i", $thisHdr)) {
-                $val = \substr($thisHdr, \strlen($hdr));
+                $val = mb_substr($thisHdr, mb_strlen($hdr));
                 break;
             }
         }
+
         return $asArray ? [$hdr => \trim($val)] : \trim($val);
     }
 
@@ -113,10 +112,8 @@ class Issues
      * Returns response from involking Curl
      *
      * @param bool $serialized (default = false)
-     *
-     * @return string
      */
-    public function getCurlResponse($serialized = false)
+    public function getCurlResponse(bool $serialized = false): string
     {
         return $serialized ? \serialize(\base64_encode($this->curl_response)) : $this->curl_response;
     }
@@ -126,27 +123,23 @@ class Issues
      *
      * @return int size of header in bytes
      */
-    public function getHdrSize()
+    public function getHdrSize(): int
     {
         return $this->hdrSize;
     }
 
     /**
      * Get the URL for curl
-     *
-     * @return string
      */
-    public function getServiceUrl()
+    public function getServiceUrl(): string
     {
         return $this->serviceUrl;
     }
 
     /**
      * Get the Prefix for SESSION variable
-     *
-     * @return string
      */
-    public function getSessPrefix()
+    public function getSessPrefix(): string
     {
         return $this->sessPrefix;
     }
@@ -158,48 +151,41 @@ class Issues
      *
      * @return string prefix
      */
-    public function setSessPrefix($prefix)
+    public function setSessPrefix(string $prefix): string
     {
         $this->sessPrefix = \htmlspecialchars($prefix, \ENT_QUOTES | \ENT_HTML5) . '_';
+
         return $this->sessPrefix;
     }
 
     /**
      * Get the SESSION variable name for Etag key
-     *
-     * @return string
      */
-    public function getsKeyEtag()
+    public function getsKeyEtag(): string
     {
         return $this->sessPrefix . 'github_etag';
     }
 
     /**
      * Get the SESSION variable name for Header Size key
-     *
-     * @return string
      */
-    public function getsKeyHdrSize()
+    public function getsKeyHdrSize(): string
     {
         return $this->sessPrefix . 'github_hdr_size';
     }
 
     /**
      * Get the SESSION variable name for Response key
-     *
-     * @return string
      */
-    public function getsKeyResponse()
+    public function getsKeyResponse(): string
     {
         return $this->sessPrefix . 'github_curl_response';
     }
 
     /**
      * Get the SESSION variable name for Array key
-     *
-     * @return array
      */
-    public function getsKeyArray()
+    public function getsKeyArray(): array
     {
         return [$this->getsKeyEtag(), $this->getsKeyHdrSize(), $this->getsKeyResponse()];
     }
@@ -211,17 +197,15 @@ class Issues
      */
     public function getCachedEtag()
     {
-        return isset($_SESSION[$this->getsKeyEtag()]) ? \base64_decode(\unserialize($_SESSION[$this->getsKeyEtag()])) : false;
+        return isset($_SESSION[$this->getsKeyEtag()]) ? \base64_decode(\unserialize($_SESSION[$this->getsKeyEtag()]), true) : false;
     }
 
     /**
      * Set the error message associated with the latest Curl operation
      *
      * @param string $msg the error message to save
-     *
-     * @return void
      */
-    public function setError($msg)
+    public function setError(string $msg): void
     {
         $this->err = $msg;
     }
@@ -231,7 +215,7 @@ class Issues
      *
      * @return string the current error message
      */
-    public function getError()
+    public function getError(): string
     {
         return $this->err;
     }
@@ -243,7 +227,7 @@ class Issues
      *
      * @return int the current header size from curl
      */
-    public function execCurl()
+    public function execCurl(): int
     {
         $curl = \curl_init($this->getServiceUrl());
         \curl_setopt_array(
@@ -254,7 +238,7 @@ class Issues
                 \CURLOPT_VERBOSE        => true,
                 \CURLOPT_TIMEOUT        => 5,
                 \CURLOPT_HTTPGET        => true,
-                \CURLOPT_USERAGENT      => 'XOOPS-' . $this->dirname,
+                \CURLOPT_USERAGENT      => 'XOOPS-' . \mb_strtoupper($this->dirname),
                 \CURLOPT_HTTPHEADER     => [
                     'Content-type:application/json',
                     'If-None-Match: ' . $this->getCachedEtag(),
@@ -275,6 +259,7 @@ class Issues
         $_SESSION[$this->getsKeyEtag()]     = \serialize(\base64_encode($hdrEtag));
         $_SESSION[$this->getsKeyHdrSize()]  = \serialize($this->hdrSize);
         $_SESSION[$this->getsKeyResponse()] = \serialize(\base64_encode($this->curl_response));
+
         return $this->hdrSize;
     }
 }

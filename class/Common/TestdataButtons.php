@@ -8,42 +8,55 @@ namespace XoopsModules\Tag\Common;
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
  which is considered copyrighted (c) material of the original comment or credit authors.
- 
+
  This program is distributed in the hope that it will be useful,
  but WITHOUT ANY WARRANTY; without even the implied warranty of
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 */
 
 /**
- *
  * @category        Module
  * @author          XOOPS Development Team <https://xoops.org>
  * @copyright       {@link https://xoops.org/ XOOPS Project}
  * @license         GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  */
 
-use Xmf\Request;
-use Xmf\Yaml;
-use XoopsModules\Tag\Helper;
+use Xmf\{
+    Module\Admin,
+    Request,
+    Yaml
+};
+use XoopsModules\Tag\{
+    Constants,
+    Helper
+};
+
 /** @var Helper $helper */
 
 /**
- * Class SysUtility
+ * Class TestdataButtons
+ *
+ * Contains methods to create the Test buttons and change their visibility
  */
 class TestdataButtons
 {
+    /** Button status constants */
+    private const SHOW_BUTTONS = 1;
+    private const HIDE_BUTTONS = 0;
 
-    //functions for import buttons
-    public static function loadButtonConfig($adminObject)
+    /**
+     * Load the test button configuration
+     */
+    public static function loadButtonConfig(Admin $adminObject): void
     {
-        $moduleDirName      = \basename(\dirname(__DIR__, 2));
-        $moduleDirNameUpper = \mb_strtoupper($moduleDirName);
-        $yamlFile           = \dirname(__DIR__, 2) . '/config/admin.yml';
-        $config             = Yaml::readWrapped($yamlFile); // work with phpmyadmin YAML dumps
+        $moduleDirName       = \basename(\dirname(__DIR__, 2));
+        $moduleDirNameUpper  = \mb_strtoupper($moduleDirName);
+        $helper              = Helper::getInstance();
+        $yamlFile            = $helper->path('/config/admin.yml');
+        $config              = Yaml::readWrapped($yamlFile); // work with phpmyadmin YAML dumps
         $displaySampleButton = $config['displaySampleButton'];
-        $helper = Helper::getInstance();
 
-        if (1 == $displaySampleButton) {
+        if (self::SHOW_BUTTONS == $displaySampleButton) {
             \xoops_loadLanguage('admin/modulesadmin', 'system');
             $adminObject->addItemButton(\constant('CO_' . $moduleDirNameUpper . '_' . 'LOAD_SAMPLEDATA'), $helper->url('testdata/index.php?op=load'), 'add');
             $adminObject->addItemButton(\constant('CO_' . $moduleDirNameUpper . '_' . 'SAVE_SAMPLEDATA'), $helper->url('testdata/index.php?op=save'), 'add');
@@ -56,21 +69,29 @@ class TestdataButtons
         }
     }
 
-    public static function hideButtons()
+    /**
+     * Hide the test buttons
+     */
+    public static function hideButtons(): void
     {
-        $yamlFile            = \dirname(__DIR__, 2) . '/config/admin.yml';
+        $helper                     = Helper::getInstance();
+        $yamlFile                   = $helper->path('config/admin.yml');
         $app                        = [];
-        $app['displaySampleButton'] = 0;
+        $app['displaySampleButton'] = self::HIDE_BUTTONS;
         Yaml::save($app, $yamlFile);
-        \redirect_header('index.php', 0, '');
+        $helper->redirect('admin/index.php', Constants::REDIRECT_DELAY_NONE, '');
     }
 
-    public static function showButtons()
+    /**
+     * Show the test buttons
+     */
+    public static function showButtons(): void
     {
-        $yamlFile            = \dirname(__DIR__, 2) . '/config/admin.yml';
+        $helper                     = Helper::getInstance();
+        $yamlFile                   = $helper->path('config/admin.yml');
         $app                        = [];
-        $app['displaySampleButton'] = 1;
+        $app['displaySampleButton'] = self::SHOW_BUTTONS;
         Yaml::save($app, $yamlFile);
-        \redirect_header('index.php', 0, '');
+        $helper->redirect('admin/index.php', Constants::REDIRECT_DELAY_NONE, '');
     }
 }

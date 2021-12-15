@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /*
  * You may not change or alter any portion of this comment or credits
  * of supporting developers from this source code or any supporting source code
@@ -10,7 +10,6 @@
  */
 
 /**
- * @package      XoopsModules\Tag
  * @copyright    XOOPS Project (https://xoops.org)
  * @license      GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @author       XOOPS Development Team
@@ -33,7 +32,7 @@ xoops_loadLanguage('common', $moduleDirName);
  *
  * @return bool true if ready to install, false if not
  */
-function xoops_module_pre_update_tag(\XoopsModule $module)
+function xoops_module_pre_update_tag(\XoopsModule $module): bool
 {
     /** @var Tag\Helper $helper */
     /** @var Tag\Utility $utility */
@@ -54,19 +53,19 @@ function xoops_module_pre_update_tag(\XoopsModule $module)
  *
  * @return bool true if update successful, false if not
  */
-function xoops_module_update_tag(\XoopsModule $module, $previousVersion = null)
+function xoops_module_update_tag(\XoopsModule $module, $previousVersion = null): bool
 {
     global $xoopsDB;
     $moduleDirName = \basename(\dirname(__DIR__));
 
-    /** @var Tag\Helper $helper */ 
+    /** @var Tag\Helper $helper */
     /** @var Tag\Utility $utility */
     /** @var Tag\Common\Configurator $configurator */
     $helper       = Tag\Helper::getInstance();
     $utility      = new Tag\Utility();
     $configurator = new Tag\Common\Configurator();
 
-    if ($previousVersion < 235) {
+    if ($previousVersion < 236) {
         //delete old HTML templates
         if (count($configurator->templateFolders) > 0) {
             foreach ($configurator->templateFolders as $folder) {
@@ -102,7 +101,7 @@ function xoops_module_update_tag(\XoopsModule $module, $previousVersion = null)
             //    foreach (array_keys($GLOBALS['uploadFolders']) as $i) {
             foreach (array_keys($configurator->oldFolders) as $i) {
                 $tempFolder = $GLOBALS['xoops']->path('modules/' . $moduleDirName . $configurator->oldFolders[$i]);
-                /* @var XoopsObjectHandler $folderHandler */
+                /** @var XoopsObjectHandler $folderHandler */
                 $folderHandler = XoopsFile::getHandler('folder', $tempFolder);
                 $folderHandler->delete($tempFolder);
             }
@@ -128,6 +127,10 @@ function xoops_module_update_tag(\XoopsModule $module, $previousVersion = null)
         //delete .html entries from the tpl table
         $sql = 'DELETE FROM ' . $GLOBALS['xoopsDB']->prefix('tplfile') . " WHERE `tpl_module` = '" . $module->getVar('dirname', 'n') . '\' AND `tpl_file` LIKE \'%.html%\'';
         $GLOBALS['xoopsDB']->queryF($sql);
+
+        /* Do some synchronization */
+        require $GLOBALS['xoops']->path('/modules/' . $module->getVar('dirname') . '/include/functions.recon.php');
+        tag_synchronization();
 
         /** @var \XoopsGroupPermHandler $grouppermHandler */
         $grouppermHandler = xoops_getHandler('groupperm');

@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -12,9 +12,8 @@
 /**
  * XOOPS tag management module
  *
- * @package         \XoopsModules\Tag
- * @copyright       {@link http://sourceforge.net/projects/xoops/ The XOOPS Project}
- * @license         {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
+ * @copyright       {@link https://sourceforge.net/projects/xoops/ The XOOPS Project}
+ * @license         {@link https://www.fsf.org/copyleft/gpl.html GNU public license}
  * @since           1.00
  */
 
@@ -27,11 +26,10 @@ defined('XOOPS_ROOT_PATH') || exit('Restricted access');
  *
  * @param array $items is an array containing category and item information
  *
- * @return bool
  */
-function extgallery_tag_iteminfo(&$items)
+function extgallery_tag_iteminfo(array &$items): bool
 {
-    if (empty($items) || !is_array($items)) {
+    if (empty($items)) {
         return false;
     }
 
@@ -71,9 +69,8 @@ function extgallery_tag_iteminfo(&$items)
  *
  * @param int $mid module id
  *
- * @return bool
  */
-function extgallery_tag_synchronization($mid)
+function extgallery_tag_synchronization(int $mid): bool
 {
     /** @var \XoopsModules\Extgallery\PublicPhotoHandler $itemHandler */
     $itemHandler = \XoopsModules\Extgallery\Helper::getInstance()->getHandler('PublicPhoto');
@@ -85,9 +82,9 @@ function extgallery_tag_synchronization($mid)
 
     /* clear tag-item links */
     /** {@internal the following statement isn't really needed any more (MySQL is really old)
- *   and some hosting companies block the $GLOBALS['xoopsDB']->getServerVersion() function for security
- *   reasons.}
- */
+     *   and some hosting companies block the $GLOBALS['xoopsDB']->getServerVersion() function for security
+     *   reasons.}
+     */
     //    if (version_compare( $GLOBALS['xoopsDB']->getServerVersion(), "4.1.0", "ge" )):
     $sql = "DELETE FROM {$linkHandler->table}" . " WHERE tag_modid = {$mid}" . ' AND (tag_itemid NOT IN ' . "       (SELECT DISTINCT {$itemHandler->keyName} " . "        FROM {$itemHandler->table} " . "          WHERE {$itemHandler->table}.photo_approved > 0" . '       )' . '     )';
     /*
@@ -106,5 +103,5 @@ function extgallery_tag_synchronization($mid)
         //xoops_error($linkHandler->db->error());
     }
 
-    return $result ? true : false;
+    return (bool)$result;
 }

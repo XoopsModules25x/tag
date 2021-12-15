@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace XoopsModules\Tag\Common;
 
@@ -14,7 +14,7 @@ namespace XoopsModules\Tag\Common;
 
 /**
  * @copyright   XOOPS Project (https://xoops.org)
- * @license     http://www.fsf.org/copyleft/gpl.html GNU public license
+ * @license     https://www.fsf.org/copyleft/gpl.html GNU public license
  * @author      mamba <mambax7@gmail.com>
  */
 
@@ -22,16 +22,14 @@ use XoopsModules\Tag;
 
 /**
  * Trait ServerStats
- * @package XoopsModules\Tag\Common
  */
 trait ServerStats
 {
     /**
      * serverStats()
      *
-     * @return string
      */
-    public static function getServerStats()
+    public static function getServerStats(): string
     {
         //mb    $wfdownloads = WfdownloadsWfdownloads::getInstance();
         $moduleDirName      = \basename(\dirname(__DIR__, 2));

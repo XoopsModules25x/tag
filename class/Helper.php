@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace XoopsModules\Tag;
 
@@ -15,7 +15,7 @@ namespace XoopsModules\Tag;
 /**
  * @copyright    XOOPS Project (https://xoops.org)
  * @license      GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
- * @author      XOOPS Development Team
+ * @author       XOOPS Development Team
  */
 
 /**
@@ -30,6 +30,7 @@ class Helper extends \Xmf\Module\Helper
      */
     public function __construct($debug = false)
     {
+        $this->debug = $debug;
         if (null === $this->dirname) {
             $dirname       = \basename(\dirname(__DIR__));
             $this->dirname = $dirname;
@@ -37,12 +38,7 @@ class Helper extends \Xmf\Module\Helper
         parent::__construct($this->dirname);
     }
 
-    /**
-     * @param bool $debug
-     *
-     * @return \XoopsModules\Tag\Helper
-     */
-    public static function getInstance(bool $debug = false): Helper
+    public static function getInstance(bool $debug = false): self
     {
         static $instance;
         if (null === $instance) {
@@ -52,42 +48,18 @@ class Helper extends \Xmf\Module\Helper
         return $instance;
     }
 
-    /**
-     * @return string
-     */
     public function getDirname(): string
     {
         return $this->dirname;
     }
 
     /**
-     * @param null|string $name
-     * @param null|string $value
-     *
-     * @return string|null
-     */
-    public function setConfig($name = null, $value = null)
-    {
-        if (null === $this->configs) {
-            $this->initConfig();
-        }
-        $this->configs[$name] = $value;
-        $this->addLog("Setting config '{$name}' : " . $this->configs[$name]);
-
-        return $this->configs[$name];
-    }
-
-    /**
      * Get an Object Handler
      *
      * @param string $name name of handler to load
-     *
-     * @return \XoopsPersistableObjectHandler
      */
-    public function getHandler($name): ?\XoopsPersistableObjectHandler
+    public function getHandler($name): \XoopsPersistableObjectHandler
     {
-        $ret = null;
-
         $class = __NAMESPACE__ . '\\' . \ucfirst($name) . 'Handler';
         if (!\class_exists($class)) {
             throw new \RuntimeException("Class '$class' not found");
@@ -97,6 +69,7 @@ class Helper extends \Xmf\Module\Helper
         $helper = self::getInstance();
         $ret    = new $class($db, $helper);
         $this->addLog("Getting handler '$name'");
+
         return $ret;
     }
 }

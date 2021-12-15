@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -12,9 +12,8 @@
 /**
  * XOOPS tag management module
  *
- * @package         XoopsModules\Tag
  * @copyright       XOOPS Project (https://xoops.org)
- * @license         http://www.fsf.org/copyleft/gpl.html GNU public license
+ * @license         https://www.fsf.org/copyleft/gpl.html GNU public license
  * @since           1.00
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
  * */
@@ -25,11 +24,9 @@ defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 defined('TAG_INI') || require_once __DIR__ . '/vars.php';
 
 /**
- * @param XoopsModule $module
- * @return bool
  * @deprecated
  */
-function xoops_module_install_tag(\XoopsModule $module)
+function xoops_module_install_tag(\XoopsModule $module): bool
 {
     $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1);
     trigger_error(__FUNCTION__ . " is deprecated, called from {$trace[0]['file']} line {$trace[0]['line']}");
@@ -41,11 +38,9 @@ function xoops_module_install_tag(\XoopsModule $module)
 }
 
 /**
- * @param XoopsModule $module
- * @return bool
  * @deprecated
  */
-function xoops_module_pre_install_tag(\XoopsModule $module)
+function xoops_module_pre_install_tag(\XoopsModule $module): bool
 {
     $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1);
     trigger_error(__FUNCTION__ . " is deprecated, called from {$trace[0]['file']} line {$trace[0]['line']}");
@@ -88,8 +83,8 @@ function xoops_module_pre_install_tag(\XoopsModule $module)
     }
     */
 
-    $mod_tables = $module->getInfo('tables');
-    foreach ($mod_tables as $table) {
+    $modTables = $module->getInfo('tables');
+    foreach ($modTables as $table) {
         $GLOBALS['xoopsDB']->queryF('DROP TABLE IF EXISTS ' . $GLOBALS['xoopsDB']->prefix($table) . ';');
     }
 
@@ -97,18 +92,15 @@ function xoops_module_pre_install_tag(\XoopsModule $module)
 }
 
 /**
- * @param XoopsModule $module
- * @return bool
  * @deprecated
  */
-function xoops_module_pre_update_tag(\XoopsModule $module)
+function xoops_module_pre_update_tag(\XoopsModule $module): bool
 {
     $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1);
     trigger_error(__FUNCTION__ . " is deprecated, called from {$trace[0]['file']} line {$trace[0]['line']}");
     $GLOBALS['xoopsLogger']->addDeprecated(
         'Tag Module: ' . __FUNCTION__ . " function is deprecated since Tag 2.3.4, please use './tag/include/onupdate()' functions instead." . " Called from {$trace[0]['file']}line {$trace[0]['line']}"
     );
-    /** @var Tag\Utility $utility */
     $moduleDirName = \basename(\dirname(__DIR__));
     $utility       = new Tag\Utility();
 
@@ -119,27 +111,24 @@ function xoops_module_pre_update_tag(\XoopsModule $module)
 }
 
 /**
- * @param XoopsModule $module
- * @return bool
  * @deprecated
  */
-function xoops_module_pre_uninstall_tag(\XoopsModule $module)
+function xoops_module_pre_uninstall_tag(\XoopsModule $module): bool
 {
     $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1);
     trigger_error(__FUNCTION__ . " is deprecated, called from {$trace[0]['file']} line {$trace[0]['line']}");
     $GLOBALS['xoopsLogger']->addDeprecated(
         'Tag Module: ' . __FUNCTION__ . " function is deprecated since Tag 2.3.4, please use './tag/include/onuninstall()' functions instead." . " Called from {$trace[0]['file']}line {$trace[0]['line']}"
     );
+
     return true;
 }
 
 /**
- * @param XoopsModule $module
- * @param null        $prev_version
- * @return bool
+ * @param null $prev_version
  * @deprecated
  */
-function xoops_module_update_tag(\XoopsModule $module, $prev_version = null)
+function xoops_module_update_tag(\XoopsModule $module, $prev_version = null): bool
 {
     $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1);
     trigger_error(__FUNCTION__ . " is deprecated, called from {$trace[0]['file']} line {$trace[0]['line']}");

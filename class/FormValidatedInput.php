@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace XoopsModules\Tag;
 
@@ -15,10 +15,9 @@ namespace XoopsModules\Tag;
 /**
  * Tag form element for form input
  *
- * @package         XoopsModules\Tag
- * @copyright       {@link http://sourceforge.net/projects/xoops/ The XOOPS Project}
+ * @copyright       {@link https://sourceforge.net/projects/xoops/ The XOOPS Project}
  * @license         {@link https://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU GPL 2}
- * @author          Kazumi Ono (AKA onokazu) http://www.myweb.ne.jp/, http://jp.xoops.org/
+ * @author          Kazumi Ono (AKA onokazu) https://www.myweb.ne.jp/, https://jp.xoops.org/
  * @author          ZySpec <zyspec@yahoo.com>
  * @since           2.33
  */
@@ -32,14 +31,12 @@ class FormValidatedInput extends \XoopsFormText
      * Initial type
      *
      * @var string
-     * @access private
      */
     private $_type;
     /**
      * Valid HTML Type array
      *
-     * @var string
-     * @access private
+     * @var array
      */
     private $_htmlTypes;
 
@@ -51,9 +48,8 @@ class FormValidatedInput extends \XoopsFormText
      * @param int    $size      Size
      * @param int    $maxlength Maximum length of text
      * @param string $value     Initial text
-     * @param string $type
      */
-    public function __construct($caption, $name, $size, $maxlength, $value = '', $type = 'text')
+    public function __construct($caption, $name, $size, $maxlength, $value = '', string $type = 'text')
     {
         $this->_htmlTypes = [
             'color',
@@ -84,7 +80,7 @@ class FormValidatedInput extends \XoopsFormText
      *
      * @return string containing type
      */
-    public function getType()
+    public function getType(): string
     {
         return $this->_type;
     }
@@ -92,9 +88,9 @@ class FormValidatedInput extends \XoopsFormText
     /**
      * Get HTML types supported
      *
-     * @return string|array containing HTML type(s) supported
+     * @return array containing HTML type(s) supported
      */
-    public function getHtmlTypes()
+    public function getHtmlTypes(): array
     {
         return $this->_htmlTypes;
     }
@@ -104,19 +100,20 @@ class FormValidatedInput extends \XoopsFormText
      *
      * @param string|array $value is string, set value; value is array then keys are ('type', 'min', 'max')
      */
-    public function setType($value)
+    public function setType($value = ''): void
     {
-        if (isset($value)) {
+        if ('' !== $value) {
             if (\is_array($value)) {
                 $value       = isset($value['type']) ? \mb_strtolower($value['type']) : 'text';
-                $this->_type = \in_array($value, $this->_htmlTypes) ? $value : 'text';
+                $this->_type = \in_array($value, $this->_htmlTypes, true) ? $value : 'text';
                 if (\in_array(
                     $value['type'],
                     [
                         'number',
                         'date',
                         'range',
-                    ]
+                    ],
+                    true
                 )) {
                     if (isset($value['min'])) {
                         $this->setExtra('min=' . $value['min']);
@@ -127,7 +124,7 @@ class FormValidatedInput extends \XoopsFormText
                 }
             } else {
                 $value       = isset($value) ? \mb_strtolower($value) : 'text';
-                $this->_type = \in_array($value, $this->_htmlTypes) ? $value : 'text';
+                $this->_type = \in_array($value, $this->_htmlTypes, true) ? $value : 'text';
             }
         } else {
             $this->_type = 'text';
@@ -139,7 +136,7 @@ class FormValidatedInput extends \XoopsFormText
      *
      * @return string HTML <input>
      */
-    public function render()
+    public function render(): string
     {
         $myClasses = $this->getClass();
         $classes   = $myClasses ? " class='{$myClasses}'" : '';

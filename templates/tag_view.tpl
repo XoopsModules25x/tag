@@ -1,12 +1,12 @@
 <div class="tag-page-title">
     <h3>
-    <{$tag_breadcrumb}>
-<{*        <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/" title="<{$module_name}>"><{$module_name}></a> &raquo;
-        <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/list.tag.php" title="<{$smarty.const._MD_TAG_TAGS}>"><{$smarty.const._MD_TAG_TAGS}></a> &raquo;
-        <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/view.tag.php<{$smarty.const.URL_DELIMITER}><{$tag_term}>" title="<{$tag_title}>" rel="tag"><{$tag_title}></a>
-*}>    </h3>
+        <{$tag_breadcrumb}>
+        <{*        <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/" title="<{$module_name}>"><{$module_name}></a> &raquo;
+                <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/list.tag.php" title="<{$smarty.const._MD_TAG_TAGS}>"><{$smarty.const._MD_TAG_TAGS}></a> &raquo;
+                <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/view.tag.php<{$smarty.const.URL_DELIMITER}><{$tag_term}>" title="<{$tag_title}>" rel="tag"><{$tag_title}></a>
+        *}>
+    </h3>
 </div>
-
 
 <div class="tag-item-list" style="padding-top: 10px;">
     <{foreach item=article from=$tag_articles}>
@@ -30,7 +30,9 @@
 <{if $tag_addon}>
     <div class="tag-item-meta" style="padding-top: 10px;">
         <{$tag_addon.title}>:
-        <{foreach item=addon from=$tag_addon.addons}> <{$addon}><{/foreach}>
+        <{foreach item=addon from=$tag_addon.addons}>
+            <{$addon}>
+        <{/foreach}>
     </div>
 <{/if}>
 

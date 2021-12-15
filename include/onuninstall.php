@@ -1,10 +1,10 @@
-<?php
+<?php declare(strict_types=1);
 /**
  * uninstall.php - cleanup on module uninstall
  *
  * @author          XOOPS Module Development Team
  * @copyright       {@link https://xoops.org 2001-2016 XOOPS Project}
- * @license         {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
+ * @license         {@link https://www.fsf.org/copyleft/gpl.html GNU public license}
  * @link            https://xoops.org XOOPS
  */
 
@@ -14,7 +14,7 @@
  *
  * @return bool true if ready to uninstall, false if not
  */
-function xoops_module_pre_uninstall_tag(\XoopsModule $module)
+function xoops_module_pre_uninstall_tag(\XoopsModule $module): bool
 {
     // Do some synchronization
     return true;
@@ -26,7 +26,7 @@ function xoops_module_pre_uninstall_tag(\XoopsModule $module)
  *
  * @return bool true if uninstallation successful, false if not
  */
-function xoops_module_uninstall_tag(\XoopsModule $module)
+function xoops_module_uninstall_tag(\XoopsModule $module): bool
 {
     return true;
 }

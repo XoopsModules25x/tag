@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -12,9 +12,8 @@
 /**
  * XOOPS tag management module
  *
- * @package         tag
  * @copyright       Gregory Mage (Aka Mage)
- * @license         {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
+ * @license         {@link https://www.fsf.org/copyleft/gpl.html GNU public license}
  * @author          Gregory Mage (Aka Mage)
  * @since           1.00
  */
@@ -23,13 +22,9 @@ use XoopsModules\Xfaq\Helper;
 
 defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
-/**
- * @param $items
- * @return bool
- */
-function xfaq_tag_iteminfo(&$items)
+function xfaq_tag_iteminfo(array &$items): bool
 {
-    if (empty($items) || !is_array($items)) {
+    if (empty($items)) {
         return false;
     }
 
@@ -42,8 +37,8 @@ function xfaq_tag_iteminfo(&$items)
 
     /** @var \XoopsDatabase $db */
     $db = \XoopsDatabaseFactory::getDatabase();
-    /** @var \XoopsModules\Xfaq\XfaqHandler $itemHandler */
-    $itemHandler = Helper::getInstance()->getHandler('Xfaq');
+    /** @var \XoopsModules\Xfaq\FaqHandler $itemHandler */
+    $itemHandler = Helper::getInstance()->getHandler('Faq');
 
     $items_obj = $itemHandler->getObjects(new \Criteria('faq_id', '(' . implode(', ', $items_id) . ')', 'IN'), true);
 
@@ -67,10 +62,7 @@ function xfaq_tag_iteminfo(&$items)
     return true;
 }
 
-/**
- * @param $mid
- */
-function xfaq_tag_synchronization($mid)
+function xfaq_tag_synchronization(int $mid): void
 {
     // Optional
 }

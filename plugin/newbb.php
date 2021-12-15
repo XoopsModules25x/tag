@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -12,9 +12,8 @@
 /**
  * XOOPS tag management module
  *
- * @package         \XoopsModuels\Tag
- * @copyright       {@link http://sourceforge.net/projects/xoops/ The XOOPS Project}
- * @license         {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
+ * @copyright       {@link https://sourceforge.net/projects/xoops/ The XOOPS Project}
+ * @license         {@link https://www.fsf.org/copyleft/gpl.html GNU public license}
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
  * @since           1.00
  */
@@ -37,11 +36,10 @@ defined('XOOPS_ROOT_PATH') || exit('Restricted access');
  *
  * @param array $items associative array of items: [modid][catid][itemid]
  *
- * @return bool
  */
-function newbb_tag_iteminfo(&$items)
+function newbb_tag_iteminfo(array &$items): bool
 {
-    if (empty($items) || !is_array($items)) {
+    if (empty($items)) {
         return false;
     }
 
@@ -81,9 +79,8 @@ function newbb_tag_iteminfo(&$items)
  * Remove orphan tag-item links
  *
  * @param int $mid module id
- * @return bool
  */
-function newbb_tag_synchronization($mid)
+function newbb_tag_synchronization(int $mid): bool
 {
     /** @var \XoopsModules\Newbb\TopicHandler $itemHandler */
     $itemHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Topic');
@@ -93,11 +90,11 @@ function newbb_tag_synchronization($mid)
     //    $mid = XoopsFilterInput::clean($mid, 'INT');
     $mid = Request::getInt('mid');
 
-    /* clear tag-item links */ 
+    /* clear tag-item links */
     /** {@internal the following statement isn't really needed any more (MySQL is really old)
- *   and some hosting companies block the $GLOBALS['xoopsDB']->getServerVersion() function for security
- *   reasons. }
- */
+     *   and some hosting companies block the $GLOBALS['xoopsDB']->getServerVersion() function for security
+     *   reasons. }
+     */
     //    if (version_compare( $GLOBALS['xoopsDB']->getServerVersion(), "4.1.0", "ge" )):
     $sql = "DELETE FROM {$linkHandler->table}" . " WHERE tag_modid = {$mid}" . '   AND (tag_itemid NOT IN ' . "         (SELECT DISTINCT {$itemHandler->keyName} " . "          FROM {$itemHandler->table} " . "          WHERE {$itemHandler->table}.approved > 0" . '          )' . '       )';
     /*
@@ -116,5 +113,5 @@ function newbb_tag_synchronization($mid)
         //xoops_error($linkHandler->db->error());
     }
 
-    return $result ? true : false;
+    return (bool)$result;
 }

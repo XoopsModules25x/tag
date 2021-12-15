@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -12,9 +12,8 @@
 /**
  * XOOPS tag management module
  *
- * @package         \XoopsModules\Tag
- * @copyright       {@link http://sourceforge.net/projects/xoops/ The XOOPS Project}
- * @license         {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
+ * @copyright       {@link https://sourceforge.net/projects/xoops/ The XOOPS Project}
+ * @license         {@link https://www.fsf.org/copyleft/gpl.html GNU public license}
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
  * @since           1.00
  */
@@ -36,12 +35,11 @@ defined('XOOPS_ROOT_PATH') || exit('Restricted access');
  * tags
  *
  *
- * @param mixed $items associative array of items: [modid][catid][itemid]
- * @return bool
+ * @param array $items associative array of items: [modid][catid][itemid]
  */
-function myalbum0_tag_iteminfo(&$items)
+function myalbum0_tag_iteminfo(array &$items): bool
 {
-    if (empty($items) || !is_array($items)) {
+    if (empty($items)) {
         return false;
     }
 
@@ -56,8 +54,8 @@ function myalbum0_tag_iteminfo(&$items)
     }
     $helper = \XoopsModules\Myalbum\Helper::getInstance();
     /** @var \Myalbum0PhotosHandler $itemHandler */
-    $itemHandler = $helper->getHandler('Photos', 'myalbum0');
-    $textHandler = $helper->getHandler('Text', 'myalbum0');
+    $itemHandler = $helper->getHandler('Photos');
+    $textHandler = $helper->getHandler('Text');
 
     /** @var \XoopsModules\Myalbum\PhotosHandler $itemHandler */
     $itemHandler = \XoopsModules\Myalbum\Helper::getInstance()->getHandler('Photos');
@@ -90,21 +88,21 @@ function myalbum0_tag_iteminfo(&$items)
  *
  * @param $mid
  */
-function myalbum0_tag_synchronization($mid)
+function myalbum0_tag_synchronization($mid): void
 {
     /** @var \Myalbum0PhotosHandler $itemHandler */
-    $itemHandler = \XoopsModules\Myalbum\Helper::getInstance()->getHandler('Photos', 'myalbum0');
+    $itemHandler = \XoopsModules\Myalbum\Helper::getInstance()->getHandler('Photos');
     /** @var \XoopsModules\Tag\LinkHandler $linkHandler */
     $linkHandler = Helper::getInstance()->getHandler('Link'); //@var \XoopsModules\Tag\Handler $tagHandler
 
     //    $mid = XoopsFilterInput::clean($mid, 'INT');
     $mid = Request::getInt('mid');
 
-    /* clear tag-item links */ 
+    /* clear tag-item links */
     /** {@internal the following statement isn't really needed any more (MySQL is really old)
- *   and some hosting companies block the $GLOBALS['xoopsDB']->getServerVersion() function for security
- *   reasons. }
- */
+     *   and some hosting companies block the $GLOBALS['xoopsDB']->getServerVersion() function for security
+     *   reasons. }
+     */
     //    if (version_compare( $GLOBALS['xoopsDB']->getServerVersion(), "4.1.0", "ge" )):
     $sql = "DELETE FROM {$linkHandler->table}" . " WHERE tag_modid = {$mid}" . '   AND (tag_itemid NOT IN ' . "         (SELECT DISTINCT {$itemHandler->keyName}" . "           FROM {$itemHandler->table} " . "           WHERE {$itemHandler->table}.approved > 0" . '         )' . '       )';
     /*

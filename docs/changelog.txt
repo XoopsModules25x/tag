@@ -1,3 +1,29 @@
+<h5>2.35.0 Beta 4          [2021-12-15]</h5>  Dev: XOOPS 2.5.11, PHP 7.4.26,  PHP 8.1.0
+<hr>
+- refactor tagBar() function into a class (mamba)
+- various cosmetics (mamba)
+- trigger_error() (mamba)
+- fixed update_stats(): replaced ADD with AND in $criteria->add(new \Criteria('tag_modid', $modid), 'ADD'); (mamba)
+- reversed missing tag_modid in getByLimit() (mamba)
+- updated sample.php (mamba)
+- reversed some changes in blocks.php (mamba)
+- lowered limit_cloud_list from 100 to 10 (mamba)
+- added xmnews plugin (mage)
+- updated instructions for creating a plugin (mage)
+- fix: when using the tags for the first time, the id was displayed in the field (maga)
+- added Blocksadmin (mamba)
+- PHP 8.1 cosmetics and type hinting (mamba)
+- $module_name in tag_index.tpl (alain01/mamba)
+- fix for int required in TagHandler (alain01/mamba) https://github.com/mambax7/tag/issues/12
+- added pull for summary for Publisher (alain01/mamba)
+- deleted include/functions.php (mamba)
+- fixed bug Number of tags (alain01/mamba) https://github.com/mambax7/tag/issues/13
+- fixed bug in tag_block_cloud.php (alain01/mamba) https://github.com/mambax7/tag/issues/15
+- deleted /test folder (alain01/mamba) https://github.com/mambax7/tag/issues/17
+- commented out the code for the new flash cumules block (alain01/mamba)
+
+
+
 <h5>2.35.0 Beta 3          [2021-11-11]</h5>  Dev: XOOPS 2.5.11, PHP 7.4.25, PHP 8.0.12, PHP 8.1.0 Beta 5
 <hr>
 - reverse refactoring (mamba)

@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -12,9 +12,8 @@
 /**
  * XOOPS tag management module
  *
- * @package         XoopsModules/Tag
- * @copyright       {@link http://sourceforge.net/projects/xoops/ The XOOPS Project}
- * @license         {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
+ * @copyright       {@link https://sourceforge.net/projects/xoops/ The XOOPS Project}
+ * @license         {@link https://www.fsf.org/copyleft/gpl.html GNU public license}
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
  * @since           1.00
  */
@@ -40,7 +39,7 @@ $sql           = 'SELECT tag_modid, COUNT(DISTINCT tag_id) AS count_tag' . ' FRO
 $counts_module = [];
 $module_list   = [];
 $result        = $GLOBALS['xoopsDB']->query($sql);
-if ($result) {
+if ($result instanceof \mysqli_result) {
     while (false !== ($myrow = $GLOBALS['xoopsDB']->fetchArray($result))) {
         $counts_module[$myrow['tag_modid']] = $myrow['count_tag'];
     }
@@ -49,13 +48,15 @@ if ($result) {
         $moduleHandler = xoops_getHandler('module');
         $module_list   = $moduleHandler->getList(new \Criteria('mid', '(' . implode(', ', array_keys($counts_module)) . ')', 'IN'));
     }
+} else {
+    \trigger_error($GLOBALS['xoopsDB']->error());
 }
 
 $opform     = new \XoopsSimpleForm('', 'moduleform', xoops_getenv('SCRIPT_NAME'), 'get', true);
 $tray       = new \XoopsFormElementTray('');
 $mod_select = new \XoopsFormSelect(_SELECT, 'modid', $modid);
-$mod_select->addOption(-1, _AM_TAG_GLOBAL);
-$mod_select->addOption(0, _AM_TAG_ALL);
+$mod_select->addOption('-1', _AM_TAG_GLOBAL);
+$mod_select->addOption('0', _AM_TAG_ALL);
 foreach ($module_list as $module => $module_name) {
     $mod_select->addOption($module, $module_name . ' (' . $counts_module[$module] . ')');
 }
@@ -72,7 +73,7 @@ $num_select->addOptionArray(
 );
 $tray->addElement($num_select);
 $tray->addElement(new \XoopsFormButton('', 'submit', _SUBMIT, 'submit'));
-$tray->addElement(new \XoopsFormHidden('start', $start));
+$tray->addElement(new \XoopsFormHidden('start', (string)$start));
 $opform->addElement($tray);
 $opform->display();
 
@@ -84,13 +85,13 @@ if (Request::hasVar('start', 'GET')) {
     //    $criteria->setStart($start);
     //    $criteria->setLimit($limit);
     if ($modid > Constants::DEFAULT_ID) {
-        $criteria->add(new \Criteria('l.tag_modid', $modid));
+        $criteria->add(new \Criteria('l.tag_modid', (string)$modid));
     }
     $tags = $tagHandler->getByLimit($limit, $start, $criteria, null, false);
     //    $tags = $tagHandler->getByLimit(0, 0, $criteria, null, false);
     if ($tags && is_array($tags)) {
         foreach ($tags as $tag_id => $tag) {
-            $tagHandler->update_stats($tag_id, (-1 == $modid) ? Constants::DEFAULT_ID : $tag['modid']);
+            $tagHandler->update_stats($tag_id, (int)((-1 == $modid) ? Constants::DEFAULT_ID : $tag['modid'] ?? 0));
         }
         $helper->redirect("admin/syn.tag.php?modid={$modid}&amp;start=" . ($start + $limit) . "&amp;limit={$limit}", Constants::REDIRECT_DELAY_MEDIUM, _AM_TAG_IN_PROCESS);
     }

@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -10,29 +10,26 @@
  */
 
 /**
- * @package         XoopsModules\Tag
- * @copyright       The XUUPS Project http://sourceforge.net/projects/xuups/
- * @license         http://www.fsf.org/copyleft/gpl.html GNU public license
+ * @copyright       The XUUPS Project https://sourceforge.net/projects/xuups/
+ * @license         https://www.fsf.org/copyleft/gpl.html GNU public license
  * @since           1.0
  * @author          trabis <lusopoemas@gmail.com>
  * @author          The SmartFactory <www.smartfactory.ca>
  */
 
 use Xmf\Request;
+use XoopsModules\Publisher\Helper as PublisherHelper;
 use XoopsModules\Tag\Helper;
 use XoopsModules\Tag\Utility;
-use XoopsModules\Publisher\Helper as PublisherHelper;
 
 defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
 /**
  * Get item fields: title, content, time, link, uid, tags
- * @param array $items
- * @return bool
  */
-function publisher_tag_iteminfo(&$items)
+function publisher_tag_iteminfo(array &$items): bool
 {
-    if (empty($items) || !is_array($items)) {
+    if (empty($items)) {
         return false;
     }
 
@@ -50,7 +47,7 @@ function publisher_tag_iteminfo(&$items)
 
     $criteria  = new \Criteria('itemid', '(' . implode(', ', $items_id) . ')', 'IN');
     $items_obj = $itemHandler->getObjects($criteria, 'itemid');
-
+    //$myts      = \MyTextSanitizer::getInstance(); //uncomment it if you use the summary for the content
     foreach (array_keys($items) as $cat_id) {
         foreach (array_keys($items[$cat_id]) as $item_id) {
             $item_obj                 = $items_obj[$item_id];
@@ -61,6 +58,7 @@ function publisher_tag_iteminfo(&$items)
                 'time'    => $item_obj->getVar('datesub'),
                 'tags'    => Utility::tag_parse_tag($item_obj->getVar('item_tag', 'n')), // optional
                 'content' => '',
+//                'content' => $myts->displayTarea($item_obj->summary(), 1, 1, 1, 1, 1), // in case you want to show the summary of the article
             ];
         }
     }
@@ -70,10 +68,8 @@ function publisher_tag_iteminfo(&$items)
 }
 
 /** Remove orphan tag-item links *
- * @param int $mid
- * @return bool
  */
-function publisher_tag_synchronization($mid)
+function publisher_tag_synchronization(int $mid): bool
 {
     /** @var \XoopsModules\Publisher\ItemHandler $itemHandler */
     $itemHandler = \XoopsModules\Publisher\Helper::getInstance()->getHandler('Item');
@@ -82,7 +78,7 @@ function publisher_tag_synchronization($mid)
     $linkHandler = Helper::getInstance()->getHandler('Link');
 
     //    $mid = XoopsFilterInput::clean($mid, 'INT');
-    $mid = \Xmf\Request::getInt('mid');
+    $mid = Request::getInt('mid');
 
     /* clear tag-item links */
     $sql    = "    DELETE FROM {$linkHandler->table}"
@@ -98,5 +94,5 @@ function publisher_tag_synchronization($mid)
               . '        )';
     $result = $linkHandler->db->queryF($sql);
 
-    return $result ? true : false;
+    return (bool)$result;
 }
