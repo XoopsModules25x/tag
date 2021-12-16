@@ -1,3 +1,9 @@
+<h5>2.35.0 Beta 5          [NOT RELEASED]</h5>  Dev: XOOPS 2.5.11, PHP 7.4.26,  PHP 8.1.0
+<hr>
+- minimum PHP version: 7.4 (mamba)
+- added Security.md file (mamba)
+
+
 <h5>2.35.0 Beta 4          [2021-12-15]</h5>  Dev: XOOPS 2.5.11, PHP 7.4.26,  PHP 8.1.0
 <hr>
 - refactor tagBar() function into a class (mamba)
@@ -11,7 +17,7 @@
 - added xmnews plugin (mage)
 - updated instructions for creating a plugin (mage)
 - fix: when using the tags for the first time, the id was displayed in the field (maga)
-- added Blocksadmin (mamba)
+- added Blocksadmin class (mamba)
 - PHP 8.1 cosmetics and type hinting (mamba)
 - $module_name in tag_index.tpl (alain01/mamba)
 - fix for int required in TagHandler (alain01/mamba) https://github.com/mambax7/tag/issues/12
@@ -21,6 +27,7 @@
 - fixed bug in tag_block_cloud.php (alain01/mamba) https://github.com/mambax7/tag/issues/15
 - deleted /test folder (alain01/mamba) https://github.com/mambax7/tag/issues/17
 - commented out the code for the new flash cumules block (alain01/mamba)
+- added Bootstrap 4 templates ((alain01) (see the /extra folder)
 
 
 
