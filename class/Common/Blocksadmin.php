@@ -421,7 +421,7 @@ class Blocksadmin
         if ('' !== $clone->getVar('template')) {
             /** @var \XoopsTplfileHandler $tplfileHandler */
             $tplfileHandler = \xoops_getHandler('tplfile');
-            $btemplate      = $tplfileHandler->find($GLOBALS['xoopsConfig']['template_set'], 'block', $bid);
+            $btemplate      = $tplfileHandler->find($GLOBALS['xoopsConfig']['template_set'], 'block', (string)$bid);
             if (\count($btemplate) > 0) {
                 $tplclone = $btemplate[0]->xoopsClone();
                 $tplclone->setVar('tpl_id', 0);
