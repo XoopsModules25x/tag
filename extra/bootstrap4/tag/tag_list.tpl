@@ -31,7 +31,6 @@
     </div>
 </form>
 
-
 <{if $pagenav|default:false}>
     <div id="pagenav" class="pt-5">
         <{$pagenav}>
