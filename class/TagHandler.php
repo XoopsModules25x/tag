@@ -313,7 +313,7 @@ class TagHandler extends \XoopsPersistableObjectHandler
             $limit = $limit >= 0 ? $limit : $criteria->getLimit(); // non-zero arg passed to method overrides $criteria setting
             $start = $start >= 0 ? $start : $criteria->getStart(); // non-zero arg passed to method overrides $criteria setting
         }
-        $sql .= " GROUP BY o.{$this->keyName}, o.tag_term, o.tag_status, l.tag_modid";
+        $sql .= " GROUP BY o.{$this->keyName}, o.tag_term, o.tag_status";
 
         $order = ('ASC' !== \mb_strtoupper($order)) ? 'DESC' : 'ASC';
         $sort  = \mb_strtolower($sort);
