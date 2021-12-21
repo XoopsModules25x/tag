@@ -26,12 +26,12 @@ $moduleDirName = basename(__DIR__);
 // ------------------- Information ------------------- /
 $modversion = [
     'version'             => '2.35.0',
-    'module_status'       => 'Beta 5 NOT RELEASED',
-    'release_date'        => '2021/12/15',
+    'module_status'       => 'RC-1 NOT RELEASED',
+    'release_date'        => '2021/12/21',
     'name'                => _MI_TAG_NAME,
     'description'         => _MI_TAG_DESC,
     'official'            => 0,    //1 indicates official XOOPS module supported by XOOPS Dev Team, 0 means 3rd party supported
-    'author'              => 'Taiwen Jiang <phppp@users.sourceforge.net>',
+    'author'              => 'Taiwen Jiang, Zyspec, Mamba, Alain01',
     'author_website_url'  => 'https://xoops.org',
     'author_website_name' => 'XOOPS',
     'credits'             => 'XOOPS Development Team, Trabis, Mamba, Aerograf, Mage, Alfredx, ZySpec, Geekwright',
