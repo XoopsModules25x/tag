@@ -5,6 +5,8 @@
 - DESC sorting of items by time https://github.com/mambax7/tag/issues/18
 - fixed bug in tag_block_cloud.php (alain01/mamba) https://github.com/mambax7/tag/issues/15
 - fixed version (alain01/mamba) https://github.com/mambax7/tag/issues/21
+- commented out time sort as option for Top tags block (mamba)
+- cosmetics (mamba)
 
 
 <h5>2.35.0 Beta 4          [2021-12-15]</h5>  Dev: XOOPS 2.5.11, PHP 7.4.26,  PHP 8.1.0

@@ -388,11 +388,13 @@ function tag_block_top_edit(array $options)
         $form .= ' selected ';
     }
     $form .= '>' . _MB_TAG_COUNT . "</option>\n";
-    $form .= "<option value='t'";
-    if ('t' === $options[2]) {
-        $form .= ' selected ';
-    }
-    $form .= '>' . _MB_TAG_TIME . "</option>\n";
+
+//    $form .= "<option value='t'"; //@todo currently not implemented
+//    if ('t' === $options[2]) {
+//        $form .= ' selected ';
+//    }
+//    $form .= '>' . _MB_TAG_TIME . "</option>\n";
+
     $form .= "</select><br>\n";
 
     return $form;
