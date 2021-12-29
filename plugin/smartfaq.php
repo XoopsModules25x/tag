@@ -36,7 +36,6 @@ defined('XOOPS_ROOT_PATH') || exit('Restricted access');
  * tags
  *
  * @param mixed $items
- * @return bool
  * @var array   $items associative array of items: [modid][catid][itemid]
  *
  */

@@ -25,11 +25,13 @@ use XoopsModules\Tag\Utility;
 
 defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
-require_once $GLOBALS['xoops']->path('/modules/tag/include/vars.php');
-
 if (!xoops_isActiveModule('tag')) {
     return false;
 }
+
+require_once $GLOBALS['xoops']->path('/modules/tag/include/vars.php');
+
+
 
 $helper = Helper::getInstance();
 
@@ -386,11 +388,13 @@ function tag_block_top_edit(array $options)
         $form .= ' selected ';
     }
     $form .= '>' . _MB_TAG_COUNT . "</option>\n";
-    $form .= "<option value='t'";
-    if ('t' === $options[2]) {
-        $form .= ' selected ';
-    }
-    $form .= '>' . _MB_TAG_TIME . "</option>\n";
+
+//    $form .= "<option value='t'"; //@todo currently not implemented
+//    if ('t' === $options[2]) {
+//        $form .= ' selected ';
+//    }
+//    $form .= '>' . _MB_TAG_TIME . "</option>\n";
+
     $form .= "</select><br>\n";
 
     return $form;

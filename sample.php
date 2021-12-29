@@ -55,9 +55,10 @@ The following steps are needed to enable tag for a module ("mymodule"):
 
 //-----------  Step 1: add tag input box to your item edit form  -----------
 // File: edit.item.php
-$itemid = $item_obj->isNew() ? 0 : $item_obj->getVar('itemid');
-//XoopsLoad::load('formtag', 'tag');  // get the TagFormTag class
-$form_item->addElement(new FormTag('item_tag', 60, 255, $itemid, $catid = 0));
+if (\class_exists(\XoopsModules\Tag\FormTag::class) && xoops_isActiveModule('tag')) {
+    $itemid = $item_obj->isNew() ? 0 : $item_obj->getVar('itemid');
+    $form_item->addElement(new \XoopsModules\Tag\FormTag('item_tag', 60, 255, $itemid, $catid = 0));
+}
 
 
 //-----------  Step 2: add tag storage after item storage -----------

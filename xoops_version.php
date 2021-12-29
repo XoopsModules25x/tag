@@ -26,15 +26,15 @@ $moduleDirName = basename(__DIR__);
 // ------------------- Information ------------------- /
 $modversion = [
     'version'             => '2.35.0',
-    'module_status'       => 'Beta 4',
-    'release_date'        => '2021/12/15',
+    'module_status'       => 'RC-1',
+    'release_date'        => '2021/12/21',
     'name'                => _MI_TAG_NAME,
     'description'         => _MI_TAG_DESC,
     'official'            => 0,    //1 indicates official XOOPS module supported by XOOPS Dev Team, 0 means 3rd party supported
     'author'              => 'Taiwen Jiang <phppp@users.sourceforge.net>',
     'author_website_url'  => 'https://xoops.org',
     'author_website_name' => 'XOOPS',
-    'credits'             => 'XOOPS Development Team, Trabis, Mamba, Aerograf, Mage, Alfredx, ZySpec, Geekwright',
+    'credits'             => 'XOOPS Development Team, Trabis, Mamba, Aerograf, Mage, Alfredx, ZySpec, Geekwright, Alain01',
     'license'             => 'GPL 2.0 or later',
     'license_url'         => 'https://www.gnu.org/licenses/old-licenses/gpl-2.0.html',
     'help'                => 'page=help',
@@ -66,7 +66,7 @@ $modversion = [
     'module_website_url'  => 'www.xoops.org',
     'module_website_name' => 'XOOPS Project',
     // ------------------- Min Requirements -------------
-    'min_php'             => '7.3',
+    'min_php'             => '7.4',
     'min_xoops'           => '2.5.10',
     'min_admin'           => '1.2',
     'min_db'              => ['mysql' => '5.5'],

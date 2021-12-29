@@ -30,12 +30,9 @@ class Helper extends \Xmf\Module\Helper
      */
     public function __construct($debug = false)
     {
-        $this->debug = $debug;
-        if (null === $this->dirname) {
-            $dirname       = \basename(\dirname(__DIR__));
-            $this->dirname = $dirname;
-        }
-        parent::__construct($this->dirname);
+        $this->debug   = $debug;
+        $moduleDirName = \basename(\dirname(__DIR__));
+        parent::__construct($moduleDirName);
     }
 
     public static function getInstance(bool $debug = false): self

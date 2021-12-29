@@ -44,7 +44,7 @@ $catid = (int)(empty($_GET['catid']) ? @$args['catid'] : $_GET['catid']);
 $start = (int)(empty($_GET['start']) ? @$args['start'] : $_GET['start']);
 */
 $tagid    = (empty($_GET['tag'])) ? @$args['tag'] : Request::getInt('tag', Constants::DEFAULT_ID, 'GET');
-$tag_term = empty($_GET['term']) ? @$args['term'] : Request::getString('term', null, 'GET');
+$tag_term = empty($_GET['term']) ? @$args['term'] : Request::getString('term', '', 'GET');
 $modid    = (int)(empty($_GET['modid'])) ? @$args['modid'] : Request::getInt('modid', Constants::DEFAULT_ID, 'GET');
 $catid    = (int)(empty($_GET['catid'])) ? @$args['catid'] : Request::getInt('catid', Constants::DEFAULT_ID, 'GET');
 $start    = (int)(empty($_GET['start'])) ? @$args['start'] : Request::getInt('start', Constants::BEGINNING, 'GET');
@@ -152,16 +152,25 @@ foreach ($items_array as $key => $myItem) {
     if (!$item = @$module_item_array[$myItem['modid']][$myItem['catid']][$myItem['itemid']]) {
         continue;
     }
-    $item['module']  = $module_obj_array[$myItem['modid']]->getVar('name');
-    $item['dirname'] = $module_obj_array[$myItem['modid']]->getVar('dirname', 'n');
-    $time            = empty($item['time']) ? $myItem['time'] : $item['time'];
-    $item['time']    = formatTimestamp($time, 's');
-    $item['tags']    = $tagbar->getTagbar($item['tags']);
-    $items_data[]    = $item;
+    $item['module']    = $module_obj_array[$myItem['modid']]->getVar('name');
+    $item['dirname']   = $module_obj_array[$myItem['modid']]->getVar('dirname', 'n');
+    $time              = empty($item['time']) ? $myItem['time'] : $item['time'];
+    $item['timestamp'] = $time; //needed for sorting
+    $item['time']      = formatTimestamp($time, 's');
+    $item['tags']      = $tagbar->getTagbar($item['tags']);
+    $items_data[]      = $item;
     // @todo: fix this to use xoops user id, if present otherwise to 1st admin
     $uids[$item['uid']] = 1;
 }
 unset($item);
+
+// sorting of the array by timestamp (the newest item on top)
+$timestamp  = array_column($items_data, 'timestamp');
+// Sort the data with timestamp descending
+// Add $items_data as the last parameter, to sort by the common key
+array_multisort($timestamp, SORT_DESC, $items_data);
+
+
 xoops_load('XoopsUserUtility');
 $users = \XoopsUserUtility::getUnameFromIds(array_keys($uids));
 

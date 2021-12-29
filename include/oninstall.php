@@ -28,14 +28,11 @@ function xoops_module_pre_install_tag(\XoopsModule $module): bool
     $moduleDirName = \basename(\dirname(__DIR__));
     $utility       = new Tag\Utility();
     //check for minimum XOOPS version
-    if (!$utility::checkVerXoops($module)) {
-        return false;
-    }
+    //check for minimum XOOPS version
+    $xoopsSuccess = $utility::checkVerXoops($module);
 
     // check for minimum PHP version
-    if (!$utility::checkVerPhp($module)) {
-        return false;
-    }
+    $phpSuccess = $utility::checkVerPhp($module);
 
     $modTables = $module->getInfo('tables');
     /** @todo replace table operations using Xmf\Tables object methods
@@ -50,7 +47,7 @@ function xoops_module_pre_install_tag(\XoopsModule $module): bool
         $GLOBALS['xoopsDB']->queryF('DROP TABLE IF EXISTS ' . $GLOBALS['xoopsDB']->prefix($table) . ';');
     }
 
-    return true;
+    return $xoopsSuccess && $phpSuccess;
 }
 
 /**
